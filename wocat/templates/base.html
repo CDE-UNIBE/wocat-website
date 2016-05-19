@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}<!DOCTYPE html>
+{% load staticfiles i18n cms_tags sekizai_tags %}<!DOCTYPE html>
 <html lang="en" >
   <head>
     <meta charset="utf-8">
@@ -23,11 +23,11 @@
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock %}
 
-    
-
+    {% render_block "css" %}
   </head>
 
   <body>
+    {% cms_toolbar %}
 
     <div class="m-b">
       <nav class="navbar navbar-dark navbar-static-top bg-inverse">
@@ -104,6 +104,7 @@
       <!-- place project specific Javascript in this file -->
       <script src="{% static 'js/project.js' %}"></script>
     {% endblock javascript %}
+    {% render_block "js" %}
   </body>
 </html>
- 
+
