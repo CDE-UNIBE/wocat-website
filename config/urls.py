@@ -25,9 +25,10 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),
+]
+# Static files
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

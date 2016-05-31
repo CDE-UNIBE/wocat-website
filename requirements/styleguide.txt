@@ -1,0 +1,2 @@
+# Styleguide dependencies go here
+django==1.9.6

@@ -1,0 +1,18 @@
+{% extends "styleguide/base.html" %}
+{% load static %}
+
+{% block css %}
+{{ block.super }}
+	<link rel="stylesheet" href="{% static 'styleguide/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h1>WOCAT Styleguide</h1>
+	</div>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+	<script src="{% static 'styleguide/js/index.js' %}"></script>
+{% endblock %}
