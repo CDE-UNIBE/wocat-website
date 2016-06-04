@@ -1,0 +1,272 @@
+// Wocat CSS
+
+@color-neutral: #F8F8F8;
+@color-neutral-dark: #777777;
+@color-black: #333;
+@color-primary: #DA812C;
+@color-primary-dark: #CC6300;
+@color-white: #FFF;
+
+@import "open-sans.less";
+
+@import "bootstrap/bootstrap.less";
+
+
+
+body {
+	// https://stackoverflow.com/questions/6935040/disadvantages-to-using-css-word-wrap-globally
+	word-wrap: break-word;
+}
+
+a {
+	&:hover, &:active, &:focus {
+		color: @color-primary-dark;
+	}
+
+	&.h1, &.h2, &.h3, &.h4, &.h5, &.h6 {
+		color: @color-primary;
+
+		&:hover, &:active, &:focus {
+			color: @color-primary-dark;
+		}
+	}
+}
+
+.content-container {
+	background-color: @color-white;
+}
+
+.widget-header {
+	.navbar-default {
+		border-width: 0;
+		margin: 0;
+
+		.topnav {
+			background-color: @color-white;
+
+			.navbar-toggle {
+				border-width: 0;
+
+				&:hover, &:focus {
+				}
+			}
+
+
+			.navbar-brand {
+				height: auto;
+
+				> img {
+					width: 120px;
+					@media(min-width:768px) {
+						width: 190px;
+					}
+					height: auto;
+				}
+			}
+
+			.navbar-nav > li > a {
+				color: @color-neutral-dark;
+				text-transform: uppercase;
+				font-size: 12px;
+			}
+
+
+		}
+
+		.mainnav {
+			.navbar-toggle {
+				border-width: 0;
+				background-color: @color-white;
+
+				.icon-bar {
+					background-color: @color-primary;
+				}
+
+
+				&:hover, &:focus {
+				}
+			}
+
+			.navbar-brand {
+				img {
+					width: auto;
+					height: 30px;
+					display: inline-block;
+				}
+				.navbar-brand-name {
+					display: inline-block;
+					color: @color-white;
+				}
+			}
+
+			&.mainnav-depth-1 {
+				background-color: @color-primary;
+				color: @color-white;
+			}
+			&.mainnav-depth-2, &.mainnav-depth-3 {
+				border: 1px solid @color-primary;
+				border-width: 5px 0 0 0;
+				background-color: @color-neutral-dark;
+				color: @color-white;
+			}
+
+			.navbar-nav > li > a {
+				color: @color-white;
+			}
+		}
+	}
+}
+
+
+.widget-teaser {
+	margin-bottom: 30px;
+
+	.widget-teaser-imgtop, .widget-teaser-imgleft, .widget-teaser-imgright {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+	.widget-teaser-imgtop {
+		margin-bottom: 15px;
+	}
+
+	.widget-teaser-date {
+		color: @color-neutral-dark;
+		font-size: 12px;
+	}
+
+	.widget-teaser-title {
+		display: block;
+	}
+
+	.widget-teaser-readmoretext {
+		display: block;
+	}
+}
+
+.widget-image {
+	margin-bottom: 30px;
+
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.widget-image-caption {
+		margin: 10px 0 0 0;
+		font-style: italic;
+	}
+}
+
+.widget-readmorelink {
+	margin-bottom: 30px;
+}
+
+
+
+
+.widget-richtext-content {
+	margin: 0 0 30px 0;
+
+
+	img.richtext-image {
+		display: block;
+		width: 100%;
+		height: auto;
+
+		@media (min-width: 768px) {
+			&.left {
+				clear: both;
+				float: left;
+				width: 50%;
+				margin: 0 15px 15px 0;
+			}
+
+			&.right {
+				clear: both;
+				float: right;
+				width: 50%;
+				margin: 0 0 15px 15px;
+			}
+		}
+
+		@media (min-width: 992px) {
+			&.left, &.right {
+				width: 33%;
+			}
+		}
+	}
+
+	.responsive-object {
+		margin-top: 15px;
+		clear: both;
+	}
+
+	*:first-child {
+		margin-top: 0;
+	}
+	*:last-child {
+		margin-bottom: 0;
+	}
+}
+
+
+.widget-embed {
+	margin-bottom: 30px;
+}
+.widget-embed, .widget-richtext-content {
+	.responsive-object {
+		position:relative;
+
+		iframe, object, embed {
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+		}
+	}
+}
+
+
+.widget-columns-1-1, .widget-columns-2-1, .widget-columns-1-2 {
+	margin-bottom: 30px;
+
+	> .col {
+		> *:first-child {
+			margin-top: 0;
+		}
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+
+
+// ############# Print ##############
+
+@media print {
+	.container {
+		width: auto;
+	}
+
+	.widget-header,
+	.widget-footer,
+	.widget-social-links,
+	.widget-nav-stacked,
+	.widget-breadcrumb,
+	.widget-pagination,
+	.widget-monsterbutton-group,
+	.widget-button,
+	.widget-carousel,
+	.widget-imagebuttonlink,
+	.widget-readmorelink,
+	iframe,
+	.widget-embed,
+	.rich-text .responsive-object,
+	form {
+		display: none;
+	}
+}

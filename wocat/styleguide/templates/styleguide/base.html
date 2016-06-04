@@ -8,11 +8,11 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<meta property="og:description" content="MS-Wissenschaft"/>
+	<meta property="og:description" content="Wocat"/>
 	<meta property="og:image" content="/static/images/og-image.png"/>
 	<meta property="og:locale" content="de"/>
-	<meta property="og:site_name" content="MS-Wissenschaft"/>
-	<meta property="og:title" content="MS-Wissenschaft"/>
+	<meta property="og:site_name" content="Wocat"/>
+	<meta property="og:title" content="Wocat"/>
 	<meta property="og:url" content=""/>
 	<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/images/apple-touch-icon-114x114-precomposed.png"/>
@@ -20,11 +20,10 @@
 	<script src="/static/vendor/js/less.min.js"></script>
 
 	{% block css %}
-		<link rel="stylesheet" type="text/css" href="{% static 'vendor/css/bootstrap.min.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'vendor/css/font-awesome.min.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'vendor/css/leaflet.css' %}">
-		<link rel="stylesheet/less" type="text/css" href="{% static 'css/msw.less' %}"/>
-		<script src="{% static 'vendor/js/less.min.js' %}"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
+		<link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
+		<script src="{% static 'js/less.min.js' %}"></script>
 	{% endblock %}
 </head>
 
@@ -54,10 +53,10 @@
 
 
 {% block javascript %}
-	<script src="{% static 'vendor/js/jquery-2.1.4.min.js' %}"></script>
-	<script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'vendor/js/leaflet.js' %}"></script>
-	<script src="{% static 'js/msw.js' %}"></script>
+	<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/leaflet.js' %}"></script>
+	<script src="{% static 'js/wocat.js' %}"></script>
 {% endblock %}
 </body>
 </html>

@@ -1,0 +1,54 @@
+<div class="widget-teaser">
+{% if imgsrc and imgpos == 'top' %}
+	<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop">
+{% endif %}
+{% if imgsrc and imgpos == 'left' %}
+	<div class="row">
+		<div class="col-sm-4">
+			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgleft">
+		</div>
+		<div class="col-sm-8">
+{% endif %}
+{% if imgsrc and imgpos == 'right' %}
+	<div class="row">
+		<div class="col-sm-8">
+{% endif %}
+
+
+{% if date %}
+	<p class="widget-teaser-date">
+		{{ date }}
+	</p>
+{% endif %}
+{% if title %}
+	<a class="h4 widget-teaser-title" href="{{ href }}">
+		{{ title }}
+	</a>
+{% endif %}
+{% if description %}
+	<p class="widget-teaser-description">
+		{{ description }}
+	</p>
+{% endif %}
+
+{% if readmoretext %}
+	<a class="widget-teaser-readmoretext" href="{{ href }}">
+		{{ readmoretext|safe }}
+	</a>
+{% endif %}
+
+
+{% if imgsrc and imgpos == 'left' %}
+		</div>
+	</div><!-- row -->
+{% endif %}
+{% if imgsrc and imgpos == 'right' %}
+		</div>
+		<div class="col-sm-4">
+			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgright">
+		</div>
+	</div><!-- row -->
+{% endif %}
+
+
+</div><!-- widget-teaser -->
