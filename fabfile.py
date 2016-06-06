@@ -7,28 +7,28 @@ def staging():
     env.hosts = ['wocat@wocat.sinnwerkstatt.com']
     env.path = '/srv/wocat.sinnwerkstatt.com/wocat'
     env.virtualenv_path = '/srv/wocat.sinnwerkstatt.com/wocatenv'
-    env.backup_path = '/srv/ms-wissenschaft.sinnwerkstatt.com/backups'
+    env.backup_path = '/srv/wocat.sinnwerkstatt.com/backups'
     env.push_branch = 'staging'
     env.push_remote = 'origin'
-    env.reload_cmd = 'supervisorctl restart ms-wissenschaft'
-    env.db_name = 'mswissenschaft'
-    env.db_username = 'mswissenschaft'
-    env.after_deploy_url = 'http://ms-wissenschaft.sinnwerkstatt.com'
+    env.reload_cmd = 'supervisorctl restart wocat'
+    env.db_name = 'wocat'
+    env.db_username = 'wocat'
+    env.after_deploy_url = 'http://wocat.sinnwerkstatt.com'
     env.settings = '--settings=config.settings.production'
 
 
 def production():
     env.name = 'production'
-    env.hosts = ['msw@87.230.93.115']
-    env.path = '/home/msw/ms-wissenschaft'
-    env.virtualenv_path = '/home/msw/.virtualenvs/msw'
-    env.backup_path = '/home/msw/backups'
+    env.hosts = ['wocat@87.230.93.115']
+    env.path = '/home/wocat/wocat'
+    env.virtualenv_path = '/home/wocat/.virtualenvs/wocat'
+    env.backup_path = '/home/wocat/backups'
     env.push_branch = 'master'
     env.push_remote = 'origin'
-    env.reload_cmd = 'supervisorctl restart msw'
-    env.db_name = 'msw'
-    env.db_username = 'msw'
-    env.after_deploy_url = 'http://beta.ms-wissenschaft.de'
+    env.reload_cmd = 'supervisorctl restart wocat'
+    env.db_name = 'wocat'
+    env.db_username = 'wocat'
+    env.after_deploy_url = 'http://beta.wocat.de'
     env.settings = '--settings=config.settings.production'
 
 
@@ -49,7 +49,7 @@ def recompile_cache():
 
 def compile_less():
     with virtualenv(env.virtualenv_path):
-        run("lessc --clean-css %(path)s/mswissenschaft/static/css/msw.less %(path)s/mswissenschaft/static/css/msw.css" % env)
+        run("lessc --clean-css %(path)s/wocat/static/css/project.less %(path)s/wocat/static/css/project.css" % env)
 
 
 def ping():
