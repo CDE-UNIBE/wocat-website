@@ -15,6 +15,7 @@ def staging():
     env.db_username = 'wocat'
     env.after_deploy_url = 'http://wocat.sinnwerkstatt.com'
     env.settings = '--settings=config.settings.production'
+    env.requirements = 'requirements/production.txt'
 
 
 def production():
@@ -30,6 +31,7 @@ def production():
     env.db_username = 'wocat'
     env.after_deploy_url = 'http://beta.wocat.de'
     env.settings = '--settings=config.settings.production'
+    env.requirements = 'requirements/production.txt'
 
 
 def reload_webserver():
@@ -62,7 +64,7 @@ def deploy():
         run("git pull %(push_remote)s %(push_branch)s" % env)
         compile_less()
         with virtualenv(env.virtualenv_path):
-            run("pip install -Ur requirements.txt")
+            run("pip install -Ur %(requirements)s" % env)
             run("./manage.py collectstatic --noinput %(settings)s" % env)
             run("./manage.py compilemessages %(settings)s" % env)
 
