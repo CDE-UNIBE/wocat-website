@@ -18,7 +18,10 @@
         <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
 
         <!-- Your stuff: Third-party css libraries go here -->
-
+		<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
+		<link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
+		<script src="{% static 'js/less.min.js' %}"></script>
         <!-- This file store project specific CSS -->
         <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock %}
@@ -28,6 +31,8 @@
 
 <body>
 {% cms_toolbar %}
+
+{% include 'widgets/header.html' %}
 
 <div class="m-b">
     <nav class="navbar navbar-dark navbar-static-top bg-inverse">
