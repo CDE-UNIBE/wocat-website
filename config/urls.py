@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import debug_toolbar
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
@@ -41,6 +40,7 @@ if settings.DEBUG:
     ]
 
     # debug-toolbar
+    import debug_toolbar
     urlpatterns += [
         url(r'^__debug__/', include('debug_toolbar.urls')),
     ]
