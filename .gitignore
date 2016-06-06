@@ -70,3 +70,6 @@ wocat/media/
 
 # MailHog binary
 mailhog
+
+# local files
+local/
