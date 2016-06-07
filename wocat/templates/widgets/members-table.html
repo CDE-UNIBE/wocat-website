@@ -1,0 +1,43 @@
+<div class="widget-members-table">
+		<div class="widget-members-table-headline">
+			<div class="widget-members-table-avatar">
+			</div>
+			<div class="widget-members-table-name">
+				Name
+			</div>
+			<div class="widget-members-table-country">
+				Country
+			</div>
+			<div class="widget-members-table-organisation">
+				Organisation
+			</div>
+			<div class="widget-members-table-expertise">
+				Expertise
+			</div>
+		</div>
+
+
+	{% for member in members %}
+		<div class="widget-members-table-member">
+			<div class="widget-members-table-avatar">
+				<img src="{{ member.avatarsrc }}" alt="Avatar">
+			</div>
+			<div class="widget-members-table-name">
+				{{ member.name }}
+			</div>
+			<div class="widget-members-table-country">
+				{{ member.country }}
+			</div>
+			<div class="widget-members-table-organisation">
+				{{ member.organisation }}
+
+				<div class="widget-members-table-position">
+					{{ member.position }}
+				</div>
+			</div>
+			<div class="widget-members-table-expertise">
+				{{ member.expertise }}
+			</div>
+		</div>
+	{% endfor %}
+</div><!-- widget-members-table -->
