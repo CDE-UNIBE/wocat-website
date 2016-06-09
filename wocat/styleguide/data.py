@@ -349,15 +349,29 @@ data = {
         'name': 'Members Table',
         'template': 'widgets/members-table.html',
         'context': {
+            'countries': [
+                { 'name': 'Germany', },
+                { 'name': 'Niger', },
+                { 'name': 'Toga', },
+            ],
+            'expertises': [
+                { 'name': 'Strippen ziehen', },
+                { 'name': 'Schrauben drehn', },
+                { 'name': 'Werkstatt stehn', },
+                { 'name': 'Fahne wehn', },
+            ],
+            'pages': [1,2,3,4,5],
+            'maxpagesize': 3,
             'members': [
                 {
                     'avatarsrc': '/static/styleguide/test-images/dog-1by1.jpg',
                     'url': 'http://google.de',
                     'name': 'Eraldo',
                     'country': 'Germany',
-                    'organisation': 'Telekom',
+                    'organisation': 'Sinnwerkstatt',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                    ],
                     'visible': True,
                 },
                 {
@@ -367,7 +381,9 @@ data = {
                     'country': 'Niger',
                     'organisation': 'Telekom',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Strippen ziehen', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -375,9 +391,11 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Udo',
                     'country': 'Germany',
-                    'organisation': 'Telekom',
+                    'organisation': 'O2',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Schrauben drehn', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -385,9 +403,12 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Matthias',
                     'country': 'Niger',
-                    'organisation': 'Telekom',
+                    'organisation': 'Google',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Werkstatt stehn', },
+                        { 'name': 'Fahne wehn', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -395,9 +416,12 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Nuts',
                     'country': 'Toga',
-                    'organisation': 'Telekom',
+                    'organisation': 'Microsoft',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Strippen ziehen', },
+                        { 'name': 'Fahne wehn', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -405,9 +429,13 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Cheffe',
                     'country': 'Germany',
-                    'organisation': 'Telekom',
+                    'organisation': 'Google',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Strippen ziehen', },
+                        { 'name': 'Schrauben drehn', },
+                        { 'name': 'Werkstatt stehn', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -415,9 +443,12 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Riot',
                     'country': 'Niger',
-                    'organisation': 'Telekom',
+                    'organisation': 'Adobe',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Werkstatt stehn', },
+                        { 'name': 'Fahne wehn', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -425,9 +456,13 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Lene',
                     'country': 'Toga',
-                    'organisation': 'Telekom',
+                    'organisation': 'Nutella',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Strippen ziehen', },
+                        { 'name': 'Schrauben drehn', },
+                        { 'name': 'Fahne wehn', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -435,9 +470,11 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Markus',
                     'country': 'Niger',
-                    'organisation': 'Telekom',
+                    'organisation': 'Oranienhof',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Strippen ziehen', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -445,9 +482,14 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Johanna',
                     'country': 'Germany',
-                    'organisation': 'Telekom',
+                    'organisation': 'Müllermilch',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Strippen ziehen', },
+                        { 'name': 'Schrauben drehn', },
+                        { 'name': 'Werkstatt stehn', },
+                        { 'name': 'Fahne wehn', },
+                    ],
                     'visible': True,
                 },
                 {
@@ -455,9 +497,13 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Tobi',
                     'country': 'Toga',
-                    'organisation': 'Telekom',
+                    'organisation': 'Calumet',
                     'position': 'Manager',
-                    'expertise': 'Strippen ziehen',
+                    'expertises': [
+                        { 'name': 'Strippen ziehen', },
+                        { 'name': 'Schrauben drehn', },
+                        { 'name': 'Fahne wehn', },
+                    ],
                     'visible': True,
                 },
             ],
