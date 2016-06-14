@@ -1,7 +1,7 @@
 from classytags.helpers import InclusionTag
 from django import template
 from django.core.urlresolvers import reverse
-from menus.templatetags.menu_tags import ShowMenu
+from menus.templatetags.menu_tags import ShowMenu, ShowBreadcrumb
 
 register = template.Library()
 
@@ -26,7 +26,7 @@ class Header(InclusionTag):
                 {'url': '#twitter', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>'},
                 {'url': '#get-involved', 'text': 'Get involved'},
                 {'url': '#faq', 'text': 'FAQ'},
-                {'url': '#glassary', 'text': 'Glossary', 'active': True,},
+                {'url': '#glassary', 'text': 'Glossary'},
                 user_link,
                 {
                     'dropdown': True,
@@ -49,4 +49,16 @@ class Header(InclusionTag):
                 'links1': [{'url': node.get_absolute_url, 'text': node.title} for node in nodes],
                 'links2': [{'url': node.get_absolute_url, 'text': node.title} for node in nodes],
             },
+        }
+
+
+@register.tag
+class Breadcrumb(InclusionTag):
+    name = 'breadcrumb'
+    template = 'widgets/breadcrumb.html'
+
+    def get_context(self, context, **kwargs):
+        nodes = ShowBreadcrumb.get_context(self, context, 0, None, True).get('ancestors')
+        return {
+            'links': [{'href': node.get_absolute_url if not node.selected else None, 'text': node.title} for node in nodes],
         }
