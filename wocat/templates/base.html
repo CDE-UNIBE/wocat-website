@@ -4,26 +4,30 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{% block title %}WOCAT{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta property="og:description" content="Wocat"/>
+    <meta property="og:image" content="/static/images/og-image.png"/>
+    <meta property="og:locale" content="de"/>
+    <meta property="og:site_name" content="Wocat"/>
+    <meta property="og:title" content="Wocat"/>
+    <meta property="og:url" content=""/>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/images/apple-touch-icon-114x114-precomposed.png"/>
 
     {% block css %}
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
-
         <!-- Your stuff: Third-party css libraries go here -->
-		<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
-		<link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
-		<script src="{% static 'js/less.min.js' %}"></script>
-        <!-- This file store project specific CSS -->
-        <link href="{% static 'css/wocat.css' %}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
+
+        {% if debug %}
+            <link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
+            <script src="{% static 'js/less.min.js' %}"></script>
+        {% else %}
+            <link href="{% static 'css/wocat.css' %}" rel="stylesheet">
+        {% endif %}
     {% endblock %}
 
     {% render_block "css" %}
@@ -34,44 +38,40 @@
 
 {% header %}
 
-<div class="container">
-
-    {% if messages %}
+{% if messages %}
+    <div class="container">
         {% for message in messages %}
             <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
         {% endfor %}
-    {% endif %}
+    </div>
+{% endif %}
 
-    {% show_breadcrumb %}
-    <hr>
 
-    {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-    {% endblock content %}
+{% block content_container %}
+    <div class="container">
+        {% show_breadcrumb %}
+        <hr>
+        {% block content %}
+                <p>Use this document as a way to quick start any new project.</p>
+        {% endblock content %}
+    </div>
+{% endblock content_container %}
 
-</div> <!-- /container -->
 
-{% block modal %}{% endblock modal %}
+{% block footer %}
+{% endblock %}
 
-<!-- Le javascript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+
+{% block modal %}
+{% endblock modal %}
+
+<!-- Le javascript -->
 {% block javascript %}
-    <!-- Latest JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-    <!-- Tether - a requirement for Bootstrap tooltips -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
-
-    <!-- Your stuff: Third-party javascript libraries go here -->
-
-    <!-- place project specific Javascript in this file -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/leaflet.js' %}"></script>
     <script src="{% static 'js/wocat.js' %}"></script>
 {% endblock javascript %}
 {% render_block "js" %}
 </body>
 </html>
-
