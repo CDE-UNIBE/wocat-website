@@ -36,6 +36,21 @@ a {
 	background-color: @color-white;
 }
 
+
+#affix-wrapper {
+	position: relative;
+}
+#affix {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	&.affix-fixed {
+		position: fixed;
+	}
+}
+
+
 .widget-header {
 	.navbar-default {
 		border-width: 0;
@@ -243,6 +258,134 @@ a {
 	}
 }
 
+
+.widget-members-table {
+	margin-bottom: 30px;
+
+	.widget-members-table-selector {
+		text-align: right;
+		margin-bottom: 15px;
+
+		.widget-members-table-countryselector, .widget-members-table-expertiseselector, .widget-members-table-sortselector {
+			width: auto;
+			max-width: 100%;
+			display: inline-block;
+		}
+	}
+
+	.widget-members-table-headline {
+		margin-bottom: 15px;
+
+		.widget-members-table-avatar {
+			display: inline-block;
+			width: 95px;
+		}
+		.widget-members-table-name {
+			display: inline-block;
+			width: 200px;
+			font-weight: bold;
+		}
+		.widget-members-table-country {
+			display: inline-block;
+			width: 200px;
+			font-weight: bold;
+		}
+		.widget-members-table-organisation {
+			display: inline-block;
+			width: 200px;
+			font-weight: bold;
+		}
+		.widget-members-table-expertises {
+			display: inline-block;
+			width: 200px;
+			font-weight: bold;
+		}
+	}
+
+	.widget-members-table-member {
+		margin-bottom: 15px;
+
+		.widget-members-table-avatar {
+			display: inline-block;
+			vertical-align:top;
+			width: 95px;
+
+			img {
+				display: inline-block;
+				width: 80px;
+				height: auto;
+			}
+		}
+		.widget-members-table-name {
+			display: inline-block;
+			vertical-align:top;
+			width: 200px;
+		}
+		.widget-members-table-country {
+			display: inline-block;
+			vertical-align:top;
+			width: 200px;
+		}
+		.widget-members-table-organisation {
+			display: inline-block;
+			width: 200px;
+			vertical-align:top;
+
+			.member-position {
+				font-style: italic;
+			}
+		}
+		.widget-members-table-expertises {
+			display: inline-block;
+			width: 200px;
+			vertical-align:top;
+
+			.expertise {
+				&:after {
+					content: ', ';
+				}
+
+				&:last-child {
+					&:after {
+						content: '';
+					}
+				}
+			}
+		}
+	}
+
+	.pages {
+		.pagination {
+			margin-top: 0;
+		}
+	}
+}
+
+
+
+.widget-breadcrumb {
+	margin-bottom: 15px;
+	background-color: transparent;
+	padding-left: 0;
+	padding-right: 0;
+
+	a {
+		color: @color-black;
+
+		&:hover, &:focus {
+			color: @color-primary;
+		}
+	}
+
+	> li.active a {
+		text-decoration: none;
+	}
+
+	> li + li::before {
+		content: ">";
+		color: @color-black;
+	}
+}
 
 
 // ############# Print ##############
