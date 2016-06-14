@@ -1,0 +1,7 @@
+<div class="widget-sidebar">
+	<ul class="nav nav-pills nav-stacked">
+		{% for link in links %}
+			<li role="presentation"><a href="{{ link.href }}"{% if link.anchorlink %} class="anchorlink"{% endif %}>{{ link.text }}</a></li>
+		{% endfor %}
+	</ul>
+</div><!-- widget-sidebar -->

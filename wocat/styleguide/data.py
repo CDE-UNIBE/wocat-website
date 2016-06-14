@@ -509,4 +509,27 @@ data = {
             ],
         },
     },
+    'breadcrumb': {
+        'name': 'Breadcrumb with 3 entries',
+        'template': 'widgets/breadcrumb.html',
+        'context': {
+            'links': [
+                { 'href': 'http://google.de', 'text': 'Kontakt' },
+                { 'href': 'http://bing.de', 'text': 'Presse' },
+                { 'href': 'http://google.de', 'text': 'Newsletter', 'active': True },
+            ],
+        },
+    },
+    'sidebar': {
+        'name': 'Sidebar',
+        'template': 'widgets/sidebar.html',
+        'context': {
+            'links': [
+                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
+                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
+                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
+                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
+            ],
+        },
+    },
 }

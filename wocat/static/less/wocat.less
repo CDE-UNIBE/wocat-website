@@ -36,6 +36,21 @@ a {
 	background-color: @color-white;
 }
 
+
+#affix-wrapper {
+	position: relative;
+}
+#affix {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	&.affix-fixed {
+		position: fixed;
+	}
+}
+
+
 .widget-header {
 	.navbar-default {
 		border-width: 0;
@@ -343,6 +358,32 @@ a {
 		.pagination {
 			margin-top: 0;
 		}
+	}
+}
+
+
+
+.widget-breadcrumb {
+	margin-bottom: 15px;
+	background-color: transparent;
+	padding-left: 0;
+	padding-right: 0;
+
+	a {
+		color: @color-black;
+
+		&:hover, &:focus {
+			color: @color-primary;
+		}
+	}
+
+	> li.active a {
+		text-decoration: none;
+	}
+
+	> li + li::before {
+		content: ">";
+		color: @color-black;
 	}
 }
 

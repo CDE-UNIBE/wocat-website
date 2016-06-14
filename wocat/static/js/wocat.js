@@ -67,7 +67,7 @@ $(function() {
 			// Pagination
 			var firstMemberNumber = maxpagesize*(page-1);
 			var numberOfPages = Math.ceil(membersTable.find('.widget-members-table-members .widget-members-table-member:not(.member-hidden)').length / maxpagesize);
-			console.log('Show page: ', page, 'Max members per page: ', maxpagesize, 'First member: ', firstMemberNumber, 'Number of pages available: ', numberOfPages);
+			//console.log('Show page: ', page, 'Max members per page: ', maxpagesize, 'First member: ', firstMemberNumber, 'Number of pages available: ', numberOfPages);
 			// disable pagination if only one page
 			if (numberOfPages < 2) {
 				membersTable.find('.pages').hide();
@@ -99,7 +99,6 @@ $(function() {
 			});
 
 			// Show error message when no member found with filter
-			console.log(membersTable.find('.widget-members-table-members .widget-members-table-member:visible'));
 			if (membersTable.find('.widget-members-table-members .widget-members-table-member:not(:hidden)').length) {
 				membersTable.find('.widget-members-table-nothingfound').hide();
 			} else {
@@ -127,4 +126,84 @@ $(function() {
 
 });
 
+
+$(function() {
+	// Gibt es auf der Seite ein Affix?
+	if (!$('#affix').length) return;
+
+	// Deklaration von Variablen, die beim Scrollen gebraucht und meist nicht überschrieben werden.
+	var doAffix;
+	var state;
+	var affixElement, affixTopStop, affixBottomStop, affixHeight;
+
+
+	// Nach dem Scroll wird das Update des Affix um 50ms verzögert, um die Funktion seltener auszuführen.
+	var scrollTimer = null;
+	$(window).scroll(function () {
+		if (scrollTimer) {
+			return;
+			//clearTimeout(scrollTimer);
+		}
+		if (doAffix) scrollTimer = setTimeout(handleScroll, 50); // set new timer
+	});
+
+
+
+	// Definition dieser Variablen bei Ready, Load und Resize. Resize umfasst auch Orientationchange und Zoom.
+	function resetAffix() {
+		//console.log('affixTopStop', affixTopStop, 'affixBottomStop', affixBottomStop, 'affixHeight', affixHeight);
+		doAffix = $('#affix').is(":visible");
+		state = null;
+		affixElement = $('#affix');
+		affixTopStop = $('#affix-wrapper').offset().top;
+		affixBottomStop = $('#affix-bottom').offset().top;
+		affixHeight = affixElement.height();
+		handleScroll();
+	}
+	$(window).on('resize load', function() {
+		resetAffix();
+	});
+	resetAffix();
+
+
+	// Schauen, ob Viewport über, in oder unter dem Affix-Bereich ist.
+	function handleScroll() {
+		// reset timer
+		scrollTimer = null;
+
+		var scrollTop = $(window).scrollTop();
+
+
+		if (scrollTop < affixTopStop) {
+			//console.log('We are above affix area.');
+			if (state != 'top') {
+				affixElement.removeClass('affix-fixed').css({'top': 0, 'left': 0});
+				state = 'top';
+			}
+			return;
+		}
+
+
+		if ((scrollTop + affixHeight) > affixBottomStop) {
+			//console.log('We are below affix area.');
+			if (state != 'bottom') {
+				var topOffset = affixBottomStop - affixTopStop - affixHeight;
+				affixElement.removeClass('affix-fixed').css({'top': topOffset, 'left': 0});
+				state = 'bottom';
+			}
+			return;
+		}
+
+		// We are in affix area
+		//console.log('We are in the affix area.');
+		if (state != 'fixed') {
+			var affixLeft = $('#affix-wrapper').offset().left;
+			//console.log('affixLeft: ', affixLeft);
+
+			affixElement.addClass('affix-fixed').css({'top': '0', 'left': affixLeft});
+			state = 'fixed';
+		}
+
+	}
+});
 

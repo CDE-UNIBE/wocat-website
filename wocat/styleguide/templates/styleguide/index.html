@@ -14,31 +14,46 @@
 	<div class="container content-container">
 		<h1>WOCAT Styleguide</h1>
 
-		{{ heading1 }}
-		{{ heading2 }}
-		{{ heading2_link }}
-		{{ heading3 }}
-		{{ heading3_link }}
-
-		{{ teaser_noimg }}
-		{{ teaser_topimg }}
-		{{ teaser_leftimg }}
-		{{ teaser_rightimg }}
-
 		{{ columns_1_1 }}
 		{{ columns_2_1 }}
 		{{ columns_1_2 }}
 		{{ columns_1_1_1 }}
 
 
-		{{ image }}
-		{{ richtext }}
-		{{ embed }}
+		<div class="row">
+			<div class="hidden-xs col-sm-4 col-md-3">
+				<div id="affix-wrapper">
+					<div id="affix">
+					{{ sidebar_output }}
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8 col-md-7">
+				{{ heading1 }}
+				{{ heading2 }}
+				{{ heading2_link }}
+				{{ heading3 }}
+				{{ heading3_link }}
 
-		{{ readmorelink }}
-		{{ readmorelink_right }}
+				{{ teaser_noimg }}
+				{{ teaser_topimg }}
+				{{ teaser_leftimg }}
+				{{ teaser_rightimg }}
 
-		{{ pagination }}
+				{{ image }}
+				{{ richtext }}
+				{{ embed }}
+
+				{{ readmorelink }}
+				{{ readmorelink_right }}
+
+				{{ pagination }}
+
+				{{ breadcrumb }}
+				<div id="affix-bottom"></div>
+			</div>
+		</div><!-- row -->
+
 
 		{{ members_table }}
 
