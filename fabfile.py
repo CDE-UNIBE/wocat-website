@@ -51,7 +51,7 @@ def recompile_cache():
 
 def compile_less():
     with virtualenv(env.virtualenv_path):
-        run("lessc --clean-css %(path)s/wocat/static/css/project.less %(path)s/wocat/static/css/project.css" % env)
+        run("lessc --clean-css %(path)s/wocat/static/less/wocat.less %(path)s/wocat/static/css/wocat.css" % env)
 
 
 def ping():

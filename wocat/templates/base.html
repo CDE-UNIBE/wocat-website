@@ -23,7 +23,7 @@
 		<link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
 		<script src="{% static 'js/less.min.js' %}"></script>
         <!-- This file store project specific CSS -->
-        <link href="{% static 'css/project.css' %}" rel="stylesheet">
+        <link href="{% static 'css/wocat.css' %}" rel="stylesheet">
     {% endblock %}
 
     {% render_block "css" %}
@@ -69,7 +69,7 @@
     <!-- Your stuff: Third-party javascript libraries go here -->
 
     <!-- place project specific Javascript in this file -->
-    <script src="{% static 'js/project.js' %}"></script>
+    <script src="{% static 'js/wocat.js' %}"></script>
 {% endblock javascript %}
 {% render_block "js" %}
 </body>
