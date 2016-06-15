@@ -2,16 +2,23 @@
 {% if imgsrc and imgpos == 'top' %}
 	<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop">
 {% endif %}
+{% if lines %}
+	{% if title %}
+		<a class="h4 widget-teaser-title widget-teaser-title-lines" href="{{ href }}">
+			{{ title }}
+		</a>
+	{% endif %}
+{% endif %}
 {% if imgsrc and imgpos == 'left' %}
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-4{% endif %}">
 			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgleft">
 		</div>
-		<div class="col-sm-8">
+		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-8{% endif %}">
 {% endif %}
 {% if imgsrc and imgpos == 'right' %}
 	<div class="row">
-		<div class="col-sm-8">
+		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-8{% endif %}">
 {% endif %}
 
 
@@ -20,20 +27,29 @@
 		{{ date }}
 	</p>
 {% endif %}
-{% if title %}
-	<a class="h4 widget-teaser-title" href="{{ href }}">
-		{{ title }}
-	</a>
+{% if not lines %}
+	{% if title %}
+		<a class="h4 widget-teaser-title" href="{{ href }}">
+			{{ title }}
+		</a>
+	{% endif %}
 {% endif %}
+
 {% if description %}
 	<p class="widget-teaser-description">
 		{{ description }}
 	</p>
 {% endif %}
-
-{% if readmoretext %}
-	<a class="widget-teaser-readmoretext" href="{{ href }}">
-		{{ readmoretext|safe }}
+{% if not lines %}
+	{% if readmorelink %}
+		<a class="widget-teaser-readmoretext" href="{{ href }}">
+			» {{ readmorelink.text|safe }}
+		</a>
+	{% endif %}
+{% endif %}
+{% if readmorebutton %}
+	<a class="widget-teaser-readmorebutton btn btn-default" href="{{ href }}">
+		{{ readmorebutton.text|safe }}
 	</a>
 {% endif %}
 
@@ -44,10 +60,17 @@
 {% endif %}
 {% if imgsrc and imgpos == 'right' %}
 		</div>
-		<div class="col-sm-4">
+		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-4{% endif %}">
 			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgright">
 		</div>
 	</div><!-- row -->
+{% endif %}
+{% if lines %}
+	{% if readmorelink %}
+		<a class="widget-teaser-readmoretext widget-teaser-readmoretext-lines" href="{{ href }}">
+			» {{ readmorelink.text|safe }}
+		</a>
+	{% endif %}
 {% endif %}
 
 

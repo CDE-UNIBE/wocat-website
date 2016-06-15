@@ -20,12 +20,8 @@
 	{% block css %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
-        {% if debug %}
-            <link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
-            <script src="{% static 'js/less.min.js' %}"></script>
-        {% else %}
-            <link href="{% static 'css/wocat.css' %}" rel="stylesheet">
-        {% endif %}
+        <link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
+        <script src="{% static 'js/less.min.js' %}"></script>
 	{% endblock %}
 </head>
 
