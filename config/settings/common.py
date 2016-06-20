@@ -33,39 +33,26 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
-    # 'django.contrib.admin', => CMS
+    'django.contrib.admin',
 
     'wocat.users',  # custom users app
 )
 
 CMS_APPS = (
-    'cms',  # django CMS itself
-    'treebeard',  # utilities for implementing a tree
-    'menus',  # helper for model independent hierarchical website navigation
-    'sekizai',  # for JavaScript and CSS management
+    'wagtail.wagtailforms',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailcore',
 
-    'djangocms_admin_style',
-    # Admin
-    'django.contrib.admin',
-    # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
-
-    # Filer
-    'filer',
-    'easy_thumbnails',
-
-    'djangocms_text_ckeditor',
-    'reversion',
-
-    'cmsplugin_filer_file',
-    'cmsplugin_filer_folder',
-    'cmsplugin_filer_link',
-    'cmsplugin_filer_image',
-    'cmsplugin_filer_teaser',
-    'cmsplugin_filer_video',
-
-    # 'djangocms_googlemap',
-    # 'djangocms_inherit',
-    # 'djangocms_link',
+    'taggit',
+    'modelcluster',
 )
 
 THIRD_PARTY_APPS = (
@@ -79,6 +66,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     # Your stuff: custom apps go here
     'wocat.core',
+    'wocat.cms',
     'wocat.styleguide',
 )
 
@@ -88,9 +76,6 @@ INSTALLED_APPS = DJANGO_APPS + CMS_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE_CLASSES = (
-    # http://docs.django-cms.org/en/develop/how_to/install.html#configuring-your-project-for-django-cms
-    'cms.middleware.utils.ApphookReloadMiddleware',
-
     # Make sure djangosecure.middleware.SecurityMiddleware is listed first
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -99,25 +84,15 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-
-    # CMS
-    'cms.middleware.user.CurrentUserMiddleware',
-    'cms.middleware.page.CurrentPageMiddleware',
-    'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware'
+    # wagtail cms
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 )
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
     'sites': 'wocat.contrib.sites.migrations',
-    # CMS
-    'cmsplugin_filer_image': 'cmsplugin_filer_image.migrations_django',
-    'cmsplugin_filer_folder': 'cmsplugin_filer_folder.migrations_django',
-    'cmsplugin_filer_file': 'cmsplugin_filer_file.migrations_django',
-    'cmsplugin_filer_teaser': 'cmsplugin_filer_teaser.migrations_django',
-    'cmsplugin_filer_video': 'cmsplugin_filer_video.migrations_django',
-    'cmsplugin_filer_link': 'cmsplugin_filer_link.migrations_django',
 }
 
 # DEBUG
@@ -209,9 +184,6 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 # Your stuff: custom template context processors go here
-                # CMS
-                'sekizai.context_processors.sekizai',
-                'cms.context_processors.cms_settings',
             ],
         },
     },
@@ -286,29 +258,9 @@ ADMIN_URL = r'^admin/'
 
 # CMS
 # ------------------------------------------------------------------------------
-LANGUAGES = [
-    ('en', 'English'),
-    ('de', 'Deutsch'),
-]
-
-CMS_TEMPLATES = (
-    ('page.html', 'Page'),
-    # ('feature.html', 'Page with Feature')
-)
-
-CMS_PERMISSION = True
-
-
-# REVERSION
-# ------------------------------------------------------------------------------
-# CMS_MAX_PAGE_PUBLISH_REVERSIONS = 2
-
-
-# FILER
-# ------------------------------------------------------------------------------
-# FILER_IMAGE_USE_ICON = True
-# FILER_ENABLE_PERMISSIONS = True
-FILER_ENABLE_LOGGING = True
+WAGTAIL_SITE_NAME = 'WOCAT'
+WAGTAILADMIN_NOTIFICATION_USE_HTML = True
+TAGGIT_CASE_INSENSITIVE = True
 
 
 # EASY THUMBNAILS
@@ -324,7 +276,7 @@ THUMBNAIL_HIGH_RESOLUTION = True
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
-    #'easy_thumbnails.processors.scale_and_crop',
-    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.scale_and_crop',
     'easy_thumbnails.processors.filters',
 )
+THUMBNAIL_BASEDIR = 'thumbnails'

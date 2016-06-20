@@ -11,8 +11,6 @@ django==1.9.6
 django-environ==0.4.0
 django-secure==1.0.1
 
-
-
 # Forms
 django-braces==1.8.1
 django-crispy-forms==1.6.0
@@ -44,11 +42,7 @@ django-redis==4.4.2
 redis>=2.10.0
 
 
-
 # Your custom requirements go here
 
 # CMS
-django-cms==3.2.5
-cmsplugin-filer==1.0.1
-django-reversion==1.10.2
-djangocms-text-ckeditor==2.9.1
+wagtail==1.5.2

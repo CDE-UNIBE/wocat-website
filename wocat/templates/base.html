@@ -1,4 +1,4 @@
-{% load staticfiles i18n cms_tags menu_tags sekizai_tags core_tags %}<!DOCTYPE html>
+{% load staticfiles i18n core_tags wagtailuserbar %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -29,13 +29,9 @@
             <link href="{% static 'css/wocat.css' %}" rel="stylesheet">
         {% endif %}
     {% endblock %}
-
-    {% render_block "css" %}
 </head>
 
 <body>
-{% cms_toolbar %}
-
 {% header %}
 
 {% if messages %}
@@ -71,6 +67,6 @@
     <script src="{% static 'js/leaflet.js' %}"></script>
     <script src="{% static 'js/wocat.js' %}"></script>
 {% endblock javascript %}
-{% render_block "js" %}
+{% wagtailuserbar %}
 </body>
 </html>

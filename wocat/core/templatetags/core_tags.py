@@ -1,7 +1,6 @@
 from classytags.helpers import InclusionTag
 from django import template
 from django.core.urlresolvers import reverse
-from menus.templatetags.menu_tags import ShowMenu, ShowBreadcrumb
 
 register = template.Library()
 
@@ -12,7 +11,7 @@ class Header(InclusionTag):
     template = 'widgets/header.html'
 
     def get_context(self, context, **kwargs):
-        nodes = ShowMenu.get_context(self, context, 1, 100, 100, 100, 'widgets/menu.html', None, None, None).get('children')
+        nodes = []
         user = context.get('user')
         if user.is_authenticated():
             user_link = {'url': reverse('users:detail', args=[user.username]), 'text': user.username}
@@ -58,7 +57,7 @@ class Breadcrumb(InclusionTag):
     template = 'widgets/breadcrumb.html'
 
     def get_context(self, context, **kwargs):
-        nodes = ShowBreadcrumb.get_context(self, context, 0, None, True).get('ancestors')
+        nodes = []
         return {
             'links': [{'href': node.get_absolute_url if not node.selected else None, 'text': node.title} for node in nodes],
         }

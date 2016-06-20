@@ -8,6 +8,11 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
+from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtailadmin import urls as wagtailadmin_urls
+from wagtail.wagtaildocs import urls as wagtaildocs_urls
+from wagtail.wagtailsearch import urls as wagtailsearch_urls
+
 BACKEND_NAME = 'WOCAT backend'
 admin.site.site_header = BACKEND_NAME
 admin.site.site_title = BACKEND_NAME
@@ -47,6 +52,8 @@ if settings.DEBUG:
 
 urlpatterns += [
     # CMS
-    url(r'^files/', include('filer.urls')),
-    url(r'^', include('cms.urls')),
+    url(r'^cms/', include(wagtailadmin_urls)),
+    url(r'^search/', include(wagtailsearch_urls)),
+    url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^', include(wagtail_urls)),
 ]
