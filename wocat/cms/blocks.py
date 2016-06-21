@@ -1,5 +1,5 @@
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.blocks import RawHTMLBlock
+from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -59,9 +59,82 @@ BASE_BLOCKS = [
     ('embed', EmbedBlock()),
 ]
 
+
+class OptionalExternalLinkBlock(StructBlock):
+    text = blocks.CharBlock(required=False)
+    url = blocks.URLBlock(required=False)
+
+
+class TeaserBlock(StructBlock):
+    title = blocks.CharBlock()
+    content = blocks.RichTextBlock()
+    page = PageChooserBlock(required=False)
+    external_link = blocks.URLBlock(required=False)
+
+    def get_context(self, value):
+        context = super().get_context(value)
+
+        title = value.get('title')
+        context['title'] = title
+
+        content = value.get('content')
+        context['content'] = content
+
+        page = value.get('page')
+        external_link = value.get('external_link')
+        if page:
+            link = {
+                'text': page.title,
+                'url': page.url,
+            }
+            external = False
+        elif external_link:
+            link = external_link
+            external = True
+        else:
+            link = ''
+            external = False
+        context['link'] = link
+        context['external'] = external
+        return context
+
+    class Meta:
+        icon = 'fa fa-link'
+        label = 'Link'
+        template = 'widgets/read-more-link.html'
+        help_text = 'Choose either a page or an external link'
+
+# class LinkBlock(StructBlock):
+#     title = CharBlock(required=True)
+#     picture = ImageChooserBlock(required=False)
+#     text = RichTextBlock(required=False)
+#     link = URLBlock(required=False)
+#     date = DateBlock(required=False)
+#
+#     class Meta:
+#         classname = 'link'
+#         icon = 'fa fa-external-link'
+#         template = 'widgets/page-teaser-wide.html'
+#
+#     def get_context(self, value):
+#         context = super().get_context(value)
+#         context['arrow_right_link'] = True
+#         context['title'] = value.get('title')
+#         context['description'] = value.get('text')
+#         context['date'] = value.get('date')
+#
+#         image = value.get('picture')
+#         if image:
+#             rendition = image.get_rendition('fill-640x360-c100')
+#             context['image'] = {'url': rendition.url, 'name': image.title}
+#         if value.get('link'):
+#             context['href'] = value.get('link')
+#         return context
+
 ALL_BLOCKS = BASE_BLOCKS + [
     ('html', RawHTMLBlock()),
 ]
+
 
 
 # class QABlock(StructBlock):
