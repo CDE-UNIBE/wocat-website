@@ -1,10 +1,11 @@
-{% load staticfiles i18n cms_tags menu_tags sekizai_tags core_tags %}<!DOCTYPE html>
+{% load staticfiles i18n core_tags cms_tags wagtailuserbar %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{% block title %}WOCAT{% endblock title %}</title>
-    {% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
+    {% block viewport %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -15,7 +16,8 @@
     <meta property="og:title" content="Wocat"/>
     <meta property="og:url" content=""/>
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/images/apple-touch-icon-114x114-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="/static/images/apple-touch-icon-114x114-precomposed.png"/>
 
     {% block css %}
         <!-- Your stuff: Third-party css libraries go here -->
@@ -28,14 +30,11 @@
         {% else %}
             <link href="{% static 'css/wocat.css' %}" rel="stylesheet">
         {% endif %}
+        <link href="{% static 'cms/css/index.css' %}" rel="stylesheet">
     {% endblock %}
-
-    {% render_block "css" %}
 </head>
 
 <body>
-{% cms_toolbar %}
-
 {% header %}
 
 {% if messages %}
@@ -51,7 +50,7 @@
     <div class="container">
         {% breadcrumb %}
         {% block content %}
-                <p>Use this document as a way to quick start any new project.</p>
+            <p>Use this document as a way to quick start any new project.</p>
         {% endblock content %}
     </div>
 {% endblock content_container %}
@@ -71,6 +70,8 @@
     <script src="{% static 'js/leaflet.js' %}"></script>
     <script src="{% static 'js/wocat.js' %}"></script>
 {% endblock javascript %}
-{% render_block "js" %}
+<div class="widget-cms-userbar">
+    {% wagtailuserbar %}
+</div>
 </body>
 </html>

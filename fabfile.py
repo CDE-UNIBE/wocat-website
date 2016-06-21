@@ -43,6 +43,11 @@ def migrate():
         run("%(path)s/manage.py migrate %(settings)s" % env)
 
 
+def create_superuser():
+    with virtualenv(env.virtualenv_path):
+        run("%(path)s/manage.py createsuperuser %(settings)s" % env)
+
+
 def recompile_cache():
     with virtualenv(env.virtualenv_path):
         run("rm -rf %(path)s/staticfiles/CACHE" % env)
