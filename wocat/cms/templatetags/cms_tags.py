@@ -23,6 +23,8 @@ class Header(InclusionTag):
     def get_nodes(self, context):
         current_page = context.get('page')
         home_page = HomePage.objects.live().in_menu().first()
+        if not home_page:
+            return []
         main_pages = home_page.get_children().live().in_menu().specific()
         if current_page:
             current_page = current_page.specific
