@@ -1,7 +1,9 @@
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock
+from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
+
+from django.utils.translation import ugettext_lazy as _
 
 
 class HeadingBlock(blocks.CharBlock):
@@ -65,100 +67,56 @@ class OptionalExternalLinkBlock(StructBlock):
     url = blocks.URLBlock(required=False)
 
 
+class TeaserImageBlock(StructBlock):
+    image = ImageChooserBlock(required=False)
+    position = ChoiceBlock(
+        choices=[
+            ('top', _('Top')),
+            ('left', _('Left')),
+            ('right', _('Right')),
+        ],
+        required=False,
+    )
+    large = BooleanBlock(required=False)
+
+
 class TeaserBlock(StructBlock):
     title = blocks.CharBlock()
-    content = blocks.RichTextBlock()
+    content = blocks.RichTextBlock(required=False)
+    image = TeaserImageBlock(required=False)
     page = PageChooserBlock(required=False)
-    external_link = blocks.URLBlock(required=False)
+    link = blocks.URLBlock(required=False)
 
     def get_context(self, value):
-        context = super().get_context(value)
-
-        title = value.get('title')
-        context['title'] = title
-
-        content = value.get('content')
-        context['content'] = content
-
         page = value.get('page')
-        external_link = value.get('external_link')
-        if page:
-            link = {
-                'text': page.title,
-                'url': page.url,
-            }
-            external = False
-        elif external_link:
-            link = external_link
-            external = True
-        else:
-            link = ''
-            external = False
-        context['link'] = link
-        context['external'] = external
-        return context
+        link = value.get('link')
+        image_block = value.get('image')
+        image = image_block.get('image')
+        imagepos = image_block.get('position')
+        largeimg = image_block.get('large')
+        return {
+            'href': page.url if page else link,
+            'external': not bool(page),
+            'title': value.get('title'),
+            'description': value.get('content'),
+            'readmorelink': {'text': 'read more'},
+            'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
+            'imgpos': imagepos,
+            'largeimg': largeimg,
+            'lines': True,
+        }
 
     class Meta:
-        icon = 'fa fa-link'
-        label = 'Link'
-        template = 'widgets/read-more-link.html'
+        icon = 'link'
+        label = _('Teaser')
+        template = 'widgets/teaser.html'
         help_text = 'Choose either a page or an external link'
 
-# class LinkBlock(StructBlock):
-#     title = CharBlock(required=True)
-#     picture = ImageChooserBlock(required=False)
-#     text = RichTextBlock(required=False)
-#     link = URLBlock(required=False)
-#     date = DateBlock(required=False)
-#
-#     class Meta:
-#         classname = 'link'
-#         icon = 'fa fa-external-link'
-#         template = 'widgets/page-teaser-wide.html'
-#
-#     def get_context(self, value):
-#         context = super().get_context(value)
-#         context['arrow_right_link'] = True
-#         context['title'] = value.get('title')
-#         context['description'] = value.get('text')
-#         context['date'] = value.get('date')
-#
-#         image = value.get('picture')
-#         if image:
-#             rendition = image.get_rendition('fill-640x360-c100')
-#             context['image'] = {'url': rendition.url, 'name': image.title}
-#         if value.get('link'):
-#             context['href'] = value.get('link')
-#         return context
 
-ALL_BLOCKS = BASE_BLOCKS + [
-    ('html', RawHTMLBlock()),
+TEASER_BLOCKS = [
+    ('teaser', TeaserBlock()),
 ]
 
-
-
-# class QABlock(StructBlock):
-#     question = CharBlock()
-#     answer = RichTextBlock()
-#
-#
-# class FAQBlock(StructBlock):
-#     title = CharBlock()
-#     faqs = ListBlock(QABlock())
-#
-#     class Meta:
-#         icon = 'fa fa-medkit'
-#         template = 'blocks/faq_block.html'
-#
-#     def get_context(self, value):
-#         context = super().get_context(value)
-#         context['titel'] = value.get('title')
-#         context['list'] = []
-#         for faq in value.get('faqs'):
-#             res = {'term': faq.get('question'),
-#                    'definitions': [{'text': faq.get('answer')}],
-#                    'opened': False,
-#                    'notoggle': False
-#                    }
-#             context['list'] += [res]
-#         return context
+ALL_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + [
+    ('html', RawHTMLBlock()),
+]

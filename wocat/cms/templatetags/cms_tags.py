@@ -15,7 +15,7 @@ class Header(InclusionTag):
     def get_node(self, page, current_page, ancestors):
         return {
             'text': page.title,
-            'url': page.url,
+            'href': page.url,
             # Checking if this page is in the tree of active pages
             'active': page == current_page or page in ancestors,
         }
@@ -36,28 +36,28 @@ class Header(InclusionTag):
         # nodes = []
         user = context.get('user')
         if user.is_authenticated():
-            user_link = {'url': reverse('users:detail', args=[user.username]), 'text': user.username}
+            user_link = {'href': reverse('users:detail', args=[user.username]), 'text': user.username}
         else:
-            user_link = {'url': reverse('account_login'), 'text': 'Login'}
+            user_link = {'href': reverse('account_login'), 'text': 'Login'}
         return {
             'id': '1',
             'toplinks': [
-                {'url': '#facebook', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>'},
-                {'url': '#youtube', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>'},
-                {'url': '#twitter', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>'},
-                {'url': '#get-involved', 'text': 'Get involved'},
-                {'url': '#faq', 'text': 'FAQ'},
-                {'url': '#glassary', 'text': 'Glossary'},
+                {'href': '#facebook', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>'},
+                {'href': '#youtube', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>'},
+                {'href': '#twitter', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>'},
+                {'href': '#get-involved', 'text': 'Get involved'},
+                {'href': '#faq', 'text': 'FAQ'},
+                {'href': '#glassary', 'text': 'Glossary'},
                 user_link,
                 {
                     'dropdown': True,
                     'text': 'EN',
                     'links': [
-                        {'url': '#de', 'text': 'DE', 'active': True,},
-                        {'url': '#fr', 'text': 'FR'},
+                        {'href': '#de', 'text': 'DE', 'active': True,},
+                        {'href': '#fr', 'text': 'FR'},
                     ]
                 },
-                {'url': '#search', 'text': '<i class="fa fa-search" aria-hidden="true"></i>'},
+                {'href': '#search', 'text': '<i class="fa fa-search" aria-hidden="true"></i>'},
             ],
             'mainnav': {
                 'depth': 1,
@@ -89,10 +89,10 @@ class Breadcrumb(InclusionTag):
         if current_page:
             current_page = current_page.specific
             ancestors = current_page.get_ancestors().live().in_menu().specific()
+            return [self.get_node(page, current_page=current_page, ancestors=ancestors) for page in ancestors] + [
+                self.get_node(current_page, current_page=current_page, ancestors=ancestors)]
         else:
-            ancestors = []
-        return [self.get_node(page, current_page=current_page, ancestors=ancestors) for page in ancestors] + [
-            self.get_node(current_page, current_page=current_page, ancestors=ancestors)]
+            return []
 
     def get_context(self, context, **kwargs):
         nodes = self.get_nodes(context)
