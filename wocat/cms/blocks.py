@@ -10,12 +10,11 @@ class HeadingBlock(blocks.CharBlock):
     class Meta:
         classname = 'full title'
         icon = 'title'
-        template = 'widgets/heading.html'
+        template = 'widgets/heading1.html'
 
     def get_context(self, value):
         context = super().get_context(value)
-        context['level'] = 1
-        context['content'] = value
+        context['text'] = value
         return context
 
 
