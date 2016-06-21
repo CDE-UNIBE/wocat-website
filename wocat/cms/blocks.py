@@ -37,7 +37,7 @@ class ImageBlock(ImageChooserBlock):
 
     def get_context(self, value):
         context = super().get_context(value)
-        context['url'] = value.get_rendition('max-1200x1200').url
+        context['src'] = value.get_rendition('max-1200x1200').url
         context['name'] = value.title
         return context
 
