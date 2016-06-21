@@ -9,9 +9,10 @@
 {% block content %}
 	{{ header1_output }}
 	{{ carousel_output }}
+	{{ page_lead_overlay_output }}
 	{{ header2_output }}
 
-	<div class="container content-container">
+	<div class="container">
 		<h1>WOCAT Styleguide</h1>
 
 		{{ columns_1_1 }}
@@ -36,11 +37,21 @@
 				{{ heading3_link }}
 
 				{{ teaser_noimg }}
+				{{ teaser_lines }}
+				{{ teaser_lines_leftimage }}
+				{{ teaser_lines_rightimage }}
+				{{ teaser_lines_topimage }}
+				{{ teaser_lines_large_rightimage }}
+				{{ teaser_lines_large_leftimage }}
 				{{ teaser_topimg }}
 				{{ teaser_leftimg }}
 				{{ teaser_rightimg }}
 
+
+				{{ horizontal_ruler }}
+
 				{{ image }}
+				{{ image_overlaycaption }}
 				{{ richtext }}
 				{{ embed }}
 
@@ -50,15 +61,86 @@
 				{{ pagination }}
 
 				{{ breadcrumb }}
+
+				{{ button }}
+				{{ button_center }}
+
+				<h2>The buttons without widget</h2>
+				<p>
+					<button class="btn btn-default">Default Button</button>
+					<button class="btn btn-primary">Primary Button</button>
+					<button class="btn btn-link">Link Button</button>
+				</p>
+
+				<h2>Input elements <a href="http://getbootstrap.com/css/#forms-horizontal">(Bootstrap example)</a></h2>
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputSelect" class="col-sm-2 control-label">Form Control</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="inputSelect">
+								<option>for Mayor Tom</option>
+								<option>for Chris Hadfield</option>
+								<option>for Fry and Homer</option>
+								<option>for David Bowie</option>
+								<option>for all Muppets</option>
+							</select>
+						</div>
+					</div>
+
+
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Remember me
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-default">Sign in</button>
+						</div>
+					</div>
+				</form>
+
+				{{ nullboolean }}
+				{{ nullboolean_error }}
+				{{ nullboolean_nonull }}
+
+				{{ multiselect_full }}
+				{{ singleselect }}
+				{{ singleselect_error }}
+
+
 				<div id="affix-bottom"></div>
 			</div>
 		</div><!-- row -->
 
+		{{ teaser_super_leftimg }}
+		{{ teaser_super_leftimg_nobackground }}
+		{{ teaser_super_narrow }}
 
 		{{ members_table }}
 
-
 	</div>
+
+	{{ footer_output }}
+
 {% endblock %}
 
 {% block javascript %}

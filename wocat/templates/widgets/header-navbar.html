@@ -2,19 +2,19 @@
 	{% for link in links %}
 
 		{% if link.dropdown %}
-			<li class="dropdown">
+			<li class="dropdown{% if link.active %} active{% endif %}{% if link.onlyxs %} hidden-sm hidden-md hidden-lg{% endif %}">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ link.text|safe }} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					{% for secondarylink in link.links %}
 						<li{% if secondarylink.active %} class="active"{% endif %}>
-							<a href="{{ secondarylink.url }}">{{ secondarylink.text|safe }}</a>
+							<a href="{{ secondarylink.href }}">{{ secondarylink.text|safe }}</a>
 						</li>
 					{% endfor %}
 				</ul>
 			</li>
 		{% else %}
-			<li{% if link.active %} class="active"{% endif %}>
-				<a href="{{ link.url }}">{{ link.text|safe }}</a>
+			<li class="{% if link.active %}active{% endif %}{% if link.onlyxs %} hidden-sm hidden-md hidden-lg{% endif %}">
+				<a href="{{ link.href }}">{{ link.text|safe }}</a>
 			</li>
 		{% endif %}
 	{% endfor %}

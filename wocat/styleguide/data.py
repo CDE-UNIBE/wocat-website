@@ -9,22 +9,22 @@ data = {
         'context': {
             'id': '1',
             'toplinks': [
-                { 'url': 'http://google.de/1', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>' },
-                { 'url': 'http://bing.de/2', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>' },
-                { 'url': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>' },
-                { 'url': 'http://google.de/1', 'text': 'Get involved' },
-                { 'url': 'http://bing.de/2', 'text': 'FAQ' },
-                { 'url': 'http://bing.de/3', 'text': 'Glossary', 'active': True, },
-                { 'url': 'http://bing.de/2', 'text': 'Login' },
+                { 'href': 'http://google.de/1', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>' },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>' },
+                { 'href': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>' },
+                { 'href': 'http://google.de/1', 'text': 'Get involved' },
+                { 'href': 'http://bing.de/2', 'text': 'FAQ' },
+                { 'href': 'http://bing.de/3', 'text': 'Glossary', 'active': True, },
+                { 'href': 'http://bing.de/2', 'text': 'Login' },
                 {
                     'dropdown': True,
                     'text': 'EN',
                     'links': [
-                        { 'url': 'http://google.de/1', 'text': 'DE', 'active': True, },
-                        { 'url': 'http://bing.de/2', 'text': 'FR' },
+                        { 'href': 'http://google.de/1', 'text': 'DE', 'active': True, },
+                        { 'href': 'http://bing.de/2', 'text': 'FR' },
                     ]
                 },
-                { 'url': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i>' },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i>', },
             ],
             'mainnav': {
                 'depth': 1,
@@ -35,32 +35,31 @@ data = {
                 },
 
                 'links1': [
-                    { 'url': 'http://google.de/1', 'text': 'Get involved' },
-                    { 'url': 'http://bing.de/2', 'text': 'FAQ' },
-                    { 'url': 'http://bing.de/3', 'text': 'Glossary', 'active': True, },
-                    { 'url': 'http://bing.de/2', 'text': 'Login' },
+                    { 'href': 'http://google.de/1', 'text': 'Get involved' },
+                    { 'href': 'http://bing.de/2', 'text': 'FAQ' },
+                    { 'href': 'http://bing.de/3', 'text': 'Glossary', 'active': True, },
+                    { 'href': 'http://bing.de/2', 'text': 'Login' },
                     {
                         'dropdown': True,
+                        'active': True,
                         'text': 'Yolo',
                         'links': [
-                            { 'url': 'http://google.de/1', 'text': 'Swag', 'active': True, },
-                            { 'url': 'http://bing.de/2', 'text': 'More Swag' },
+                            { 'href': 'http://google.de/1', 'text': 'Swag', 'active': True, },
+                            { 'href': 'http://bing.de/2', 'text': 'More Swag' },
                         ],
                     },
+                    {
+                        'dropdown': True,
+                        'text': 'EN',
+                        'onlyxs': True,
+                        'links': [
+                            { 'href': 'http://google.de/1', 'text': 'DE', 'active': True, },
+                            { 'href': 'http://bing.de/2', 'text': 'FR' },
+                        ]
+                    },
+                    { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i> Search', 'onlyxs': True, },
                 ],
                 'links2': [
-                    { 'url': 'http://google.de/1', 'text': 'About' },
-                    { 'url': 'http://bing.de/2', 'text': 'Using the framework' },
-                    { 'url': 'http://bing.de/3', 'text': 'Countries', 'active': True, },
-                    { 'url': 'http://bing.de/2', 'text': 'News and Events' },
-                    {
-                        'dropdown': True,
-                        'text': 'Yolo',
-                        'links': [
-                            { 'url': 'http://google.de/1', 'text': 'News', 'active': True, },
-                            { 'url': 'http://bing.de/2', 'text': 'Events' },
-                        ],
-                    },
                 ],
             },
         },
@@ -72,22 +71,22 @@ data = {
         'context': {
             'id': '2',
             'toplinks': [
-                { 'url': 'http://google.de/1', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>' },
-                { 'url': 'http://bing.de/2', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>' },
-                { 'url': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>' },
-                { 'url': 'http://google.de/1', 'text': 'Get involved' },
-                { 'url': 'http://bing.de/2', 'text': 'FAQ' },
-                { 'url': 'http://bing.de/3', 'text': 'Glossary', 'active': True, },
-                { 'url': 'http://bing.de/2', 'text': 'Login' },
+                { 'href': 'http://google.de/1', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>' },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>' },
+                { 'href': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>' },
+                { 'href': 'http://google.de/1', 'text': 'Get involved' },
+                { 'href': 'http://bing.de/2', 'text': 'FAQ' },
+                { 'href': 'http://bing.de/3', 'text': 'Glossary', 'active': True, },
+                { 'href': 'http://bing.de/2', 'text': 'Login' },
                 {
                     'dropdown': True,
                     'text': 'EN',
                     'links': [
-                        { 'url': 'http://google.de/1', 'text': 'DE', 'active': True, },
-                        { 'url': 'http://bing.de/2', 'text': 'FR' },
+                        { 'href': 'http://google.de/1', 'text': 'DE', 'active': True, },
+                        { 'href': 'http://bing.de/2', 'text': 'FR' },
                     ]
                 },
-                { 'url': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i>' },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i> Search' },
             ],
             'mainnav': {
                 'depth': 2,
@@ -98,32 +97,30 @@ data = {
                 },
 
                 'links1': [
-                    { 'url': 'http://google.de/1', 'text': 'Get involved' },
-                    { 'url': 'http://bing.de/2', 'text': 'FAQ' },
-                    { 'url': 'http://bing.de/3', 'text': 'Glossary', 'active': True, },
-                    { 'url': 'http://bing.de/2', 'text': 'Login' },
-                    {
-                        'dropdown': True,
-                        'text': 'Yolo',
-                        'links': [
-                            { 'url': 'http://google.de/1', 'text': 'Swag', 'active': True, },
-                            { 'url': 'http://bing.de/2', 'text': 'More Swag' },
-                        ],
-                    },
                 ],
                 'links2': [
-                    { 'url': 'http://google.de/1', 'text': 'About' },
-                    { 'url': 'http://bing.de/2', 'text': 'Using the framework' },
-                    { 'url': 'http://bing.de/3', 'text': 'Countries', 'active': True, },
-                    { 'url': 'http://bing.de/2', 'text': 'News and Events' },
+                    { 'href': 'http://google.de/1', 'text': 'About' },
+                    { 'href': 'http://bing.de/2', 'text': 'Using the framework' },
+                    { 'href': 'http://bing.de/3', 'text': 'Countries', 'active': True, },
+                    { 'href': 'http://bing.de/2', 'text': 'News and Events' },
                     {
                         'dropdown': True,
                         'text': 'Yolo',
                         'links': [
-                            { 'url': 'http://google.de/1', 'text': 'News', 'active': True, },
-                            { 'url': 'http://bing.de/2', 'text': 'Events' },
+                            { 'href': 'http://google.de/1', 'text': 'News', 'active': True, },
+                            { 'href': 'http://bing.de/2', 'text': 'Events' },
                         ],
                     },
+                    {
+                        'dropdown': True,
+                        'text': 'EN',
+                        'onlyxs': True,
+                        'links': [
+                            { 'href': 'http://google.de/1', 'text': 'DE', 'active': True, },
+                            { 'href': 'http://bing.de/2', 'text': 'FR' },
+                        ]
+                    },
+                    { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i> Search', 'onlyxs': True, },
                 ],
             },
         },
@@ -191,7 +188,99 @@ data = {
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
             'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
-            'readmoretext': 'read more &gt;',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_lines': {
+        'name': 'Teaser with lines',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'lines': True,
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_lines_leftimage': {
+        'name': 'Teaser with lines and left image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'lines': True,
+            'imgpos': 'left',
+            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_lines_rightimage': {
+        'name': 'Teaser with lines and right image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'lines': True,
+            'imgpos': 'right',
+            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_lines_large_leftimage': {
+        'name': 'Teaser with lines and large left image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'lines': True,
+            'imgpos': 'left',
+            'largeimg': True,
+            'imgsrc': '/static/styleguide/test-images/header1-3by1.jpg',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_lines_large_rightimage': {
+        'name': 'Teaser with lines and large right image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'lines': True,
+            'imgpos': 'right',
+            'largeimg': True,
+            'imgsrc': '/static/styleguide/test-images/header1-3by1.jpg',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_lines_topimage': {
+        'name': 'Teaser with lines and top image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch extra langer Titel, der nie auf eine Zeile passt, was total oft zu Umbrüchen führt.',
+            'lines': True,
+            'imgpos': 'top',
+            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
         },
     },
     'teaser_topimg': {
@@ -204,7 +293,9 @@ data = {
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
             'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
-            'readmoretext': 'read more &gt;',
+            'readmorelink': {
+                'text': 'read more',
+            },
         },
     },
     'teaser_leftimg': {
@@ -217,7 +308,54 @@ data = {
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
             'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
-            'readmoretext': 'read more &gt;',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_super_leftimg': {
+        'name': 'Super Teaser with left image',
+        'template': 'widgets/teaser-super.html',
+        'context': {
+            'backgroundimagesrc': '/static/styleguide/test-images/header3.jpg',
+            'imgpos': 'left',
+            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'href': 'http://sinnwerkstatt.com',
+            'date': '24. April 2016',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_super_leftimg_nobackground': {
+        'name': 'Super Teaser with left image without background',
+        'template': 'widgets/teaser-super.html',
+        'context': {
+            'imgpos': 'left',
+            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'href': 'http://sinnwerkstatt.com',
+            'date': '24. April 2016',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorebutton': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_super_narrow': {
+        'name': 'Super Teaser Narrow',
+        'template': 'widgets/teaser-super-narrow.html',
+        'context': {
+            'backgroundimagesrc': '/static/styleguide/test-images/header3.jpg',
+            'href': 'http://sinnwerkstatt.com',
+            'date': '24. April 2016',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorebutton': {
+                'text': 'read more',
+            },
         },
     },
     'teaser_rightimg': {
@@ -230,9 +368,178 @@ data = {
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
             'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
-            'readmoretext': 'read more &gt;',
+            'readmorelink': {
+                'text': 'read more',
+            },
         },
     },
+
+
+    'page_lead_overlay': {
+        'name': 'Page Lead Overlay',
+        'template': 'widgets/page-lead-overlay.html',
+        'context': {
+            'heading': 'Styleguide',
+            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+        },
+    },
+
+
+
+
+    'nullboolean': {
+        'name': 'Nullboolean',
+        'template': 'widgets/nullboolean.html',
+        'context': {
+            'id': 'nullboolean',
+            'label': 'Hollywood hat alle Apollo-Missionen auf dem Mond gedreht',
+            'value': True,
+            'nullable': True,
+        },
+    },
+    'nullboolean_error': {
+        'name': 'Nullboolean with Error',
+        'template': 'widgets/nullboolean.html',
+        'context': {
+            'id': 'nullboolean2',
+            'label': 'Hollywood hat alle Apollo-Missionen auf dem Mond gedreht',
+            'value': False,
+            'error': True,
+            'help': 'Ja nö oder egal?',
+            'nullable': True,
+        },
+    },
+    'nullboolean_nonull': {
+        'name': 'Nullboolean not Nullable',
+        'template': 'widgets/nullboolean.html',
+        'context': {
+            'id': 'nullboolean3',
+            'label': 'Hollywood hat alle Apollo-Missionen auf dem Mond gedreht',
+            'value': False,
+        },
+    },
+
+    'multiselect': {
+        'name': 'Multiselect',
+        'template': 'widgets/multiselect.html',
+        'context': {
+            'id': 'multiselect',
+            'label': 'Was zählt zu deiner Expertise?',
+            'allowcustom': True,
+            'options': [
+                {'value':'alt', 'label':'Alt', 'checked':True},
+                {'value':'neu', 'label':'Neu', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern', 'checked':False},
+                {'value':'neu 2016', 'label':'neu 2016', 'checked':False},
+            ],
+        },
+    },
+    'multiselect_full': {
+        'name': 'Multiselect with many values',
+        'template': 'widgets/multiselect.html',
+        'context': {
+            'id': 'multiselect',
+            'label': 'In welchen Ländern ist dein Projekt aktiv?',
+            'allowcustom': True,
+            'options': [
+                {'value':'alt', 'label':'Alt1', 'checked':True},
+                {'value':'alt', 'label':'Alt2', 'checked':True},
+                {'value':'alt', 'label':'Alt3', 'checked':True},
+                {'value':'alt', 'label':'Alt4', 'checked':True},
+                {'value':'alt', 'label':'Alt5', 'checked':True},
+                {'value':'alt', 'label':'Alt6', 'checked':True},
+                {'value':'alt', 'label':'Alt7', 'checked':True},
+                {'value':'alt', 'label':'Alt8', 'checked':True},
+                {'value':'alt', 'label':'Alt9', 'checked':True},
+                {'value':'alt', 'label':'Alt10', 'checked':True},
+                {'value':'alt', 'label':'Alt11', 'checked':True},
+                {'value':'alt', 'label':'Alt12', 'checked':True},
+                {'value':'alt', 'label':'Alt13', 'checked':True},
+                {'value':'alt', 'label':'Alt14', 'checked':True},
+                {'value':'alt', 'label':'Alt15', 'checked':True},
+                {'value':'alt', 'label':'Alt1', 'checked':True},
+                {'value':'alt', 'label':'Alt2', 'checked':True},
+                {'value':'alt', 'label':'Alt3', 'checked':True},
+                {'value':'alt', 'label':'Alt4', 'checked':True},
+                {'value':'alt', 'label':'Alt5', 'checked':True},
+                {'value':'alt', 'label':'Alt6', 'checked':True},
+                {'value':'alt', 'label':'Alt7', 'checked':True},
+                {'value':'alt', 'label':'Alt8', 'checked':True},
+                {'value':'alt', 'label':'Alt9', 'checked':True},
+                {'value':'alt', 'label':'Alt10', 'checked':True},
+                {'value':'alt', 'label':'Alt11', 'checked':True},
+                {'value':'alt', 'label':'Alt12', 'checked':True},
+                {'value':'alt', 'label':'Alt13', 'checked':True},
+                {'value':'alt', 'label':'Alt14', 'checked':True},
+                {'value':'alt', 'label':'Alt15', 'checked':True},
+                {'value':'neu', 'label':'Neu', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern1', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern2', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern3', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern4', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern5', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern6', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern7', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern8', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern9', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern10', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern11', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern12', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern13', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern14', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern15', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern16', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern17', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern18', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern19', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern20', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern21', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern22', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern23', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern24', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern25', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern26', 'checked':False},
+                {'value':'neu 2016', 'label':'neu 2016', 'checked':False},
+            ],
+        },
+    },
+
+
+    'singleselect': {
+        'name': 'Singleselect',
+        'template': 'widgets/multiselect.html',
+        'context': {
+            'id': 'singleselect',
+            'label': 'Von wann ist dein Longboard?',
+            'singleselect': True,
+            'allowcustom': True,
+            'options': [
+                {'value':'alt', 'label':'Alt', 'checked':False},
+                {'value':'neu', 'label':'Neu', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern', 'checked':False},
+                {'value':'neu 2016', 'label':'neu 2016', 'checked':True},
+            ],
+        },
+    },
+    'singleselect_error': {
+        'name': 'Singleselect with error',
+        'template': 'widgets/multiselect.html',
+        'context': {
+            'id': 'singleselect2',
+            'label': 'Von wann ist dein Longboard?',
+            'singleselect': True,
+            'allowcustom': True,
+            'options': [
+                {'value':'alt', 'label':'Alt', 'checked':False},
+                {'value':'neu', 'label':'Neu', 'checked':False},
+                {'value':'von gestern', 'label':'Von gestern', 'checked':False},
+                {'value':'neu 2016', 'label':'neu 2016', 'checked':True},
+            ],
+            'error': True,
+            'help': 'Hier klickste was rein.'
+        },
+    },
+
 
 
     'columns_1_1': {
@@ -269,6 +576,16 @@ data = {
         },
     },
 
+    'horizontal_ruler' : {
+        'name': 'Horizontal Ruler',
+        'template': 'widgets/horizontal-ruler.html',
+        'context': {
+            'src': '/static/styleguide/test-images/header1.jpg',
+            'caption': 'This is the description of the image. This is the description of the image. This is the description of the image. This is the description of the image. This is the description of the image.',
+            'href': 'http://xxx',
+        },
+    },
+
     'image': {
         'name': 'Image',
         'template': 'widgets/image.html',
@@ -278,13 +595,31 @@ data = {
             'href': 'http://xxx',
         },
     },
+    'image_overlaycaption': {
+        'name': 'Image with Overlaycaption',
+        'template': 'widgets/image.html',
+        'context': {
+            'src': '/static/styleguide/test-images/header1.jpg',
+            'overlay': {
+                'date': '15. Juni 2016',
+                'heading': 'Bodo Bagger',
+                'text': 'This is the description of the image. This is the description of the image. This is the description of the image. This is the description of the image. This is the description of the image.',
+                'links': [
+                    { 'href': 'http://google.de', 'text': 'Google', },
+                    { 'href': 'http://facebook.de', 'text': 'Facebook', },
+                    { 'href': 'http://bing.de', 'text': 'Bing', },
+                ],
+            },
+            'href': 'http://xxx',
+        },
+    },
 
     'readmorelink': {
         'name': 'Read more link',
         'template': 'widgets/read-more-link.html',
         'context': {
             'text': 'weiterlesen',
-            'url': 'http://x',
+            'href': 'http://x',
         },
     },
     'readmorelink_right': {
@@ -292,7 +627,7 @@ data = {
         'template': 'widgets/read-more-link.html',
         'context': {
             'text': 'weiterlesen',
-            'url': 'http://x',
+            'href': 'http://x',
             'align': 'right',
         },
     },
@@ -302,7 +637,7 @@ data = {
         'name': 'Richtext',
         'template': 'widgets/richtext-content.html',
         'context': {
-            'content': '<div class="rich-text"><p><img class="richtext-image right" src="/static/styleguide/test-images/header3.jpg" alt="Schönes Bild">Jemand musste Josef K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er <a href="#">eines Morgens</a> verhaftet. »Wie ein Hund!« sagte er, es war, als sollte die Scham ihn überleben. Als Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in seinem Bett zu einem ungeheueren Ungeziefer verwandelt. Und es war ihnen wie eine Bestätigung ihrer neuen Träume und guten Absichten, als am Ziele ihrer Fahrt die Tochter als erste sich erhob und ihren jungen Körper dehnte. »Es ist ein eigentümlicher Apparat«, sagte der Offizier zu dem Forschungsreisenden und überblickte mit einem gewissermaßen bewundernden Blick den ihm doch wohlbekannten Apparat. Sie hätten noch ins Boot springen können, aber der Reisende hob ein schweres, geknotetes Tau vom Boden, drohte ihnen damit und hielt sie dadurch von dem Sprunge ab.</p><div style="padding-bottom: 56.25%;" class="responsive-object"><iframe src="https://www.youtube.com/embed/SywPPK8ixiw?feature=oembed" allowfullscreen="" width="480" frameborder="0" height="270"></iframe></div><h3>Yolo!</h3><p>Jemand musste Josef K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet. »Wie ein Hund!« sagte er, es war, als sollte die Scham ihn überleben. Als Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in seinem Bett zu einem ungeheueren Ungeziefer verwandelt. Und es war ihnen wie eine Bestätigung ihrer neuen Träume und guten Absichten, als am Ziele ihrer Fahrt die Tochter als erste sich erhob und ihren jungen Körper dehnte. »Es ist ein eigentümlicher Apparat«, sagte der Offizier zu dem Forschungsreisenden und überblickte mit einem gewissermaßen bewundernden Blick den ihm doch wohlbekannten Apparat. Sie hätten noch ins Boot springen können, aber der Reisende hob ein schweres, geknotetes Tau vom Boden, drohte ihnen damit und hielt sie dadurch von dem Sprunge ab.</p></div>',
+            'content':'<p><img class="filer_image right" alt="2015-09-10.jpg" src="/static/styleguide/test-images/header3.jpg" /></p><ul><li>Erster Punkt der Aufzählung</li><li>Zweiter Punkt der Aufzählung. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste. Dieser Punkt ist länger als der erste.</li><li>Dritter Punkt der Aufzählung</li></ul><p><img class="filer_image " alt="2015-09-10.jpg" src="/static/styleguide/test-images/header3.jpg" /></p><p>Jemand musste Josef K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er <a href="http://127.0.0.1:8000/#">eines Morgens</a> verhaftet. »Wie ein Hund!« sagte er, es war, als sollte die Scham ihn überleben. Als Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in seinem Bett zu einem ungeheueren Ungeziefer verwandelt. Und es war ihnen wie eine Bestätigung ihrer neuen Träume und guten Absichten, als am Ziele ihrer Fahrt die Tochter als erste sich erhob und ihren jungen Körper dehnte. »Es ist ein eigentümlicher Apparat«, sagte der Offizier zu dem Forschungsreisenden und überblickte mit einem gewissermaßen bewundernden Blick den ihm doch wohlbekannten Apparat. Sie hätten noch ins Boot springen können, aber der Reisende hob ein schweres, geknotetes Tau vom Boden, drohte ihnen damit und hielt sie dadurch von dem Sprunge ab.</p>',
         },
     },
 
@@ -321,24 +656,24 @@ data = {
         'context': {
             'pages': [
                 {
-                    'url': 'http://google.de',
+                    'href': 'http://google.de',
                     'text': '1',
                 },
                 {
-                    'url': '/glossar/',
+                    'href': '/glossar/',
                     'text': '2',
                 },
                 {
                     'active': True,
-                    'url': 'http://google.ru',
+                    'href': 'http://google.ru',
                     'text': '3',
                 },
                 {
-                    'url': 'http://google.ru',
+                    'href': 'http://google.ru',
                     'text': '4',
                 },
                 {
-                    'url': 'http://google.ru',
+                    'href': 'http://google.ru',
                     'text': '5',
                 },
             ],
@@ -360,8 +695,8 @@ data = {
                 { 'name': 'Werkstatt stehn', },
                 { 'name': 'Fahne wehn', },
             ],
-            'pages': [1,2,3,4,5],
-            'maxpagesize': 3,
+            'pages': [1,2,3,4], # Math.ceil ( Anzahl Members / Members pro Seite )
+            'maxpagesize': 3, # Members pro Seite
             'members': [
                 {
                     'avatarsrc': '/static/styleguide/test-images/dog-1by1.jpg',
@@ -409,7 +744,7 @@ data = {
                         { 'name': 'Werkstatt stehn', },
                         { 'name': 'Fahne wehn', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
                 {
                     'avatarsrc': '/static/styleguide/test-images/girls-1by1.jpg',
@@ -422,7 +757,7 @@ data = {
                         { 'name': 'Strippen ziehen', },
                         { 'name': 'Fahne wehn', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
                 {
                     'avatarsrc': '/static/styleguide/test-images/giraffe-1by1.jpg',
@@ -436,7 +771,7 @@ data = {
                         { 'name': 'Schrauben drehn', },
                         { 'name': 'Werkstatt stehn', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
                 {
                     'avatarsrc': '/static/styleguide/test-images/dog-1by1.jpg',
@@ -449,7 +784,7 @@ data = {
                         { 'name': 'Werkstatt stehn', },
                         { 'name': 'Fahne wehn', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
                 {
                     'avatarsrc': '/static/styleguide/test-images/studio-1by1.jpg',
@@ -463,7 +798,7 @@ data = {
                         { 'name': 'Schrauben drehn', },
                         { 'name': 'Fahne wehn', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
                 {
                     'avatarsrc': '/static/styleguide/test-images/silhouette-1by1.jpg',
@@ -475,7 +810,7 @@ data = {
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
                 {
                     'avatarsrc': '/static/styleguide/test-images/girls-1by1.jpg',
@@ -490,7 +825,7 @@ data = {
                         { 'name': 'Werkstatt stehn', },
                         { 'name': 'Fahne wehn', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
                 {
                     'avatarsrc': '/static/styleguide/test-images/giraffe-1by1.jpg',
@@ -504,7 +839,7 @@ data = {
                         { 'name': 'Schrauben drehn', },
                         { 'name': 'Fahne wehn', },
                     ],
-                    'visible': True,
+                    'visible': False,
                 },
             ],
         },
@@ -525,10 +860,46 @@ data = {
         'template': 'widgets/sidebar.html',
         'context': {
             'links': [
-                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
-                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
-                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
-                { 'href': '#', 'text': 'Kontakt', 'anchorlink': True },
+                { 'href': '#', 'text': 'Headings', 'anchorlink': True },
+                { 'href': '#', 'text': 'Teaser', 'anchorlink': True },
+                { 'href': '#', 'text': 'Richtext', 'anchorlink': True },
+                { 'href': '#', 'text': 'Forms', 'anchorlink': True },
+            ],
+        },
+    },
+    'button': {
+        'name': 'Button',
+        'template': 'widgets/button.html',
+        'context': {
+            'text': 'Use the framework',
+            'href': 'http://google.de',
+        },
+    },
+    'button_center': {
+        'name': 'Button Centered',
+        'template': 'widgets/button.html',
+        'context': {
+            'center': True,
+            'text': 'Use the framework',
+            'href': 'http://google.de',
+        },
+    },
+
+    'footer': {
+        'name': 'Footer',
+        'template': 'widgets/footer.html',
+        'context': {
+            'links': [
+                { 'href': 'http://google.de/1', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>', 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>', 'onlyxs': True, },
+                { 'href': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>', 'onlyxs': True, },
+                { 'href': 'http://google.de/1', 'text': 'Get involved', 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': 'FAQ', 'onlyxs': True, },
+                { 'href': 'http://bing.de/3', 'text': 'Glossary', 'active': True, 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': 'Login', 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': 'Imprint', },
+                { 'href': 'http://bing.de/2', 'text': 'Contact', },
+
             ],
         },
     },

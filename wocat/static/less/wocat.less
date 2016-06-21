@@ -1,10 +1,11 @@
 // Wocat CSS
 
-@color-neutral: #F8F8F8;
+@color-neutral: #bbb;
 @color-neutral-dark: #777777;
 @color-black: #333;
 @color-primary: #DA812C;
 @color-primary-dark: #CC6300;
+@color-secondary-dark: #015C6C;
 @color-white: #FFF;
 
 @import "open-sans.less";
@@ -32,9 +33,21 @@ a {
 	}
 }
 
-.content-container {
-	background-color: @color-white;
+h1, .h1 {
+	font-weight: 200;
 }
+h4, .h4 {
+	font-weight: 600;
+}
+
+.btn {
+	font-weight: 600;
+
+	&.btn-default {
+		background-color: transparent;
+	}
+}
+
 
 
 #affix-wrapper {
@@ -117,6 +130,7 @@ a {
 			&.mainnav-depth-1 {
 				background-color: @color-primary;
 				color: @color-white;
+				min-height: 7px; // Für XS
 			}
 			&.mainnav-depth-2, &.mainnav-depth-3 {
 				border: 1px solid @color-primary;
@@ -140,8 +154,6 @@ a {
 		width: 100%;
 		height: auto;
 		display: block;
-	}
-	.widget-teaser-imgtop {
 		margin-bottom: 15px;
 	}
 
@@ -152,15 +164,126 @@ a {
 
 	.widget-teaser-title {
 		display: block;
+		margin: 0 0 15px 0;
+
+		&.widget-teaser-title-lines {
+			border: 1px solid @color-primary;
+			border-width: 1px 0;
+			padding: 10px 0;
+
+			&:hover, &:active, &:focus {
+				text-decoration: none;
+				border-color: @color-primary-dark;
+			}
+		}
 	}
 
 	.widget-teaser-readmoretext {
 		display: block;
+
+		&.widget-teaser-readmoretext-lines {
+			border: 1px solid @color-neutral;
+			border-width: 1px 0;
+			padding: 10px 0;
+
+			&:hover, &:active, &:focus {
+				text-decoration: none;
+				border-color: @color-neutral-dark;
+			}
+		}
 	}
 }
 
+
+.widget-teaser-super {
+	padding: 15px;
+	margin-bottom: 30px;
+
+	&.widget-teaser-super-backgroundimage {
+		background-size: cover;
+		background-position: center;
+	}
+	&.widget-teaser-super-blue {
+		background-image: url(/static/images/striped-background-secondary.png);
+		background-repeat: repeat;
+	}
+
+	.widget-teaser {
+		margin-bottom: 0;
+	}
+}
+
+.widget-teaser-super-narrow {
+	margin-bottom: 30px;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	background-size: cover;
+	background-position: center;
+
+	.widget-teaser-super-narrow-background {
+		background-image: url(/static/images/striped-background-primary.png);
+		background-repeat: repeat;
+		padding: 15px;
+	}
+
+	.widget-teaser {
+		margin-bottom: 0;
+	}
+}
+
+
+
+.widget-page-lead-overlay {
+	.widget-page-lead-overlay-box-wrapper {
+		.widget-page-lead-overlay-box {
+			margin-top: 30px;
+			margin-bottom: 30px;
+			margin-left: 0;
+			margin-right: 0;
+
+			h1 {
+				margin: 0 0 15px 0;
+			}
+			p.lead {
+				margin: 0;
+				font-weight: 600;
+				font-size: 14px;
+			}
+		}
+	}
+
+	@media(min-width:768px) {
+		.widget-page-lead-overlay-box-wrapper {
+			position: relative;
+
+			.widget-page-lead-overlay-box {
+				margin: 0 -20px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				background-color: @color-white;
+				padding: 25px 20px 0 20px;
+			}
+		}
+	}
+}
+
+.widget-horizontal-ruler {
+	margin-bottom: 30px;
+	margin-top: 15px;
+
+	hr {
+		border-top-color: @color-neutral;
+		margin: 0;
+	}
+}
+
+
 .widget-image {
 	margin-bottom: 30px;
+	position: relative;
+	overflow: hidden;
 
 	img {
 		width: 100%;
@@ -172,6 +295,37 @@ a {
 		margin: 10px 0 0 0;
 		font-style: italic;
 	}
+
+	.widget-image-overlay {
+		margin: 0;
+		padding: 15px;
+		font-weight: 600;
+
+		.widget-image-overlay-date {
+			margin: 0 0 1px 0;
+		}
+		.widget-image-overlay-heading {
+			margin: 0 0 15px 0;
+		}
+		.widget-image-overlay-text {
+			margin: 0 0 15px 0;
+		}
+		.widget-image-overlay-link {
+			margin: 0 0 5px 0;
+			display: block;
+		}
+
+		@media(min-width:768px) {
+			background-color: rgba(0,0,0,0.5);
+			color: @color-white;
+			position: absolute;
+			width: 100%;
+			bottom: 0;
+			left: 0;
+		}
+
+	}
+
 }
 
 .widget-readmorelink {
@@ -185,7 +339,7 @@ a {
 	margin: 0 0 30px 0;
 
 
-	img.richtext-image {
+	img.filer_image {
 		display: block;
 		width: 100%;
 		height: auto;
@@ -363,6 +517,109 @@ a {
 
 
 
+
+.widget-nullboolean, .widget-multiselect {
+	.control-label {
+		margin-right: 10px;
+	}
+
+	.widget-options {
+		display: inline-block;
+
+		label.radio-inline, label.checkbox-inline {
+			margin: 0;
+			padding: 0;
+
+			input {
+				display:none;
+
+				+ span {
+					border: 1px solid @color-primary;
+					display:inline-block;
+					margin: 0;
+					padding: 4px 12px;
+					background-color: @color-white;
+					color: @color-primary;
+
+					&:hover, &:focus, &:active {
+						color: @color-primary-dark;
+						border-color: @color-primary-dark;
+					}
+				}
+				&:checked + span {
+					background-image: none;
+					background-color: @color-primary;
+					color: @color-white;
+
+					&:hover, &:focus, &:active {
+						background-color: @color-primary-dark;
+						border-color: @color-primary-dark;
+					}
+				}
+			}
+
+		}
+
+	}
+
+}
+.widget-nullboolean {
+	margin-bottom: 30px;
+
+	.widget-options {
+
+		label.radio-inline, label.checkbox-inline {
+			+ label.radio-inline, + label.checkbox-inline {
+				span {
+					border-left-width: 0;
+				}
+			}
+		}
+	}
+}
+
+
+.widget-multiselect {
+	margin-bottom: 30px;
+
+	.widget-options {
+
+		label.radio-inline, label.checkbox-inline {
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+
+		&.widget-options-notchecked {
+			margin-top: 10px;
+			display: block;
+
+			label.radio-inline, label.checkbox-inline {
+				span {
+					border-color: @color-primary;
+					color: @color-primary;
+				}
+			}
+		}
+
+
+		&.widget-options-template {
+			display: none;
+		}
+	}
+
+
+	.widget-select-custom {
+		// Input for new tags
+		margin-top: 15px;
+
+		input {
+			max-width: 400px;
+		}
+	}
+}
+
+
+
 .widget-breadcrumb {
 	margin-bottom: 15px;
 	background-color: transparent;
@@ -387,6 +644,57 @@ a {
 	}
 }
 
+
+.widget-button {
+	margin-bottom: 30px;
+}
+
+
+.widget-footer {
+	background-color: @color-neutral;
+	padding: 15px 0;
+
+	.widget-footer-navbar {
+		text-align: center;
+
+		ul {
+			padding: 0;
+			margin: 0;
+			list-style-type: none;
+
+			li {
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+
+				a {
+					display: inline-block;
+					padding: 10px;
+					margin-bottom: 10px;
+					color: @color-black;
+					font-weight: 600;
+
+					&:hover, &:focus, &:active {
+						// color: @color-neutral-dark;
+					}
+				}
+
+				&.active {
+					a {
+						background-color: @color-white;
+					}
+				}
+			}
+		}
+	}
+
+	.widget-footer-license {
+		a {
+			color: inherit;
+			font-weight: 600;
+		}
+	}
+}
 
 // ############# Print ##############
 
