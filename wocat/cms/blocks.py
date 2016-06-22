@@ -1,5 +1,6 @@
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock
+from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
+    StreamBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -116,6 +117,64 @@ TEASER_BLOCKS = [
     ('teaser', TeaserBlock()),
 ]
 
-ALL_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + [
+BASE_BLOCKS += TEASER_BLOCKS
+
+class ColumnsBlock(StructBlock):
+    left_column = StreamBlock(BASE_BLOCKS)
+    right_column = StreamBlock(BASE_BLOCKS)
+
+    def get_context(self, value):
+        context = super().get_context(value)
+        context['left_column'] = value.get('left_column')
+        context['right_column'] = value.get('right_column')
+        return context
+
+    class Meta:
+        icon = 'fa fa-columns'
+        label = 'Columns 1-1'
+        template = None
+
+
+class Columns1To1Block(ColumnsBlock):
+    class Meta:
+        label = 'Columns 1:1'
+        template = 'widgets/columns-1-1.html'
+
+
+class Columns1To2Block(ColumnsBlock):
+    class Meta:
+        label = 'Columns 1:2'
+        template = 'widgets/columns-1-2.html'
+
+
+class Columns2To1Block(ColumnsBlock):
+    class Meta:
+        label = 'Columns 2:1'
+        template = 'widgets/columns-2-1.html'
+
+
+class Columns1To1To1Block(ColumnsBlock):
+    middle_column = StreamBlock(BASE_BLOCKS)
+
+    class Meta:
+        label = 'Columns 1:1:1'
+        template = 'widgets/columns-1-1-1.html'
+
+    def get_context(self, value):
+        context = super().get_context(value)
+        context['middle_column'] = value.get('middle_column')
+        return context
+
+
+COLUMNS_BLOCKS = [
+    ('columns_1_to_1', Columns1To1Block()),
+    ('columns_1_to_2', Columns1To2Block()),
+    ('columns_2_to_1', Columns2To1Block()),
+    ('columns_1_to_1_to_1', Columns1To1To1Block()),
+]
+
+CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
+
+ALL_BLOCKS = COLUMNS_BLOCKS + [
     ('html', RawHTMLBlock()),
 ]
