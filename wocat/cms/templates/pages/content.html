@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
-{% load core_tags %}
+{% load cms_tags %}
 
-{% block content %}
-    {{ page.content }}
-{% endblock %}
+
+{% block content_container %}
+    {{ page.header }}
+    <div class="container">
+        {% breadcrumb %}
+        {% block content %}
+            {{ page.content }}
+        {% endblock content %}
+    </div>
+{% endblock content_container %}

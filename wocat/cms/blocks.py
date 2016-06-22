@@ -1,10 +1,13 @@
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
-    StreamBlock
+    StreamBlock, ListBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from django.utils.translation import ugettext_lazy as _
+from django.template.loader import render_to_string
 
 
 class HeadingBlock(blocks.CharBlock):
@@ -62,9 +65,42 @@ BASE_BLOCKS = [
 ]
 
 
-class OptionalExternalLinkBlock(StructBlock):
-    text = blocks.CharBlock(required=False)
-    url = blocks.URLBlock(required=False)
+class LinkBlock(StructBlock):
+    name = blocks.CharBlock(required=False)
+    page = PageChooserBlock(required=False)
+    link = blocks.URLBlock(required=False)
+
+    def __init__(self, required=True, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.required = required
+
+    @property
+    def url(self):
+        if self.page:
+            return self.page.url
+        elif self.link:
+            return self.link
+
+    @property
+    def external(self):
+        return not bool(self.page)
+
+    def get_context(self, value):
+        page = value.get('page')
+        url = self.url
+        return {
+            'url': url,
+            'external': self.external,
+            'name': value.get('name'),
+        }
+
+    def clean(self, value):
+        at_lest_one_field_required_fields = ['page', 'url']
+        if self.required and not any([bool(value.get(field)) for field in at_lest_one_field_required_fields]):
+            error_message = _('At lest one of {} is required').format(at_lest_one_field_required_fields)
+            errors = {field: ErrorList([error_message]) for field in at_lest_one_field_required_fields}
+            raise ValidationError(error_message, params=errors)
+        return super().clean(value)
 
 
 class TeaserImageBlock(StructBlock):
@@ -82,7 +118,7 @@ class TeaserImageBlock(StructBlock):
 
 class TeaserBlock(StructBlock):
     title = blocks.CharBlock()
-    content = blocks.RichTextBlock(required=False)
+    content = RichTextBlock(required=False)
     image = TeaserImageBlock(required=False)
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
@@ -118,6 +154,7 @@ TEASER_BLOCKS = [
 ]
 
 BASE_BLOCKS += TEASER_BLOCKS
+
 
 class ColumnsBlock(StructBlock):
     left_column = StreamBlock(BASE_BLOCKS)
@@ -175,6 +212,109 @@ COLUMNS_BLOCKS = [
 
 CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 
-ALL_BLOCKS = COLUMNS_BLOCKS + [
+
+# class CarouselBlock(StructBlock):
+#     title = blocks.CharBlock()
+#     content = RichTextBlock(required=False)
+#     images = ListBlock(ImageBlock())
+#     link = OptionalLinkBlock()
+#
+#     def get_context(self, value):
+#         page = value.get('page')
+#         link = value.get('link')
+#         images = value.get('images')
+#         return {
+#             'id': 1,
+#             'external': not bool(page),
+#             'title': value.get('title'),
+#             'description': value.get('content'),
+#             'readmorelink': {'text': 'read more'},
+#             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
+#             'imgpos': imagepos,
+#             'largeimg': largeimg,
+#             'lines': True,
+#         }
+#
+#     class Meta:
+#         icon = 'link'
+#         label = _('Teaser')
+#         template = 'widgets/teaser.html'
+#         help_text = 'Choose either a page or an external link'
+
+class CarouselSlideBlock(StructBlock):
+    image = ImageBlock()
+    name = blocks.CharBlock(required=False)
+    content = RichTextBlock(required=False)
+    link = LinkBlock(required=False)
+
+
+class CarouselBlock(StructBlock):
+    images = ListBlock(ImageBlock())
+    heading = blocks.CharBlock()
+    content = RichTextBlock(required=False)
+
+    def get_context(self, value):
+        images = value.get('images')
+        heading = value.get('heading')
+        content = value.get('content')
+        print(images)
+        return {
+            'carousel': {
+                'id': 1,
+                'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
+            },
+            'overlay': {
+                'heading': heading,
+                'lead': content,
+            },
+        }
+
+    def render(self, value):
+        carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
+        overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
+        return carousel + overlay
+
+    class Meta:
+        icon = 'picture'
+        label = _('Carousel')
+
+
+# class CarouselTeaserBlock(StructBlock):
+#     images = ListBlock(CarouselSlideBlock())
+#     name = blocks.CharBlock(required=False)
+#     content = RichTextBlock(required=False)
+#     link = LinkBlock(required=False)
+#
+#     def get_context(self, value):
+#         page = value.get('page')
+#         link = value.get('link')
+#         images = value.get('images')
+#         return {
+#             'id': 1,
+#             'external': not bool(page),
+#             'title': value.get('title'),
+#             'description': value.get('content'),
+#             'readmorelink': {'text': 'read more'},
+#             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
+#             'imgpos': imagepos,
+#             'largeimg': largeimg,
+#             'lines': True,
+#         }
+#
+#     class Meta:
+#         icon = 'link'
+#         label = _('Teaser')
+#         template = 'widgets/teaser.html'
+#         help_text = 'Choose either a page or an external link'
+
+
+CAROUSEL_BLOCKS = (
+    ('carousel', CarouselBlock()),
+)
+HEADER_BLOCKS = CAROUSEL_BLOCKS
+
+EXTRA_BLOCKS = COLUMNS_BLOCKS + [
     ('html', RawHTMLBlock()),
 ]
+
+ALL_BLOCKS = CORE_BLOCKS + EXTRA_BLOCKS

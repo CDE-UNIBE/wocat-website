@@ -3,7 +3,7 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 
-from wocat.cms.blocks import CORE_BLOCKS
+from wocat.cms.blocks import CORE_BLOCKS, HEADER_BLOCKS
 
 __author__ = 'Eraldo Energy'
 
@@ -38,7 +38,9 @@ class HomePage(SinglePageMixin, Page):
     template = 'pages/content.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
+    header = StreamField(HEADER_BLOCKS, blank=True)
 
     content_panels = Page.content_panels + [
+        StreamFieldPanel('header'),
         StreamFieldPanel('content'),
     ]
