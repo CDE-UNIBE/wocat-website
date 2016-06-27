@@ -2,6 +2,22 @@ from fabric.api import cd, run, env
 from fabvenv import virtualenv
 
 
+def development():
+    env.name = 'development'
+    env.hosts = ['localhost']
+    # env.path = '/srv/wocat.sinnwerkstatt.com/wocat'
+    # env.virtualenv_path = '/srv/wocat.sinnwerkstatt.com/wocatenv'
+    env.backup_path = './local/backups'
+    env.push_branch = 'development'
+    env.push_remote = 'origin'
+    # env.reload_cmd = 'supervisorctl restart wocat'
+    env.db_name = 'wocat'
+    env.db_username = ''
+    # env.after_deploy_url = 'http://wocat.sinnwerkstatt.com'
+    env.settings = '--settings=config.settings.local'
+    env.requirements = 'requirements/local.txt'
+
+
 def staging():
     env.name = 'staging'
     env.hosts = ['wocat@wocat.sinnwerkstatt.com']

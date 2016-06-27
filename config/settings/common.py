@@ -61,6 +61,7 @@ THIRD_PARTY_APPS = (
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'django_countries',
+    'easy_thumbnails',
 )
 
 # Apps specific for this project go here.
@@ -262,6 +263,9 @@ ADMIN_URL = r'^admin/'
 WAGTAIL_SITE_NAME = 'WOCAT'
 WAGTAILADMIN_NOTIFICATION_USE_HTML = True
 TAGGIT_CASE_INSENSITIVE = True
+WAGTAIL_USER_EDIT_FORM = 'wocat.cms.forms.CustomUserEditForm'
+WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
+WAGTAIL_USER_CUSTOM_FIELDS = ['avatar', 'country', 'organisation', 'expertise']
 
 
 # EASY THUMBNAILS

@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import ProgrammingError
 from django.db import models
 from django.template.loader import render_to_string
@@ -38,6 +39,10 @@ class ContentPage(Page):
     content_panels = Page.content_panels + [
         StreamFieldPanel('content'),
     ]
+
+    search_fields = Page.search_fields + (
+        index.SearchField('content'),
+    )
 
     class Meta:
         verbose_name = _('Content')
@@ -185,4 +190,55 @@ class CountryPage(Page):
                         ('per_capita_income', 'population', 'human_development_index', 'poverty_rate') if
                         hasattr(self, field)]
         context['lead'] = render_to_string('widgets/country-meta.html', context={'objects': meta_objects})
+        return context
+
+
+class MembersPage(UniquePageMixin, Page):
+    template = 'pages/members.html'
+
+    content = StreamField(CORE_BLOCKS, blank=True)
+
+    content_panels = Page.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + (
+        index.SearchField('content'),
+    )
+
+    # parent_page_types = []
+    # subpage_types = []
+
+    class Meta:
+        verbose_name = _('Members')
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        members = []
+        countries = []
+        expertises = []
+        # TODO: Update to users with group 'Members' only.
+        users = get_user_model().objects.all()
+        for user in users:
+            countries.append({'name': user.country.name})
+            expertises.append({'name': user.expertise})
+            members.append({
+                'avatarsrc': user.avatar.url if user.avatar else '',
+                'country': user.country.name if user.country else '',
+                'expertises': [{'name': user.expertise}] if user.expertise else '',
+                'name': user.username or '',
+                'organisation': user.organisation or '',
+                # 'position': 'Manager',
+                'url': user.get_absolute_url(),
+                'visible': True,
+            })
+        context.update(
+            {'countries': countries,
+             'expertises': expertises,
+             'members': members,
+             # TODO: set and calculate pages
+             # 'maxpagesize': 3,
+             # 'pages': [1, 2, 3, 4],
+             }
+        )
         return context
