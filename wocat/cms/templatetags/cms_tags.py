@@ -135,5 +135,5 @@ class Carousel(InclusionTag):
     def get_context(self, context, images, **kwargs):
         items = []
         for image in images:
-            items.append({'src': image.value.get_rendition('max-1200x1200').url})
+            items.append({'src': image.value.get_rendition('fill-1800x600').url})
         return {'items': items}
