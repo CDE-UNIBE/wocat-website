@@ -1,0 +1,21 @@
+{% extends 'pages/content.html' %}
+{% load cms_tags %}
+
+
+{% block content_container %}
+
+    {% if carousel_images %}
+        {% carousel carousel_images %}
+        {% include 'widgets/page-lead-overlay.html' %}
+    {% else %}
+        Foo
+    {% endif %}
+    <div class="container">
+
+        {% breadcrumb %}
+        {% block content %}
+            {{ page.content }}
+        {% endblock content %}
+    </div>
+{% endblock content_container %}
+

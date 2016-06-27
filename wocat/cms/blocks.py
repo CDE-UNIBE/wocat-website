@@ -241,44 +241,100 @@ CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 #         template = 'widgets/teaser.html'
 #         help_text = 'Choose either a page or an external link'
 
-class CarouselSlideBlock(StructBlock):
-    image = ImageBlock()
-    name = blocks.CharBlock(required=False)
-    content = RichTextBlock(required=False)
-    link = LinkBlock(required=False)
+# class CarouselSlideBlock(StructBlock):
+#     image = ImageBlock()
+#     name = blocks.CharBlock(required=False)
+#     content = RichTextBlock(required=False)
+#     link = LinkBlock(required=False)
 
 
-class CarouselBlock(StructBlock):
-    images = ListBlock(ImageBlock())
-    heading = blocks.CharBlock()
-    content = RichTextBlock(required=False)
-
-    def get_context(self, value):
-        images = value.get('images')
-        heading = value.get('heading')
-        content = value.get('content')
-        print(images)
-        return {
-            'carousel': {
-                'id': 1,
-                'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
-            },
-            'overlay': {
-                'heading': heading,
-                'lead': content,
-            },
-        }
-
-    def render(self, value):
-        carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
-        overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
-        return carousel + overlay
-
-    class Meta:
-        icon = 'picture'
-        label = _('Carousel')
+# class CarouselBlock(ListBlock(ImageBlock)):
+#
+#     def get_context(self, value):
+#         images = value.get('images')
+#         heading = value.get('heading')
+#         content = value.get('content')
+#         return {
+#             'carousel': {
+#                 'id': 1,
+#                 'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
+#             },
+#             'overlay': {
+#                 'heading': heading,
+#                 'lead': content,
+#             },
+#         }
+#
+#     def render(self, value):
+#         carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
+#         overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
+#         return carousel + overlay
+#
+#     class Meta:
+#         icon = 'picture'
+#         label = _('Carousel')
 
 
+# class CarouselBlock(StructBlock):
+#     images = ListBlock(ImageBlock())
+#     heading = blocks.CharBlock()
+#     content = RichTextBlock(required=False)
+#
+#     def get_context(self, value):
+#         images = value.get('images')
+#         heading = value.get('heading')
+#         content = value.get('content')
+#         return {
+#             'carousel': {
+#                 'id': 1,
+#                 'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
+#             },
+#             'overlay': {
+#                 'heading': heading,
+#                 'lead': content,
+#             },
+#         }
+#
+#     def render(self, value):
+#         carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
+#         overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
+#         return carousel + overlay
+#
+#     class Meta:
+#         icon = 'picture'
+#         label = _('Carousel')
+
+
+# class CarouselHeadingBlock(StructBlock):
+#     images = ListBlock(ImageBlock())
+#     heading = blocks.CharBlock()
+#     content = RichTextBlock(required=False)
+#
+#     def get_context(self, value):
+#         images = value.get('images')
+#         heading = value.get('heading')
+#         content = value.get('content')
+#         return {
+#             'carousel': {
+#                 'id': 1,
+#                 'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
+#             },
+#             'overlay': {
+#                 'heading': heading,
+#                 'lead': content,
+#             },
+#         }
+#
+#     def render(self, value):
+#         carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
+#         overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
+#         return carousel + overlay
+#
+#     class Meta:
+#         icon = 'picture'
+#         label = _('Carousel')
+#
+#
 # class CarouselTeaserBlock(StructBlock):
 #     images = ListBlock(CarouselSlideBlock())
 #     name = blocks.CharBlock(required=False)
@@ -307,11 +363,15 @@ class CarouselBlock(StructBlock):
 #         template = 'widgets/teaser.html'
 #         help_text = 'Choose either a page or an external link'
 
-
-CAROUSEL_BLOCKS = (
-    ('carousel', CarouselBlock()),
+IMAGE_BLOCKS = (
+    ('image', ImageBlock()),
 )
-HEADER_BLOCKS = CAROUSEL_BLOCKS
+
+# CAROUSEL_BLOCKS = (
+#     ('image', ImageBlock()),
+#     # ('carousel', CarouselBlock()),
+# )
+# HEADER_BLOCKS = CAROUSEL_BLOCKS
 
 EXTRA_BLOCKS = COLUMNS_BLOCKS + [
     ('html', RawHTMLBlock()),

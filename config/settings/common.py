@@ -60,6 +60,7 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'django_countries',
 )
 
 # Apps specific for this project go here.

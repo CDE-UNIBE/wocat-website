@@ -1,0 +1,11 @@
+<div class="widget-country-meta">
+    {% if objects %}
+        <div class="row">
+            {% for name, value in objects %}
+                <div class="col-md-6">
+                    {{ name }} <strong>{{ value }}</strong>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
