@@ -8,7 +8,7 @@
         {% carousel carousel_images %}
         {% include 'widgets/page-lead-overlay.html' %}
     {% else %}
-        Foo
+        {% include 'widgets/page-lead-overlay.html' with noimage=True %}
     {% endif %}
     <div class="container">
 

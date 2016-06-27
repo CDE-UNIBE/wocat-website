@@ -180,7 +180,7 @@ class CountryPage(Page):
         context = super().get_context(request, *args, **kwargs)
         context['carousel_images'] = self.header_images
         context['heading'] = self.title
-        context['heading_icon_src'] = self.flag
+        context['heading_iconsrc'] = self.flag
         meta_objects = [(self._meta.get_field(field).verbose_name, getattr(self, field)) for field in
                         ('per_capita_income', 'population', 'human_development_index', 'poverty_rate') if
                         hasattr(self, field)]
