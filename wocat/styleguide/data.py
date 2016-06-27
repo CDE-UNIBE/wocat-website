@@ -141,6 +141,19 @@ data = {
     },
 
 
+    'carousel_ugly': {
+        'name': 'Carousel with ugly images',
+        'template': 'widgets/carousel.html',
+        'context': {
+            'id': 2,
+            'items': [
+                { 'src': '/static/styleguide/test-images/header1.jpg' },
+                { 'src': '/static/styleguide/test-images/small.jpg' },
+            ],
+        },
+    },
+
+
     'heading1': {
         'name': 'Heading 1',
         'template': 'widgets/heading1.html',
@@ -237,10 +250,11 @@ data = {
         },
     },
     'teaser_lines_large_leftimage': {
-        'name': 'Teaser with lines and large left image',
+        'name': 'Teaser with lines and large left image and external link',
         'template': 'widgets/teaser.html',
         'context': {
             'href': 'http://sinnwerkstatt.com',
+            'external': True,
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
             'lines': True,
             'imgpos': 'left',
@@ -385,6 +399,26 @@ data = {
     },
 
 
+    'page_lead_overlay_noimage': {
+        'name': 'Page Lead Overlay',
+        'template': 'widgets/page-lead-overlay.html',
+        'context': {
+            'noimage': True,
+            'heading': 'Page Head without image overlay',
+            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+        },
+    },
+
+    'page_lead_overlay_noimage_alternative': {
+        'name': 'Page Lead Overlay',
+        'template': 'widgets/page-lead-overlay.html',
+        'context': {
+            'noimage': True,
+            'heading': 'Page Head without image overlay',
+            'heading_iconsrc': '/static/styleguide/test-images/dog-1by1.jpg',
+            'content': '<div class="row"><div class="col-sm-6">Linke Zahl: <strong>5m</strong></div><div class="col-sm-6">Rechte Zahl: <strong>100km</strong></div></div>',
+        },
+    },
 
 
     'nullboolean': {
@@ -851,7 +885,7 @@ data = {
             'links': [
                 { 'href': 'http://google.de', 'text': 'Kontakt' },
                 { 'href': 'http://bing.de', 'text': 'Presse' },
-                { 'href': 'http://google.de', 'text': 'Newsletter', 'active': True },
+                { 'text': 'Newsletter' },
             ],
         },
     },

@@ -42,10 +42,15 @@ h4, .h4 {
 
 .btn {
 	font-weight: 600;
+	border-radius: 4px;
 
 	&.btn-default {
 		background-color: transparent;
 	}
+}
+
+.form-control {
+	border-radius: 4px;
 }
 
 
@@ -146,6 +151,12 @@ h4, .h4 {
 	}
 }
 
+.widget-carousel {
+	.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+		width: 100%;
+	}
+}
+
 
 .widget-teaser {
 	margin-bottom: 30px;
@@ -243,6 +254,12 @@ h4, .h4 {
 
 			h1 {
 				margin: 0 0 15px 0;
+
+				img.heading-icon {
+					height: 40px;
+					width: auto;
+					display: inline-block;
+				}
 			}
 			p.lead {
 				margin: 0;
@@ -253,17 +270,25 @@ h4, .h4 {
 	}
 
 	@media(min-width:768px) {
-		.widget-page-lead-overlay-box-wrapper {
-			position: relative;
+		&:not(.widget-page-lead-overlay-noimage) {
 
-			.widget-page-lead-overlay-box {
-				margin: 0 -20px;
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				background-color: @color-white;
-				padding: 25px 20px 0 20px;
+			.widget-page-lead-overlay-col {
+				padding-left: 0;
+				padding-right: 0;
+
+				.widget-page-lead-overlay-box-wrapper {
+					position: relative;
+
+					.widget-page-lead-overlay-box {
+						margin: 0;
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						width: 100%;
+						background-color: @color-white;
+						padding: 25px 15px 0 15px;
+					}
+				}
 			}
 		}
 	}
@@ -540,6 +565,7 @@ h4, .h4 {
 					padding: 4px 12px;
 					background-color: @color-white;
 					color: @color-primary;
+					border-radius: 3px;
 
 					&:hover, &:focus, &:active {
 						color: @color-primary-dark;
@@ -569,9 +595,32 @@ h4, .h4 {
 	.widget-options {
 
 		label.radio-inline, label.checkbox-inline {
+			input {
+				+ span {
+					border-radius: 0;
+				}
+			}
+
 			+ label.radio-inline, + label.checkbox-inline {
 				span {
 					border-left-width: 0;
+				}
+			}
+
+			&:first-child {
+				input {
+					+ span {
+						border-top-left-radius: 3px;
+						border-bottom-left-radius: 3px;
+					}
+				}
+			}
+			&:last-child {
+				input {
+					+ span {
+						border-top-right-radius: 3px;
+						border-bottom-right-radius: 3px;
+					}
 				}
 			}
 		}

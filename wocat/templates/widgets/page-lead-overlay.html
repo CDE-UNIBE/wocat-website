@@ -1,14 +1,24 @@
-<div class="widget-page-lead-overlay">
+<div class="widget-page-lead-overlay{% if noimage %} widget-page-lead-overlay-noimage{% endif %}">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-8 widget-page-lead-overlay-col">
 				<div class="widget-page-lead-overlay-box-wrapper">
 					<div class="widget-page-lead-overlay-box">
 						{% if heading %}
-							<h1>{{ heading }}</h1>
+							<h1>
+								{% if heading_iconsrc %}
+									<img src="{{ heading_iconsrc }}" class="heading-icon">
+								{% endif %}
+								{{ heading }}
+							</h1>
 						{% endif %}
 						{% if lead %}
 							<p class="lead">{{ lead }}</p>
+						{% endif %}
+						{% if content %}
+							<div class="content">
+								{{ content|safe }}
+							</div>
 						{% endif %}
 					</div>
 				</div>

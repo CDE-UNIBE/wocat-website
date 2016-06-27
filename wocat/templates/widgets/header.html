@@ -26,20 +26,20 @@
 		</div>
 		<div class="mainnav mainnav-depth-{{ mainnav.depth }}">
 			<div class="container container-mainnav">
-				<div class="navbar-header">
-
-					{% if mainnav.depth > 1 %}
+				{% if mainnav.depth > 1 %}
+					<div class="navbar-header">
 						{% if mainnav.brand2 %}
-						<a class="navbar-brand" href="{{ mainnav.brand2.href }}">
-							<img src="{{ mainnav.brand2.src }}" alt="{{ mainnav.brand2.name }}">
-							<div class="navbar-brand-name">
-								{{ mainnav.brand2.name }}
-							</div>
-						</a>
+							<a class="navbar-brand" href="{{ mainnav.brand2.href }}">
+								{% if mainnav.brand2.src %}
+									<img src="{{ mainnav.brand2.src }}" alt="{{ mainnav.brand2.name }}">
+								{% endif %}
+								<div class="navbar-brand-name">
+									{{ mainnav.brand2.name }}
+								</div>
+							</a>
 						{% endif %}
-					{% endif %}
-
-				</div>
+					</div>
+				{% endif %}
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="widget-header-main-{{ id }}">
