@@ -41,6 +41,8 @@ class Header(InclusionTag):
         return [self.get_node(page, current_page=current_page, ancestors=ancestors) for page in main_pages]
 
     def get_project_page(self, page):
+        if not page:
+            return
         if isinstance(page, ProjectPage):
             return page
         project_page = page.get_ancestors().type(ProjectPage).first()
