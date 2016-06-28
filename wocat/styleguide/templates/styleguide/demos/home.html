@@ -1,0 +1,31 @@
+{% extends "styleguide/base.html" %}
+{% load static %}
+
+{% block content %}
+	{{ header1_home_output }}
+	{{ carousel_output }}
+	{{ page_lead_overlay_home_output }}
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-sm-8">
+				{{ teaser_home_globalissues_output }}
+			</div>
+		</div>
+
+		{{ heading2_news_output }}
+		<div class="row">
+			<div class="col-sm-4">
+				{{ teaser_lines_home_news_output }}
+			</div>
+			<div class="col-sm-4">
+				{{ teaser_lines_home_news_output }}
+			</div>
+			<div class="col-sm-4">
+				{{ teaser_lines_home_news_output }}
+			</div>
+		</div>
+	</div><!-- container -->
+	{{ footer_output }}
+{% endblock %}
