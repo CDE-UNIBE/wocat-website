@@ -28,11 +28,6 @@ data = {
             ],
             'mainnav': {
                 'depth': 1,
-                'brand2': {
-                    'src': '/static/styleguide/test-images/dog-1by1.jpg',
-                    'name': 'Yolo-Projekt',
-                    'href': 'zurück',
-                },
 
                 'links1': [
                     { 'href': 'http://google.de/1', 'text': 'Get involved' },
@@ -41,7 +36,6 @@ data = {
                     { 'href': 'http://bing.de/2', 'text': 'Login' },
                     {
                         'dropdown': True,
-                        'active': True,
                         'text': 'Yolo',
                         'links': [
                             { 'href': 'http://google.de/1', 'text': 'Swag', 'active': True, },
@@ -64,6 +58,53 @@ data = {
             },
         },
     },
+
+    'header1_home': {
+        'name': 'Header first level in home demo',
+        'template': 'widgets/header.html',
+        'context': {
+            'id': '1',
+            'toplinks': [
+                { 'href': 'http://google.de/1', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>', },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>', },
+                { 'href': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>', },
+                { 'href': 'http://google.de/1', 'text': 'Get involved', },
+                { 'href': 'http://bing.de/2', 'text': 'FAQ', },
+                { 'href': 'http://bing.de/3', 'text': 'Glossary', },
+                { 'href': 'http://bing.de/2', 'text': 'Login', },
+                {
+                    'dropdown': True,
+                    'text': 'EN',
+                    'links': [
+                        { 'href': 'http://google.de/1', 'text': 'DE', },
+                        { 'href': 'http://bing.de/2', 'text': 'FR' },
+                    ]
+                },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i>', },
+            ],
+            'mainnav': {
+                'depth': 1,
+
+                'links1': [
+                    { 'href': 'http://google.de/1', 'text': 'Get involved' },
+                    { 'href': 'http://bing.de/2', 'text': 'FAQ' },
+                    { 'href': 'http://bing.de/3', 'text': 'Glossary', },
+                    { 'href': 'http://bing.de/2', 'text': 'Login' },
+                    {
+                        'dropdown': True,
+                        'text': 'EN',
+                        'onlyxs': True,
+                        'links': [
+                            { 'href': 'http://google.de/1', 'text': 'DE', },
+                            { 'href': 'http://bing.de/2', 'text': 'FR' },
+                        ]
+                    },
+                    { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i> Search', 'onlyxs': True, },
+                ],
+            },
+        },
+    },
+
 
     'header2': {
         'name': 'Header 2nd level',
@@ -168,6 +209,13 @@ data = {
             'text': 'Die Fotografie von Geistern',
         },
     },
+    'heading2_news': {
+        'name': 'Heading 2 News',
+        'template': 'widgets/heading2.html',
+        'context': {
+            'text': 'News',
+        },
+    },
     'heading2_link': {
         'name': 'Heading 2 with link',
         'template': 'widgets/heading2.html',
@@ -204,6 +252,18 @@ data = {
             'readmorelink': {
                 'text': 'read more',
             },
+        },
+    },
+    'teaser_home_globalissues': {
+        'name': 'Teaser with no image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'Read more about Global Issues',
+            },
+             'lines': True,
         },
     },
     'teaser_lines': {
@@ -297,6 +357,20 @@ data = {
             },
         },
     },
+    'teaser_lines_home_news': {
+        'name': 'Teaser with lines and top image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Building resilience',
+            'imgpos': 'top',
+            'date': '24. April 2016',
+            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
     'teaser_topimg': {
         'name': 'Teaser with top image',
         'template': 'widgets/teaser.html',
@@ -306,7 +380,7 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -398,6 +472,14 @@ data = {
         },
     },
 
+    'page_lead_overlay_home': {
+        'name': 'Page Lead Overlay',
+        'template': 'widgets/page-lead-overlay.html',
+        'context': {
+            'heading': 'Wocat',
+            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+        },
+    },
 
     'page_lead_overlay_noimage': {
         'name': 'Page Lead Overlay',
