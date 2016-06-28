@@ -110,7 +110,7 @@ class CountriesPage(UniquePageMixin, Page):
     template = 'pages/content.html'
 
     class Meta:
-        verbose_name = _('Countries')
+        verbose_name = _('Project')
 
     parent_page_types = ['ProjectsAndCountiesPage']
     subpage_types = ['CountryPage']
