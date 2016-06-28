@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     # Django Admin, use {% url 'admin:index' %}
-    url(settings.ADMIN_URL, include(admin.site.urls)),
+    url(r'^{}/'.format(settings.ADMIN_URL), include(admin.site.urls)),
 
     # User management
     url(r'^users/', include('wocat.users.urls', namespace='users')),
