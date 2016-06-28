@@ -3,15 +3,9 @@
 
 
 {% block content_container %}
-
-    {% if carousel_images %}
-        {% carousel carousel_images %}
-        {% include 'widgets/page-lead-overlay.html' %}
-    {% else %}
-        {% include 'widgets/page-lead-overlay.html' with noimage=True %}
-    {% endif %}
+    {% carousel %}
+    {% overlay %}
     <div class="container">
-
         {% breadcrumb %}
         {% block content %}
             {{ page.content }}

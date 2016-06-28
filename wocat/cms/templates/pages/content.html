@@ -3,7 +3,8 @@
 
 
 {% block content_container %}
-    {{ page.header }}
+    {% carousel %}
+    {% overlay %}
     <div class="container">
         {% breadcrumb %}
         {% block content %}

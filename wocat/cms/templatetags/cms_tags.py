@@ -128,12 +128,42 @@ class Breadcrumb(InclusionTag):
 class Carousel(InclusionTag):
     name = 'carousel'
     template = 'widgets/carousel.html'
-    options = Options(
-        Argument('images', required=True),
-    )
 
-    def get_context(self, context, images, **kwargs):
+    def render(self, context):
+        if self.get_images(context):
+            return super().render(context)
+        return ''
+
+    def get_images(self, context):
+        header = context.get('header')
+        if header:
+            return header.get('images', [])
+
+    def get_context(self, context, **kwargs):
         items = []
-        for image in images:
+        for image in self.get_images(context):
             items.append({'src': image.value.get_rendition('fill-1800x600').url})
         return {'items': items}
+
+
+@register.tag
+class Overlay(InclusionTag):
+    name = 'overlay'
+    template = 'widgets/page-lead-overlay.html'
+
+    def get_context(self, context, **kwargs):
+        header = context.get('header')
+        if not header:
+            page = context.get('page')
+            if page:
+                return {
+                    'heading': page.title,
+                    'content': page.lead if hasattr(page, 'lead') else '',
+                    'noimage': True,
+                }
+        return {
+            'heading': header.get('title'),
+            'heading_iconsrc': header.get('iconsrc'),
+            'content': header.get('content'),
+            'noimage': not header.get('images'),
+        }

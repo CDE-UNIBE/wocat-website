@@ -15,7 +15,7 @@ from wocat.cms.blocks import CORE_BLOCKS, IMAGE_BLOCKS
 __author__ = 'Eraldo Energy'
 
 
-class UniquePageMixin(object):
+class UniquePageMixin:
     """
     Mixin for Wagtail pages to make sure only one of this Page exists.
     """
@@ -31,16 +31,58 @@ class UniquePageMixin(object):
         return super().clean_parent_page_models()
 
 
-class ContentPage(Page):
+class HeaderPageMixin(models.Model):
+    header_images = StreamField(
+        IMAGE_BLOCKS,
+        blank=True
+    )
+    lead = models.TextField(
+        _('Lead text'),
+        blank=True
+    )
+
+    class Meta:
+        abstract = True
+
+    content_panels = [
+        MultiFieldPanel(
+            [
+                StreamFieldPanel('header_images'),
+                FieldPanel('lead'),
+            ],
+            heading="Header",
+            classname="collapsible collapsed"
+        ),
+    ]
+
+    search_fields = (
+        index.SearchField('lead'),
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['header'] = {
+            'title': self.title,
+            'images': self.header_images,
+            'noimage': not bool(self.header_images),
+            'content': self.lead,
+        }
+        return context
+
+
+class ContentPage(HeaderPageMixin, Page):
     template = 'pages/content.html'
 
-    content = StreamField(CORE_BLOCKS, blank=True)
+    content = StreamField(
+        CORE_BLOCKS,
+        blank=True
+    )
 
-    content_panels = Page.content_panels + [
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
         index.SearchField('content'),
     )
 
@@ -48,24 +90,19 @@ class ContentPage(Page):
         verbose_name = _('Content')
 
 
-class HomePage(UniquePageMixin, Page):
+class HomePage(UniquePageMixin, HeaderPageMixin, Page):
     template = 'pages/content.html'
 
-    content = StreamField(CORE_BLOCKS, blank=True)
-    header_images = StreamField(IMAGE_BLOCKS, blank=True)
+    content = StreamField(
+        CORE_BLOCKS,
+        blank=True
+    )
 
-    content_panels = Page.content_panels + [
-        MultiFieldPanel(
-            [
-                StreamFieldPanel('header_images'),
-            ],
-            heading="Header",
-            classname="collapsible collapsed"
-        ),
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
         index.SearchField('content'),
     )
 
@@ -96,11 +133,21 @@ class ProjectsPage(UniquePageMixin, Page):
     subpage_types = ['ProjectPage']
 
 
-class ProjectPage(Page):
+class ProjectPage(HeaderPageMixin, Page):
     template = 'pages/content.html'
 
+    content = StreamField(CORE_BLOCKS, blank=True)
+
     class Meta:
-        verbose_name = _('Countries')
+        verbose_name = _('Project')
+
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+        index.SearchField('content'),
+    )
 
     parent_page_types = ['ProjectsPage']
     subpage_types = ['ContentPage']
@@ -116,7 +163,7 @@ class CountriesPage(UniquePageMixin, Page):
     subpage_types = ['CountryPage']
 
 
-class CountryPage(Page):
+class CountryPage(HeaderPageMixin, Page):
     template = 'pages/country.html'
 
     country = CountryField(unique=True)
@@ -131,50 +178,18 @@ class CountryPage(Page):
         on_delete=models.SET_NULL,
         null=True
     )
-    per_capita_income = models.CharField(
-        _('Per capita income'),
-        max_length=100,
-        blank=True,
-    )
-    population = models.CharField(
-        _('Population'),
-        max_length=100,
-        blank=True,
-    )
-    human_development_index = models.CharField(
-        _('Human development index'),
-        max_length=100,
-        blank=True,
-    )
-    poverty_rate = models.CharField(
-        _('Poverty rate'),
-        max_length=100,
-        blank=True,
-    )
-    header_images = StreamField(IMAGE_BLOCKS, blank=True)
     content = StreamField(CORE_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Country')
 
-    content_panels = Page.content_panels + [
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         FieldPanel('country'),
         FieldPanel('contact_person'),
-        MultiFieldPanel(
-            [
-                StreamFieldPanel('header_images'),
-                FieldPanel('per_capita_income'),
-                FieldPanel('population'),
-                FieldPanel('human_development_index'),
-                FieldPanel('poverty_rate'),
-            ],
-            heading="Header",
-            classname="collapsible collapsed"
-        ),
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
         index.SearchField('content'),
     )
 
@@ -183,13 +198,9 @@ class CountryPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['carousel_images'] = self.header_images
-        context['heading'] = self.title
-        context['heading_iconsrc'] = self.flag
-        meta_objects = [(self._meta.get_field(field).verbose_name, getattr(self, field)) for field in
-                        ('per_capita_income', 'population', 'human_development_index', 'poverty_rate') if
-                        hasattr(self, field)]
-        context['lead'] = render_to_string('widgets/country-meta.html', context={'objects': meta_objects})
+        header = context.get('header')
+        if header:
+            header['iconsrc'] = self.flag
         return context
 
 
