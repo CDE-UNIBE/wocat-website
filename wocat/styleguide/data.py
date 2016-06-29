@@ -1033,6 +1033,16 @@ data = {
         },
     },
 
+
+    'map': {
+        'name': 'Map',
+        'template': 'widgets/map.html',
+        'context': {
+        },
+
+    },
+
+
     'footer': {
         'name': 'Footer',
         'template': 'widgets/footer.html',

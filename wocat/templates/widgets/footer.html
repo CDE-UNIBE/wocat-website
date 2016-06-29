@@ -3,7 +3,7 @@
 		<div class="widget-footer-navbar">
 			<ul>
 				{% for link in links %}
-					<li role="presentation" class="{% if link.active %}active{% endif %} {% if link.onlyxs %}hidden-sm hidden-md hidden-lg{% endif %}"}>
+					<li role="presentation" class="{% if link.active %}active{% endif %} {% if link.onlyxs %}hidden-md hidden-lg{% endif %}"}>
 						<a href="{{ link.href }}">
 							{{ link.text|safe }}
 						</a>

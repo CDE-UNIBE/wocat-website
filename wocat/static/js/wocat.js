@@ -3,6 +3,7 @@ $(function() {
 });
 
 $(function() {
+	// Members Table
 	$('.widget-members-table').each(function() {
 		var membersTable = $(this);
 
@@ -282,3 +283,124 @@ $(function() {
 
 
 
+$(function() {
+
+	var countries;
+	$.ajax({
+		url: '/static/js/countries.geo.json',
+		async: false,
+		dataType: 'json',
+		success: function (response) {
+			countries = response;
+		}
+	});
+
+	// Maps
+	var mapcounter = 0;
+
+	$('.widget-map').each(function() {
+		// Find unique ID for this map
+		mapcounter++;
+		var mapElement = $(this);
+		var id = 'leaflet-map' + mapcounter;
+		mapElement.attr('id', id);
+
+		var noInteraction = true; // We use this unless a map is fullscreen
+
+		if (noInteraction) {
+			var options = { zoomControl:false };
+		} else {
+			var options = {};
+		}
+
+		var view = {
+			lat: 0,
+			lon: 0,
+			zoom: 1,
+		};
+
+		var map = L.map(id, options).setView([view.lat, view.lon], view.zoom);
+		// http://{s}.tile.osm.org/{z}/{x}/{y}.png
+		L.tileLayer('/static/images/tiles/tile{z}-{x}-{y}.png', {
+			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+			maxZoom: 5, // We don't have more tiles on local repository
+		}).addTo(map);
+
+
+		if (noInteraction) {
+			map.dragging.disable();
+			map.touchZoom.disable();
+			map.doubleClickZoom.disable();
+			map.scrollWheelZoom.disable();
+			map.boxZoom.disable();
+			map.keyboard.disable();
+			if (map.tap) map.tap.disable();
+		}
+
+
+		var imagepath = "/static/images/leaflet/"
+		var icons = {
+			primary:
+				L.icon({
+					iconUrl: imagepath+'marker-primary.png',
+					shadowUrl: imagepath+'marker-shadow.png',
+					iconSize: [25, 41],
+					iconAnchor: [12, 41],
+					popupAnchor: [1, -34],
+					shadowSize: [41, 41]
+				}),
+			secondary:
+				L.icon({
+					iconUrl: imagepath+'marker-secondary.png',
+					shadowUrl: imagepath+'marker-shadow.png',
+					iconSize: [25, 41],
+					iconAnchor: [12, 41],
+					popupAnchor: [1, -34],
+					shadowSize: [41, 41]
+				}),
+		};
+
+
+		// Country Code: ISO 3166-1 alpha-3
+		// https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json
+
+		marker = {
+			lat: 51.5,
+			lon: -0.09,
+			marker: 'primary',
+			popup: 'Yolo',
+		};
+
+		var popup = L.marker([marker.lat, marker.lon], {icon: icons[marker.marker]})
+			.bindPopup(marker.popup)
+			.addTo(map);
+
+
+		var countryselector = [ "DEU", "GUF"];
+		var countryStyle = {
+			weight: 2,
+			opacity: 1,
+			color: '#DA812C',
+			fillOpacity: 0.3,
+			fillColor: '#DA812C',
+		};
+
+		var countriesLayer = L.geoJson(countries.features, {
+			style: countryStyle,
+			filter: function(feature, layer) {
+				// Return true if country is selected
+				return $.inArray(feature.id, countryselector) != -1;
+			},
+		});
+		countriesLayer.addTo(map);
+
+		// Fit map to countries
+		function mapToBoundaries() {
+			var countriesBoudaries = countriesLayer.getBounds();
+			// With Leaflet pad() we could make the boundaries larger
+			map.fitBounds(countriesBoudaries);
+		}
+		$(window).on('resize', mapToBoundaries);
+		mapToBoundaries();
+	});
+});

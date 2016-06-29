@@ -13,7 +13,7 @@
 				</ul>
 			</li>
 		{% else %}
-			<li class="{% if link.active %}active{% endif %}{% if link.onlyxs %} hidden-sm hidden-md hidden-lg{% endif %}">
+			<li class="{% if link.active %}active{% endif %}{% if link.onlyxs %} hidden-md hidden-lg{% endif %}">
 				<a href="{{ link.href }}">{{ link.text|safe }}</a>
 			</li>
 		{% endif %}
