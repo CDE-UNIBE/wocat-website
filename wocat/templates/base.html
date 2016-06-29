@@ -1,58 +1,78 @@
 {% load staticfiles i18n core_tags cms_tags wagtailuserbar %}<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}WOCAT{% endblock title %}</title>
-    {% block viewport %}
-        <meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>{% block title %}WOCAT{% endblock title %}</title>
+	{% block viewport %}
+		<meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-    <meta property="og:description" content="Wocat"/>
-    <meta property="og:image" content="/static/images/og-image.png"/>
-    <meta property="og:locale" content="de"/>
-    <meta property="og:site_name" content="Wocat"/>
-    <meta property="og:title" content="Wocat"/>
-    <meta property="og:url" content=""/>
-    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
-    <link rel="apple-touch-icon-precomposed" sizes="114x114"
-          href="/static/images/apple-touch-icon-114x114-precomposed.png"/>
+	<meta property="og:description" content="Wocat"/>
+	<meta property="og:image" content="/static/images/og-image.png"/>
+	<meta property="og:locale" content="de"/>
+	<meta property="og:site_name" content="Wocat"/>
+	<meta property="og:title" content="Wocat"/>
+	<meta property="og:url" content=""/>
 
-    {% block css %}
-        <!-- Your stuff: Third-party css libraries go here -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
+	<!-- http://realfavicongenerator.net -->
+	<link rel="apple-touch-icon" sizes="57x57" href="/static/images/favicons/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/static/images/favicons/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/static/images/favicons/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/static/images/favicons/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/static/images/favicons/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/static/images/favicons/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/static/images/favicons/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/static/images/favicons/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicons/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/static/images/favicons/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/static/images/favicons/favicon-194x194.png" sizes="194x194">
+	<link rel="icon" type="image/png" href="/static/images/favicons/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/static/images/favicons/android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/static/images/favicons/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/static/images/favicons/manifest.json">
+	<link rel="mask-icon" href="/static/images/favicons/safari-pinned-tab.svg" color="#da812c">
+	<link rel="shortcut icon" href="/static/images/favicons/favicon.ico">
+	<meta name="msapplication-TileColor" content="#da812c">
+	<meta name="msapplication-TileImage" content="/static/images/favicons/mstile-144x144.png">
+	<meta name="msapplication-config" content="/static/images/favicons/browserconfig.xml">
+	<meta name="theme-color" content="#da812c">
 
-        {% if debug %}
-            <link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
-            <script src="{% static 'js/less.min.js' %}"></script>
-        {% else %}
-            <link href="{% static 'css/wocat.css' %}" rel="stylesheet">
-        {% endif %}
-        <link href="{% static 'cms/css/index.css' %}" rel="stylesheet">
-    {% endblock %}
+	{% block css %}
+		<!-- Your stuff: Third-party css libraries go here -->
+		<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
+
+		{% if debug %}
+			<link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
+			<script src="{% static 'js/less.min.js' %}"></script>
+		{% else %}
+			<link href="{% static 'css/wocat.css' %}" rel="stylesheet">
+		{% endif %}
+		<link href="{% static 'cms/css/index.css' %}" rel="stylesheet">
+	{% endblock %}
 </head>
 
 <body>
 {% header %}
 
 {% if messages %}
-    <div class="container">
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
-    </div>
+	<div class="container">
+		{% for message in messages %}
+			<div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+		{% endfor %}
+	</div>
 {% endif %}
 
 
 {% block content_container %}
-    <div class="container">
-        {% breadcrumb %}
-        {% block content %}
-            <p>Use this document as a way to quick start any new project.</p>
-        {% endblock content %}
-    </div>
+	<div class="container">
+		{% breadcrumb %}
+		{% block content %}
+			<p>Use this document as a way to quick start any new project.</p>
+		{% endblock content %}
+	</div>
 {% endblock content_container %}
 
 
@@ -65,13 +85,13 @@
 
 <!-- Le javascript -->
 {% block javascript %}
-    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/leaflet.js' %}"></script>
-    <script src="{% static 'js/wocat.js' %}"></script>
+	<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/leaflet.js' %}"></script>
+	<script src="{% static 'js/wocat.js' %}"></script>
 {% endblock javascript %}
 <div class="widget-cms-userbar">
-    {% wagtailuserbar %}
+	{% wagtailuserbar %}
 </div>
 </body>
 </html>

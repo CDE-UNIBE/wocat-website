@@ -1,0 +1,7 @@
+<div class="widget-carousel-widgetchooser">
+	{% if items|length > 1 %}
+		{% include "widgets/carousel.html" %}
+	{% elif items|length == 1 %}
+		<img src="{{ items.0.src }}" class="widget-carousel-widgetchooser-image">
+	{% endif %}
+</div><!-- widget-carousel-widgetchooser -->

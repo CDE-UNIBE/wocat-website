@@ -195,6 +195,38 @@ data = {
     },
 
 
+    'carousel_widgetchooser_two': {
+        'name': 'Carousel Widgetchooser with two images',
+        'template': 'widgets/carousel-widgetchooser.html',
+        'context': {
+            'id': 'wc2',
+            'items': [
+                { 'src': '/static/styleguide/test-images/header1-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/header2-3by1.jpg' },
+            ],
+        },
+    },
+    'carousel_widgetchooser_one': {
+        'name': 'Carousel Widgetchooser with one image',
+        'template': 'widgets/carousel-widgetchooser.html',
+        'context': {
+            'id': 'wc1',
+            'items': [
+                { 'src': '/static/styleguide/test-images/header3-3by1.jpg' },
+            ],
+        },
+    },
+    'carousel_widgetchooser_zero': {
+        'name': 'Carousel Widgetchooser with no images',
+        'template': 'widgets/carousel-widgetchooser.html',
+        'context': {
+            'id': 'wc0',
+            'items': [
+            ],
+        },
+    },
+
+
     'heading1': {
         'name': 'Heading 1',
         'template': 'widgets/heading1.html',
