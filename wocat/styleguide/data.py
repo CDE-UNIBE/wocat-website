@@ -761,7 +761,20 @@ data = {
             'href': 'http://xxx',
         },
     },
-
+    'image_overlaycaption_map': {
+        'name': 'Image Map with Overlaycaption',
+        'template': 'widgets/image.html',
+        'context': {
+            'src': '/static/styleguide/test-images/map.jpg',
+            'overlay': {
+                'heading': 'Projects and Countries',
+                'text': 'This is the description of the image. This is the description of the image.',
+                'links': [
+                    { 'href': 'http://google.de', 'text': 'Projects and Countries', },
+                ],
+            },
+        },
+    },
     'readmorelink': {
         'name': 'Read more link',
         'template': 'widgets/read-more-link.html',
@@ -1038,10 +1051,74 @@ data = {
         'name': 'Map',
         'template': 'widgets/map.html',
         'context': {
+            'countries': [
+                { 'ISO_3166_1_alpha_3': 'AUT', },
+                { 'ISO_3166_1_alpha_3': 'BIH', },
+                { 'ISO_3166_1_alpha_3': 'CHE', },
+                { 'ISO_3166_1_alpha_3': 'ECU', },
+                { 'ISO_3166_1_alpha_3': 'CMR', },
+                { 'ISO_3166_1_alpha_3': 'KEN', },
+                { 'ISO_3166_1_alpha_3': 'NGA', },
+                { 'ISO_3166_1_alpha_3': 'DZA', },
+            ],
         },
-
     },
-
+    'map_project': {
+        'name': 'Project Map',
+        'template': 'widgets/map.html',
+        'context': {
+            'small': True,
+            'countries': [
+                { 'ISO_3166_1_alpha_3': 'CMR', },
+                { 'ISO_3166_1_alpha_3': 'KEN', },
+                { 'ISO_3166_1_alpha_3': 'NGA', },
+                { 'ISO_3166_1_alpha_3': 'DZA', },
+            ],
+        },
+    },
+    'map_project1': {
+        'name': 'Project Map 1',
+        'template': 'widgets/map.html',
+        'context': {
+            'small': True,
+            'countries': [
+                { 'ISO_3166_1_alpha_3': 'SOM', },
+                { 'ISO_3166_1_alpha_3': 'SDN', },
+                { 'ISO_3166_1_alpha_3': 'UGA', },
+                { 'ISO_3166_1_alpha_3': 'ZWE', },
+            ],
+        },
+    },
+    'map_project2': {
+        'name': 'Project Map 2',
+        'template': 'widgets/map.html',
+        'context': {
+            'small': True,
+            'countries': [
+                { 'ISO_3166_1_alpha_3': 'DZA', },
+            ],
+        },
+    },
+    'map_project3': {
+        'name': 'Project Map 3',
+        'template': 'widgets/map.html',
+        'context': {
+            'small': True,
+            'countries': [
+                { 'ISO_3166_1_alpha_3': 'KEN', },
+            ],
+        },
+    },
+    'map_project4': {
+        'name': 'Project Map 4',
+        'template': 'widgets/map.html',
+        'context': {
+            'small': True,
+            'countries': [
+                { 'ISO_3166_1_alpha_3': 'NGA', },
+            ],
+        },
+    },
 
     'footer': {
         'name': 'Footer',

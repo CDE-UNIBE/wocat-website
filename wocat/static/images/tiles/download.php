@@ -8,6 +8,7 @@
 		for ($x = 0; $x < pow(2, $z); $x++) {
 			for ($y = 0; $y < pow(2, $z); $y++) {
 				// http://a.tile.osm.org/0/0/0.png
+				// Auswahl https://leaflet-extras.github.io/leaflet-providers/preview/
 				$url = $domain. '/'. $z. '/'. $x. '/'. $y. '.png';
 				file_put_contents('tile'. $z. '-'. $x. '-'. $y. '.png' , fopen($url, 'r'));
 			}

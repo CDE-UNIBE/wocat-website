@@ -1,2 +1,9 @@
-<div class="widget-map">
+<div class="widget-map{% if small %} widget-map-small{% endif %}">
+	{% if countries %}
+	<ul class="widget-map-countryselector">
+		{% for country in countries %}
+			<li>{{ country.ISO_3166_1_alpha_3 }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 </div><!-- widget-map -->

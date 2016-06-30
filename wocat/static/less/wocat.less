@@ -709,9 +709,18 @@ h4, .h4 {
 
 .widget-map {
 	height: 400px;
+	margin-bottom: 30px;
+
+	&.widget-map-small {
+		height: 150px;
+	}
 
 	&.leaflet-container {
 		cursor: default;
+
+		.leaflet-control-container {
+			display: none;
+		}
 	}
 }
 

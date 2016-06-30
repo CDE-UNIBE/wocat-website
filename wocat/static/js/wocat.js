@@ -305,6 +305,17 @@ $(function() {
 		var id = 'leaflet-map' + mapcounter;
 		mapElement.attr('id', id);
 
+
+		// Are countries to show?
+		if (mapElement.find('ul.widget-map-countryselector li').length) {
+			var countryselector = [];
+			// Store list of countries in countryselector.
+			mapElement.find('ul.widget-map-countryselector li').each(function() {
+				countryselector.push($(this).text());
+			});
+			mapElement.find('ul.widget-map-countryselector').remove();
+		}
+
 		var noInteraction = true; // We use this unless a map is fullscreen
 
 		if (noInteraction) {
@@ -361,9 +372,8 @@ $(function() {
 		};
 
 
-		// Country Code: ISO 3166-1 alpha-3
-		// https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json
-
+		/*
+		// Display Markers
 		marker = {
 			lat: 51.5,
 			lon: -0.09,
@@ -374,33 +384,41 @@ $(function() {
 		var popup = L.marker([marker.lat, marker.lon], {icon: icons[marker.marker]})
 			.bindPopup(marker.popup)
 			.addTo(map);
+		*/
 
 
-		var countryselector = [ "DEU", "GUF"];
-		var countryStyle = {
-			weight: 2,
-			opacity: 1,
-			color: '#DA812C',
-			fillOpacity: 0.3,
-			fillColor: '#DA812C',
-		};
 
-		var countriesLayer = L.geoJson(countries.features, {
-			style: countryStyle,
-			filter: function(feature, layer) {
-				// Return true if country is selected
-				return $.inArray(feature.id, countryselector) != -1;
-			},
-		});
-		countriesLayer.addTo(map);
+		if (countryselector) {
 
-		// Fit map to countries
-		function mapToBoundaries() {
-			var countriesBoudaries = countriesLayer.getBounds();
-			// With Leaflet pad() we could make the boundaries larger
-			map.fitBounds(countriesBoudaries);
+			// Country Code: ISO 3166-1 alpha-3
+			// https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json
+
+			var countryStyle = {
+				weight: 2,
+				opacity: 1,
+				color: '#DA812C',
+				fillOpacity: 0.3,
+				fillColor: '#DA812C',
+			};
+
+			var countriesLayer = L.geoJson(countries.features, {
+				style: countryStyle,
+				filter: function(feature, layer) {
+					// Return true if country is selected
+					return $.inArray(feature.id, countryselector) != -1;
+				},
+			});
+			countriesLayer.addTo(map);
+
+			// Fit map to countries
+			function mapToBoundaries() {
+				var countriesBoudaries = countriesLayer.getBounds();
+				// With Leaflet pad() we could make the boundaries larger
+				map.fitBounds(countriesBoudaries);
+			}
+			$(window).on('resize', mapToBoundaries);
+			mapToBoundaries();
 		}
-		$(window).on('resize', mapToBoundaries);
-		mapToBoundaries();
+
 	});
 });
