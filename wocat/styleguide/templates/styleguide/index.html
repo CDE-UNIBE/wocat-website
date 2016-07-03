@@ -21,13 +21,31 @@
 		</div>
 	</div>
 
+
+	<div class="container">
+		{{ header2_meta }}
+		{{ carousel_widgetchooser_one_meta }}
+		{{ page_lead_overlay_small_meta }}
+	</div>
 	{{ header2_output }}
+	{{ carousel_widgetchooser_one_output }}
+	{{ page_lead_overlay_small_output }}
+
+	<div class="container">
+		{{ page_lead_overlay_noimage_meta }}
+	</div>
+	{{ page_lead_overlay_noimage_output }}
+
+	<div class="container">
+		{{ page_lead_overlay_noimage_alternative_meta }}
+	</div>
+
+	{{ page_lead_overlay_noimage_alternative_output }}
+
 
 	<div class="container">
 		<h1>WOCAT Styleguide</h1>
 
-		{{ page_lead_overlay_noimage }}
-		{{ page_lead_overlay_noimage_alternative }}
 
 		{{ columns_1_1 }}
 		{{ columns_2_1 }}
@@ -70,8 +88,19 @@
 				{{ horizontal_ruler }}
 
 				{{ image }}
-				{{ image_overlaycaption }}
-				{{ image_overlaycaption_map }}
+
+				{{ image_nocaption_meta }}
+				{{ overlay_teaser_meta }}
+				{{ image_nocaption_output }}
+				{{ overlay_teaser_output }}
+
+
+				{{ image_nocaption_meta }}
+				{{ overlay_teaser_bottom_meta }}
+				{{ image_nocaption_output }}
+				{{ overlay_teaser_bottom_output }}
+
+
 				{{ richtext }}
 				{{ embed }}
 
@@ -147,8 +176,18 @@
 				{{ singleselect_error }}
 
 
+				{{ map_large }}
 				{{ map }}
+				{{ map_small }}
 
+				<div class="row">
+					<div class="col-sm-6">
+						{{ map_teaser_project2 }}
+					</div>
+					<div class="col-sm-6">
+						{{ map_teaser_project }}
+					</div>
+				</div>
 
 
 				<div id="affix-bottom"></div>
@@ -156,70 +195,6 @@
 		</div><!-- row -->
 
 
-		<h2>Projekte in Afrika</h2>
-		<div class="row">
-			<div class="col-sm-4">
-				{{ map_project_output }}
-				<h3>Project Lalala</h3>
-				<p>Teaser bla bla bla zum Projekt. Teaser bla bla bla zum Projekt. Und noch ein bisschen Text in dieser Zeile.</p>
-				<p><a href="x">zum Projekt</a></p>
-				<br>
-				</div>
-			<div class="col-sm-4">
-				{{ map_project2_output }}
-				<h3>Anderes Projekt</h3>
-				<p>Der Teaser zu diesem Projekt ist kürzer.</p>
-				<p><a href="x">zum Projekt</a></p>
-				<br>
-			</div>
-			<div class="col-sm-4">
-				{{ map_project1_output }}
-				<h3>Noch ein Projekt</h3>
-				<p>Ein paar Zahlen zum Projekt. Bruttoinlandsprodukt fünf Billionen Lira.</p>
-				<p><a href="x">zum Projekt</a></p>
-				<br>
-			</div>
-		</div>
-		<p><a href="x">Alle Projete zeigen, auch die archivierten</a></p>
-		<br><br>
-
-
-
-		<h2>Countries involved</h2>
-		<div class="row">
-			<div class="col-sm-3">
-				{{ map_project2_output }}
-				<h3>Algerien</h3>
-				<p>Ein paar Zahlen zu Algerien: Lala und Blubblub.</p>
-				<p><a href="x">zum Land</a></p>
-				<br><br>
-			</div>
-			<div class="col-sm-3">
-				{{ map_project3_output }}
-				<h3>Kenia</h3>
-				<p>Ein paar Zahlen zu Kenia: Lala und Blubblub.</p>
-				<p><a href="x">zum Land</a></p>
-				<br><br>
-			</div>
-			<div class="col-sm-3">
-				{{ map_project4_output }}
-				<h3>Nigeria</h3>
-				<p>Ein paar Zahlen zu Nigeria: Lala und Blubblub.</p>
-				<p><a href="x">zum Land</a></p>
-				<br><br>
-			</div>
-			<div class="col-sm-3">
-				{{ map_project3_output }}
-				<h3>Kenia</h3>
-				<p>Ein paar Zahlen zu Kenia: Lala und Blubblub.</p>
-				<p><a href="x">zum Land</a></p>
-				<br><br>
-			</div>
-		</div>
-
-		{{ image_overlaycaption_map }}
-
-		{{ map }}
 
 
 		{{ teaser_super_leftimg }}

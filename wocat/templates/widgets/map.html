@@ -1,8 +1,11 @@
-<div class="widget-map{% if small %} widget-map-small{% endif %}">
+<div class="widget-map{% if size == "small" %} widget-map-small{% endif %}{% if size == "large" %} widget-map-large{% endif %}">
 	{% if countries %}
 	<ul class="widget-map-countryselector">
 		{% for country in countries %}
-			<li>{{ country.ISO_3166_1_alpha_3 }}</li>
+			<li>
+				<div class="iso_3166_1_alpha_3">{{ country.iso_3166_1_alpha_3 }}</div>
+				{% if country.popup %}<div class="popup">{{ country.popup|safe }}</div>{% endif %}
+			</li>
 		{% endfor %}
 	</ul>
 	{% endif %}

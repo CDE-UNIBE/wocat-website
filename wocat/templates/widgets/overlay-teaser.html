@@ -1,0 +1,19 @@
+<div class="widget-overlay-teaser{% if style == "box" %} widget-overlay-teaser-box{% endif %}{% if style == "bottom" %} widget-overlay-teaser-bottom{% endif %}">
+	<div class="widget-overlay-teaser-content">
+		{% if title %}
+			<h3>{{ title }}</h3>
+		{% endif %}
+
+		{% if description %}
+			<p class="description">{{ description }}</p>
+		{% endif %}
+
+		{% if links %}
+			{% for link in links %}
+				<p>
+					<a href="{{ link.href }}" class="widget-image-overlay-link">» {{ link.text }}</a>
+				</p>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div><!-- widget-overlay-teaser -->

@@ -1,7 +1,7 @@
 <div class="widget-page-lead-overlay{% if noimage %} widget-page-lead-overlay-noimage{% endif %}">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8 widget-page-lead-overlay-col">
+			<div class="col-sm-{% if small %}6{% else %}8{% endif %} widget-page-lead-overlay-col">
 				<div class="widget-page-lead-overlay-box-wrapper">
 					<div class="widget-page-lead-overlay-box">
 						{% if heading %}
@@ -25,4 +25,4 @@
 			</div>
 		</div>
 	</div>
-</div><!-- widget-teaser-super -->
+</div><!-- widget-page-lead-overlay -->

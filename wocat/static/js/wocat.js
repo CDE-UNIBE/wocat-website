@@ -1,5 +1,6 @@
 $(function() {
-	$('.widget-carousel .carousel').carousel({interval: 5000});
+	// Stop annoying auto cycling
+	$('.widget-carousel .carousel').carousel({interval: false});
 });
 
 $(function() {
@@ -311,7 +312,13 @@ $(function() {
 			var countryselector = [];
 			// Store list of countries in countryselector.
 			mapElement.find('ul.widget-map-countryselector li').each(function() {
-				countryselector.push($(this).text());
+				var countryData = {
+					'iso_3166_1_alpha_3': $(this).find('.iso_3166_1_alpha_3').text()
+				};
+				if ($(this).find('.popup')) {
+					countryData.popup = $(this).find('.popup').html();
+				}
+				countryselector.push(countryData);
 			});
 			mapElement.find('ul.widget-map-countryselector').remove();
 		}
@@ -331,7 +338,9 @@ $(function() {
 		};
 
 		var map = L.map(id, options).setView([view.lat, view.lon], view.zoom);
-		// http://{s}.tile.osm.org/{z}/{x}/{y}.png
+		// OSM: http://{s}.tile.osm.org/{z}/{x}/{y}.png
+		// Blackwhite: http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png
+		// Webspace: /static/images/tiles/tile{z}-{x}-{y}.png
 		L.tileLayer('/static/images/tiles/tile{z}-{x}-{y}.png', {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 			maxZoom: 5, // We don't have more tiles on local repository
@@ -401,23 +410,43 @@ $(function() {
 				fillColor: '#DA812C',
 			};
 
-			var countriesLayer = L.geoJson(countries.features, {
-				style: countryStyle,
-				filter: function(feature, layer) {
-					// Return true if country is selected
-					return $.inArray(feature.id, countryselector) != -1;
-				},
-			});
-			countriesLayer.addTo(map);
 
+			// The Leaflet Layer with all Countries
+			var countriesLayerGroup = L.featureGroup();
 			// Fit map to countries
 			function mapToBoundaries() {
-				var countriesBoudaries = countriesLayer.getBounds();
+				var countriesBoudaries = countriesLayerGroup.getBounds();
 				// With Leaflet pad() we could make the boundaries larger
 				map.fitBounds(countriesBoudaries);
 			}
+
+			$.each(countryselector, function(index, countryData) {
+				$.each(countries.features, function(index, feature) {
+					if (feature.id == countryData.iso_3166_1_alpha_3) {
+						var countryLayer = L.geoJson(feature, {
+							style: countryStyle
+						});
+						countryLayer.addTo(map);
+
+						if (countryData.popup) {
+							// Add popup
+							var popup = countryLayer.bindPopup( countryData.popup );
+							if (noInteraction) {
+								// Pan map back after popup closed
+								popup.on("popupclose", function(e) {
+									mapToBoundaries();
+								});
+							}
+						}
+
+						countriesLayerGroup.addLayer(countryLayer);
+					}
+				});
+			});
+
 			$(window).on('resize', mapToBoundaries);
 			mapToBoundaries();
+
 		}
 
 	});

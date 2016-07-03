@@ -1,5 +1,6 @@
 <?php
-	$domain = 'http://a.tile.osm.org';
+	// $domain = 'http://a.tile.osm.org'; $suffix = '';
+	$domain = 'http://a.basemaps.cartocdn.com/light_all'; $suffix = '@2x';
 
 	$maxz = 6;
 
@@ -9,7 +10,7 @@
 			for ($y = 0; $y < pow(2, $z); $y++) {
 				// http://a.tile.osm.org/0/0/0.png
 				// Auswahl https://leaflet-extras.github.io/leaflet-providers/preview/
-				$url = $domain. '/'. $z. '/'. $x. '/'. $y. '.png';
+				$url = $domain. '/'. $z. '/'. $x. '/'. $y. $suffix. '.png';
 				file_put_contents('tile'. $z. '-'. $x. '-'. $y. '.png' , fopen($url, 'r'));
 			}
 		}

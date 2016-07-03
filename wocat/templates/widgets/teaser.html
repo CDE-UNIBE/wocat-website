@@ -37,7 +37,7 @@
 
 {% if description %}
 	<p class="widget-teaser-description">
-		{{ description }}
+		{{ description|safe }}
 	</p>
 {% endif %}
 {% if not lines %}
@@ -72,6 +72,4 @@
 		</a>
 	{% endif %}
 {% endif %}
-
-
 </div><!-- widget-teaser -->

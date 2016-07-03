@@ -151,6 +151,7 @@ h4, .h4 {
 	}
 }
 
+
 .widget-carousel {
 	.carousel-inner > .item > img, .carousel-inner > .item > a > img {
 		width: 100%;
@@ -302,6 +303,53 @@ h4, .h4 {
 	}
 }
 
+
+.widget-overlay-teaser {
+	position: relative;
+
+	.widget-overlay-teaser-content {
+		margin-bottom: 30px;
+
+		h3 {
+			margin: 0 0 10px 0;
+		}
+		p {
+			margin: 0 0 5px 0;
+
+			&.description {
+				margin-bottom: 10px;
+			}
+		}
+
+		@media(min-width:768px) {
+			margin-bottom: 0;
+			position: absolute;
+			z-index: 10;
+			background-color: rgba(255, 255, 255, 0.9);
+			padding: 15px;
+		}
+	}
+
+	&.widget-overlay-teaser-box {
+		.widget-overlay-teaser-content {
+
+			@media(min-width:768px) {
+				bottom: 60px;
+				left: 30px;
+				width: 405px;
+			}
+		}
+	}
+	&.widget-overlay-teaser-bottom {
+		.widget-overlay-teaser-content {
+			@media(min-width:768px) {
+				bottom: 30px;
+				left: 0px;
+			}
+		}
+	}
+}
+
 .widget-horizontal-ruler {
 	margin-bottom: 30px;
 	margin-top: 15px;
@@ -368,11 +416,18 @@ h4, .h4 {
 
 
 
-.widget-richtext-content {
+.widget-richtext {
+	// TODO: Abstände der Headings einstellen
 	margin: 0 0 30px 0;
 
 
-	img.filer_image {
+	h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+		margin-top: 1em;
+		margin-bottom: 0.3em;
+	}
+
+
+	img.richtext-image {
 		display: block;
 		width: 100%;
 		height: auto;
@@ -412,12 +467,10 @@ h4, .h4 {
 		margin-bottom: 0;
 	}
 }
-
-
 .widget-embed {
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 }
-.widget-embed, .widget-richtext-content {
+.widget-embed, .widget-richtext {
 	.responsive-object {
 		position:relative;
 
@@ -430,6 +483,7 @@ h4, .h4 {
 		}
 	}
 }
+
 
 
 .widget-columns-1-1, .widget-columns-2-1, .widget-columns-1-2 {
@@ -708,22 +762,45 @@ h4, .h4 {
 
 
 .widget-map {
-	height: 400px;
+	height: 250px;
 	margin-bottom: 30px;
 
 	&.widget-map-small {
-		height: 150px;
+		height: 130px;
+	}
+	&.widget-map-large {
+		height: 250px;
+
+		@media(min-width:768px) {
+			height: 400px;
+		}
+		@media(min-width:1200px) {
+			height: 500px;
+		}
 	}
 
 	&.leaflet-container {
 		cursor: default;
+		font-family: inherit;
+
+		a {
+			color: @color-primary;
+			font-size: 14px;
+		}
 
 		.leaflet-control-container {
 			display: none;
 		}
 	}
 }
+.widget-map-teaser {
+	margin-bottom: 30px;
 
+	.widget-map {
+		margin-bottom: 15px;
+	}
+
+}
 
 .widget-footer {
 	background-color: @color-neutral;

@@ -1,0 +1,107 @@
+{% extends "styleguide/base.html" %}
+{% load static %}
+
+{% block content %}
+	{{ header2_project_output }}
+	{{ carousel_output }}
+	{{ page_lead_overlay_project_output }}
+
+	<div class="container">
+		{{ breadcrumb_project_output }}
+
+		<div class="row">
+			<div class="col-sm-8">
+				{{ richtext_project_output }}
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-xs-3 col-sm-3">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						{{ image_logo_output }}
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						{{ image_logo_output }}
+					</div>
+				</div>
+			</div>
+		</div><!-- row -->
+
+
+		{{ horizontal_ruler_output }}
+
+		<h2>Countries involved</h2>
+		{{ map_large_output }}
+		<h3>Africa</h3>
+		<div class="row">
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_nigeria_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_nigeria_output }}
+			</div>
+		</div>
+		<h3>Asia</h3>
+		<div class="row">
+			<div class="col-sm-3">
+				{{ teaser_nigeria_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_nigeria_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+		</div>
+		<h3>Europe and Central Asia</h3>
+		<div class="row">
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_nigeria_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+		</div>
+		<h3>Latin America</h3>
+		<div class="row">
+			<div class="col-sm-3">
+				{{ teaser_nigeria_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_nigeria_output }}
+			</div>
+			<div class="col-sm-3">
+				{{ teaser_kenya_output }}
+			</div>
+		</div>
+
+
+
+		<h2>How it works</h2>
+		<h2>…</h2>
+		<br><br>
+
+	</div><!-- container -->
+	{{ footer_output }}
+{% endblock %}
