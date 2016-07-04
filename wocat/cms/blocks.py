@@ -74,24 +74,13 @@ class LinkBlock(StructBlock):
         super().__init__(*args, **kwargs)
         self.required = required
 
-    @property
-    def url(self):
-        if self.page:
-            return self.page.url
-        elif self.link:
-            return self.link
-
-    @property
-    def external(self):
-        return not bool(self.page)
-
     def get_context(self, value):
         page = value.get('page')
-        url = self.url
+        link = value.get('link')
         return {
-            'url': url,
-            'external': self.external,
-            'name': value.get('name'),
+            'href': page.url if page else link,
+            'external': not bool(page),
+            'text': value.get('name') or _('read more'),
         }
 
     def clean(self, value):
@@ -101,6 +90,47 @@ class LinkBlock(StructBlock):
             errors = {field: ErrorList([error_message]) for field in at_lest_one_field_required_fields}
             raise ValidationError(error_message, params=errors)
         return super().clean(value)
+
+
+class ReadMoreBlock(StructBlock):
+    name = blocks.CharBlock(required=False)
+    page = PageChooserBlock(required=False)
+    link = blocks.URLBlock(required=False)
+
+    def __init__(self, required=True, local_blocks=None, *args, **kwargs):
+        super().__init__(local_blocks=local_blocks, *args, **kwargs)
+        self.required = required
+
+    def get_context(self, value):
+        page = value.get('page')
+        link = value.get('link')
+        return {
+            'href': page.url if page else link,
+            'external': not bool(page),
+            'text': value.get('name') or _('read more'),
+            'align': value.get('alignment'),
+        }
+
+    def clean(self, value):
+        at_lest_one_field_required_fields = ['page', 'link']
+        if self.required and not any([bool(value.get(field)) for field in at_lest_one_field_required_fields]):
+            error_message = _('At lest one of {} is required').format(at_lest_one_field_required_fields)
+            errors = {field: ErrorList([error_message]) for field in at_lest_one_field_required_fields}
+            raise ValidationError(error_message, params=errors)
+        return super().clean(value)
+
+    class Meta:
+        icon = 'link'
+        label = _('Read more')
+        template = 'widgets/read-more-link.html'
+        help_text = _('Choose either a page or an external link')
+
+
+LINK_BLOCKS = [
+    ('read_more', ReadMoreBlock()),
+]
+
+BASE_BLOCKS += LINK_BLOCKS
 
 
 class TeaserImageBlock(StructBlock):
@@ -146,7 +176,7 @@ class TeaserBlock(StructBlock):
         icon = 'link'
         label = _('Teaser')
         template = 'widgets/teaser.html'
-        help_text = 'Choose either a page or an external link'
+        help_text = _('Choose either a page or an external link')
 
 
 TEASER_BLOCKS = [
@@ -239,7 +269,7 @@ CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 #         icon = 'link'
 #         label = _('Teaser')
 #         template = 'widgets/teaser.html'
-#         help_text = 'Choose either a page or an external link'
+#         help_text = _('Choose either a page or an external link')
 
 # class CarouselSlideBlock(StructBlock):
 #     image = ImageBlock()
@@ -361,7 +391,7 @@ CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 #         icon = 'link'
 #         label = _('Teaser')
 #         template = 'widgets/teaser.html'
-#         help_text = 'Choose either a page or an external link'
+#         help_text = _('Choose either a page or an external link')
 
 IMAGE_BLOCKS = (
     ('image', ImageBlock()),
