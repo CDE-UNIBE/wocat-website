@@ -444,7 +444,16 @@ $(function() {
 				});
 			});
 
-			$(window).on('resize', mapToBoundaries);
+
+			// Update map on resize
+			var resizeTimer = null;
+			$(window).resize(function () {
+				if (resizeTimer) {
+					clearTimeout(resizeTimer);
+				}
+				resizeTimer = setTimeout(mapToBoundaries, 200); // set new timer
+			});
+
 			mapToBoundaries();
 
 		}
