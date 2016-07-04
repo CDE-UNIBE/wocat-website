@@ -5,8 +5,15 @@ from django_countries.widgets import CountrySelectWidget
 from wagtail.wagtailusers.forms import UserEditForm, UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
+from wocat.institutions.models import Institution
+
 
 class CustomUserEditForm(UserEditForm):
+    institution = forms.ModelChoiceField(
+        queryset=Institution.objects.all(),
+        required=False,
+        label=_('Institution'),
+    )
     avatar = forms.ImageField(
         required=False,
         label=_('Avatar'),
@@ -27,6 +34,11 @@ class CustomUserEditForm(UserEditForm):
 
 
 class CustomUserCreationForm(UserCreationForm):
+    institution = forms.ModelChoiceField(
+        queryset=Institution.objects.all(),
+        required=False,
+        label=_('Institution'),
+    )
     avatar = forms.ImageField(
         required=False,
         label=_('Avatar'),

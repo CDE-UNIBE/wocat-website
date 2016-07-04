@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from easy_thumbnails.fields import ThumbnailerImageField
 
+from wocat.institutions.models import Institution
+
 
 @python_2_unicode_compatible
 class User(AbstractUser):
@@ -25,6 +27,12 @@ class User(AbstractUser):
     country = CountryField(
         verbose_name=_('Country'),
         blank=True,
+    )
+    institution = models.ForeignKey(
+        Institution,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
     organisation = models.CharField(
         verbose_name=_('Organisation'),

@@ -268,7 +268,7 @@ WAGTAILADMIN_NOTIFICATION_USE_HTML = True
 TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_EDIT_FORM = 'wocat.cms.forms.CustomUserEditForm'
 WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
-WAGTAIL_USER_CUSTOM_FIELDS = ['avatar', 'country', 'organisation', 'expertise']
+WAGTAIL_USER_CUSTOM_FIELDS = ['avatar', 'country', 'institution', 'organisation', 'expertise']
 
 
 # EASY THUMBNAILS
