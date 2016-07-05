@@ -308,6 +308,13 @@ data = {
             'text': 'News',
         },
     },
+    'heading3_media': {
+        'name': 'Heading 3 Media',
+        'template': 'widgets/heading3.html',
+        'context': {
+            'text': 'Media',
+        },
+    },
     'heading2_countries': {
         'name': 'Heading 2 Countries',
         'template': 'widgets/heading2.html',
@@ -390,18 +397,6 @@ data = {
             'description': ' Ein paar Zahlen zu Algerien: Lala und Blubblub. ',
             'readmorelink': {
                 'text': 'to the country',
-            },
-        },
-    },
-    'teaser_home_media': {
-        'name': 'Teaser Home Media',
-        'template': 'widgets/teaser.html',
-        'context': {
-            'href': 'http://sinnwerkstatt.com',
-            'title': 'Media Library',
-            'description': 'Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
-            'readmorelink': {
-                'text': 'Search media library',
             },
         },
     },
@@ -1092,6 +1087,14 @@ data = {
             'href': 'http://x',
         },
     },
+    'readmorelink_media': {
+        'name': 'Read all media',
+        'template': 'widgets/read-more-link.html',
+        'context': {
+            'text': 'Show all media',
+            'href': 'http://x',
+        },
+    },
 
     'richtext': {
         'name': 'Richtext',
@@ -1526,6 +1529,35 @@ data = {
             'readmorelink': {
                 'text': 'to the country',
             },
+        },
+    },
+
+
+    'media': {
+        'name': 'Media',
+        'template': 'widgets/media.html',
+        'context': {
+            'imgsrc': '/static/styleguide/test-images/header3-3by1.jpg',
+            'title': 'Das Schaf',
+            'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+        },
+    },
+    'media_ytimage': {
+        'name': 'Media',
+        'template': 'widgets/media.html',
+        'context': {
+            'imgsrc': '/static/styleguide/test-images/youtube-thumb.jpg',
+            'title': 'Auf die Größe kommts an. Besonders bei Titeln über mehrere Zeilen.',
+            'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+        },
+    },
+    'media_highimage': {
+        'name': 'Media',
+        'template': 'widgets/media.html',
+        'context': {
+            'imgsrc': '/static/styleguide/test-images/studio-vertical.jpg',
+            'title': 'Das Schaf',
+            'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
         },
     },
 
