@@ -83,6 +83,33 @@ h4, .h4 {
 
 
 
+// Zweispaltige, dreispaltige und vierspaltige Listen
+.row.cols-sm-6 .col {
+	.make-sm-column(6);
+
+	// Clear every second
+	&:nth-child(2n+1) {
+		clear:left;
+	}
+}
+.row.cols-sm-4 .col {
+	.make-sm-column(4);
+
+	// Clear every third
+	&:nth-child(3n+1) {
+		clear:left;
+	}
+}
+.row.cols-sm-3 .col {
+	.make-sm-column(3);
+
+	// Clear every fourth
+	&:nth-child(4n+1) {
+		clear:left;
+	}
+}
+
+
 .widget-header {
 	.navbar-default {
 		border-width: 0;
@@ -366,6 +393,13 @@ h4, .h4 {
 	.widget-teaser-title {
 		display: block;
 		margin: 0 0 7px 0;
+
+ 		.widget-teaser-flag {
+ 			position: relative;
+ 			top: -1px;
+ 			display: inline-block;
+ 			margin-right: 2px;
+ 		}
 
 		&.widget-teaser-title-lines {
 			margin-bottom: 15px;

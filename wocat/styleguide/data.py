@@ -373,6 +373,7 @@ data = {
         'context': {
             'href': 'http://sinnwerkstatt.com',
             'title': 'Kenya',
+            'flag_iso_3166_1_alpha_3': 'ken',
             'description': ' Ein paar Zahlen zu Algerien: Lala und Blubblub. ',
             'readmorelink': {
                 'text': 'to the country',
@@ -385,6 +386,7 @@ data = {
         'context': {
             'href': 'http://sinnwerkstatt.com',
             'title': 'Nigeria',
+            'flag_iso_3166_1_alpha_3': 'nga',
             'description': ' Ein paar Zahlen zu Algerien: Lala und Blubblub. ',
             'readmorelink': {
                 'text': 'to the country',
@@ -419,6 +421,19 @@ data = {
             'description': 'Wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.<br>Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'Read more about Global Issues',
+            },
+             'lines': True,
+        },
+    },
+    'teaser_home_decisionsupport': {
+        'name': 'Teaser with no image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'title': 'Decision Support',
+            'href': 'http://sinnwerkstatt.com',
+            'description': 'Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.<br>Wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'Read more about Decision Support',
             },
              'lines': True,
         },
@@ -1467,6 +1482,7 @@ data = {
                 ],
             },
             'title': 'Algier',
+            'flag_iso_3166_1_alpha_3': 'dza',
             'description': 'Ein paar Zahlen zu Algerien: Lala und Blubblub.',
             'href': 'x',
             'readmorelink': {
@@ -1485,6 +1501,7 @@ data = {
                 ],
             },
             'title': 'Kenya',
+            'flag_iso_3166_1_alpha_3': 'ken',
             'description': 'Ein paar Zahlen zu Kenia: Lala und Blubblub.',
             'href': 'x',
             'readmorelink': {
@@ -1503,6 +1520,7 @@ data = {
                 ],
             },
             'title': 'Nigeria',
+            'flag_iso_3166_1_alpha_3': 'nga',
             'description': 'Ein paar Zahlen zu Nigeria: Lala und Blubblub.',
             'href': 'x',
             'readmorelink': {
