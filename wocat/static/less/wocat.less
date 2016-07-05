@@ -4,6 +4,7 @@
 @color-neutral-dark: #777777;
 @color-black: #333;
 @color-primary: #DA812C;
+@color-primary-light: #F3D9C0;
 @color-primary-dark: #CC6300;
 @color-secondary-dark: #015C6C;
 @color-white: #FFF;
@@ -36,8 +37,20 @@ a {
 h1, .h1 {
 	font-weight: 200;
 }
+h2, .h2 {
+	font-size: 26px;
+	font-weight: 800;
+	color: @color-neutral-dark;
+}
+h3, .h3 {
+	font-size: 22px;
+	text-transform: uppercase;
+	font-weight: 800;
+	color: @color-neutral-dark;
+}
 h4, .h4 {
 	font-weight: 600;
+	font-size: 16px;
 }
 
 .btn {
@@ -69,10 +82,12 @@ h4, .h4 {
 }
 
 
+
 .widget-header {
 	.navbar-default {
 		border-width: 0;
 		margin: 0;
+
 
 		.topnav {
 			background-color: @color-white;
@@ -97,10 +112,40 @@ h4, .h4 {
 				}
 			}
 
-			.navbar-nav > li > a {
-				color: @color-neutral-dark;
-				text-transform: uppercase;
-				font-size: 12px;
+			.navbar-nav { 
+				> li {
+					> a {
+						color: @color-neutral-dark;
+						text-transform: uppercase;
+						font-size: 12px;
+					}
+
+					ul.dropdown-menu {
+						> li {
+							> a {
+
+								@media(min-width:992px) {
+									padding-top: 10px;
+									padding-bottom: 10px;
+								}
+
+								-webkit-transition: background-color 0.5s;
+								transition: background-color 0.5s;
+
+								&:hover, &:focus {
+									background-color: @color-neutral;
+								}
+							}
+
+							&.active {
+								> a {
+									background-color: @color-neutral;
+								}
+							}
+						}
+					}
+
+				}
 			}
 
 
@@ -121,6 +166,21 @@ h4, .h4 {
 			}
 
 			.navbar-brand {
+				padding-top: 10px;
+				padding-bottom: 9px;
+				line-height: 26px; // Works with and without logo					
+
+				@media(min-width:992px) {
+					padding-top: 10px;
+					padding-bottom: 9px;
+					line-height: 25px; // Works with and without logo
+				}
+				@media(min-width:1200px) {
+					padding-top: 11px;
+					padding-bottom: 9px;
+					line-height: 28px; // Works with and without logo
+				}
+
 				img {
 					width: auto;
 					height: 30px;
@@ -132,6 +192,74 @@ h4, .h4 {
 				}
 			}
 
+			ul.nav.navbar-nav {
+				> li {
+					> a {
+						color: @color-white;
+						text-transform: uppercase;
+
+						@media(min-width:992px) {
+							font-size: 14px;
+						}
+						@media(min-width:1200px) {
+							font-size: 16px;
+						}
+
+						-webkit-transition: background-color 0.5s;
+						transition: background-color 0.5s;
+
+						&:hover, &:focus, &:active {
+							background-color: @color-primary-light;
+						}
+
+					}
+
+					&.active {
+						> a {
+							background-color: @color-primary-light;
+							color: @color-primary;
+						}
+					}
+
+					+ li > a {
+						@media(min-width:992px) {
+							border-left: 1px solid @color-primary-light;
+						}
+					}
+
+					ul.dropdown-menu {
+						background-color: @color-primary;
+						> li {
+							> a {
+								color: @color-white;
+
+								@media(min-width:992px) {
+									padding-top: 10px;
+									padding-bottom: 10px;
+								}
+
+								-webkit-transition: background-color 0.5s;
+								transition: background-color 0.5s;
+
+								&:hover, &:focus {
+									background-color: @color-primary-light;
+								}
+							}
+
+							&.active {
+								> a {
+									background-color: @color-primary-light;
+									color: @color-primary;
+								}
+							}
+						}
+					}
+
+
+				}
+			}
+
+
 			&.mainnav-depth-1 {
 				background-color: @color-primary;
 				color: @color-white;
@@ -142,11 +270,58 @@ h4, .h4 {
 				border-width: 5px 0 0 0;
 				background-color: @color-neutral-dark;
 				color: @color-white;
+
+
+				ul.nav.navbar-nav {
+					> li {
+						> a {
+
+							&:hover, &:focus, &:active {
+								background-color: @color-neutral;
+							}
+
+						}
+
+						&.active {
+							> a {
+								background-color: @color-neutral;
+								color: @color-black;
+							}
+						}
+	
+						+ li > a {
+							@media(min-width:992px) {
+								border-left: 1px solid @color-neutral;
+							}
+						}
+
+
+						ul.dropdown-menu {
+							background-color: @color-neutral-dark;
+							> li {
+								> a {
+									color: @color-white;
+
+
+									&:hover, &:focus {
+										background-color: @color-neutral;
+									}
+								}
+
+								&.active {
+									> a {
+										background-color: @color-neutral;
+										color: @color-black;
+									}
+								}
+							}
+						}
+
+					}
+				}
+
 			}
 
-			.navbar-nav > li > a {
-				color: @color-white;
-			}
 		}
 	}
 }
@@ -168,7 +343,12 @@ h4, .h4 {
 
 
 .widget-teaser {
-	margin-bottom: 30px;
+	margin-bottom: 15px;
+	overflow: hidden; // No collapse margins
+
+	.widget-map {
+		margin-bottom: 15px;
+	}
 
 	.widget-teaser-imgtop, .widget-teaser-imgleft, .widget-teaser-imgright {
 		width: 100%;
@@ -178,15 +358,17 @@ h4, .h4 {
 	}
 
 	.widget-teaser-date {
+		margin-bottom: 4px;
 		color: @color-neutral-dark;
 		font-size: 12px;
 	}
 
 	.widget-teaser-title {
 		display: block;
-		margin: 0 0 15px 0;
+		margin: 0 0 7px 0;
 
 		&.widget-teaser-title-lines {
+			margin-bottom: 15px;
 			border: 1px solid @color-primary;
 			border-width: 1px 0;
 			padding: 10px 0;
@@ -198,6 +380,15 @@ h4, .h4 {
 		}
 	}
 
+	.widget-teaser-description {
+		margin-bottom: 7px;
+	}
+
+	.widget-teaser-textbottom-spacer {
+		// Margin after text content
+		margin-bottom: 15px;
+	}
+
 	.widget-teaser-readmoretext {
 		display: block;
 
@@ -205,6 +396,7 @@ h4, .h4 {
 			border: 1px solid @color-neutral;
 			border-width: 1px 0;
 			padding: 10px 0;
+			margin-bottom: 15px;
 
 			&:hover, &:active, &:focus {
 				text-decoration: none;
@@ -736,9 +928,10 @@ h4, .h4 {
 	background-color: transparent;
 	padding-left: 0;
 	padding-right: 0;
+	color: @color-neutral-dark;
 
 	a {
-		color: @color-black;
+		color: @color-neutral-dark;
 
 		&:hover, &:focus {
 			color: @color-primary;
@@ -751,7 +944,7 @@ h4, .h4 {
 
 	> li + li::before {
 		content: ">";
-		color: @color-black;
+		color: @color-neutral-dark;
 	}
 }
 
@@ -793,17 +986,10 @@ h4, .h4 {
 		}
 	}
 }
-.widget-map-teaser {
-	margin-bottom: 30px;
-
-	.widget-map {
-		margin-bottom: 15px;
-	}
-
-}
 
 .widget-footer {
-	background-color: @color-neutral;
+	background-color: @color-neutral-dark;
+	color: @color-white;
 	padding: 15px 0;
 
 	.widget-footer-navbar {
@@ -823,17 +1009,23 @@ h4, .h4 {
 					display: inline-block;
 					padding: 10px;
 					margin-bottom: 10px;
-					color: @color-black;
+					color: @color-white;
 					font-weight: 600;
 
+
+					-webkit-transition: background-color 0.5s;
+					transition: background-color 0.5s;
+
 					&:hover, &:focus, &:active {
-						// color: @color-neutral-dark;
+						background-color: @color-neutral;
+						text-decoration: none;
 					}
 				}
 
 				&.active {
 					a {
-						background-color: @color-white;
+						background-color: @color-neutral;
+						color: @color-black;
 					}
 				}
 			}

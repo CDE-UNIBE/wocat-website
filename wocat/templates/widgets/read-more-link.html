@@ -1,3 +1,9 @@
-<div class="widget-readmorelink{% if align == "right" %} text-right{% endif %}">
-	<a href="{{ href }}"{% if external %} target="_blank" {% endif %}>» {{ text }}</a>
+<div class="widget-readmorelink{% if align == "right" %} text-right{% endif %}{% if align == "center" %} text-center{% endif %}">
+	{% if button %}
+		<a href="{{ href }}"{% if external %} target="_blank"{% endif %} class="btn btn-primary">
+			{{ text|safe }}
+		</a>
+	{% else %}
+		<a href="{{ href }}"{% if external %} target="_blank"{% endif %}>» {{ text }}</a>
+	{% endif %}
 </div>

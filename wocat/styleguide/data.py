@@ -301,15 +301,15 @@ data = {
             'text': 'Consortium Partners',
         },
     },
-    'heading2_news': {
-        'name': 'Heading 2 News',
-        'template': 'widgets/heading2.html',
+    'heading3_news': {
+        'name': 'Heading 3 News',
+        'template': 'widgets/heading3.html',
         'context': {
             'text': 'News',
         },
     },
     'heading2_countries': {
-        'name': 'Heading 2 News',
+        'name': 'Heading 2 Countries',
         'template': 'widgets/heading2.html',
         'context': {
             'text': 'Countries',
@@ -542,6 +542,30 @@ data = {
             },
         },
     },
+    'teaser_lines_home_news2': {
+        'name': 'Teaser with lines and top image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Building resilience',
+            'date': '24. April 2016',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
+    'teaser_lines_home_news2_long': {
+        'name': 'Teaser with lines and top image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'See what happens if we write a long article about building resilience and all the interesting aspects you had never expected!',
+            'date': '24. April 2016',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
     'teaser_topimg': {
         'name': 'Teaser with top image',
         'template': 'widgets/teaser.html',
@@ -661,6 +685,17 @@ data = {
             'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
         },
     },
+
+    'page_lead_overlay_home2': {
+        'name': 'Page Lead Overlay',
+        'template': 'widgets/page-lead-overlay.html',
+        'context': {
+            'heading': 'Wocat',
+            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+        },
+    },
+
+
     'page_lead_overlay_project': {
         'name': 'Page Lead Overlay',
         'template': 'widgets/page-lead-overlay.html',
@@ -945,9 +980,6 @@ data = {
         'name': 'Horizontal Ruler',
         'template': 'widgets/horizontal-ruler.html',
         'context': {
-            'src': '/static/styleguide/test-images/header1.jpg',
-            'caption': 'This is the description of the image. This is the description of the image. This is the description of the image. This is the description of the image. This is the description of the image.',
-            'href': 'http://xxx',
         },
     },
 
@@ -973,6 +1005,35 @@ data = {
         'context': {
             'src': '/static/images/logo.png',
             'href': 'http://x',
+        },
+    },
+    'button': {
+        'name': 'Button',
+        'template': 'widgets/read-more-link.html',
+        'context': {
+            'text': 'Use the framework',
+            'href': 'http://google.de',
+            'button': True,
+        },
+    },
+    'button_center': {
+        'name': 'Button Centered',
+        'template': 'widgets/read-more-link.html',
+        'context': {
+            'align': 'center',
+            'text': 'Use the framework',
+            'href': 'http://google.de',
+            'button': True,
+        },
+    },
+    'button_right': {
+        'name': 'Button Right',
+        'template': 'widgets/read-more-link.html',
+        'context': {
+            'align': 'right',
+            'text': 'Use the framework',
+            'href': 'http://google.de',
+            'button': True,
         },
     },
     'readmorelink': {
@@ -1005,6 +1066,14 @@ data = {
         'template': 'widgets/read-more-link.html',
         'context': {
             'text': 'Show all countries including stubs',
+            'href': 'http://x',
+        },
+    },
+    'readmorelink_news': {
+        'name': 'Read all news',
+        'template': 'widgets/read-more-link.html',
+        'context': {
+            'text': 'Show all news',
             'href': 'http://x',
         },
     },
@@ -1261,23 +1330,6 @@ data = {
             ],
         },
     },
-    'button': {
-        'name': 'Button',
-        'template': 'widgets/button.html',
-        'context': {
-            'text': 'Use the framework',
-            'href': 'http://google.de',
-        },
-    },
-    'button_center': {
-        'name': 'Button Centered',
-        'template': 'widgets/button.html',
-        'context': {
-            'center': True,
-            'text': 'Use the framework',
-            'href': 'http://google.de',
-        },
-    },
 
 
     'map_large': {
@@ -1352,28 +1404,30 @@ data = {
     },
     'map_teaser_project': {
         'name': 'Map Teaser Multiple',
-        'template': 'widgets/map-teaser.html',
+        'template': 'widgets/teaser.html',
         'context': {
-            'countries': [
-                { 'iso_3166_1_alpha_3': 'LSO', 'popup': '<a href="x">Lesotho</a>', },
-                { 'iso_3166_1_alpha_3': 'MAR', 'popup': '<a href="x">Morocco</a>', },
-                { 'iso_3166_1_alpha_3': 'NGA', 'popup': '<a href="x">Nigeria</a>', },
-                { 'iso_3166_1_alpha_3': 'TUN', 'popup': '<a href="x">Tunisia</a>', },
+            'map': {
+                'countries': [
+                    { 'iso_3166_1_alpha_3': 'LSO', 'popup': '<a href="x">Lesotho</a>', },
+                    { 'iso_3166_1_alpha_3': 'MAR', 'popup': '<a href="x">Morocco</a>', },
+                    { 'iso_3166_1_alpha_3': 'NGA', 'popup': '<a href="x">Nigeria</a>', },
+                    { 'iso_3166_1_alpha_3': 'TUN', 'popup': '<a href="x">Tunisia</a>', },
 
-                { 'iso_3166_1_alpha_3': 'BGD', 'popup': '<a href="x">Bangladesh</a>', },
-                { 'iso_3166_1_alpha_3': 'CHN', 'popup': '<a href="x">China</a>', },
-                { 'iso_3166_1_alpha_3': 'PHL', 'popup': '<a href="x">Philippines</a>', },
-                { 'iso_3166_1_alpha_3': 'THA', 'popup': '<a href="x">Thailand</a>', },
+                    { 'iso_3166_1_alpha_3': 'BGD', 'popup': '<a href="x">Bangladesh</a>', },
+                    { 'iso_3166_1_alpha_3': 'CHN', 'popup': '<a href="x">China</a>', },
+                    { 'iso_3166_1_alpha_3': 'PHL', 'popup': '<a href="x">Philippines</a>', },
+                    { 'iso_3166_1_alpha_3': 'THA', 'popup': '<a href="x">Thailand</a>', },
 
-                { 'iso_3166_1_alpha_3': 'BIH', 'popup': '<a href="x">Bosnia & Herzegovina</a>', },
-                { 'iso_3166_1_alpha_3': 'TUR', 'popup': '<a href="x">Turkey</a>', },
-                { 'iso_3166_1_alpha_3': 'UZB', 'popup': '<a href="x">Uzbekistan</a>', },
+                    { 'iso_3166_1_alpha_3': 'BIH', 'popup': '<a href="x">Bosnia & Herzegovina</a>', },
+                    { 'iso_3166_1_alpha_3': 'TUR', 'popup': '<a href="x">Turkey</a>', },
+                    { 'iso_3166_1_alpha_3': 'UZB', 'popup': '<a href="x">Uzbekistan</a>', },
 
-                { 'iso_3166_1_alpha_3': 'ARG', 'popup': '<a href="x">Argentinia</a>', },
-                { 'iso_3166_1_alpha_3': 'COL', 'popup': '<a href="x">Colombia</a>', },
-                { 'iso_3166_1_alpha_3': 'ECU', 'popup': '<a href="x">Equador</a>', },
-                { 'iso_3166_1_alpha_3': 'PAN', 'popup': '<a href="x">Panama</a>', },
-            ],
+                    { 'iso_3166_1_alpha_3': 'ARG', 'popup': '<a href="x">Argentinia</a>', },
+                    { 'iso_3166_1_alpha_3': 'COL', 'popup': '<a href="x">Colombia</a>', },
+                    { 'iso_3166_1_alpha_3': 'ECU', 'popup': '<a href="x">Equador</a>', },
+                    { 'iso_3166_1_alpha_3': 'PAN', 'popup': '<a href="x">Panama</a>', },
+                ],
+            },
             'title': 'Decision support for mainstreaming and scaling out SLM',
             'description': 'The DS-SLM project contributes to arresting and reversing current global trends in land degradation by supporting 15 countries in mainstreaming and scaling out SLM.',
             'href': 'x',
@@ -1384,14 +1438,16 @@ data = {
     },
     'map_teaser_project1': {
         'name': 'Project Teaser Map 1',
-        'template': 'widgets/map-teaser.html',
+        'template': 'widgets/teaser.html',
         'context': {
-            'countries': [
-                { 'iso_3166_1_alpha_3': 'SOM', },
-                { 'iso_3166_1_alpha_3': 'SDN', },
-                { 'iso_3166_1_alpha_3': 'UGA', },
-                { 'iso_3166_1_alpha_3': 'ZWE', },
-            ],
+            'map': {
+                'countries': [
+                    { 'iso_3166_1_alpha_3': 'SOM', },
+                    { 'iso_3166_1_alpha_3': 'SDN', },
+                    { 'iso_3166_1_alpha_3': 'UGA', },
+                    { 'iso_3166_1_alpha_3': 'ZWE', },
+                ],
+            },
             'title': 'Project Alpha',
             'description': 'The project alpha is bla bla and lorem ipsum. Numbers are five and nine.',
             'href': 'x',
@@ -1402,12 +1458,14 @@ data = {
     },
     'map_teaser_project2': {
         'name': 'Map Teaser Country',
-        'template': 'widgets/map-teaser.html',
+        'template': 'widgets/teaser.html',
         'context': {
-            'size': 'small',
-            'countries': [
-                { 'iso_3166_1_alpha_3': 'DZA', },
-            ],
+            'map': {
+                'size': 'small',
+                'countries': [
+                    { 'iso_3166_1_alpha_3': 'DZA', },
+                ],
+            },
             'title': 'Algier',
             'description': 'Ein paar Zahlen zu Algerien: Lala und Blubblub.',
             'href': 'x',
@@ -1418,12 +1476,14 @@ data = {
     },
     'map_teaser_project3': {
         'name': 'Project Map Teaser 3',
-        'template': 'widgets/map-teaser.html',
+        'template': 'widgets/teaser.html',
         'context': {
-            'size': 'small',
-            'countries': [
-                { 'iso_3166_1_alpha_3': 'KEN', },
-            ],
+            'map': {
+                'size': 'small',
+                'countries': [
+                    { 'iso_3166_1_alpha_3': 'KEN', },
+                ],
+            },
             'title': 'Kenya',
             'description': 'Ein paar Zahlen zu Kenia: Lala und Blubblub.',
             'href': 'x',
@@ -1434,12 +1494,14 @@ data = {
     },
     'map_teaser_project4': {
         'name': 'Project Map Teaser 4',
-        'template': 'widgets/map-teaser.html',
+        'template': 'widgets/teaser.html',
         'context': {
-            'size': 'small',
-            'countries': [
-                { 'iso_3166_1_alpha_3': 'NGA', },
-            ],
+            'map': {
+                'size': 'small',
+                'countries': [
+                    { 'iso_3166_1_alpha_3': 'NGA', },
+                ],
+            },
             'title': 'Nigeria',
             'description': 'Ein paar Zahlen zu Nigeria: Lala und Blubblub.',
             'href': 'x',
@@ -1450,6 +1512,25 @@ data = {
     },
 
     'footer': {
+        'name': 'Footer',
+        'template': 'widgets/footer.html',
+        'context': {
+            'links': [
+                { 'href': 'http://google.de/1', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>', 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>', 'onlyxs': True, },
+                { 'href': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>', 'onlyxs': True, },
+                { 'href': 'http://google.de/1', 'text': 'Get involved', 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': 'FAQ', 'onlyxs': True, },
+                { 'href': 'http://bing.de/3', 'text': 'Glossary', 'active': True, 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': 'Login', 'onlyxs': True, },
+                { 'href': 'http://bing.de/2', 'text': 'Imprint', },
+                { 'href': 'http://bing.de/2', 'text': 'Contact', },
+                { 'href': 'http://bing.de/2', 'text': 'Active', 'active': True, },
+
+            ],
+        },
+    },
+    'footer_demo': {
         'name': 'Footer',
         'template': 'widgets/footer.html',
         'context': {

@@ -1,4 +1,7 @@
 <div class="widget-teaser">
+{% if map %}
+	{% include "widgets/map.html" with countries=map.countries size=map.size %}
+{% endif %}
 {% if imgsrc and imgpos == 'top' %}
 	<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop">
 {% endif %}
@@ -18,7 +21,10 @@
 {% endif %}
 {% if imgsrc and imgpos == 'right' %}
 	<div class="row">
-		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-8{% endif %}">
+		<div class="{% if largeimg %}col-sm-6 col-sm-push-6{% else %}col-sm-4 col-sm-push-8{% endif %}">
+			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgright">
+		</div>
+		<div class="{% if largeimg %}col-sm-6 col-sm-pull-6{% else %}col-sm-8 col-sm-pull-4{% endif %}">
 {% endif %}
 
 
@@ -54,14 +60,13 @@
 {% endif %}
 
 
+
+<div class="widget-teaser-textbottom-spacer"></div>
 {% if imgsrc and imgpos == 'left' %}
 		</div>
 	</div><!-- row -->
 {% endif %}
 {% if imgsrc and imgpos == 'right' %}
-		</div>
-		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-4{% endif %}">
-			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgright">
 		</div>
 	</div><!-- row -->
 {% endif %}

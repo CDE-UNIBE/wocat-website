@@ -2,26 +2,29 @@
 {% load static %}
 
 {% block content %}
+
+
 	{{ header1_home_output }}
 	{{ carousel_output }}
-	{{ page_lead_overlay_home_output }}
+	{{ page_lead_overlay_home2_output }}
 
 	<div class="container">
 
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-8">
+				<br>
 				{{ teaser_home_wocat_output }}
 				{{ teaser_home_globalissues_output }}
 			</div>
-			<div class="col-sm-6">
-				{{ heading2_news_output }}
-				{{ teaser_lines_home_news_output }}
-				{{ teaser_lines_home_news_long_output }}
+			<div class="col-sm-4">
+				{{ heading3_news_output }}
+				{{ teaser_lines_home_news2_output }}
+				{{ teaser_lines_home_news2_long_output }}
+				{{ readmorelink_news_output }}
 			</div>
 		</div>
 
-
-		{{ map_output }}
+		{{ map_large_output }}
 		{{ overlay_teaser_home_map_output }}
 
 		<div class="row">
@@ -100,4 +103,31 @@
 
 	</div><!-- container -->
 	{{ footer_output }}
+
+
+	{{ header1_home_output }}
+	{{ carousel_output }}
+	{{ page_lead_overlay_home_output }}
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-sm-6">
+				<br>
+				{{ teaser_home_wocat_output }}
+				{{ teaser_home_globalissues_output }}
+			</div>
+			<div class="col-sm-6">
+				{{ heading3_news_output }}
+				{{ teaser_lines_home_news_output }}
+				{{ teaser_lines_home_news_long_output }}
+				{{ readmorelink_news_output }}
+			</div>
+		</div>
+
+
+		{{ map_large_output }}
+		{{ overlay_teaser_home_map_output }}
+	</div>
+
 {% endblock %}
