@@ -61,7 +61,7 @@ class Header(InclusionTag):
         if project_page:
             depth = 2
             brand2 = {
-                'src': '/static/styleguide/test-images/dog-1by1.jpg',
+                'src': 'http://placehold.it/30x30',
                 'name': project_page.title,
                 'href': project_page.url,
             }
@@ -157,7 +157,7 @@ class Overlay(InclusionTag):
             page = context.get('page')
             if page:
                 return {
-                    'heading': page.title,
+                    'heading': page.seo_title or page.title,
                     'content': page.lead if hasattr(page, 'lead') else '',
                     'noimage': True,
                 }

@@ -62,7 +62,7 @@ class HeaderPageMixin(models.Model):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context['header'] = {
-            'title': self.title,
+            'title': self.seo_title or self.title,
             'images': self.header_images,
             'noimage': not bool(self.header_images),
             'content': self.lead,
