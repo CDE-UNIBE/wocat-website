@@ -1022,6 +1022,25 @@ data = {
             'href': 'http://x',
         },
     },
+
+    'image_gallery': {
+        'name': 'Image Gallery',
+        'template': 'widgets/image-gallery.html',
+        'context': {
+            'cols': 4,
+            'images': [
+                {
+                    'src': '/static/styleguide/test-images/header2.jpg',
+                    'caption': 'This is the description of the image. This is the description of the image.',
+                    'href': 'http://xxx',
+                },
+
+            ],
+        },
+    },
+
+
+
     'button': {
         'name': 'Button',
         'template': 'widgets/read-more-link.html',
