@@ -1017,7 +1017,7 @@ data = {
                 {
                     'src': '/static/styleguide/test-images/header4.jpg',
                     'description': 'This is the description of the image. This is the description of the image.',
-                    'href': 'http://xxx',
+                    'href': 'http://xxx1',
                 },
                 {
                     'src': '/static/styleguide/test-images/header1.jpg',
@@ -1025,12 +1025,12 @@ data = {
                 },
                 {
                     'src': '/static/styleguide/test-images/header3.jpg',
-                    'href': 'http://yyy',
+                    'href': 'http://yyy2',
                 },
                 {
                     'src': '/static/styleguide/test-images/header4.jpg',
                     'description': 'This is the description of the image. This is the description of the image.',
-                    'href': 'http://xxx',
+                    'href': 'http://xxx3',
                     'shrink': 1,
                 },
                 {
@@ -1040,8 +1040,8 @@ data = {
                 },
                 {
                     'src': '/static/styleguide/test-images/header3.jpg',
-                    'href': 'http://yyy',
-                    'shrink': 3,
+                    'href': 'http://yyy4',
+                    'shrink': 1,
                 },
             ],
         },
@@ -1179,11 +1179,26 @@ data = {
         'name': 'Members Table',
         'template': 'widgets/members-table.html',
         'context': {
+            'allcountries': 'All Countries',
             'countries': [
                 { 'name': 'Germany', },
                 { 'name': 'Niger', },
                 { 'name': 'Toga', },
             ],
+            'allorganisations': 'All Organisations',
+            'organisations': [
+                { 'name': 'Sinnwerkstatt', },
+                { 'name': 'Telekom', },
+                { 'name': 'O2', },
+                { 'name': 'Google', },
+                { 'name': 'Müllermilch', },
+                { 'name': 'Nutella', },
+                { 'name': 'Oranienhof', },
+                { 'name': 'Microsoft', },
+                { 'name': 'Adobe', },
+                { 'name': 'Calumet', },
+            ],
+            'allexpertises': 'All Expertiese',
             'expertises': [
                 { 'name': 'Strippen ziehen', },
                 { 'name': 'Schrauben drehn', },
