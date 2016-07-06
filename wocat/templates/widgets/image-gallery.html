@@ -1,24 +1,25 @@
 <div class="widget-image-gallery">
 	<div class="row cols-xs-{{ cols }}">
 		{% for image in images %}
-			{% if image.shrink == 1 %}
-				<div class="row"><div class="col-md-10 col-md-offset-1">
-			{% elif image.shrink == 2 %}
-				<div class="row"><div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-			{% endif %}
-			{% if href %}
-				<a href="{{ href }}">
-			{% endif %}
-			<img src="{{ image.src }}" alt="" class="widget-image-gallery-image">
-			{% if image.description %}
-				<p class="widget-image-gallery-description">{{ image.description }}</p>
-			{% endif %}
-			{% if href %}
-				</a>
-			{% endif %}
-			{% if image.shrink > 1 %}
-				</div></div>
-			{% endif %}
+			<div class="col">
+				{% if image.href %}
+					<a href="{{ image.href }}">
+				{% endif %}
+				{% if image.shrink == 1 %}
+					<div class="row"><div class="col-md-10 col-md-offset-1">
+				{% elif image.shrink == 2 %}
+					<div class="row"><div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+				{% endif %}
+				<img src="{{ image.src }}" alt="" class="widget-image-gallery-image">
+				{% if image.shrink %}
+					</div></div>
+				{% endif %}
+				{% if image.description %}
+					<p class="widget-image-gallery-description">{{ image.description }}</p>
+				{% endif %}
+				{% if image.href %}
+					</a>
+				{% endif %}
 			</div>
 		{% endfor %}
 	</div>

@@ -1015,11 +1015,34 @@ data = {
             'cols': 4,
             'images': [
                 {
-                    'src': '/static/styleguide/test-images/header2.jpg',
-                    'caption': 'This is the description of the image. This is the description of the image.',
+                    'src': '/static/styleguide/test-images/header4.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
                     'href': 'http://xxx',
                 },
-
+                {
+                    'src': '/static/styleguide/test-images/header1.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
+                },
+                {
+                    'src': '/static/styleguide/test-images/header3.jpg',
+                    'href': 'http://yyy',
+                },
+                {
+                    'src': '/static/styleguide/test-images/header4.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
+                    'href': 'http://xxx',
+                    'shrink': 1,
+                },
+                {
+                    'src': '/static/styleguide/test-images/header1.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
+                    'shrink': 2,
+                },
+                {
+                    'src': '/static/styleguide/test-images/header3.jpg',
+                    'href': 'http://yyy',
+                    'shrink': 3,
+                },
             ],
         },
     },
