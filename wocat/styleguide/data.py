@@ -400,37 +400,23 @@ data = {
             },
         },
     },
-    'teaser_home_wocat': {
-        'name': 'Teaser with no image',
-        'template': 'widgets/teaser.html',
+    'teaser_home_globalissues_image': {
+        'name': 'Home Global Issues Image',
+        'template': 'widgets/image.html',
         'context': {
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'src': '/static/styleguide/test-images/header1.jpg',
         },
     },
     'teaser_home_globalissues': {
         'name': 'Teaser with no image',
-        'template': 'widgets/teaser.html',
+        'template': 'widgets/overlay-teaser.html',
         'context': {
+            'description': 'Climate Change, Disaster Risk, Food Security, Sustainable Development Goals.',
             'title': 'Global Issues',
-            'href': 'http://sinnwerkstatt.com',
-            'description': 'Wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.<br>Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
-            'readmorelink': {
-                'text': 'Read more about Global Issues',
-            },
-             'lines': True,
-        },
-    },
-    'teaser_home_decisionsupport': {
-        'name': 'Teaser with no image',
-        'template': 'widgets/teaser.html',
-        'context': {
-            'title': 'Decision Support',
-            'href': 'http://sinnwerkstatt.com',
-            'description': 'Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.<br>Wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
-            'readmorelink': {
-                'text': 'Read more about Decision Support',
-            },
-             'lines': True,
+            'links': [
+                {'href': 'http://google.de', 'text': 'learn more'},
+            ],
+            'style': 'box',
         },
     },
     'teaser_lines': {
@@ -698,10 +684,14 @@ data = {
 
     'page_lead_overlay_home2': {
         'name': 'Page Lead Overlay',
-        'template': 'widgets/page-lead-overlay.html',
+        'template': 'widgets/overlay-teaser.html',
         'context': {
-            'heading': 'Wocat',
-            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'title': 'Wocat',
+            'links': [
+                {'href': 'http://google.de', 'text': 'Discover Wocat'},
+            ],
+            'style': 'box',
         },
     },
 
@@ -1087,14 +1077,7 @@ data = {
             'href': 'http://x',
         },
     },
-    'readmorelink_media': {
-        'name': 'Read all media',
-        'template': 'widgets/read-more-link.html',
-        'context': {
-            'text': 'Show all media',
-            'href': 'http://x',
-        },
-    },
+
 
     'richtext': {
         'name': 'Richtext',
@@ -1528,6 +1511,21 @@ data = {
             'href': 'x',
             'readmorelink': {
                 'text': 'to the country',
+            },
+        },
+    },
+    'teaser_home_media': {
+        'name': 'Teaser with lines and top image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Media',
+            'lines': True,
+            'imgpos': 'top',
+            'imgsrc': '/static/styleguide/test-images/media.jpg',
+            'description': 'Unsere Medien umfassen unter anderem globale Bücher, nationale Bücher, Videos und Trainings.',
+            'readmorelink': {
+                'text': 'show all media',
             },
         },
     },
