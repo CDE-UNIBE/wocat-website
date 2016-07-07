@@ -1211,7 +1211,8 @@ data = {
                 {
                     'avatarsrc': '/static/styleguide/test-images/dog-1by1.jpg',
                     'url': 'http://google.de',
-                    'name': 'Eraldo',
+                    'name': 'Eraldo mit sehr langem Namen',
+                    'href': 'http://x',
                     'country': 'Germany',
                     'organisation': 'Sinnwerkstatt',
                     'position': 'Manager',
@@ -1223,6 +1224,7 @@ data = {
                     'avatarsrc': '/static/styleguide/test-images/giraffe-1by1.jpg',
                     'url': 'http://google.de',
                     'name': 'Tomi',
+                    'href': 'http://x',
                     'country': 'Niger',
                     'organisation': 'Telekom',
                     'position': 'Manager',
@@ -1235,6 +1237,7 @@ data = {
                     'avatarsrc': '/static/styleguide/test-images/studio-1by1.jpg',
                     'url': 'http://google.de',
                     'name': 'Udo',
+                    'href': 'http://x',
                     'country': 'Germany',
                     'organisation': 'O2',
                     'position': 'Manager',
@@ -1521,11 +1524,11 @@ data = {
             'map': {
                 'size': 'small',
                 'countries': [
-                    { 'iso_3166_1_alpha_3': 'DZA', },
+                    { 'iso_3166_1_alpha_3': 'DzA', },
                 ],
             },
             'title': 'Algier',
-            'flag_iso_3166_1_alpha_3': 'dza',
+            'flag_iso_3166_1_alpha_3': 'dZa',
             'description': 'Ein paar Zahlen zu Algerien: Lala und Blubblub.',
             'href': 'x',
             'readmorelink': {

@@ -49,7 +49,14 @@
 					<img src="{{ member.avatarsrc }}" alt="Avatar">
 				</div>
 				<div class="widget-members-table-name">
+					{% if member.href %}
+						<a href="{{ member.href}}">
+					{% endif %}
 					{{ member.name }}
+					{% if member.href %}
+						</a>
+					{% endif %}
+
 				</div>
 				<div class="widget-members-table-country">
 					{{ member.country }}
