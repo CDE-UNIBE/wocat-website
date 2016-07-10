@@ -4,7 +4,6 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailsnippets.models import register_snippet
 
 
-# @register_snippet
 class Institution(models.Model):
     name = models.CharField(
         verbose_name=_('Name'),

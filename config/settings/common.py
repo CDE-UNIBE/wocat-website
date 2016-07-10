@@ -73,6 +73,7 @@ LOCAL_APPS = (
     'wocat.cms',
     'wocat.styleguide',
     'wocat.institutions',
+    'wocat.medialibrary',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

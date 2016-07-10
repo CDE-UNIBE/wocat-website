@@ -3,7 +3,7 @@
 	<ul class="widget-map-countryselector">
 		{% for country in countries %}
 			<li>
-				<div class="iso_3166_1_alpha_3">{{ country.iso_3166_1_alpha_3 }}</div>
+				<div class="iso_3166_1_alpha_3">{{ country.iso_3166_1_alpha_3|upper }}</div>
 				{% if country.popup %}<div class="popup">{{ country.popup|safe }}</div>{% endif %}
 			</li>
 		{% endfor %}

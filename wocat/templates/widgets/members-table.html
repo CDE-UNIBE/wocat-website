@@ -1,19 +1,26 @@
 <div class="widget-members-table">
 	<div class="widget-members-table-selector">
 		<select class="widget-members-table-countryselector form-control" autocomplete="off">
-			<option selected="selected" value="all">Country</option>
+			<option selected="selected" value="all">{{ allcountries }}</option>
 			{% for country in countries %}
 				<option>{{ country.name }}</option>
 			{% endfor %}
 		</select>
+		<select class="widget-members-table-organisationselector form-control" autocomplete="off">
+			<option selected="selected" value="all">{{ allorganisations }}</option>
+			{% for organisation in organisations %}
+				<option>{{ organisation.name }}</option>
+			{% endfor %}
+		</select>
 		<select class="widget-members-table-expertiseselector form-control" autocomplete="off">
-			<option selected="selected" value="all">Expertise</option>
+			<option selected="selected" value="all">{{ allexpertises }}</option>
 			{% for expertise in expertises %}
 				<option>{{ expertise.name }}</option>
 			{% endfor %}
 		</select>
 		<select class="widget-members-table-sortselector form-control" autocomplete="off">
 			<option selected="selected" value="name">by Name</option>
+			<option value="country">by Country</option>
 			<option value="organisation">by Organisation</option>
 		</select>
 	</div>
@@ -21,16 +28,16 @@
 	<div class="widget-members-table-headline">
 		<div class="widget-members-table-avatar">
 		</div>
-		<div class="widget-members-table-name">
+		<div class="widget-members-table-name h4">
 			Name
 		</div>
-		<div class="widget-members-table-country">
+		<div class="widget-members-table-country h4">
 			Country
 		</div>
-		<div class="widget-members-table-organisation">
+		<div class="widget-members-table-organisation h4">
 			Organisation
 		</div>
-		<div class="widget-members-table-expertises">
+		<div class="widget-members-table-expertises h4">
 			Expertise
 		</div>
 	</div>
@@ -42,7 +49,14 @@
 					<img src="{{ member.avatarsrc }}" alt="Avatar">
 				</div>
 				<div class="widget-members-table-name">
+					{% if member.href %}
+						<a href="{{ member.href}}">
+					{% endif %}
 					{{ member.name }}
+					{% if member.href %}
+						</a>
+					{% endif %}
+
 				</div>
 				<div class="widget-members-table-country">
 					{{ member.country }}
@@ -61,6 +75,7 @@
 					{% endfor %}
 
 				</div>
+				<div class="clearfix"></div>
 			</div>
 		{% endfor %}
 	</div>

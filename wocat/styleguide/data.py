@@ -1007,6 +1007,48 @@ data = {
             'href': 'http://x',
         },
     },
+
+    'image_gallery': {
+        'name': 'Image Gallery',
+        'template': 'widgets/image-gallery.html',
+        'context': {
+            'cols': 4,
+            'images': [
+                {
+                    'src': '/static/styleguide/test-images/header4.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
+                    'href': 'http://xxx1',
+                },
+                {
+                    'src': '/static/styleguide/test-images/header1.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
+                },
+                {
+                    'src': '/static/styleguide/test-images/header3.jpg',
+                    'href': 'http://yyy2',
+                },
+                {
+                    'src': '/static/styleguide/test-images/header4.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
+                    'href': 'http://xxx3',
+                    'shrink': 1,
+                },
+                {
+                    'src': '/static/styleguide/test-images/header1.jpg',
+                    'description': 'This is the description of the image. This is the description of the image.',
+                    'shrink': 2,
+                },
+                {
+                    'src': '/static/styleguide/test-images/header3.jpg',
+                    'href': 'http://yyy4',
+                    'shrink': 1,
+                },
+            ],
+        },
+    },
+
+
+
     'button': {
         'name': 'Button',
         'template': 'widgets/read-more-link.html',
@@ -1137,11 +1179,26 @@ data = {
         'name': 'Members Table',
         'template': 'widgets/members-table.html',
         'context': {
+            'allcountries': 'All Countries',
             'countries': [
                 { 'name': 'Germany', },
                 { 'name': 'Niger', },
                 { 'name': 'Toga', },
             ],
+            'allorganisations': 'All Organisations',
+            'organisations': [
+                { 'name': 'Sinnwerkstatt', },
+                { 'name': 'Telekom', },
+                { 'name': 'O2', },
+                { 'name': 'Google', },
+                { 'name': 'Müllermilch', },
+                { 'name': 'Nutella', },
+                { 'name': 'Oranienhof', },
+                { 'name': 'Microsoft', },
+                { 'name': 'Adobe', },
+                { 'name': 'Calumet', },
+            ],
+            'allexpertises': 'All Expertiese',
             'expertises': [
                 { 'name': 'Strippen ziehen', },
                 { 'name': 'Schrauben drehn', },
@@ -1154,7 +1211,8 @@ data = {
                 {
                     'avatarsrc': '/static/styleguide/test-images/dog-1by1.jpg',
                     'url': 'http://google.de',
-                    'name': 'Eraldo',
+                    'name': 'Eraldo mit sehr langem Namen',
+                    'href': 'http://x',
                     'country': 'Germany',
                     'organisation': 'Sinnwerkstatt',
                     'position': 'Manager',
@@ -1166,6 +1224,7 @@ data = {
                     'avatarsrc': '/static/styleguide/test-images/giraffe-1by1.jpg',
                     'url': 'http://google.de',
                     'name': 'Tomi',
+                    'href': 'http://x',
                     'country': 'Niger',
                     'organisation': 'Telekom',
                     'position': 'Manager',
@@ -1178,6 +1237,7 @@ data = {
                     'avatarsrc': '/static/styleguide/test-images/studio-1by1.jpg',
                     'url': 'http://google.de',
                     'name': 'Udo',
+                    'href': 'http://x',
                     'country': 'Germany',
                     'organisation': 'O2',
                     'position': 'Manager',
@@ -1464,11 +1524,11 @@ data = {
             'map': {
                 'size': 'small',
                 'countries': [
-                    { 'iso_3166_1_alpha_3': 'DZA', },
+                    { 'iso_3166_1_alpha_3': 'DzA', },
                 ],
             },
             'title': 'Algier',
-            'flag_iso_3166_1_alpha_3': 'dza',
+            'flag_iso_3166_1_alpha_3': 'dZa',
             'description': 'Ein paar Zahlen zu Algerien: Lala und Blubblub.',
             'href': 'x',
             'readmorelink': {

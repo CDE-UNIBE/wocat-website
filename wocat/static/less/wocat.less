@@ -68,6 +68,30 @@ h4, .h4 {
 }
 
 
+// Nice dropdowns for SELECT element
+select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
+	background-size: 9px 6px;
+	background-position: right -1rem center;
+	background-origin: content-box;
+	background-repeat: no-repeat;
+	padding-right: 18px;
+}
+
+// https://github.com/less/less.js/issues/1538
+@ie9-10: ~"screen and (min-width:0\0)";
+@media @ie9-10 {
+	select.form-control {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==");
+	}
+}
+select.form-control::-ms-expand {
+	display: none;
+}
+
+
 
 #affix-wrapper {
 	position: relative;
@@ -109,6 +133,31 @@ h4, .h4 {
 		clear:left;
 	}
 }
+.row.cols-xs-6 .col {
+	.make-xs-column(6);
+
+	// Clear every second
+	&:nth-child(2n+1) {
+		clear:left;
+	}
+}
+.row.cols-xs-4 .col {
+	.make-xs-column(4);
+
+	// Clear every third
+	&:nth-child(3n+1) {
+		clear:left;
+	}
+}
+.row.cols-xs-3 .col {
+	.make-xs-column(3);
+
+	// Clear every fourth
+	&:nth-child(4n+1) {
+		clear:left;
+	}
+}
+
 
 
 .widget-header {
@@ -676,6 +725,41 @@ h4, .h4 {
 
 }
 
+
+.widget-image-gallery {
+	.col {
+		overflow: hidden;
+		margin-bottom: 15px;
+
+		.widget-image-gallery-image {
+			display: block;
+			width: 100%;
+			height: auto;
+			margin-bottom: 15px;
+
+			-webkit-transition: opacity 0.5s;
+			transition: opacity 0.5s;
+		}
+
+		.widget-image-gallery-description {
+			margin: 0 0 15px 0;
+			text-align: center;
+			font-weight: bold;
+		}
+
+		a {
+			&:hover, &:active, &:focus {
+				text-decoration: none;
+
+				.widget-image-gallery-image {
+					opacity: 0.7;
+				}
+			}
+		}
+
+	}
+}
+
 .widget-readmorelink {
 	margin-bottom: 30px;
 }
@@ -772,81 +856,141 @@ h4, .h4 {
 
 	.widget-members-table-selector {
 		text-align: right;
-		margin-bottom: 15px;
+		overflow: hidden;
+		margin-bottom: 10px;
 
-		.widget-members-table-countryselector, .widget-members-table-expertiseselector, .widget-members-table-sortselector {
+		.widget-members-table-countryselector, .widget-members-table-organisationselector, .widget-members-table-expertiseselector, .widget-members-table-sortselector {
 			width: auto;
 			max-width: 100%;
 			display: inline-block;
+			margin-bottom: 15px;
+			margin-left: 10px;
 		}
+		.widget-members-table-countryselector, .widget-members-table-organisationselector, .widget-members-table-expertiseselector {
+		}
+
 	}
 
 	.widget-members-table-headline {
 		margin-bottom: 15px;
+		display: none;
+
+		@media(min-width:768px) {
+			display: block;
+		}
+
 
 		.widget-members-table-avatar {
 			display: inline-block;
 			width: 95px;
+			@media(min-width:1200px) { width: 120px; }
 		}
-		.widget-members-table-name {
+		.widget-members-table-name, .widget-members-table-country, .widget-members-table-organisation, .widget-members-table-expertises {
 			display: inline-block;
-			width: 200px;
 			font-weight: bold;
+		}
+		.widget-members-table-name, .widget-members-table-country, .widget-members-table-organisation {
+			cursor: pointer;
+
+			&:hover {
+				color: @color-neutral-dark;
+			}
+		}
+
+		.widget-members-table-name {
+			@media(min-width:768px) { width: 150px; }
+			@media(min-width:992px) { width: 200px; }
+			@media(min-width:1200px) { width: 240px; }
 		}
 		.widget-members-table-country {
-			display: inline-block;
-			width: 200px;
-			font-weight: bold;
+			@media(min-width:768px) { width: 150px; }
+			@media(min-width:992px) { width: 180px; }
+			@media(min-width:1200px) { width: 230px; }
 		}
 		.widget-members-table-organisation {
-			display: inline-block;
-			width: 200px;
-			font-weight: bold;
+			@media(min-width:768px) { width: 150px; }
+			@media(min-width:992px) { width: 220px; }
+			@media(min-width:1200px) { width: 240px; }
 		}
 		.widget-members-table-expertises {
-			display: inline-block;
-			width: 200px;
-			font-weight: bold;
+			@media(min-width:768px) { width: 150px; }
+			@media(min-width:992px) { width: 220px; }
+			@media(min-width:1200px) { width: 270px; }
 		}
+
 	}
 
 	.widget-members-table-member {
 		margin-bottom: 15px;
+		@media(min-width:1200px) { margin-bottom: 25px; }
 
 		.widget-members-table-avatar {
 			display: inline-block;
+			float: left;
 			vertical-align:top;
 			width: 95px;
+			@media(min-width:1200px) { width: 120px; }
 
 			img {
 				display: inline-block;
 				width: 80px;
+				@media(min-width:1200px) { width: 105px; }
 				height: auto;
 			}
+
+			@media(min-width:768px) {
+				float: none;
+			}
+
 		}
-		.widget-members-table-name {
+		.widget-members-table-name, .widget-members-table-country, .widget-members-table-organisation, .widget-members-table-expertises {
 			display: inline-block;
 			vertical-align:top;
-			width: 200px;
+		}
+
+		.widget-members-table-name {
+			font-weight: bold;
+			width: auto;
+			display: block;
+			margin-left: 100px;
+			@media(min-width:768px) { display: inline-block; margin-left: 0; width: 150px; }
+			@media(min-width:992px) { width: 200px; }
+			@media(min-width:1200px) { width: 240px; }
 		}
 		.widget-members-table-country {
-			display: inline-block;
-			vertical-align:top;
-			width: 200px;
+			width: auto;
+			display: block;
+			margin-left: 100px;
+			margin-bottom: 4px;
+			@media(min-width:768px) { display: inline-block; margin-left: 0; margin-bottom: 0; width: 150px; }
+			@media(min-width:992px) { width: 180px; }
+			@media(min-width:1200px) { width: 230px; }
 		}
 		.widget-members-table-organisation {
-			display: inline-block;
-			width: 200px;
-			vertical-align:top;
+			width: auto;
+			display: block;
+			margin-left: 100px;
+			@media(min-width:768px) { display: inline-block; margin-left: 0; width: 150px; }
+			@media(min-width:992px) { width: 220px; }
+			@media(min-width:1200px) { width: 240px; }
 
+			.member-organisation {
+				display: inline-block;
+				@media(min-width:768px) { display: block; }
+			}
 			.member-position {
 				font-style: italic;
+				display: inline-block;
+				@media(min-width:768px) { display: block; }
 			}
 		}
 		.widget-members-table-expertises {
-			display: inline-block;
-			width: 200px;
-			vertical-align:top;
+			width: auto;
+			display: block;
+			margin-left: 100px;
+			@media(min-width:768px) { display: inline-block; margin-left: 0; width: 150px; }
+			@media(min-width:992px) { width: 220px; }
+			@media(min-width:1200px) { width: 270px; }
 
 			.expertise {
 				&:after {

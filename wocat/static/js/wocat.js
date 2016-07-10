@@ -11,11 +11,12 @@ $(function() {
 		function applyFilters() {
 			var country = membersTable.find('.widget-members-table-countryselector').val();
 			var expertise = membersTable.find('.widget-members-table-expertiseselector').val();
+			var organisation = membersTable.find('.widget-members-table-organisationselector').val();
 			var sort = membersTable.find('.widget-members-table-sortselector').val();
 			var page = membersTable.data('page');
 			var maxpagesize = membersTable.find('.widget-members-table-members').data('maxpagesize');
 
-			// console.log('Filter Country:', country, 'Filter Expertise:', expertise, 'Sort by:', sort);
+			// console.log('Filter Country:', country, 'Filter Expertise:', expertise, 'Filter Organisation:', organisation, 'Sort by:', sort);
 
 
 			// iterate members
@@ -31,8 +32,9 @@ $(function() {
 
 				// console.log('Member Name:', memberName, 'Member Organisation:', memberOrganisation, 'Member Country:', memberCountry, 'Member Expertises:', memberExpertises);
 
-				// Country and Expertise match selection?
+				// Country and Expertise and Organisation match selection?
 				if ((country != 'all') && (country != memberCountry)) member.addClass('member-hidden');
+				if ((organisation != 'all') && (organisation != memberOrganisation)) member.addClass('member-hidden');
 				if ((expertise != 'all') && ($.inArray(expertise, memberExpertises) == -1)) member.addClass('member-hidden');
 			});
 
@@ -43,6 +45,11 @@ $(function() {
 						// Name
 						var valueA = $.trim($(a).find('.widget-members-table-name').text());
 						var valueB = $.trim($(b).find('.widget-members-table-name').text());
+					break;
+					case 'country':
+						// Country
+						var valueA = $.trim($(a).find('.widget-members-table-country').text());
+						var valueB = $.trim($(b).find('.widget-members-table-country').text());
 					break;
 					case 'organisation':
 						// Organisation
@@ -109,7 +116,7 @@ $(function() {
 
 		}
 
-		membersTable.find('.widget-members-table-countryselector, .widget-members-table-expertiseselector, .widget-members-table-sortselector').change(function() {
+		membersTable.find('.widget-members-table-countryselector, .widget-members-table-organisationselector, .widget-members-table-expertiseselector, .widget-members-table-sortselector').change(function() {
 			// reset page
 			membersTable.data('page', 1);
 			applyFilters();
@@ -124,6 +131,15 @@ $(function() {
 		});
 
 
+		membersTable.find('.widget-members-table-headline .widget-members-table-name').click(function(event) {
+			membersTable.find('.widget-members-table-sortselector').val('name').change();
+		});
+		membersTable.find('.widget-members-table-headline .widget-members-table-country').click(function(event) {
+			membersTable.find('.widget-members-table-sortselector').val('country').change();
+		});
+		membersTable.find('.widget-members-table-headline .widget-members-table-organisation').click(function(event) {
+			membersTable.find('.widget-members-table-sortselector').val('organisation').change();
+		});
 	});
 
 });

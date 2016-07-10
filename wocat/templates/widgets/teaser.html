@@ -8,7 +8,7 @@
 {% if lines %}
 	{% if title %}
 		<a class="h4 widget-teaser-title widget-teaser-title-lines" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
-			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3 }}.gif" class="widget-teaser-flag">{% endif %}
+			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3|lower }}.gif" class="widget-teaser-flag">{% endif %}
 			{{ title }}
 		</a>
 	{% endif %}
@@ -40,7 +40,7 @@
 {% if not lines %}
 	{% if title %}
 		<a class="h4 widget-teaser-title" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
-			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3 }}.gif" class="widget-teaser-flag">{% endif %}
+			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3|lower }}.gif" class="widget-teaser-flag">{% endif %}
 			{{ title }}
 		</a>
 	{% endif %}
