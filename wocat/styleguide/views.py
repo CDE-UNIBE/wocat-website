@@ -2,6 +2,7 @@ import pprint
 
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 from .data import data
 
@@ -15,6 +16,16 @@ class StyleguideView(TemplateView):
             return ['styleguide/demos/{}.html'.format(slugify(template_name))]
         return super().get_template_names()
 
+    def recursive_mark_safe(self, context):
+        for key, value in context.items():
+            if isinstance(value, dict):
+                value = self.recursive_mark_safe(value)
+            elif isinstance(value, str):
+                # print(value)
+                value = mark_safe(value)
+            context[key] = value
+        return context
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -24,7 +35,8 @@ class StyleguideView(TemplateView):
             name = values.get('name')
             template = values.get('template')
             item_context = values.get('context')
-
+            if item_context:
+                item_context = self.recursive_mark_safe(item_context)
             # Create rendering for meta data
             meta_context = dict()
             meta_context['name'] = name
