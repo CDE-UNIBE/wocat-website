@@ -5,17 +5,26 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Media(models.Model):
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
+    author = models.CharField(
+        _('Author'),
+        max_length=255,
+        blank=True,
     )
     title = models.CharField(
         _('Title'),
         max_length=255,
     )
+    description = models.TextField(
+        _('Description'),
+        blank=True,
+    )
     file = models.ForeignKey(
         'wagtaildocs.Document',
+        on_delete=models.PROTECT,
+        related_name='+'
+    )
+    teaser_image = models.ForeignKey(
+        'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -31,3 +40,10 @@ class Media(models.Model):
     country = CountryField(
         blank=True
     )
+
+    class Meta:
+        verbose_name = _('Media')
+        verbose_name_plural = _('Media')
+
+    def __str__(self):
+        return self.title

@@ -11,7 +11,7 @@ class MediaModelAdmin(ModelAdmin):
     model = Media
     menu_label = _('Media Library')
     menu_icon = 'fa fa-file-o'
-    list_display = ('author', 'title', 'country')
+    list_display = ('title', 'author', 'country')
 
-    list_filter = ('author',)
+    list_filter = ('author', 'country')
     search_fields = ('title',)

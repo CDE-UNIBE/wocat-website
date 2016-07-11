@@ -1,13 +1,15 @@
 from django.core.exceptions import ValidationError
+from django.forms import Select
 from django.forms.utils import ErrorList
+from django.utils.html import format_html
+from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
-    StreamBlock, ListBlock
+    StreamBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from django.utils.translation import ugettext_lazy as _
-from django.template.loader import render_to_string
+from wocat.medialibrary.models import Media
 
 
 class HeadingBlock(blocks.CharBlock):
@@ -179,8 +181,48 @@ class TeaserBlock(StructBlock):
         help_text = _('Choose either a page or an external link')
 
 
+class MediaChooserBlock(blocks.ChooserBlock):
+    target_model = Media
+    widget = Select
+
+    # Return the key value for the select field
+    def value_for_form(self, value):
+        if isinstance(value, self.target_model):
+            return value.pk
+        else:
+            return value
+
+
+class MediaTeaserBlock(StructBlock):
+    media = MediaChooserBlock(required=True)
+
+    def get_context(self, value):
+        media = value.get('media')
+        page = media.detail_page
+        file = media.file
+        return {
+            'href': page.url if page else file.url,
+            'title': media.title,
+            'description': format_html(
+                '{description}<p>{author_label}: {author}</p>',
+                description=media.description,
+                author_label=_('Author'),
+                author=media.author
+            ),
+            'readmorelink': {'text': _('Detail page') if page else _('Download')},
+            'imgsrc': media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else '',
+            'imgpos': 'left',
+        }
+
+    class Meta:
+        icon = 'fa fa-file-o'
+        label = _('Media Teaser')
+        template = 'widgets/teaser.html'
+
+
 TEASER_BLOCKS = [
     ('teaser', TeaserBlock()),
+    ('media_teaser', MediaTeaserBlock()),
 ]
 
 BASE_BLOCKS += TEASER_BLOCKS
@@ -241,7 +283,6 @@ COLUMNS_BLOCKS = [
 ]
 
 CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
-
 
 # class CarouselBlock(StructBlock):
 #     title = blocks.CharBlock()
