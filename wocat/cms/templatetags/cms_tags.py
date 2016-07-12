@@ -125,6 +125,29 @@ class Breadcrumb(InclusionTag):
 
 
 @register.tag
+class Footer(InclusionTag):
+    name = 'footer'
+    template = 'widgets/footer.html'
+
+    def get_context(self, context, **kwargs):
+        links = [
+            {'href': '#facebook', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>',
+             'onlyxs': True,},
+            {'href': '#youtube', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>',
+             'onlyxs': True,},
+            {'href': '#twitter', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>',
+             'onlyxs': True,},
+            {'href': '#get-involved', 'text': 'Get involved', 'onlyxs': True,},
+            {'href': '#faq', 'text': 'FAQ', 'onlyxs': True,},
+            {'href': '#glossary', 'text': 'Glossary', 'onlyxs': True,},
+            {'href': '#login', 'text': 'Login', 'onlyxs': True,},
+            {'href': '#imprint', 'text': 'Imprint',},
+            {'href': '#contact', 'text': 'Contact',},
+        ]
+        return {'links': links}
+
+
+@register.tag
 class Carousel(InclusionTag):
     name = 'carousel'
     template = 'widgets/carousel.html'

@@ -51,6 +51,11 @@
 		{{ description|safe }}
 	</p>
 {% endif %}
+{% if author %}
+	<p class="widget-teaser-author">
+		{{ author|safe }}
+	</p>
+{% endif %}
 {% if not lines %}
 	{% if readmorelink %}
 		<a class="widget-teaser-readmoretext" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
