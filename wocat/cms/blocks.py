@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
-    StreamBlock
+    StreamBlock, ListBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -228,6 +228,69 @@ TEASER_BLOCKS = [
 BASE_BLOCKS += TEASER_BLOCKS
 
 
+class ImageGalleryElementBlock(StructBlock):
+    image = ImageChooserBlock()
+    page = PageChooserBlock(required=False)
+    link = blocks.URLBlock(required=False)
+    description = blocks.CharBlock(required=False)
+    shrink = ChoiceBlock(
+        choices=[
+            (1, _('Small')),
+            (2, _('Extra small')),
+        ],
+        required=False,
+    )
+
+
+class ImageGalleryBlock(StructBlock):
+    columns = ChoiceBlock(
+        choices=[
+            (6, '2'),
+            (4, '3'),
+            (3, '4'),
+        ],
+        required=True,
+    )
+    elements = ListBlock(ImageGalleryElementBlock())
+
+    def get_context(self, value):
+        context = super().get_context(value)
+        columns = value.get('columns')
+        elements = []
+        for element in value.get('elements'):
+            description = element.get('description')
+            link = element.get('link')
+            page = element.get('page')
+            url = page.url if page else link
+            image = element.get('image')
+            image_url = image.get_rendition('max-1200x1200').url if image else ''
+            shrink = element.get('shrink')
+            if shrink:
+                shrink = int(shrink)
+            elements.append(
+                {
+                    'description': description,
+                    'href': url,
+                    'src': image_url,
+                    'shrink': shrink,
+                }
+            )
+        context['cols'] = columns
+        context['images'] = elements
+        return context
+
+    class Meta:
+        icon = 'image'
+        label = _('Image Gallery')
+        template = 'widgets/image-gallery.html'
+
+
+GALLERY_BLOCKS = [
+    ('image_gallery', ImageGalleryBlock()),
+]
+BASE_BLOCKS += GALLERY_BLOCKS
+
+
 class ColumnsBlock(StructBlock):
     left_column = StreamBlock(BASE_BLOCKS)
     right_column = StreamBlock(BASE_BLOCKS)
@@ -434,9 +497,10 @@ CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 #         template = 'widgets/teaser.html'
 #         help_text = _('Choose either a page or an external link')
 
-IMAGE_BLOCKS = (
+
+IMAGE_BLOCKS = [
     ('image', ImageBlock()),
-)
+]
 
 # CAROUSEL_BLOCKS = (
 #     ('image', ImageBlock()),
