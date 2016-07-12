@@ -154,6 +154,7 @@ class TeaserBlock(StructBlock):
     image = TeaserImageBlock(required=False)
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
+    read_more_text = blocks.CharBlock()
 
     def get_context(self, value):
         page = value.get('page')
@@ -162,12 +163,13 @@ class TeaserBlock(StructBlock):
         image = image_block.get('image')
         imagepos = image_block.get('position')
         largeimg = image_block.get('large')
+        read_more_text = value.get('read_more_text')
         return {
             'href': page.url if page else link,
             'external': not bool(page),
             'title': value.get('title'),
             'description': value.get('content'),
-            'readmorelink': {'text': 'read more'},
+            'readmorelink': {'text': read_more_text},
             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
             'imgpos': imagepos,
             'largeimg': largeimg,
