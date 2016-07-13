@@ -100,6 +100,14 @@ class ReadMoreBlock(StructBlock):
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
     button = blocks.BooleanBlock(required=False)
+    alignment = ChoiceBlock(
+        choices=[
+            ('left', _('Left')),
+            ('center', _('Center')),
+            ('right', _('Right')),
+        ],
+        required=False,
+    )
 
     def __init__(self, required=True, local_blocks=None, *args, **kwargs):
         super().__init__(local_blocks=local_blocks, *args, **kwargs)
