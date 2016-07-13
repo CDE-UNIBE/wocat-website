@@ -349,7 +349,7 @@ COLUMNS_BLOCKS = [
     ('columns_1_to_1_to_1', Columns1To1To1Block()),
 ]
 
-CORE_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
+CMS_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 
 # class CarouselBlock(StructBlock):
 #     title = blocks.CharBlock()
@@ -516,4 +516,4 @@ EXTRA_BLOCKS = COLUMNS_BLOCKS + [
     ('html', RawHTMLBlock()),
 ]
 
-ALL_BLOCKS = CORE_BLOCKS + EXTRA_BLOCKS
+ALL_BLOCKS = CMS_BLOCKS + EXTRA_BLOCKS

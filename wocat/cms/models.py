@@ -2,7 +2,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import ProgrammingError
 from django.db import models
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel
@@ -10,7 +9,8 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 
-from wocat.cms.blocks import CORE_BLOCKS, IMAGE_BLOCKS
+from wocat.cms.blocks import IMAGE_BLOCKS
+from wocat.core.blocks import CORE_BLOCKS
 
 __author__ = 'Eraldo Energy'
 
@@ -253,3 +253,13 @@ class MembersPage(UniquePageMixin, Page):
              }
         )
         return context
+
+
+class NewsAndEventsPage(UniquePageMixin, Page):
+    template = 'pages/content.html'
+
+    class Meta:
+        verbose_name = _('News & Events')
+
+    parent_page_types = ['HomePage']
+    subpage_types = ['news.NewsIndexPage']
