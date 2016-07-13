@@ -1,4 +1,4 @@
-<div class="widget-image-gallery">
+<div class="widget-image-gallery{% if verticalalign %} widget-image-gallery-verticalalign{% endif %}">
 	<div class="row cols-xs-{{ cols }}">{% for image in images %}<div class="col">
 				{% if image.href %}
 					<a href="{{ image.href }}">

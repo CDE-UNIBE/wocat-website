@@ -1065,6 +1065,44 @@ data = {
         },
     },
 
+    'image_gallery_verticalalign': {
+        'name': 'Image Gallery Vertical Align',
+        'template': 'widgets/image-gallery.html',
+        'context': {
+            'cols': 4,
+            'verticalalign': True,
+            'images': [
+                {
+                    'src': '/static/styleguide/test-images/dog-1by1.jpg',
+                    'shrink': 2,
+                    'href': 'http://xxx1',
+                },
+                {
+                    'src': '/static/styleguide/test-images/header2-3by1.jpg',
+                },
+                {
+                    'src': '/static/styleguide/test-images/surfing.jpg',
+                    'shrink': 1,
+                    'href': 'http://yyy2',
+                },
+                {
+                    'src': '/static/styleguide/test-images/header4.jpg',
+                    'href': 'http://xxx3',
+                    'shrink': 1,
+                },
+                {
+                    'src': '/static/styleguide/test-images/girls-1by1.jpg',
+                    'shrink': 2,
+                },
+                {
+                    'src': '/static/styleguide/test-images/header3.jpg',
+                    'href': 'http://yyy4',
+                    'shrink': 1,
+                },
+            ],
+        },
+    },
+
 
 
     'button': {

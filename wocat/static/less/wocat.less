@@ -738,41 +738,43 @@ select.form-control::-ms-expand {
 
 
 .widget-image-gallery {
-		.row {
-		.col {
-			overflow: hidden;
+	.col {
+		overflow: hidden;
+		margin-bottom: 15px;
+
+		.widget-image-gallery-image {
+			display: block;
+			width: 100%;
+			height: auto;
 			margin-bottom: 15px;
 
-			// Vertical align from here ...
-			display: inline-block;
-			vertical-align: middle;
-			float: none;
-			// ... to here
+			-webkit-transition: opacity 0.5s;
+			transition: opacity 0.5s;
+		}
 
-			.widget-image-gallery-image {
-				display: block;
-				width: 100%;
-				height: auto;
-				margin-bottom: 15px;
+		.widget-image-gallery-description {
+			margin: 0 0 15px 0;
+			text-align: center;
+			font-weight: bold;
+		}
 
-				-webkit-transition: opacity 0.5s;
-				transition: opacity 0.5s;
-			}
+		a {
+			&:hover, &:active, &:focus {
+				text-decoration: none;
 
-			.widget-image-gallery-description {
-				margin: 0 0 15px 0;
-				text-align: center;
-				font-weight: bold;
-			}
-
-			a {
-				&:hover, &:active, &:focus {
-					text-decoration: none;
-
-					.widget-image-gallery-image {
-						opacity: 0.7;
-					}
+				.widget-image-gallery-image {
+					opacity: 0.7;
 				}
+			}
+		}
+	}
+
+	&.widget-image-gallery-verticalalign {
+		.row {
+			.col {
+				display: inline-block;
+				vertical-align: middle;
+				float: none;
 			}
 		}
 	}
