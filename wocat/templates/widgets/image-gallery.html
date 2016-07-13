@@ -1,7 +1,5 @@
 <div class="widget-image-gallery">
-	<div class="row cols-xs-{{ cols }}">
-		{% for image in images %}
-			<div class="col">
+	<div class="row cols-xs-{{ cols }}">{% for image in images %}<div class="col">
 				{% if image.href %}
 					<a href="{{ image.href }}">
 				{% endif %}
@@ -20,8 +18,6 @@
 				{% if image.href %}
 					</a>
 				{% endif %}
-			</div>
-		{% endfor %}
-	</div>
+			</div>{% endfor %}</div><!-- row -->
 
 </div><!-- widget-image-gallery -->
