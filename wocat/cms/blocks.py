@@ -165,7 +165,7 @@ class TeaserBlock(StructBlock):
         image = image_block.get('image')
         imagepos = image_block.get('position')
         largeimg = image_block.get('large')
-        read_more_text = value.get('read_more_text', _('read more'))
+        read_more_text = value.get('read_more_text') or _('read more')
         return {
             'href': page.url if page else link,
             'external': not bool(page),
