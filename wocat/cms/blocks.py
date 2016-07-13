@@ -98,6 +98,7 @@ class ReadMoreBlock(StructBlock):
     name = blocks.CharBlock(required=False)
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
+    button = blocks.BooleanBlock(required=False)
 
     def __init__(self, required=True, local_blocks=None, *args, **kwargs):
         super().__init__(local_blocks=local_blocks, *args, **kwargs)
@@ -111,6 +112,7 @@ class ReadMoreBlock(StructBlock):
             'external': not bool(page),
             'text': value.get('name') or _('read more'),
             'align': value.get('alignment'),
+            'button': value.get('button'),
         }
 
     def clean(self, value):
@@ -154,7 +156,7 @@ class TeaserBlock(StructBlock):
     image = TeaserImageBlock(required=False)
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
-    read_more_text = blocks.CharBlock()
+    read_more_text = blocks.CharBlock(required=False)
 
     def get_context(self, value):
         page = value.get('page')
