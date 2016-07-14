@@ -1654,6 +1654,7 @@ data = {
             'imgsrc': '/static/styleguide/test-images/header3-3by1.jpg',
             'title': 'Das Schaf',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'author': 'Eraldo Energy',
         },
     },
     'media_ytimage': {
