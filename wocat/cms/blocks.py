@@ -260,11 +260,13 @@ class ImageGalleryBlock(StructBlock):
         required=True,
     )
     elements = ListBlock(ImageGalleryElementBlock())
+    vertical_align = blocks.BooleanBlock(required=False)
 
     def get_context(self, value):
         context = super().get_context(value)
         columns = value.get('columns')
         elements = []
+        vertical_align = value.get('vertical_align')
         for element in value.get('elements'):
             description = element.get('description')
             link = element.get('link')
@@ -281,6 +283,7 @@ class ImageGalleryBlock(StructBlock):
                     'href': url,
                     'src': image_url,
                     'shrink': shrink,
+                    'verticalalign': vertical_align,
                 }
             )
         context['cols'] = columns
