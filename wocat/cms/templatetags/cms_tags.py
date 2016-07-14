@@ -61,7 +61,8 @@ class Header(InclusionTag):
         if project_page:
             depth = 2
             brand2 = {
-                'src': 'http://placehold.it/30x30',
+                # TODO: add project_page.logo migration!
+                # 'src': '',
                 'name': project_page.title,
                 'href': project_page.url,
             }
@@ -150,7 +151,7 @@ class Footer(InclusionTag):
 @register.tag
 class Carousel(InclusionTag):
     name = 'carousel'
-    template = 'widgets/carousel.html'
+    template = 'widgets/carousel-widgetchooser.html'
 
     def render(self, context):
         if self.get_images(context):
@@ -166,7 +167,7 @@ class Carousel(InclusionTag):
         items = []
         for image in self.get_images(context):
             items.append({'src': image.value.get_rendition('fill-1800x600').url})
-        return {'items': items}
+        return {'items': items, 'id': 'header'}
 
 
 @register.tag
@@ -181,12 +182,12 @@ class Overlay(InclusionTag):
             if page:
                 return {
                     'heading': page.seo_title or page.title,
-                    'content': page.lead if hasattr(page, 'lead') else '',
+                    'lead': page.lead if hasattr(page, 'lead') else '',
                     'noimage': True,
                 }
         return {
             'heading': header.get('title'),
             'heading_iconsrc': header.get('iconsrc'),
-            'content': header.get('content'),
+            'lead': header.get('content'),
             'noimage': not header.get('images'),
         }
