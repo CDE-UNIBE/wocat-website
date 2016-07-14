@@ -229,7 +229,7 @@ class MediaTeaserBlock(StructBlock):
             'author': media.author,
             'readmorelink': {'text': _('Detail page') if page else _('Download')},
             'imgsrc': media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else '',
-            'imgpos': image_position,
+            'imgpos': image_position or 'top',
             'mediastyle': True,
         }
 
