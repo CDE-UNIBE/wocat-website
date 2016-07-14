@@ -3,7 +3,9 @@
 	{% include "widgets/map.html" with countries=map.countries size=map.size %}
 {% endif %}
 {% if imgsrc and imgpos == 'top' and not lines %}
-	<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop">
+	{% if mediastyle %}<div class="widget-teaser-image-graybox">{% endif %}
+	<div class="widget-teaser-image"><img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop"></div>
+	{% if mediastyle %}</div>{% endif %}
 {% endif %}
 {% if lines %}
 	{% if title %}
@@ -13,20 +15,26 @@
 		</a>
 	{% endif %}
 	{% if imgsrc and imgpos == 'top' %}
-		<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop">
+		{% if mediastyle %}<div class="widget-teaser-image-graybox">{% endif %}
+		<div class="widget-teaser-image"><img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop"></div>
+		{% if mediastyle %}</div>{% endif %}
 	{% endif %}
 {% endif %}
 {% if imgsrc and imgpos == 'left' %}
 	<div class="row">
 		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-4{% endif %}">
-			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgleft">
+		{% if mediastyle %}<div class="widget-teaser-image-graybox">{% endif %}
+			<div class="widget-teaser-image"><img src="{{ imgsrc }}" alt="" class="widget-teaser-imgleft"></div>
+			{% if mediastyle %}</div>{% endif %}
 		</div>
 		<div class="{% if largeimg %}col-sm-6{% else %}col-sm-8{% endif %}">
 {% endif %}
 {% if imgsrc and imgpos == 'right' %}
 	<div class="row">
 		<div class="{% if largeimg %}col-sm-6 col-sm-push-6{% else %}col-sm-4 col-sm-push-8{% endif %}">
-			<img src="{{ imgsrc }}" alt="" class="widget-teaser-imgright">
+			{% if mediastyle %}<div class="widget-teaser-image-graybox">{% endif %}
+			<div class="widget-teaser-image"><img src="{{ imgsrc }}" alt="" class="widget-teaser-imgright"></div>
+			{% if mediastyle %}</div>{% endif %}
 		</div>
 		<div class="{% if largeimg %}col-sm-6 col-sm-pull-6{% else %}col-sm-8 col-sm-pull-4{% endif %}">
 {% endif %}
@@ -40,7 +48,7 @@
 {% if not lines %}
 	{% if title %}
 		<a class="h4 widget-teaser-title" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
-			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3|lower }}.gif" class="widget-teaser-flag">{% endif %}
+			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3|lower }}.gif" class="widget-teaser-flag" alt="flag_iso_3166_1_alpha_3|lower">{% endif %}
 			{{ title }}
 		</a>
 	{% endif %}

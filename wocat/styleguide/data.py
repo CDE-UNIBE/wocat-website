@@ -1649,30 +1649,36 @@ data = {
 
     'media': {
         'name': 'Media',
-        'template': 'widgets/media.html',
+        'template': 'widgets/teaser.html',
         'context': {
+            'imgpos': 'top',
             'imgsrc': '/static/styleguide/test-images/header3-3by1.jpg',
             'title': 'Das Schaf',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
             'author': 'Eraldo Energy',
+            'mediastyle': True,
         },
     },
     'media_ytimage': {
         'name': 'Media',
-        'template': 'widgets/media.html',
+        'template': 'widgets/teaser.html',
         'context': {
+            'imgpos': 'top',
             'imgsrc': '/static/styleguide/test-images/youtube-thumb.jpg',
             'title': 'Auf die Größe kommts an. Besonders bei Titeln über mehrere Zeilen.',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
         },
     },
     'media_highimage': {
         'name': 'Media',
-        'template': 'widgets/media.html',
+        'template': 'widgets/teaser.html',
         'context': {
+            'imgpos': 'top',
             'imgsrc': '/static/styleguide/test-images/studio-vertical.jpg',
             'title': 'Das Schaf',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
         },
     },
 
