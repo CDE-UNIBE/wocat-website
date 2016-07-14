@@ -15,6 +15,20 @@ class Header(InclusionTag):
     name = 'header'
     template = 'widgets/header.html'
 
+    def get_language_and_search_context(self, only_xs=True):
+        return [
+            {
+                'dropdown': True,
+                'text': 'EN',
+                'links': [
+                    {'href': '#de', 'text': 'DE', 'active': True,},
+                    {'href': '#fr', 'text': 'FR'},
+                ],
+                'onlyxs': only_xs,
+            },
+            {'href': '#search', 'text': '<i class="fa fa-search" aria-hidden="true"></i>', 'onlyxs': only_xs},
+        ]
+
     def get_node(self, page, current_page, ancestors):
         text = page.title
         if hasattr(page, 'flag'):
@@ -52,7 +66,7 @@ class Header(InclusionTag):
     def get_context(self, context, **kwargs):
         page = context.get('page')
         project_page = self.get_project_page(page)
-        nodes = self.get_nodes(context, root_page=project_page)
+        nodes = self.get_nodes(context, root_page=project_page) + self.get_language_and_search_context()
         user = context.get('user')
         if user.is_authenticated():
             user_link = {'href': reverse('users:detail', args=[user.username]), 'text': user.username}
@@ -79,16 +93,7 @@ class Header(InclusionTag):
                 {'href': '#faq', 'text': 'FAQ'},
                 {'href': '#glassary', 'text': 'Glossary'},
                 user_link,
-                {
-                    'dropdown': True,
-                    'text': 'EN',
-                    'links': [
-                        {'href': '#de', 'text': 'DE', 'active': True,},
-                        {'href': '#fr', 'text': 'FR'},
-                    ]
-                },
-                {'href': '#search', 'text': '<i class="fa fa-search" aria-hidden="true"></i>'},
-            ],
+            ] + self.get_language_and_search_context(only_xs=False),
             'mainnav': {
                 'depth': depth,
                 # only visible if in or under a project page
