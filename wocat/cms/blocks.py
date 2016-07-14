@@ -216,21 +216,15 @@ class MediaTeaserBlock(StructBlock):
         return {
             'href': page.url if page else file.url,
             'title': media.title,
-            'description': format_html(
-                '{description}<p>{author_label}: {author}</p>',
-                description=media.description,
-                author_label=_('Author'),
-                author=media.author
-            ),
-            'readmorelink': {'text': _('Detail page') if page else _('Download')},
+            'description': media.description,
+            'author': media.author,
             'imgsrc': media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else '',
-            'imgpos': 'left',
         }
 
     class Meta:
         icon = 'fa fa-file-o'
         label = _('Media Teaser')
-        template = 'widgets/teaser.html'
+        template = 'widgets/media.html'
 
 
 TEASER_BLOCKS = [
