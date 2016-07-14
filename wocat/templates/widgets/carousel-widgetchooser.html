@@ -2,6 +2,6 @@
 	{% if items|length > 1 %}
 		{% include "widgets/carousel.html" %}
 	{% elif items|length == 1 %}
-		<img src="{{ items.0.src }}" class="widget-carousel-widgetchooser-image">
+		<img src="{{ items.0.src }}" class="widget-carousel-widgetchooser-image" alt="">
 	{% endif %}
 </div><!-- widget-carousel-widgetchooser -->
