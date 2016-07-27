@@ -7,22 +7,4 @@
 {% if caption %}
 	<p class="widget-image-caption">{{ caption }}</p>
 {% endif %}
-{% if overlay %}
-	<div class="widget-image-overlay">
-		{% if overlay.date %}
-			<div class="widget-image-overlay-date">{{ overlay.date }}</div>
-		{% endif %}
-		{% if overlay.heading %}
-			<h3 class="widget-image-overlay-heading">{{ overlay.heading }}</h3>
-		{% endif %}
-		{% if overlay.text %}
-			<p class="widget-image-overlay-text">{{ overlay.text }}</p>
-		{% endif %}
-		{% if overlay.links %}
-			{% for link in overlay.links %}
-				<a href="{{ link.href }}" class="widget-image-overlay-link">» {{ link.text }}</a>
-			{% endfor %}
-		{% endif %}
-	</div>
-{% endif %}
 </div><!-- widget-image -->

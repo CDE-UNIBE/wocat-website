@@ -1,4 +1,4 @@
-<div class="widget-teaser">
+<div class="widget-teaser{% if lines %} widget-teaser-lines{% endif %}{% if bottomline %} widget-teaser-bottomline{% endif %}">
 {% if map %}
 	{% include "widgets/map.html" with countries=map.countries size=map.size %}
 {% endif %}
@@ -9,7 +9,7 @@
 {% endif %}
 {% if lines %}
 	{% if title %}
-		<a class="h4 widget-teaser-title widget-teaser-title-lines" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
+		<a class="h4 widget-teaser-title widget-teaser-title-lines{% if readmorelink %} widget-teaser-title-withreadmorelink{% endif %}" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
 			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3|lower }}.gif" class="widget-teaser-flag">{% endif %}
 			{{ title }}
 		</a>
@@ -47,7 +47,7 @@
 {% endif %}
 {% if not lines %}
 	{% if title %}
-		<a class="h4 widget-teaser-title" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
+		<a class="h4 widget-teaser-title{% if readmorelink %} widget-teaser-title-withreadmorelink{% endif %}" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
 			{% if flag_iso_3166_1_alpha_3 %}<img src="/static/images/flags/{{ flag_iso_3166_1_alpha_3|lower }}.gif" class="widget-teaser-flag" alt="flag_iso_3166_1_alpha_3|lower">{% endif %}
 			{{ title }}
 		</a>

@@ -294,11 +294,19 @@ data = {
             'text': 'Die Fotografie von Geistern',
         },
     },
-    'heading3_partners': {
-        'name': 'Heading 3 Partners',
-        'template': 'widgets/heading3.html',
+    'heading4': {
+        'name': 'Heading 4',
+        'template': 'widgets/heading4.html',
         'context': {
             'text': 'Consortium Partners',
+        },
+    },
+    'heading4_link': {
+        'name': 'Heading 4',
+        'template': 'widgets/heading4.html',
+        'context': {
+            'text': 'Consortium Partners',
+            'href': 'http://google.de',
         },
     },
     'heading3_news': {
@@ -405,7 +413,7 @@ data = {
         'name': 'Home Global Issues Image',
         'template': 'widgets/image.html',
         'context': {
-            'src': '/static/styleguide/test-images/header1.jpg',
+            'src': '/static/styleguide/test-images/giraffe-1by1.jpg',
         },
     },
     'teaser_home_globalissues': {
@@ -518,8 +526,10 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'title': 'Building resilience',
             'imgpos': 'left',
+            'bottomline': True,
             'date': '24. April 2016',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind…',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -532,37 +542,16 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'title': 'See what happens if we write a long article about building resilience and all the interesting aspects you had never expected!',
             'imgpos': 'left',
+            'bottomline': True,
             'date': '24. April 2016',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen…',
             'readmorelink': {
                 'text': 'read more',
             },
         },
     },
-    'teaser_lines_home_news2': {
-        'name': 'Teaser with lines and top image',
-        'template': 'widgets/teaser.html',
-        'context': {
-            'href': 'http://sinnwerkstatt.com',
-            'title': 'Building resilience',
-            'date': '24. April 2016',
-            'readmorelink': {
-                'text': 'read more',
-            },
-        },
-    },
-    'teaser_lines_home_news2_long': {
-        'name': 'Teaser with lines and top image',
-        'template': 'widgets/teaser.html',
-        'context': {
-            'href': 'http://sinnwerkstatt.com',
-            'title': 'See what happens if we write a long article about building resilience and all the interesting aspects you had never expected!',
-            'date': '24. April 2016',
-            'readmorelink': {
-                'text': 'read more',
-            },
-        },
-    },
+
     'teaser_topimg': {
         'name': 'Teaser with top image',
         'template': 'widgets/teaser.html',
@@ -654,6 +643,22 @@ data = {
         },
     },
 
+    'teaser_rightimg': {
+        'name': 'Teaser with right image and Bottomline',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'imgpos': 'right',
+            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'href': 'http://sinnwerkstatt.com',
+            'date': '24. April 2016',
+            'bottomline': True,
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
 
     'page_lead_overlay': {
         'name': 'Page Lead Overlay',
@@ -675,16 +680,6 @@ data = {
 
     'page_lead_overlay_home': {
         'name': 'Page Lead Overlay',
-        'template': 'widgets/page-lead-overlay.html',
-        'context': {
-            'small': True,
-            'heading': 'Wocat',
-            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
-        },
-    },
-
-    'page_lead_overlay_home2': {
-        'name': 'Page Lead Overlay',
         'template': 'widgets/overlay-teaser.html',
         'context': {
             'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
@@ -692,7 +687,7 @@ data = {
             'links': [
                 {'href': 'http://google.de', 'text': 'Discover Wocat'},
             ],
-            'style': 'box',
+            'style': 'largebox',
         },
     },
 
@@ -744,7 +739,58 @@ data = {
             'links': [
                 { 'href': 'http://google.de', 'text': 'Google', },
                 { 'href': 'http://facebook.de', 'text': 'Facebook', },
-                { 'href': 'http://bing.de', 'text': 'Bing', },
+                { 'href': 'http://bing.de', 'text': 'extern Bing', 'external': True },
+            ],
+        },
+    },
+
+    'overlay_teaser_widgetchooser': {
+        'name': 'Overlay Teaser – Widgetchooser',
+        'template': 'widgets/overlay-teaser-widgetchooser.html',
+        'context': {
+            'imgsrc': '/static/styleguide/test-images/surfing.jpg',
+            'style': 'box',
+            'title': 'Overlay Teaser Box',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'links': [
+                { 'href': 'http://google.de', 'text': 'Google', },
+                { 'href': 'http://facebook.de', 'text': 'Facebook', },
+                { 'href': 'http://bing.de', 'text': 'extern Bing', 'external': True },
+            ],
+        },
+    },
+    'overlay_teaser_widgetchooser_map': {
+        'name': 'Overlay Teaser – Widgetchooser Map',
+        'template': 'widgets/overlay-teaser-widgetchooser.html',
+        'context': {
+            'size': 'large',
+            'countries': [
+                { 'iso_3166_1_alpha_3': 'LSO', 'popup': '<a href="x">Lesotho</a>', },
+                { 'iso_3166_1_alpha_3': 'MAR', 'popup': '<a href="x">Morocco</a>', },
+                { 'iso_3166_1_alpha_3': 'NGA', 'popup': '<a href="x">Nigeria</a>', },
+                { 'iso_3166_1_alpha_3': 'TUN', 'popup': '<a href="x">Tunisia</a>', },
+
+                { 'iso_3166_1_alpha_3': 'BGD', 'popup': '<a href="x">Bangladesh</a>', },
+                { 'iso_3166_1_alpha_3': 'CHN', 'popup': '<a href="x">China</a>', },
+                { 'iso_3166_1_alpha_3': 'PHL', 'popup': '<a href="x">Philippines</a>', },
+                { 'iso_3166_1_alpha_3': 'THA', 'popup': '<a href="x">Thailand</a>', },
+
+                { 'iso_3166_1_alpha_3': 'BIH', 'popup': '<a href="x">Bosnia & Herzegovina</a>', },
+                { 'iso_3166_1_alpha_3': 'TUR', 'popup': '<a href="x">Turkey</a>', },
+                { 'iso_3166_1_alpha_3': 'UZB', 'popup': '<a href="x">Uzbekistan</a>', },
+
+                { 'iso_3166_1_alpha_3': 'ARG', 'popup': '<a href="x">Argentinia</a>', },
+                { 'iso_3166_1_alpha_3': 'COL', 'popup': '<a href="x">Colombia</a>', },
+                { 'iso_3166_1_alpha_3': 'ECU', 'popup': '<a href="x">Equador</a>', },
+                { 'iso_3166_1_alpha_3': 'PAN', 'popup': '<a href="x">Panama</a>', },
+            ],
+            'style': 'box',
+            'title': 'Overlay Teaser Box',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'links': [
+                { 'href': 'http://google.de', 'text': 'Google', },
+                { 'href': 'http://facebook.de', 'text': 'Facebook', },
+                { 'href': 'http://bing.de', 'text': 'extern Bing', 'external': True },
             ],
         },
     },
@@ -783,7 +829,6 @@ data = {
             'description': 'The Wocat database on SLM contains a vast range of good practices from all over the world.',
             'links': [
                 { 'href': 'http://google.de', 'text': 'About the SLM Database', },
-                { 'href': 'http://google.de', 'text': 'Search and add SLM data', },
             ],
         },
     },
