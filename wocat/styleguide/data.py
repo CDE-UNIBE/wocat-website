@@ -1149,7 +1149,6 @@ data = {
     },
 
 
-
     'button': {
         'name': 'Button',
         'template': 'widgets/read-more-link.html',
@@ -1675,21 +1674,7 @@ data = {
             },
         },
     },
-    'teaser_home_media': {
-        'name': 'Teaser with lines and top image',
-        'template': 'widgets/teaser.html',
-        'context': {
-            'href': 'http://sinnwerkstatt.com',
-            'title': 'Media',
-            'lines': True,
-            'imgpos': 'top',
-            'imgsrc': '/static/styleguide/test-images/media.jpg',
-            'description': 'Unsere Medien umfassen unter anderem globale Bücher, nationale Bücher, Videos und Trainings.',
-            'readmorelink': {
-                'text': 'show all media',
-            },
-        },
-    },
+
 
 
     'media': {
@@ -1739,7 +1724,7 @@ data = {
                 { 'href': 'http://bing.de/2', 'text': 'FAQ', 'onlyxs': True, },
                 { 'href': 'http://bing.de/3', 'text': 'Glossary', 'active': True, 'onlyxs': True, },
                 { 'href': 'http://bing.de/2', 'text': 'Login', 'onlyxs': True, },
-                { 'href': 'http://bing.de/2', 'text': 'Imprint', },
+                { 'href': 'http://bing.de/2', 'text': 'Legal Disclaimer', },
                 { 'href': 'http://bing.de/2', 'text': 'Contact', },
                 { 'href': 'http://bing.de/2', 'text': 'Active', 'active': True, },
 

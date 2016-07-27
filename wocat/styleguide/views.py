@@ -33,7 +33,7 @@ class StyleguideView(TemplateView):
         template_name = self.kwargs.get('template')
         if template_name:
             try:
-                data_module = importlib.import_module('..demos.home', __name__)
+                data_module = importlib.import_module('..demos.{}'.format(template_name), __name__)
                 data.update(data_module.data)
             except ImportError:
                 pass

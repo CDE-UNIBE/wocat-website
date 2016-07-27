@@ -1,0 +1,114 @@
+{% extends "styleguide/base.html" %}
+{% load static %}
+
+{% block content %}
+	{{ header_output }}
+
+	<div class="container">
+		<br><br>
+
+		<p>
+			<strong>all</strong> |
+			<a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i> questionnaires</a> |
+			<a href="#"><i class="fa fa-file-text" aria-hidden="true"></i> documents</a> |
+			<a href="#"><i class="fa fa-book" aria-hidden="true"></i> books</a> |
+			<a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> reports</a> |
+			<a href="#"><i class="fa fa-map" aria-hidden="true"></i> maps</a> |
+			<a href="#"><i class="fa fa-video-camera" aria-hidden="true"></i> videos</a> |
+			<a href="#"><i class="fa fa-university" aria-hidden="true"></i> training material</a>
+		</p>
+		<br>
+
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+					<input class="form-control" id="inputEmail3" placeholder="Search" type="text">
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<select class="form-control" id="inputSelect">
+						<option>for Mayor Tom</option>
+						<option>for Chris Hadfield</option>
+						<option>for Fry and Homer</option>
+						<option>for David Bowie</option>
+						<option>for all Muppets</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<select class="form-control" id="inputSelect">
+						<option>all time</option>
+						<option>last year</option>
+						<option>last month</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<select class="form-control" id="inputSelect">
+						<option>sort by date</option>
+						<option>sort by title</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<button class="btn btn-default btn-block">
+						apply
+					</button>
+				</div>
+			</div>
+		</div>
+		<p class="text-right"><button class="btn btn-link">more filter options</button></p>
+
+		<br><br>
+
+		<div class="row cols-sm-3">
+			<div class="col">
+				 {{ media_output }}
+			</div>
+			<div class="col">
+				 {{ media_ytimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_highimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_output }}
+			</div>
+			<div class="col">
+				 {{ media_ytimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_highimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_ytimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_output }}
+			</div>
+			<div class="col">
+				 {{ media_highimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_ytimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_ytimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_highimage_output }}
+			</div>
+		</div><!-- row -->
+
+
+		<br><br>
+		{{ pagination_output }}
+		<br><br>
+	</div><!-- container -->
+	{{ footer_output }}
+
+{% endblock %}

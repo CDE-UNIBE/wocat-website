@@ -53,10 +53,12 @@ h2, .h2 {
 }
 h3, .h3 {
 	font-size: 22px;
+	margin-top:	0;
 	font-weight: 300;
 }
 h4, .h4 {
 	font-weight: 800;
+	margin-top:	0;
 	color: @color-neutral-dark;
 	font-size: 16px;
 	text-transform: uppercase;
@@ -68,6 +70,11 @@ h4, .h4 {
 
 	&.btn-default {
 		background-color: transparent;
+	}
+
+	&.btn-link {
+		padding: 0;
+		text-decoration: underline;
 	}
 }
 
@@ -241,6 +248,43 @@ select.form-control::-ms-expand {
 		}
 
 		.mainnav {
+			.navbar-header {
+				position: relative;
+
+				.widget-header-leftorangething-wrapper {
+					// Orangene Ecke bei Seiten zweiter Ordnung (Projekte)
+					position: absolute;
+					height: 100%;
+					width: 0;
+					left: 0;
+					top: 0;
+
+					.widget-header-leftorangething {
+						position: absolute;
+						display: block;
+						right: 0;
+						top: 0;
+						height: 100%;
+						width: 50vw; // halbe Bildschirmbreite reicht
+						background-color: @color-primary;
+
+						&:after {
+							content: '';
+							position: absolute;
+							right: 0;
+							top: 0;
+							height: 100%;
+							border: 5px solid @color-neutral-dark;
+							border-width: 0 0 60px 40px;
+							border-top-color: yellow;
+
+							border-left-color: @color-primary;
+						}
+					}
+
+				}
+			}
+
 			.navbar-toggle {
 				border-width: 0;
 				background-color: @color-white;
@@ -1279,7 +1323,6 @@ select.form-control::-ms-expand {
 					margin-bottom: 10px;
 					color: @color-white;
 					font-weight: bold;
-					text-transform: uppercase;
 					font-family: "HelveticaNeue-LightCond";
 
 
