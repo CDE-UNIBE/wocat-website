@@ -22,7 +22,6 @@ class StyleguideView(TemplateView):
             if isinstance(value, dict):
                 value = self.recursive_mark_safe(value)
             elif isinstance(value, str):
-                # print(value)
                 value = mark_safe(value)
             context[key] = value
         return context

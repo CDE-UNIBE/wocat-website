@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.forms import Select
 from django.forms.utils import ErrorList
-from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
@@ -218,12 +217,50 @@ class OverlayTeaserBlock(StructBlock):
                     'external': not bool(page),
                 },
             ],
+            'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
         }
 
     class Meta:
         icon = 'link'
         label = _('Large Image Teaser')
-        template = 'widgets/overlay-teaser.html'
+        template = 'widgets/overlay-teaser-widgetchooser.html'
+        help_text = _('Choose either a page or an external link')
+
+
+class OverlayTeaserMapBlock(StructBlock):
+    title = blocks.CharBlock()
+    content = RichTextBlock(required=False)
+    page = PageChooserBlock(required=False)
+    link = blocks.URLBlock(required=False)
+    link_text = blocks.CharBlock(required=False)
+
+    def get_context(self, value):
+        page = value.get('page')
+        link = value.get('link')
+        link_text = value.get('link_text') or _('link')
+        from wocat.cms.models import CountryPage
+        country_pages = CountryPage.objects.live().in_menu()
+        countries = [{'iso_3166_1_alpha_3': country_page.country.alpha3} for country_page in country_pages]
+
+        return {
+            'title': value.get('title'),
+            'description': value.get('content'),
+            'style': 'box',
+            'links': [
+                {
+                    'href': page.url if page else link,
+                    'text': link_text,
+                    'external': not bool(page),
+                },
+            ],
+            'countries': countries,
+            'size': 'large',
+        }
+
+    class Meta:
+        icon = 'link'
+        label = _('Map Teaser')
+        template = 'widgets/overlay-teaser-widgetchooser.html'
         help_text = _('Choose either a page or an external link')
 
 
@@ -274,6 +311,7 @@ class MediaTeaserBlock(StructBlock):
 
 TEASER_BLOCKS = [
     ('teaser', TeaserBlock()),
+    ('overlay_teaser', OverlayTeaserBlock()),
     ('media_teaser', MediaTeaserBlock()),
     ('news_teaser', NewsTeaserBlock()),
 ]
