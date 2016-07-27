@@ -1,0 +1,10 @@
+<div class="overlay-teaser-widgetchooser">
+	{% if imgsrc %}
+		{% include "widgets/image.html" with src=imgsrc name=title %}
+	{% endif %}
+	{% if countries %}
+		{% include "widgets/map.html" %}
+	{% endif %}
+
+	{% include "widgets/overlay-teaser.html" %}
+</div><!-- overlay-teaser-widgetchooser -->

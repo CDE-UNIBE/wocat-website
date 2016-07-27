@@ -11,7 +11,15 @@
 @color-white: #FFF;
 
 @import "open-sans.less";
-@import "open-sans-condensed.less";
+
+@font-face {
+	font-family: 'HelveticaNeue-LightCond';
+	src: url('../fonts/helvetica-neue/HelveticaNeue-LightCond.woff') format('woff');
+}
+
+
+// @import "open-sans-condensed.less";
+// TODO: Delete this from repository if not needed
 
 @import "bootstrap/bootstrap.less";
 
@@ -41,18 +49,17 @@ h1, .h1 {
 }
 h2, .h2 {
 	font-size: 26px;
-	font-weight: 800;
-	color: @color-neutral-dark;
+	font-weight: 300;
 }
 h3, .h3 {
 	font-size: 22px;
-	text-transform: uppercase;
-	font-weight: 800;
-	color: @color-neutral-dark;
+	font-weight: 300;
 }
 h4, .h4 {
-	font-weight: 600;
+	font-weight: 800;
+	color: @color-neutral-dark;
 	font-size: 16px;
+	text-transform: uppercase;
 }
 
 .btn {
@@ -269,7 +276,7 @@ select.form-control::-ms-expand {
 					display: inline-block;
 				}
 				.navbar-brand-name {
-					font-family: "Open Sans Condensed";
+					font-family: "HelveticaNeue-LightCond";
 					font-weight: 300;
 
 					display: inline-block;
@@ -281,8 +288,8 @@ select.form-control::-ms-expand {
 				> li {
 					> a {
 						color: @color-white;
-						// text-transform: uppercase;
-						font-family: "Open Sans Condensed";
+						text-transform: uppercase;
+						font-family: "HelveticaNeue-LightCond";
 						font-weight: bold;
 
 						@media(min-width:992px) {
@@ -320,7 +327,8 @@ select.form-control::-ms-expand {
 							> a {
 								color: @color-white;
 
-								font-family: "Open Sans Condensed";
+								font-family: "HelveticaNeue-LightCond";
+								text-transform: uppercase;
 								font-weight: bold;
 
 
@@ -437,6 +445,14 @@ select.form-control::-ms-expand {
 	margin-bottom: 15px;
 	overflow: hidden; // No collapse margins
 
+	&.widget-teaser-bottomline {
+		border-bottom: 1px solid @color-neutral;
+	}
+
+	&.widget-teaser-lines {
+		border-bottom-width: 0;
+	}
+
 	.widget-map {
 		margin-bottom: 15px;
 	}
@@ -483,6 +499,13 @@ select.form-control::-ms-expand {
 	.widget-teaser-title {
 		display: block;
 		margin: 0 0 7px 0;
+		font-weight: bold;
+		text-transform: none;
+		font-size: 14px;
+
+		&.widget-teaser-title-withreadmorelink {
+			color: @color-black;
+		}
 
  		.widget-teaser-flag {
  			position: relative;
@@ -494,12 +517,15 @@ select.form-control::-ms-expand {
 		&.widget-teaser-title-lines {
 			margin-bottom: 15px;
 			border: 1px solid @color-primary;
+			color: @color-primary;
 			border-width: 1px 0;
 			padding: 10px 0;
+			font-size: 16px;
 
 			&:hover, &:active, &:focus {
 				text-decoration: none;
 				border-color: @color-primary-dark;
+				color: @color-primary-dark;
 			}
 		}
 	}
@@ -628,6 +654,7 @@ select.form-control::-ms-expand {
 
 	.widget-overlay-teaser-content {
 		margin-bottom: 30px;
+		margin-top: 15px;
 
 		h3 {
 			margin: 0 0 10px 0;
@@ -642,6 +669,7 @@ select.form-control::-ms-expand {
 
 		@media(min-width:768px) {
 			margin-bottom: 0;
+			margin-top: 0;
 			position: absolute;
 			z-index: 10;
 			background-color: rgba(255, 255, 255, 0.9);
@@ -650,6 +678,7 @@ select.form-control::-ms-expand {
 	}
 
 	&.widget-overlay-teaser-box {
+		// Rechteckige abgeschlossene Box über Bild
 		.widget-overlay-teaser-content {
 
 			@media(min-width:768px) {
@@ -659,7 +688,41 @@ select.form-control::-ms-expand {
 			}
 		}
 	}
+	&.widget-overlay-teaser-largebox {
+		// Rechteckige abgeschlossene Box auffällig orange über Bild
+		.widget-overlay-teaser-content {
+
+			@media(min-width:768px) {
+				background-color: fadeout(@color-primary, 20%);
+				color: @color-white;
+				a {
+					// Bei Largebox ist der Link ein Button.
+					color: @color-white;
+					border-radius: 0;
+					margin-top: 15px;
+					-webkit-transition: background-color 0.5s;
+					transition: background-color 0.5s;
+
+					&:hover, &:focus, &:active {
+						color: @color-white;
+						border-color: @color-white;
+						background-color: fadeout(@color-white, 80%);
+					}
+				}
+				h3 {
+					font-size: 30px;
+				}
+
+				bottom: 60px;
+				left: 0;
+				right: 0;
+				margin: 0 auto;
+				width: 405px;
+			}
+		}
+	}
 	&.widget-overlay-teaser-bottom {
+		// Box unten über Bild
 		.widget-overlay-teaser-content {
 			@media(min-width:768px) {
 				bottom: 30px;
@@ -695,37 +758,6 @@ select.form-control::-ms-expand {
 		margin: 10px 0 0 0;
 		font-style: italic;
 	}
-
-	.widget-image-overlay {
-		margin: 0;
-		padding: 15px;
-		font-weight: 600;
-
-		.widget-image-overlay-date {
-			margin: 0 0 1px 0;
-		}
-		.widget-image-overlay-heading {
-			margin: 0 0 15px 0;
-		}
-		.widget-image-overlay-text {
-			margin: 0 0 15px 0;
-		}
-		.widget-image-overlay-link {
-			margin: 0 0 5px 0;
-			display: block;
-		}
-
-		@media(min-width:768px) {
-			background-color: rgba(0,0,0,0.5);
-			color: @color-white;
-			position: absolute;
-			width: 100%;
-			bottom: 0;
-			left: 0;
-		}
-
-	}
-
 }
 
 
@@ -886,6 +918,10 @@ select.form-control::-ms-expand {
 	.widget-members-table-headline {
 		margin-bottom: 15px;
 		display: none;
+
+		.h4 {
+			text-transform: none;
+		}
 
 		@media(min-width:768px) {
 			display: block;
@@ -1243,7 +1279,8 @@ select.form-control::-ms-expand {
 					margin-bottom: 10px;
 					color: @color-white;
 					font-weight: bold;
-					font-family: "Open Sans Condensed";
+					text-transform: uppercase;
+					font-family: "HelveticaNeue-LightCond";
 
 
 					-webkit-transition: background-color 0.5s;
