@@ -1,3 +1,4 @@
+import importlib
 import pprint
 
 from django.template.defaultfilters import slugify
@@ -29,7 +30,13 @@ class StyleguideView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # TODO: Split in sub-methods
+        template_name = self.kwargs.get('template')
+        if template_name:
+            try:
+                data_module = importlib.import_module('..demos.home', __name__)
+                data.update(data_module.data)
+            except ImportError:
+                pass
 
         for item, values in data.items():
             name = values.get('name')
