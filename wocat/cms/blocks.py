@@ -218,12 +218,13 @@ class OverlayTeaserBlock(StructBlock):
                     'external': not bool(page),
                 },
             ],
+            'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
         }
 
     class Meta:
         icon = 'link'
         label = _('Large Image Teaser')
-        template = 'widgets/overlay-teaser.html'
+        template = 'widgets/overlay-teaser-widgetchooser.html'
         help_text = _('Choose either a page or an external link')
 
 
@@ -274,6 +275,7 @@ class MediaTeaserBlock(StructBlock):
 
 TEASER_BLOCKS = [
     ('teaser', TeaserBlock()),
+    ('overlay_teaser', OverlayTeaserBlock()),
     ('media_teaser', MediaTeaserBlock()),
     ('news_teaser', NewsTeaserBlock()),
 ]
