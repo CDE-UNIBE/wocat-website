@@ -9,7 +9,7 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 
-from wocat.cms.blocks import IMAGE_BLOCKS
+from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock
 from wocat.core.blocks import CORE_BLOCKS
 
 __author__ = 'Eraldo Energy'
@@ -91,10 +91,10 @@ class ContentPage(HeaderPageMixin, Page):
 
 
 class HomePage(UniquePageMixin, HeaderPageMixin, Page):
-    template = 'pages/content.html'
+    template = 'pages/home.html'
 
     content = StreamField(
-        CORE_BLOCKS,
+        CORE_BLOCKS + [('map_teaser', OverlayTeaserMapBlock())],
         blank=True
     )
 
