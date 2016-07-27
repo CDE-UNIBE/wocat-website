@@ -194,6 +194,39 @@ class TeaserBlock(StructBlock):
         help_text = _('Choose either a page or an external link')
 
 
+class OverlayTeaserBlock(StructBlock):
+    title = blocks.CharBlock()
+    content = RichTextBlock(required=False)
+    image = ImageChooserBlock(required=True)
+    page = PageChooserBlock(required=False)
+    link = blocks.URLBlock(required=False)
+    link_text = blocks.CharBlock(required=False)
+
+    def get_context(self, value):
+        page = value.get('page')
+        link = value.get('link')
+        image = value.get('image')
+        link_text = value.get('link_text') or _('link')
+        return {
+            'title': value.get('title'),
+            'description': value.get('content'),
+            'style': 'box',
+            'links': [
+                {
+                    'href': page.url if page else link,
+                    'text': link_text,
+                    'external': not bool(page),
+                },
+            ],
+        }
+
+    class Meta:
+        icon = 'link'
+        label = _('Large Image Teaser')
+        template = 'widgets/overlay-teaser.html'
+        help_text = _('Choose either a page or an external link')
+
+
 class MediaChooserBlock(blocks.ChooserBlock):
     target_model = Media
     widget = Select
