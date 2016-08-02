@@ -1,9 +1,19 @@
 <div class="widget-readmorelink{% if align == "right" %} text-right{% endif %}{% if align == "center" %} text-center{% endif %}">
 	{% if button %}
 		<a href="{{ href }}"{% if external %} target="_blank"{% endif %} class="btn btn-primary">
+			{% if fontawesome %}
+				<i class="fa fa-{{ fontawesome }}" aria-hidden="true"></i>
+			{% endif %}
 			{{ text|safe }}
 		</a>
 	{% else %}
-		<a href="{{ href }}"{% if external %} target="_blank"{% endif %}>» {{ text }}</a>
+		<a href="{{ href }}"{% if external %} target="_blank"{% endif %}>
+			{% if fontawesome %}
+				<i class="fa fa-{{ fontawesome }}" aria-hidden="true"></i>
+			{% else %}
+				»
+			{% endif %}
+			{{ text }}
+			</a>
 	{% endif %}
 </div>

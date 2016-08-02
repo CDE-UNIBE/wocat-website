@@ -1,0 +1,53 @@
+{% extends "styleguide/base.html" %}
+{% load static %}
+
+{% block content %}
+	{{ header_output }}
+
+	<div class="container">
+		<br><br>
+		{{ userprofile_output }}
+
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-sm-4">
+						{{ avatar_output }}
+					</div>
+					<div class="col-sm-8">
+						<p><img src="/static/images/flags/ken.gif"> Afghanistan</p>
+						<p>
+							<strong>Afghanistan SLM</strong><br>
+							Director of Finance
+						</p>
+						<p>
+							Work Topics<br>
+							<span class="badge">Rainfed cropland</span>
+							<span class="badge">SLM knowledge management and decision support</span>
+							<span class="badge">Water management</span>
+							<span class="badge">Governance and policy support</span>
+						</p>
+						<p>
+							Experiences<br>
+							<span class="badge">Questionnaire on SLM Technologies (QT)</span>
+							<span class="badge">Watershed Management Module</span>
+							<span class="badge">Climate Change Adaptation Module</span>
+						</p>
+
+						{{ editlink_output }}
+
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3 col-sm-offset-1">
+				{{ findother_output }}
+				{{ searchbutton_output }}
+			</div>
+		</div><!-- row -->
+
+
+		<br><br>
+	</div><!-- container -->
+	{{ footer_output }}
+
+{% endblock %}
