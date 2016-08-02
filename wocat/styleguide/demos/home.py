@@ -70,7 +70,6 @@ data = {
         'context': {
             'href': 'http://sinnwerkstatt.com',
             'imgpos': 'top',
-            'title': 'Wiki',
             'imgsrc': '/static/styleguide/test-images/wiki.jpg',
             'description': 'Das Wocat-Wiki enthält Wissen und Diskussionen.',
             'readmorelink': {
@@ -84,6 +83,20 @@ data = {
         'template': 'widgets/image.html',
         'context': {
             'src': '/static/styleguide/test-images/silhouette-1by1.jpg',
+        },
+    },
+    'consortiumpartners': {
+        'name': 'Heading 3',
+        'template': 'widgets/heading3.html',
+        'context': {
+            'text': 'Consortium Partners',
+        },
+    },
+    'heading3_wiki': {
+        'name': 'Heading 3 Media',
+        'template': 'widgets/heading3.html',
+        'context': {
+            'text': 'Wiki',
         },
     },
 }
