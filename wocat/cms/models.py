@@ -232,11 +232,11 @@ class MembersPage(UniquePageMixin, Page):
         users = get_user_model().objects.all()
         for user in users:
             countries.append({'name': user.country.name})
-            expertises.append({'name': user.expertise})
+            # expertises.append({'name': user.expertise})
             members.append({
                 'avatarsrc': user.avatar.url if user.avatar else '',
                 'country': user.country.name if user.country else '',
-                'expertises': [{'name': user.expertise}] if user.expertise else '',
+                # 'expertises': [{'name': user.expertise}] if user.expertise else '',
                 'name': user.username or '',
                 'organisation': user.organisation or '',
                 # 'position': 'Manager',
@@ -245,7 +245,7 @@ class MembersPage(UniquePageMixin, Page):
             })
         context.update(
             {'countries': countries,
-             'expertises': expertises,
+             # 'expertises': expertises,
              'members': members,
              # TODO: set and calculate pages
              # 'maxpagesize': 3,

@@ -248,6 +248,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'wocat.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'wocat.users.adapters.SocialAccountAdapter'
+ACCOUNT_SIGNUP_FORM_CLASS = 'wocat.users.forms.UserForm'
 
 # Custom user app defaults
 # Select the correct user model
@@ -268,9 +269,9 @@ ADMIN_URL = r'^admin'
 WAGTAIL_SITE_NAME = 'WOCAT'
 WAGTAILADMIN_NOTIFICATION_USE_HTML = True
 TAGGIT_CASE_INSENSITIVE = True
-WAGTAIL_USER_EDIT_FORM = 'wocat.cms.forms.CustomUserEditForm'
-WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
-WAGTAIL_USER_CUSTOM_FIELDS = ['avatar', 'country', 'institution', 'organisation', 'expertise']
+# WAGTAIL_USER_EDIT_FORM = 'wocat.cms.forms.CustomUserEditForm'
+# WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
+# WAGTAIL_USER_CUSTOM_FIELDS = ['gender', 'title']
 
 
 # EASY THUMBNAILS
