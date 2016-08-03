@@ -1158,6 +1158,16 @@ data = {
             'button': True,
         },
     },
+    'button_fontawesome': {
+        'name': 'Button',
+        'template': 'widgets/read-more-link.html',
+        'context': {
+            'text': 'Use the framework',
+            'fontawesome': 'gears',
+            'href': 'http://google.de',
+            'button': True,
+        },
+    },
     'button_center': {
         'name': 'Button Centered',
         'template': 'widgets/read-more-link.html',
@@ -1183,6 +1193,15 @@ data = {
         'template': 'widgets/read-more-link.html',
         'context': {
             'text': 'weiterlesen',
+            'href': 'http://x',
+        },
+    },
+    'readmorelink_fontawesome': {
+        'name': 'Read more link Fontawesome',
+        'template': 'widgets/read-more-link.html',
+        'context': {
+            'text': 'bearbeiten',
+            'fontawesome': 'pencil',
             'href': 'http://x',
         },
     },

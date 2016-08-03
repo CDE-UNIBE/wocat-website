@@ -1,0 +1,31 @@
+{% extends "styleguide/base.html" %}
+{% load static %}
+
+{% block content %}
+	{{ header_output }}
+
+	<div class="container">
+		<br><br>
+		{{ heading1_output }}
+		{{ heading2_output }}
+		{{ heading3_output }}
+
+		<p>
+			Fließtext: Open Sans Regular 14px Es gibt Momente in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi, was sie sind. lch lese nicht sehr viel Zeitungen, aber ich habe gehört viele Situationen.
+		</p>
+
+
+		<p>
+			Schrift: <strong>#333</strong>
+		</p>
+		<p>
+			<a href="#">Link: <strong>#DA812C</strong>; hover/focus/active <strong>#CC6300</strong><br>
+		</p>
+
+		{{ button_output }}
+
+		<br><br>
+	</div><!-- container -->
+	{{ footer_output }}
+
+{% endblock %}
