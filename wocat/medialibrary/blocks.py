@@ -44,12 +44,14 @@ class MediaTeaserBlock(StructBlock):
         author = media.author
         country = media.country
         image_position = value.get('image_position')
+        content = media.content
+        url = media.get_absolute_url()
         return {
-            'href': file.url if file else '',
+            'href': file.url if file else url,
             'title': title,
             'description': abstract,
             'author': media.author,
-            # 'readmorelink': {'text': _('Detail page') if page else _('Download')},
+            'readmorelink': {'text': _('Show media') if content else _('Download')},
             'imgsrc': teaser_image,
             'imgpos': image_position or 'top',
             'mediastyle': True,
