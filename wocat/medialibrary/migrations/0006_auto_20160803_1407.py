@@ -12,6 +12,14 @@ class Migration(migrations.Migration):
         ('medialibrary', '0005_auto_20160803_1249'),
     ]
 
+    def create_initial_media_types(apps, schema_editor):
+        MediaType = apps.get_model('medialibrary', 'MediaType')
+        MediaType.objects.create(name='Media Type Placeholder')
+
+    def delete_initial_media_types(apps, schema_editor):
+        MediaType = apps.get_model('medialibrary', 'MediaType')
+        MediaType.objects.filter(name='Media Type Placeholder').delete()
+
     operations = [
         migrations.CreateModel(
             name='MediaType',
@@ -20,6 +28,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, unique=True, verbose_name='Name')),
             ],
         ),
+        migrations.RunPython(create_initial_media_types, delete_initial_media_types),
         migrations.AddField(
             model_name='media',
             name='media_type',
