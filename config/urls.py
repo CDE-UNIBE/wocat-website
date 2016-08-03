@@ -27,6 +27,7 @@ urlpatterns = [
     # User management
     url(r'^users/', include('wocat.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^media/', include('wocat.medialibrary.urls')),
 
     # Your stuff: custom urls includes go here
     url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),

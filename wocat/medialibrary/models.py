@@ -1,14 +1,27 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 from django_countries.fields import CountryField
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsnippets.models import register_snippet
 
+from wocat.cms.models import UniquePageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
+
+# class MediaLibraryPage(UniquePageMixin, Page):
+#     template = 'pages/content.html'
+#
+#     class Meta:
+#         verbose_name = _('Media Library')
+#
+#     parent_page_types = ['cms.HomePage']
+#     # subpage_types = ['medialibrary.MediaPage']
+#
 
 @register_snippet
 class MediaType(models.Model):
@@ -26,6 +39,7 @@ class Media(models.Model):
     title = models.CharField(
         _('Title'),
         max_length=255,
+        unique=True
     )
     abstract = models.TextField(
         _('Abstract'),
@@ -48,8 +62,9 @@ class Media(models.Model):
     )
     file = models.ForeignKey(
         'wagtaildocs.Document',
+        null=True, blank=True,
         on_delete=models.PROTECT,
-        related_name='+'
+        related_name='+',
     )
     author = models.CharField(
         _('Author'),
@@ -59,19 +74,6 @@ class Media(models.Model):
     country = CountryField(
         blank=True
     )
-    # TYPE_1 = 1
-    # TYPE_2 = 2
-    # TYPE_3 = 3
-    # MEDIA_TYPE_CHOICES = (
-    #     (TYPE_1, _('Type 1')),
-    #     (TYPE_2, _('Type 2')),
-    #     (TYPE_3, _('Type 3')),
-    # )
-    # media_type = models.PositiveSmallIntegerField(
-    #     verbose_name=_('Type'),
-    #     choices=MEDIA_TYPE_CHOICES,
-    #     blank=True, null=True,
-    # )
     media_type = models.ForeignKey(
         'MediaType',
         verbose_name=_('Type'),
@@ -84,6 +86,9 @@ class Media(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('media:detail', args=[self.id])
 
     panels = [
         FieldPanel('title'),

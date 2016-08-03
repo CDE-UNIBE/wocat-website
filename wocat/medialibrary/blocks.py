@@ -33,17 +33,24 @@ class MediaTeaserBlock(StructBlock):
     )
 
     def get_context(self, value):
+        context = {}
         media = value.get('media')
-        page = media.detail_page
+        title = media.title
+        abstract = media.abstract
+        media_type = media.media_type
+        video = media.video
         file = media.file
+        teaser_image = media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else ''
+        author = media.author
+        country = media.country
         image_position = value.get('image_position')
         return {
-            'href': page.url if page else file.url,
-            'title': media.title,
-            'description': media.description,
+            'href': file.url if file else '',
+            'title': title,
+            'description': abstract,
             'author': media.author,
-            'readmorelink': {'text': _('Detail page') if page else _('Download')},
-            'imgsrc': media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else '',
+            # 'readmorelink': {'text': _('Detail page') if page else _('Download')},
+            'imgsrc': teaser_image,
             'imgpos': image_position or 'top',
             'mediastyle': True,
         }
