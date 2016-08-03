@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.forms import Select
 from django.forms.utils import ErrorList
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore import blocks
@@ -8,7 +7,7 @@ from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlo
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from wocat.medialibrary.models import Media
+from wocat.medialibrary.blocks import MediaTeaserBlock
 from wocat.news.blocks import NewsTeaserBlock
 
 
@@ -264,49 +263,58 @@ class OverlayTeaserMapBlock(StructBlock):
         help_text = _('Choose either a page or an external link')
 
 
-class MediaChooserBlock(blocks.ChooserBlock):
-    target_model = Media
-    widget = Select
-
-    # Return the key value for the select field
-    def value_for_form(self, value):
-        if isinstance(value, self.target_model):
-            return value.pk
-        else:
-            return value
-
-
-class MediaTeaserBlock(StructBlock):
-    media = MediaChooserBlock(required=True)
-    image_position = ChoiceBlock(
-        choices=[
-            ('top', _('Top')),
-            ('left', _('Left')),
-            ('right', _('Right')),
-        ],
-        required=False,
-    )
-
-    def get_context(self, value):
-        media = value.get('media')
-        page = media.detail_page
-        file = media.file
-        image_position = value.get('image_position')
-        return {
-            'href': page.url if page else file.url,
-            'title': media.title,
-            'description': media.description,
-            'author': media.author,
-            'readmorelink': {'text': _('Detail page') if page else _('Download')},
-            'imgsrc': media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else '',
-            'imgpos': image_position or 'top',
-            'mediastyle': True,
-        }
-
-    class Meta:
-        icon = 'fa fa-file-o'
-        label = _('Media Teaser')
-        template = 'widgets/teaser.html'
+# class MediaChooserBlock(blocks.ChooserBlock):
+#     widget = Select
+#
+#     @cached_property
+#     def target_model(self):
+#         from wagtail.wagtailcore.models import Page  # TODO: allow limiting to specific page types
+#         return Page
+#
+#     # def __init__(self, required=True, help_text=None, **kwargs):
+#     #     from wocat.medialibrary.models import Media
+#     #     self.target_model = Media
+#     #     super().__init__(self, required=required, help_text=help_text, **kwargs)
+#
+#     # Return the key value for the select field
+#     def value_for_form(self, value):
+#         if isinstance(value, self.target_model):
+#             return value.pk
+#         else:
+#             return value
+#
+#
+# class MediaTeaserBlock(StructBlock):
+#     media = MediaChooserBlock(required=True)
+#     image_position = ChoiceBlock(
+#         choices=[
+#             ('top', _('Top')),
+#             ('left', _('Left')),
+#             ('right', _('Right')),
+#         ],
+#         required=False,
+#     )
+#
+#     def get_context(self, value):
+#         media = value.get('media')
+#         page = media.detail_page
+#         file = media.file
+#         image_position = value.get('image_position')
+#         return {
+#             'href': page.url if page else file.url,
+#             'title': media.title,
+#             'description': media.description,
+#             'author': media.author,
+#             'readmorelink': {'text': _('Detail page') if page else _('Download')},
+#             'imgsrc': media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else '',
+#             'imgpos': image_position or 'top',
+#             'mediastyle': True,
+#         }
+#
+#     class Meta:
+#         icon = 'fa fa-file-o'
+#         label = _('Media Teaser')
+#         template = 'widgets/teaser.html'
 
 
 TEASER_BLOCKS = [
