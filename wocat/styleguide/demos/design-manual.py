@@ -31,7 +31,7 @@ data = {
 
                 'links1': [
                     { 'href': 'http://google.de/1', 'text': 'Navi' },
-                    { 'href': 'http://google.de/1', 'text': 'Helvetica Neue Light Condensed' },
+                    { 'href': 'http://google.de/1', 'text': 'Roboto Regular Condensed' },
                     { 'href': 'http://bing.de/2', 'text': '<i class="fa fa-search" aria-hidden="true"></i> Search', 'onlyxs': True, },
                 ],
             },
