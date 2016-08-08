@@ -413,7 +413,7 @@ data = {
         'name': 'Home Global Issues Image',
         'template': 'widgets/image.html',
         'context': {
-            'src': '/static/styleguide/test-images/giraffe-1by1.jpg',
+            'src': '/static/styleguide/test-images/global-issues-1by1.jpg',
         },
     },
     'teaser_home_globalissues': {
@@ -1702,10 +1702,13 @@ data = {
         'context': {
             'imgpos': 'top',
             'imgsrc': '/static/styleguide/test-images/header3-3by1.jpg',
-            'title': 'Das Schaf',
-            'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'title': 'Eisberge',
+            'description': 'Eine Dokumentation über Gletscher in Kenia. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
             'author': 'Eraldo Energy',
             'mediastyle': True,
+            'readmorelink': {
+                'text': 'Download Book',
+            },
         },
     },
     'media_ytimage': {
@@ -1717,6 +1720,23 @@ data = {
             'title': 'Auf die Größe kommts an. Besonders bei Titeln über mehrere Zeilen.',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
             'mediastyle': True,
+            'readmorelink': {
+                'text': 'View Video',
+            },
+        },
+    },
+    'media_defaultvideo': {
+        'name': 'Media',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'imgpos': 'top',
+            'imgsrc': '/static/images/media-thumbs/video.svg',
+            'title': 'Jagt auf Lianen',
+            'description': 'Ein Video ohne Bild. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
+            'readmorelink': {
+                'text': 'View Video',
+            },
         },
     },
     'media_highimage': {
@@ -1724,13 +1744,43 @@ data = {
         'template': 'widgets/teaser.html',
         'context': {
             'imgpos': 'top',
-            'imgsrc': '/static/styleguide/test-images/studio-vertical.jpg',
-            'title': 'Das Schaf',
+            'imgsrc': '/static/styleguide/test-images/giraffe-vertical.jpg',
+            'title': 'Die Giraffe',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
             'mediastyle': True,
+            'readmorelink': {
+                'text': 'Show Media',
+            },
         },
     },
-
+    'media_defaultbook': {
+        'name': 'Media',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'imgpos': 'top',
+            'imgsrc': '/static/images/media-thumbs/book.svg',
+            'title': 'Südafrika und die Pinguine',
+            'description': 'Ein Buch ohne eigenem Bild. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
+            'readmorelink': {
+                'text': 'Show Media',
+            },
+        },
+    },
+    'media_defaultbrochure': {
+        'name': 'Media',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'imgpos': 'top',
+            'imgsrc': '/static/images/media-thumbs/brochure.svg',
+            'title': 'Lose Blattsammlung',
+            'description': 'Broschüre ohne Bild. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
+            'readmorelink': {
+                'text': 'Show Media',
+            },
+        },
+    },
     'footer': {
         'name': 'Footer',
         'template': 'widgets/footer.html',
