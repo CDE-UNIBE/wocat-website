@@ -22,38 +22,36 @@
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="form-group">
-					<input class="form-control" id="inputEmail3" placeholder="Search" type="text">
+					<input class="form-control" id="inputSearch" placeholder="Search" type="text">
 				</div>
 			</div>
 			<div class="col-sm-3">
 				<div class="form-group">
-					<select class="form-control" id="inputSelect">
-						<option>for Mayor Tom</option>
-						<option>for Chris Hadfield</option>
-						<option>for Fry and Homer</option>
-						<option>for David Bowie</option>
-						<option>for all Muppets</option>
+					<select class="form-control" id="inputSelect1">
+						<option>all Authors</option>
+						<option>Chris Hadfield</option>
+						<option>Fry and Homer</option>
+						<option>David Bowie</option>
+						<option>Muppets</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-2">
+			<div class="col-sm-3">
 				<div class="form-group">
-					<select class="form-control" id="inputSelect">
-						<option>all time</option>
-						<option>last year</option>
-						<option>last month</option>
+					<select class="form-control" id="inputSelect2">
+						<option>all Countries</option>
+						<option>Afghanistan</option>
+						<option>Ghana</option>
+						<option>South Africa</option>
+						<option>Kenya</option>
+						<option>Afghanistan</option>
+						<option>Ghana</option>
+						<option>South Africa</option>
+						<option>Kenya</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="form-group">
-					<select class="form-control" id="inputSelect">
-						<option>sort by date</option>
-						<option>sort by title</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-sm-2">
+			<div class="col-sm-3">
 				<div class="form-group">
 					<button class="btn btn-default btn-block">
 						apply
@@ -61,7 +59,6 @@
 				</div>
 			</div>
 		</div>
-		<p class="text-right"><button class="btn btn-link">more filter options</button></p>
 
 		<br><br>
 
@@ -70,37 +67,37 @@
 				 {{ media_output }}
 			</div>
 			<div class="col">
-				 {{ media_ytimage_output }}
+				 {{ media_defaultvideo_output }}
 			</div>
 			<div class="col">
 				 {{ media_highimage_output }}
+			</div>
+			<div class="col">
+				 {{ media_defaultbook_output }}
+			</div>
+			<div class="col">
+				 {{ media_defaultbrochure_output }}
+			</div>
+			<div class="col">
+				 {{ media_defaultbook_output }}
+			</div>
+			<div class="col">
+				 {{ media_defaultvideo_output }}
 			</div>
 			<div class="col">
 				 {{ media_output }}
 			</div>
 			<div class="col">
-				 {{ media_ytimage_output }}
+				 {{ media_defaultbrochure_output }}
 			</div>
 			<div class="col">
-				 {{ media_highimage_output }}
-			</div>
-			<div class="col">
-				 {{ media_ytimage_output }}
-			</div>
-			<div class="col">
-				 {{ media_output }}
-			</div>
-			<div class="col">
-				 {{ media_highimage_output }}
+				 {{ media_defaultvideo_output }}
 			</div>
 			<div class="col">
 				 {{ media_ytimage_output }}
 			</div>
 			<div class="col">
-				 {{ media_ytimage_output }}
-			</div>
-			<div class="col">
-				 {{ media_highimage_output }}
+				 {{ media_defaultbook_output }}
 			</div>
 		</div><!-- row -->
 

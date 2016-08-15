@@ -226,7 +226,7 @@ data = {
         'context': {
             'id': 1,
             'items': [
-                { 'src': '/static/styleguide/test-images/header1-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/global-issues-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header2-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header3-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header4-3by1.jpg' },
@@ -254,7 +254,7 @@ data = {
         'context': {
             'id': 'wc2',
             'items': [
-                { 'src': '/static/styleguide/test-images/header1-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/global-issues-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header2-3by1.jpg' },
             ],
         },
@@ -377,7 +377,7 @@ data = {
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
             'author': 'Tobias Kauer Jr.',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment17 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -413,7 +413,7 @@ data = {
         'name': 'Home Global Issues Image',
         'template': 'widgets/image.html',
         'context': {
-            'src': '/static/styleguide/test-images/giraffe-1by1.jpg',
+            'src': '/static/styleguide/test-images/ziegen-4by3.jpg',
         },
     },
     'teaser_home_globalissues': {
@@ -435,7 +435,7 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
             'lines': True,
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment18 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -450,7 +450,7 @@ data = {
             'lines': True,
             'imgpos': 'left',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment19 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -465,7 +465,7 @@ data = {
             'lines': True,
             'imgpos': 'right',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment20 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -481,8 +481,8 @@ data = {
             'lines': True,
             'imgpos': 'left',
             'largeimg': True,
-            'imgsrc': '/static/styleguide/test-images/header1-3by1.jpg',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'imgsrc': '/static/styleguide/test-images/global-issues-3by1.jpg',
+            'description': 'Es gibt im Moment21 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -498,7 +498,7 @@ data = {
             'imgpos': 'right',
             'largeimg': True,
             'imgsrc': '/static/styleguide/test-images/header1-3by1.jpg',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment22 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -513,7 +513,7 @@ data = {
             'lines': True,
             'imgpos': 'top',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment23 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -529,7 +529,7 @@ data = {
             'bottomline': True,
             'date': '24. April 2016',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind…',
+            'description': 'Es gibt im Moment in diese Mannschaft…',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -540,12 +540,12 @@ data = {
         'template': 'widgets/teaser.html',
         'context': {
             'href': 'http://sinnwerkstatt.com',
-            'title': 'See what happens if we write a long article about building resilience and all the interesting aspects you had never expected!',
+            'title': 'See what happens if we write a long article about building resilience!',
             'imgpos': 'left',
             'bottomline': True,
             'date': '24. April 2016',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen…',
+            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind…',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -576,7 +576,7 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment6 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -592,7 +592,7 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment5 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -607,7 +607,7 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment4 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorebutton': {
                 'text': 'read more',
             },
@@ -621,7 +621,7 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment2 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorebutton': {
                 'text': 'read more',
             },
@@ -636,7 +636,7 @@ data = {
             'href': 'http://sinnwerkstatt.com',
             'date': '24. April 2016',
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment1 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -653,7 +653,7 @@ data = {
             'date': '24. April 2016',
             'bottomline': True,
             'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'description': 'Es gibt im Moment3 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
             'readmorelink': {
                 'text': 'read more',
             },
@@ -665,7 +665,7 @@ data = {
         'template': 'widgets/page-lead-overlay.html',
         'context': {
             'heading': 'Styleguide',
-            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'lead': 'Es gibt im Moment7 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
         },
     },
     'page_lead_overlay_small': {
@@ -674,7 +674,7 @@ data = {
         'context': {
             'small': True,
             'heading': 'Small Overlay',
-            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'lead': 'Es gibt im Moment8 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
         },
     },
 
@@ -682,7 +682,7 @@ data = {
         'name': 'Page Lead Overlay',
         'template': 'widgets/overlay-teaser.html',
         'context': {
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'description': 'WOCAT (World Overview of Conservation Approaches and Technologies) is an established global network which supports innovation and decision-making processes in Sustainable Land Management (SLM).',
             'title': 'Wocat',
             'links': [
                 {'href': 'http://google.de', 'text': 'Discover Wocat'},
@@ -705,7 +705,7 @@ data = {
         'template': 'widgets/page-lead-overlay.html',
         'context': {
             'heading': 'Projects and Countries',
-            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'lead': 'Es gibt im Moment10 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
         },
     },
     'page_lead_overlay_noimage': {
@@ -714,7 +714,7 @@ data = {
         'context': {
             'noimage': True,
             'heading': 'Page Head without image overlay',
-            'lead': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'lead': 'Es gibt im Moment11 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
         },
     },
 
@@ -735,7 +735,7 @@ data = {
         'context': {
             'style': 'box',
             'title': 'Overlay Teaser Box',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'description': 'Es gibt im Moment12 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
             'links': [
                 { 'href': 'http://google.de', 'text': 'Google', },
                 { 'href': 'http://facebook.de', 'text': 'Facebook', },
@@ -751,7 +751,7 @@ data = {
             'imgsrc': '/static/styleguide/test-images/surfing.jpg',
             'style': 'box',
             'title': 'Overlay Teaser Box',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'description': 'Es gibt im Moment13 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
             'links': [
                 { 'href': 'http://google.de', 'text': 'Google', },
                 { 'href': 'http://facebook.de', 'text': 'Facebook', },
@@ -786,7 +786,7 @@ data = {
             ],
             'style': 'box',
             'title': 'Overlay Teaser Box',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'description': 'Es gibt im Moment14 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
             'links': [
                 { 'href': 'http://google.de', 'text': 'Google', },
                 { 'href': 'http://facebook.de', 'text': 'Facebook', },
@@ -800,7 +800,7 @@ data = {
         'context': {
             'style': 'bottom',
             'title': 'Overlay Teaser Bottom',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'description': 'Es gibt im Moment15 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
             'links': [
                 { 'href': 'http://google.de', 'text': 'Google', },
                 { 'href': 'http://facebook.de', 'text': 'Facebook', },
@@ -814,7 +814,7 @@ data = {
         'context': {
             'style': 'box',
             'title': 'Projects and Countries',
-            'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'description': 'Es gibt im Moment16 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
             'links': [
                 { 'href': 'http://google.de', 'text': 'explore Projects and Countries', },
             ],
@@ -1702,10 +1702,13 @@ data = {
         'context': {
             'imgpos': 'top',
             'imgsrc': '/static/styleguide/test-images/header3-3by1.jpg',
-            'title': 'Das Schaf',
-            'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'title': 'Eisberge',
+            'description': 'Eine Dokumentation über Gletscher in Kenia. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
             'author': 'Eraldo Energy',
             'mediastyle': True,
+            'readmorelink': {
+                'text': 'Download Book',
+            },
         },
     },
     'media_ytimage': {
@@ -1717,6 +1720,23 @@ data = {
             'title': 'Auf die Größe kommts an. Besonders bei Titeln über mehrere Zeilen.',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
             'mediastyle': True,
+            'readmorelink': {
+                'text': 'View Video',
+            },
+        },
+    },
+    'media_defaultvideo': {
+        'name': 'Media',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'imgpos': 'top',
+            'imgsrc': '/static/images/media-thumbs/video.svg',
+            'title': 'Jagt auf Lianen',
+            'description': 'Ein Video ohne Bild. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
+            'readmorelink': {
+                'text': 'View Video',
+            },
         },
     },
     'media_highimage': {
@@ -1724,13 +1744,43 @@ data = {
         'template': 'widgets/teaser.html',
         'context': {
             'imgpos': 'top',
-            'imgsrc': '/static/styleguide/test-images/studio-vertical.jpg',
-            'title': 'Das Schaf',
+            'imgsrc': '/static/styleguide/test-images/giraffe-vertical.jpg',
+            'title': 'Die Giraffe',
             'description': 'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
             'mediastyle': True,
+            'readmorelink': {
+                'text': 'Show Media',
+            },
         },
     },
-
+    'media_defaultbook': {
+        'name': 'Media',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'imgpos': 'top',
+            'imgsrc': '/static/images/media-thumbs/book.svg',
+            'title': 'Südafrika und die Pinguine',
+            'description': 'Ein Buch ohne eigenem Bild. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
+            'readmorelink': {
+                'text': 'Show Media',
+            },
+        },
+    },
+    'media_defaultbrochure': {
+        'name': 'Media',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'imgpos': 'top',
+            'imgsrc': '/static/images/media-thumbs/brochure.svg',
+            'title': 'Lose Blattsammlung',
+            'description': 'Broschüre ohne Bild. Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen?',
+            'mediastyle': True,
+            'readmorelink': {
+                'text': 'Show Media',
+            },
+        },
+    },
     'footer': {
         'name': 'Footer',
         'template': 'widgets/footer.html',

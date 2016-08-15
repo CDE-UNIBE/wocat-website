@@ -1,3 +1,9 @@
+### Owncloud ###
+.csync_journal.db
+.csync_journal.db-shm
+.csync_journal.db-wal
+
+
 ### OSX ###
 .DS_Store
 .AppleDouble

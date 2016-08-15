@@ -11,41 +11,41 @@ data = {
             'images': [
                 {
                     'src': '/static/styleguide/test-images/eidgenossen-logo.jpg',
-                    'shrink': 0,
+                    'shrink': 2,
                     'href': 'http://xxx1',
                 },
                 {
                     'src': '/static/styleguide/test-images/uni-bern-logo.jpg',
-                    'shrink': 2,
+                    'shrink': 3,
                 },
                 {
                     'src': '/static/styleguide/test-images/food-logo.jpg',
-                    'shrink': 2,
+                    'shrink': 3,
                     'href': 'http://yyy2',
                 },
                 {
                     'src': '/static/styleguide/test-images/isric-logo.jpg',
                     'href': 'http://xxx3',
-                    'shrink': 0,
+                    'shrink': 1,
                 },
                 {
                     'src': '/static/styleguide/test-images/ciat-logo.png',
-                    'shrink': 2,
+                    'shrink': 3,
                 },
                 {
                     'src': '/static/styleguide/test-images/icarda-logo.jpg',
                     'href': 'http://yyy4',
-                    'shrink': 1,
+                    'shrink': 2,
                 },
                 {
                     'src': '/static/styleguide/test-images/icimod-logo.jpg',
                     'href': 'http://yyy4',
-                    'shrink': 1,
+                    'shrink': 3,
                 },
                 {
                     'src': '/static/styleguide/test-images/giz-logo.jpg',
                     'href': 'http://yyy4',
-                    'shrink': 1,
+                    'shrink': 2,
                 },
             ],
         },
@@ -82,7 +82,7 @@ data = {
         'name': 'Image',
         'template': 'widgets/image.html',
         'context': {
-            'src': '/static/styleguide/test-images/silhouette-1by1.jpg',
+            'src': '/static/styleguide/test-images/global-issues-4by3.jpg',
         },
     },
     'consortiumpartners': {
