@@ -55,7 +55,7 @@ data = {
         'name': 'Heading 1',
         'template': 'widgets/heading1.html',
         'context': {
-            'text': 'Nicole Harai',
+            'text': 'Amélie Häfliger',
         },
     },
     'findother': {
