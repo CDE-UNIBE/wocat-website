@@ -1518,6 +1518,35 @@ data = {
             ],
         },
     },
+    'file_link_pdf': {
+        'name': 'File Link – PDF',
+        'template': 'widgets/file-link.html',
+        'context': {
+            'title': 'Project flyer',
+            'filename': 'Flyer Export 2016.pdf',
+            'filesize': '130&#8239;kB',
+            'type': 'pdf',
+            'fileurl': 'http://google.de',
+        },
+    },
+    'file_link_video': {
+        'name': 'File Link – Video',
+        'template': 'widgets/file-link.html',
+        'context': {
+            'filename': 'video-no-title.avi',
+            'filesize': '56&#8239;MB',
+            'type': 'video',
+            'fileurl': 'http://google.de',
+        },
+    },
+    'file_link_xls': {
+        'name': 'File Link – XLS',
+        'template': 'widgets/file-link.html',
+        'context': {
+            'title': 'Wocat calculation',
+            'fileurl': 'http://google.de',
+        },
+    },
     'sidebar': {
         'name': 'Sidebar',
         'template': 'widgets/sidebar.html',

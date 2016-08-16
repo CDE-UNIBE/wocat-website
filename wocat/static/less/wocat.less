@@ -1,6 +1,6 @@
 // Wocat CSS
 
-@color-neutal-light: #eee;
+@color-neutral-light: #eee;
 @color-neutral: #bbb;
 @color-neutral-dark: #777777;
 @color-black: #333;
@@ -488,7 +488,44 @@ select.form-control::-ms-expand {
 	}
 }
 
+.widget-filelink {
+	border: 2px solid @color-primary;
+	margin-bottom: 30px;
+	padding-top: 15px;
+	@media(min-width:768px) {
+		max-width: 400px;
+	}
+	overflow: hidden; // prevent collapsing margins
 
+	.widget-filelink-type {
+		display: block;
+		text-decoration: none;
+		width: 66px;
+		height: 51px;
+		color: @color-primary;
+		float: left;
+		line-height: 1em;
+		padding: 0 0 0 10px;
+		font-size: 38px;
+	}
+	.widget-filelink-title {
+		margin: 0 0 4px 81px;
+	}
+	.widget-filelink-filename {
+		margin: 0 0 4px 81px;
+
+		.widget-filelink-filesize {
+			font-style: italic;
+		}
+	}
+	.widget-filelink-button {
+		margin: 0 0 15px 81px;
+
+		a.btn {
+			margin: 0;
+		}
+	}
+}
 
 .widget-teaser {
 	margin-bottom: 15px;
@@ -516,7 +553,7 @@ select.form-control::-ms-expand {
 		// Der Wrapper kommt nur, wenn Bild einen grauen Rahmen hat.
 		padding: 10px;
 		margin-bottom: 11px;
-		background-color: @color-neutal-light;
+		background-color: @color-neutral-light;
 
 		.widget-teaser-image {
 			position: relative;
@@ -765,20 +802,46 @@ select.form-control::-ms-expand {
 		// Rechteckige abgeschlossene Box auffällig orange über Bild
 		.widget-overlay-teaser-content {
 
+				a {
+					// Bei Largebox ist der Link ein Button.
+
+				}
+
+
 			@media(min-width:768px) {
 				background-color: fadeout(@color-primary, 20%);
 				color: @color-white;
 				a {
 					// Bei Largebox ist der Link ein Button.
+					display: inline-block;
+					margin-bottom: 0;
+					text-align: center;
+					vertical-align: middle;
+					touch-action: manipulation;
+					background-image: none;
+					border: 1px solid transparent;
+					white-space: nowrap;
+					padding: 6px 12px;
+					font-size: 14px;
+					line-height: 1.42857143;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+					user-select: none;
+
 					color: @color-white;
 					border-radius: 0;
+					border-color: @color-white;
 					margin-top: 15px;
+					background-color: transparent;
+					font-weight: 600;
 					-webkit-transition: background-color 0.5s;
 					transition: background-color 0.5s;
 
 					&:hover, &:focus, &:active {
 						color: @color-white;
 						border-color: @color-white;
+						text-decoration: none;
 						background-color: fadeout(@color-white, 80%);
 					}
 				}

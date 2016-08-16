@@ -1,0 +1,32 @@
+<div class="widget-filelink">
+	<a href="{{ fileurl }}" class="widget-filelink-type">
+		{% if type == "pdf" %}
+			<i class="fa fa-file-pdf-o fa-fw" aria-hidden="true"></i>
+		{% elif type == "video" %}
+			<i class="fa fa-play-circle fa-fw" aria-hidden="true"></i>
+		{% else %}
+			<i class="fa fa-download fa-fw" aria-hidden="true"></i>
+		{% endif %}
+	</a>
+	{% if title %}<h4 class="widget-filelink-title">{{ title }}</h4>{% endif %}
+	{% if filename %}
+		<div class="widget-filelink-filename">
+			{{ filename }}
+			{% if filesize %}(<span class="widget-filelink-filesize">{{ filesize }}</span>){% endif %}
+		</div>
+	{% endif %}
+
+	<div class="widget-filelink-button">
+		<a href="{{ fileurl }}" class="btn btn-link">
+			{% if type == "pdf" %}
+				View Document
+			{% elif type == "video" %}
+				Play Video
+			{% else %}
+				Download File
+			{% endif %}
+		</a>
+	</div>
+
+	<div class="clearfix"></div>
+</div><!-- widget-filelink -->

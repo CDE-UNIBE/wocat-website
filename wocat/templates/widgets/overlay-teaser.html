@@ -11,7 +11,7 @@
 		{% if links %}
 			{% for link in links %}
 				<p>
-					<a href="{{ link.href }}" class="widget-image-overlay-link{% if style == "largebox" %} btn btn-default{% endif %}"{% if link.external %} target="_blank"{% endif %}>{% if not style == "largebox" %}» {% endif %}{{ link.text }}</a>
+					<a href="{{ link.href }}" class="widget-image-overlay-link"{% if link.external %} target="_blank"{% endif %}>{% if not style == "largebox" %}» {% endif %}{{ link.text }}</a>
 				</p>
 			{% endfor %}
 		{% endif %}
