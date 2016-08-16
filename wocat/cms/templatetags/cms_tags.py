@@ -1,13 +1,27 @@
-from classytags.arguments import Argument
-from classytags.core import Options
 from classytags.helpers import InclusionTag
 from django import template
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html
-
-from wocat.cms.models import HomePage, ProjectPage, ProjectsPage
+from django.utils.translation import ugettext_lazy as _
+from wocat.cms.models import HomePage, ProjectPage
 
 register = template.Library()
+
+
+def get_profile_links(user, onlyxs=False):
+    if user.is_authenticated():
+        profile_links = {
+            'dropdown': True,
+            'text': user.username,
+            'links': [
+                {'href': reverse('users:detail', args=[user.username]), 'text': _('Profile'), 'active': True,},
+                {'href': reverse('account_logout'), 'text': _('Logout')},
+            ],
+            'onlyxs': onlyxs,
+        }
+    else:
+        profile_links = {'href': reverse('account_login'), 'text': 'Login'}
+    return profile_links
 
 
 @register.tag
@@ -68,10 +82,7 @@ class Header(InclusionTag):
         project_page = self.get_project_page(page)
         nodes = self.get_nodes(context, root_page=project_page) + self.get_language_and_search_context()
         user = context.get('user')
-        if user.is_authenticated():
-            user_link = {'href': reverse('users:detail', args=[user.username]), 'text': user.username}
-        else:
-            user_link = {'href': reverse('account_login'), 'text': 'Login'}
+        profile_links = get_profile_links(user)
         if project_page:
             depth = 2
             brand2 = {
@@ -92,8 +103,8 @@ class Header(InclusionTag):
                 {'href': '#get-involved', 'text': 'Get involved'},
                 {'href': '#faq', 'text': 'FAQ'},
                 {'href': '#glassary', 'text': 'Glossary'},
-                user_link,
-            ] + self.get_language_and_search_context(only_xs=False),
+                profile_links,
+        ] + self.get_language_and_search_context(only_xs=False),
             'mainnav': {
                 'depth': depth,
                 # only visible if in or under a project page
@@ -136,6 +147,8 @@ class Footer(InclusionTag):
     template = 'widgets/footer.html'
 
     def get_context(self, context, **kwargs):
+        user = context.get('user')
+        profile_links = get_profile_links(user, onlyxs=True)
         links = [
             {'href': '#facebook', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>',
              'onlyxs': True,},
@@ -146,7 +159,7 @@ class Footer(InclusionTag):
             {'href': '#get-involved', 'text': 'Get involved', 'onlyxs': True,},
             {'href': '#faq', 'text': 'FAQ', 'onlyxs': True,},
             {'href': '#glossary', 'text': 'Glossary', 'onlyxs': True,},
-            {'href': '#login', 'text': 'Login', 'onlyxs': True,},
+            profile_links,
             {'href': '#imprint', 'text': 'Imprint',},
             {'href': '#contact', 'text': 'Contact',},
         ]
