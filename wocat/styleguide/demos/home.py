@@ -10,40 +10,40 @@ data = {
             'verticalalign': True,
             'images': [
                 {
-                    'src': '/static/styleguide/test-images/eidgenossen-logo.jpg',
-                    'shrink': 2,
+                    'src': '/static/styleguide/test-images/consortium-partners/SDC.svg',
+                    'shrink': 1,
                     'href': 'http://xxx1',
                 },
                 {
-                    'src': '/static/styleguide/test-images/uni-bern-logo.jpg',
+                    'src': '/static/styleguide/test-images/consortium-partners/CDE.svg',
                     'shrink': 3,
                 },
                 {
-                    'src': '/static/styleguide/test-images/food-logo.jpg',
-                    'shrink': 3,
+                    'src': '/static/styleguide/test-images/consortium-partners/FAO.svg',
+                    'shrink': 2,
                     'href': 'http://yyy2',
                 },
                 {
-                    'src': '/static/styleguide/test-images/isric-logo.jpg',
+                    'src': '/static/styleguide/test-images/consortium-partners/ISRIC.svg',
                     'href': 'http://xxx3',
                     'shrink': 1,
                 },
                 {
-                    'src': '/static/styleguide/test-images/ciat-logo.png',
+                    'src': '/static/styleguide/test-images/consortium-partners/CIAT.svg',
                     'shrink': 3,
                 },
                 {
-                    'src': '/static/styleguide/test-images/icarda-logo.jpg',
+                    'src': '/static/styleguide/test-images/consortium-partners/ICARDA.svg',
                     'href': 'http://yyy4',
                     'shrink': 2,
                 },
                 {
-                    'src': '/static/styleguide/test-images/icimod-logo.jpg',
+                    'src': '/static/styleguide/test-images/consortium-partners/ICIMOD.svg',
                     'href': 'http://yyy4',
                     'shrink': 3,
                 },
                 {
-                    'src': '/static/styleguide/test-images/giz-logo.jpg',
+                    'src': '/static/styleguide/test-images/consortium-partners/GIZ.svg',
                     'href': 'http://yyy4',
                     'shrink': 2,
                 },

@@ -226,10 +226,13 @@ data = {
         'context': {
             'id': 1,
             'items': [
-                { 'src': '/static/styleguide/test-images/global-issues-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/header7-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/header1-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header2-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header3-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header4-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/header5-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/header6-3by1.jpg' },
             ],
         },
     },
@@ -254,8 +257,8 @@ data = {
         'context': {
             'id': 'wc2',
             'items': [
-                { 'src': '/static/styleguide/test-images/global-issues-3by1.jpg' },
                 { 'src': '/static/styleguide/test-images/header2-3by1.jpg' },
+                { 'src': '/static/styleguide/test-images/header1-3by1.jpg' },
             ],
         },
     },
@@ -422,6 +425,7 @@ data = {
         'context': {
             'description': 'Climate Change, Disaster Risk, Food Security, Sustainable Development Goals.',
             'title': 'Global Issues',
+            'flapmd': True,
             'links': [
                 {'href': 'http://google.de', 'text': 'learn more'},
             ],
@@ -525,7 +529,7 @@ data = {
         'context': {
             'href': 'http://sinnwerkstatt.com',
             'title': 'Building resilience',
-            'imgpos': 'left',
+            'imgpos': 'right',
             'bottomline': True,
             'date': '24. April 2016',
             'imgsrc': '/static/styleguide/test-images/header4.jpg',
@@ -541,10 +545,10 @@ data = {
         'context': {
             'href': 'http://sinnwerkstatt.com',
             'title': 'See what happens if we write a long article about building resilience!',
-            'imgpos': 'left',
+            'imgpos': 'right',
             'bottomline': True,
             'date': '24. April 2016',
-            'imgsrc': '/static/styleguide/test-images/header4.jpg',
+            'imgsrc': '/static/styleguide/test-images/header3.jpg',
             'description': 'Es gibt im Moment in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind…',
             'readmorelink': {
                 'text': 'read more',
@@ -752,6 +756,22 @@ data = {
             'style': 'box',
             'title': 'Overlay Teaser Box',
             'description': 'Es gibt im Moment13 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'links': [
+                { 'href': 'http://google.de', 'text': 'Google', },
+                { 'href': 'http://facebook.de', 'text': 'Facebook', },
+                { 'href': 'http://bing.de', 'text': 'extern Bing', 'external': True },
+            ],
+        },
+    },
+    'overlay_teaser_widgetchooser_flapmd': {
+        'name': 'Overlay Teaser – Widgetchooser – Flap box at MD screen size',
+        'template': 'widgets/overlay-teaser-widgetchooser.html',
+        'context': {
+            'imgsrc': '/static/styleguide/test-images/surfing.jpg',
+            'style': 'box',
+            'title': 'Overlay Teaser Box',
+            'flapmd': True,
+            'description': 'Es gibt im Moment13b in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
             'links': [
                 { 'href': 'http://google.de', 'text': 'Google', },
                 { 'href': 'http://facebook.de', 'text': 'Facebook', },
@@ -1066,7 +1086,7 @@ data = {
         'name': 'Image Logo',
         'template': 'widgets/image.html',
         'context': {
-            'src': '/static/images/logo.png',
+            'src': '/static/images/Wocat_Logo.svg',
             'href': 'http://x',
         },
     },
@@ -1810,9 +1830,9 @@ data = {
                 { 'href': 'http://bing.de/3', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>', 'onlyxs': True, },
                 { 'href': 'http://google.de/1', 'text': 'Get involved', 'onlyxs': True, },
                 { 'href': 'http://bing.de/2', 'text': 'FAQ', 'onlyxs': True, },
-                { 'href': 'http://bing.de/3', 'text': 'Glossary', 'active': True, 'onlyxs': True, },
+                { 'href': 'http://bing.de/3', 'text': 'Glossary', 'onlyxs': True, },
                 { 'href': 'http://bing.de/2', 'text': 'Login', 'onlyxs': True, },
-                { 'href': 'http://bing.de/2', 'text': 'Imprint', },
+                { 'href': 'http://bing.de/2', 'text': 'Legal Disclaimer', },
                 { 'href': 'http://bing.de/2', 'text': 'Contact', },
 
             ],

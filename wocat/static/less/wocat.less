@@ -716,13 +716,25 @@ select.form-control::-ms-expand {
 			}
 		}
 
-		@media(min-width:768px) {
-			margin-bottom: 0;
-			margin-top: 0;
-			position: absolute;
-			z-index: 10;
-			background-color: rgba(255, 255, 255, 0.9);
-			padding: 15px;
+		&.widget-overlay-teaser-content-flapmd {
+			@media(min-width:992px) {
+				margin-bottom: 0;
+				margin-top: 0;
+				position: absolute;
+				z-index: 10;
+				background-color: rgba(255, 255, 255, 0.9);
+				padding: 15px;
+			}
+		}
+		&:not(.widget-overlay-teaser-content-flapmd) {
+			@media(min-width:768px) {
+				margin-bottom: 0;
+				margin-top: 0;
+				position: absolute;
+				z-index: 10;
+				background-color: rgba(255, 255, 255, 0.9);
+				padding: 15px;
+			}
 		}
 	}
 
@@ -730,13 +742,22 @@ select.form-control::-ms-expand {
 		// Rechteckige abgeschlossene Box über Bild
 		.widget-overlay-teaser-content {
 
-			@media(min-width:768px) {
-				bottom: 60px;
-				left: 30px;
-				width: 285px;
+			&.widget-overlay-teaser-content-flapmd {
+				@media(min-width:992px) {
+					bottom: 60px;
+					left: 30px;
+					width: 405px;
+				}
 			}
-			@media(min-width:992px) {
-				width: 405px;
+			&:not(.widget-overlay-teaser-content-flapmd) {
+				@media(min-width:768px) {
+					bottom: 60px;
+					left: 30px;
+					width: 285px;
+				}
+				@media(min-width:992px) {
+					width: 405px;
+				}
 			}
 		}
 	}
