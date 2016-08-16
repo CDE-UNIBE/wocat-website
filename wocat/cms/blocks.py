@@ -1,9 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
+from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
     StreamBlock, ListBlock
+from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -93,6 +95,22 @@ class LinkBlock(StructBlock):
         return super().clean(value)
 
 
+class DocumentBlock(DocumentChooserBlock):
+    def get_context(self, value):
+        document = value
+        return {
+            'title': document.title,
+            'fileurl': document.url,
+            'filename': document.filename,
+            'filesize': filesizeformat(document.file.size),
+            'type': document.file_extension,
+        }
+
+    class Meta:
+        icon = "doc-empty"
+        template = 'widgets/file-link.html'
+
+
 class ReadMoreBlock(StructBlock):
     name = blocks.CharBlock(required=False)
     page = PageChooserBlock(required=False)
@@ -138,6 +156,7 @@ class ReadMoreBlock(StructBlock):
 
 
 LINK_BLOCKS = [
+    ('document', DocumentBlock()),
     ('read_more', ReadMoreBlock()),
 ]
 
