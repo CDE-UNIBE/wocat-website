@@ -64,6 +64,7 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',  # registration
     'django_countries',
     'easy_thumbnails',
+    'rest_framework',  # api
 )
 
 # Apps specific for this project go here.
@@ -75,6 +76,7 @@ LOCAL_APPS = (
     'wocat.institutions',
     'wocat.medialibrary',
     'wocat.news',
+    'wocat.api',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -291,3 +293,12 @@ THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.filters',
 )
 THUMBNAIL_BASEDIR = 'thumbnails'
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

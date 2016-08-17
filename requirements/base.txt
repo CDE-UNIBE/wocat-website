@@ -49,3 +49,8 @@ wagtail==1.5.3
 
 # Models
 django-countries==3.4.1
+
+# API
+djangorestframework==3.3.3
+Markdown==2.6.6
+django-filter==0.14.0

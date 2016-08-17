@@ -52,6 +52,10 @@ if settings.DEBUG:
     ]
 
 urlpatterns += [
+    url(r'^api/', include('wocat.api.urls'))
+]
+
+urlpatterns += [
     # CMS
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^search/', include(wagtailsearch_urls)),

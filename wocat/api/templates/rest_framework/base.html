@@ -1,0 +1,9 @@
+{% extends 'rest_framework/base.html' %}
+
+{% block title %}{% if name %}{{ name }} – {% endif %}wocat REST api{% endblock %}
+
+{% block branding %}
+    <a class='navbar-brand' rel="nofollow" href='{% url 'api-root' %}'>
+        wocat REST api
+    </a>
+{% endblock %}
