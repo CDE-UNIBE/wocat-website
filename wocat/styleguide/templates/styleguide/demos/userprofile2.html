@@ -1,0 +1,69 @@
+{% extends "styleguide/base.html" %}
+{% load static %}
+
+{% block content %}
+	{{ header_output }}
+	<div class="container">
+		<br><br>
+		{{ userprofile_output }}
+		<br>
+
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-sm-4">
+						{{ avatar_output }}
+						<p>
+							<img src="/static/images/flags/ken.gif"> Afghanistan<br>
+							<strong>Afghanistan SLM</strong><br>
+							Director of Finance
+						</p>
+
+					</div>
+					<div class="col-sm-8 col-md-7 col-md-offset-1">
+						<h3>Contact</h3>
+						<p>
+							<i class="fa fa-phone fa-fw"></i> <a href="mailto:lalala@example.com">lalala@example.com</a><br>
+							<i class="fa fa-map-marker fa-fw"></i> <a href="http://maps.google.com/?q=Skalitzer%20Stra%C3%9Fe%20100%2010997%20Berlin">Skalitzer Straße 100 10997 Berlin</a>
+						</p>
+						<br>
+						<h3>Interests</h3>
+						<p>
+							<span class="badge">Questionnaire on SLM Technologies (QT)</span>
+							<span class="badge">Watershed Management Module</span>
+							<span class="badge">Climate Change Adaptation Module</span>
+						</p>
+
+						<br>
+						<h3>Key Work Topics</h3>
+						<p>
+							<span class="badge">Rainfed cropland</span>
+							<span class="badge">SLM knowledge management and decision support</span>
+							<span class="badge">Water management</span>
+							<span class="badge">Governance and policy support</span>
+						</p>
+						<br>
+						<h3>Wocat Experiences</h3>
+						<p>
+							<span class="badge">Questionnaire on SLM Technologies (QT)</span>
+							<span class="badge">Watershed Management Module</span>
+							<span class="badge">Climate Change Adaptation Module</span>
+						</p>
+
+						{{ editlink_output }}
+
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3 col-sm-offset-1">
+				{{ findother_output }}
+				{{ searchbutton_output }}
+			</div>
+		</div><!-- row -->
+
+
+		<br><br>
+	</div><!-- container -->
+	{{ footer_output }}
+
+{% endblock %}
