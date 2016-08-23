@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% trans 'Glossary' %}</h1>
+    <dl>
+        {% for entry in entries %}
+            {% include 'glossary/widgets/entry.html' %}
+        {% endfor %}
+    </dl>
+{% endblock content %}

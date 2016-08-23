@@ -102,7 +102,7 @@ class Header(InclusionTag):
                 {'href': '#twitter', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>'},
                 {'href': '#get-involved', 'text': 'Get involved'},
                 {'href': '#faq', 'text': 'FAQ'},
-                {'href': '#glassary', 'text': 'Glossary'},
+                {'href': reverse('glossary:list'), 'text': 'Glossary'},
                 profile_links,
         ] + self.get_language_and_search_context(only_xs=False),
             'mainnav': {
