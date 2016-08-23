@@ -68,6 +68,7 @@
 	{% if readmorelink %}
 		<a class="widget-teaser-readmoretext" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
 			» {{ readmorelink.text|safe }}
+			{% if external %}<i class="fa fa-external-link"></i>{% endif %}
 		</a>
 	{% endif %}
 {% endif %}
@@ -92,6 +93,7 @@
 	{% if readmorelink %}
 		<a class="widget-teaser-readmoretext widget-teaser-readmoretext-lines" href="{{ href }}"{% if external %} target="_blank"{% endif %}>
 			» {{ readmorelink.text|safe }}
+			{% if external %}<i class="fa fa-external-link"></i>{% endif %}
 		</a>
 	{% endif %}
 {% endif %}
