@@ -11,6 +11,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from wocat.medialibrary.blocks import MediaTeaserBlock
 from wocat.news.blocks import NewsTeaserBlock
+from wocat.users.blocks import UserTeaserBlock
 
 
 class HeadingBlock(blocks.CharBlock):
@@ -341,6 +342,7 @@ TEASER_BLOCKS = [
     ('overlay_teaser', OverlayTeaserBlock()),
     ('media_teaser', MediaTeaserBlock()),
     ('news_teaser', NewsTeaserBlock()),
+    ('user_teaser', UserTeaserBlock()),
 ]
 
 BASE_BLOCKS += TEASER_BLOCKS

@@ -12,9 +12,9 @@ def get_profile_links(user, onlyxs=False):
     if user.is_authenticated():
         profile_links = {
             'dropdown': True,
-            'text': user.username,
+            'text': user.email,
             'links': [
-                {'href': reverse('users:detail', args=[user.username]), 'text': _('Profile'), 'active': True,},
+                {'href': reverse('users:detail', args=[user.email]), 'text': _('Profile'), 'active': True,},
                 {'href': reverse('account_logout'), 'text': _('Logout')},
             ],
             'onlyxs': onlyxs,

@@ -237,7 +237,7 @@ class MembersPage(UniquePageMixin, Page):
                 'avatarsrc': user.avatar.url if user.avatar else '',
                 'country': user.country.name if user.country else '',
                 # 'expertises': [{'name': user.expertise}] if user.expertise else '',
-                'name': user.username or '',
+                'name': user.name or '',
                 'organisation': user.organisation or '',
                 # 'position': 'Manager',
                 'url': user.get_absolute_url(),

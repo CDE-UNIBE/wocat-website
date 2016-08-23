@@ -28,7 +28,7 @@ class UserTeaserBlock(StructBlock):
         if not user:
             return {}
         return {
-            'title': user,
+            'title': user.name,
             'description': '',
             'href': user.get_absolute_url(),
             'readmorelink': {'text': _('view profile')},
