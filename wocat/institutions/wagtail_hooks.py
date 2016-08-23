@@ -5,11 +5,11 @@ from wagtail.contrib.modeladmin.options import (
 from .models import Institution
 
 
-@modeladmin_register
-class InstitutionModelAdmin(ModelAdmin):
-    model = Institution
-    menu_label = _('Institution')
-    menu_icon = 'fa fa-institution'
-    list_display = ('name',)
-
-    search_fields = ('name',)
+# @modeladmin_register
+# class InstitutionModelAdmin(ModelAdmin):
+#     model = Institution
+#     menu_label = _('Institution')
+#     menu_icon = 'fa fa-institution'
+#     list_display = ('name',)
+#
+#     search_fields = ('name',)

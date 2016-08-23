@@ -16,9 +16,9 @@ class UserViewSet(viewsets.ModelViewSet):
 router.register(r'users', UserViewSet)
 
 
-class InstitutionViewSet(viewsets.ModelViewSet):
-    queryset = Institution.objects.all()
-    serializer_class = InstitutionSerializer
-
-
-router.register(r'institutions', InstitutionViewSet)
+# class InstitutionViewSet(viewsets.ModelViewSet):
+#     queryset = Institution.objects.all()
+#     serializer_class = InstitutionSerializer
+#
+#
+# router.register(r'institutions', InstitutionViewSet)
