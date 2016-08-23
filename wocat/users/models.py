@@ -253,3 +253,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.first_name
+
+    @property
+    def email_safe(self):
+        email = self.email
+        return email.replace('@', '( at )')

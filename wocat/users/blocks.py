@@ -1,6 +1,7 @@
 from django.forms import Select
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import format_html
 from wagtail.wagtailcore.blocks import StructBlock, ChooserBlock
 
 
@@ -29,9 +30,16 @@ class UserTeaserBlock(StructBlock):
             return {}
         return {
             'title': user.name,
-            'description': '',
+            'description': format_html(
+                '<p>{institution}<br>{position}<br>{email}</p>',
+                institution=user.institution,
+                position=user.position,
+                email=user.email_safe,
+            ),
             'href': user.get_absolute_url(),
             'readmorelink': {'text': _('view profile')},
+            'imgpos': 'left',
+            'imgsrc': user.avatar.url if user.avatar else '',
         }
 
     class Meta:
