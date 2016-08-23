@@ -1,0 +1,20 @@
+<div class="widget-affix">
+		<div class="row">
+			<div class="hidden-xs col-sm-4 col-md-3">
+				<div id="affix-wrapper">
+					<div id="affix">
+					{% include "widgets/sidebar.html" with links=sidebar_links %}
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8 col-md-9">
+				<div id="affix-headings"></div>
+					{% for section in sections %}
+						<div id="{{ section.id }}"></div>
+						{{ section.content|safe }}
+					{% endfor %}
+				<div id="affix-bottom"></div>
+			</div>
+		</div><!-- row -->
+
+</div><!-- widget-affix -->

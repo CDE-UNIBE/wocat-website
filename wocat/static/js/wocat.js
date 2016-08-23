@@ -152,7 +152,7 @@ $(function() {
 	// Deklaration von Variablen, die beim Scrollen gebraucht und meist nicht überschrieben werden.
 	var doAffix;
 	var state;
-	var affixElement, affixTopStop, affixBottomStop, affixHeight;
+	var affixElement, affixTopStop, affixBottomStop, affixHeight, affixWidth;
 
 
 	// Nach dem Scroll wird das Update des Affix um 50ms verzögert, um die Funktion seltener auszuführen.
@@ -173,9 +173,11 @@ $(function() {
 		doAffix = $('#affix').is(":visible");
 		state = null;
 		affixElement = $('#affix');
+		affixWrapperElement = $('#affix-wrapper');
 		affixTopStop = $('#affix-wrapper').offset().top;
 		affixBottomStop = $('#affix-bottom').offset().top;
 		affixHeight = affixElement.height();
+		affixWidth = affixWrapperElement.width();
 		handleScroll();
 	}
 	// Calculate Affix area on resize and load ...
@@ -197,7 +199,7 @@ $(function() {
 		if (scrollTop < affixTopStop) {
 			//console.log('We are above affix area.');
 			if (state != 'top') {
-				affixElement.removeClass('affix-fixed').css({'top': 0, 'left': 0});
+				affixElement.removeClass('affix-fixed').css({'top': 0, 'left': 0, 'width': 'auto'});
 				state = 'top';
 			}
 			return;
@@ -208,7 +210,7 @@ $(function() {
 			//console.log('We are below affix area.');
 			if (state != 'bottom') {
 				var topOffset = affixBottomStop - affixTopStop - affixHeight;
-				affixElement.removeClass('affix-fixed').css({'top': topOffset, 'left': 0});
+				affixElement.removeClass('affix-fixed').css({'top': topOffset, 'left': 0, 'width': 'auto'});
 				state = 'bottom';
 			}
 			return;
@@ -220,7 +222,7 @@ $(function() {
 			var affixLeft = $('#affix-wrapper').offset().left;
 			//console.log('affixLeft: ', affixLeft);
 
-			affixElement.addClass('affix-fixed').css({'top': '0', 'left': affixLeft});
+			affixElement.addClass('affix-fixed').css({'top': '0', 'left': affixLeft, 'width': affixWidth});
 			state = 'fixed';
 		}
 
@@ -483,5 +485,25 @@ $(function() {
 
 		}
 
+	});
+});
+
+
+$(function() {
+	// Enable Scrollspy for sidebar affix navigation
+	$('body').scrollspy({ target: '.widget-sidebar' });
+});
+
+
+$(function() {
+	// Smooth Scroll
+	$("a.anchorlink[href^='#']").on('click', function(e) {
+		e.preventDefault();
+		var hash = this.hash;
+		$('html, body').stop().animate({
+			scrollTop: $(this.hash).offset().top
+		}, 600, function(){
+			window.location.hash = hash;
+		});
 	});
 });

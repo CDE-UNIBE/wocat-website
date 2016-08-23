@@ -70,6 +70,7 @@ data = {
         'context': {
             'href': 'http://sinnwerkstatt.com',
             'imgpos': 'top',
+            'external': True,
             'imgsrc': '/static/styleguide/test-images/wiki.jpg',
             'description': 'Das Wocat-Wiki enthält Wissen und Diskussionen.',
             'readmorelink': {

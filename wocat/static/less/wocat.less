@@ -123,19 +123,6 @@ select.form-control::-ms-expand {
 }
 
 
-#affix-wrapper {
-	position: relative;
-}
-#affix {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	&.affix-fixed {
-		position: fixed;
-	}
-}
-
 
 
 // Zweispaltige, dreispaltige und vierspaltige Listen
@@ -189,6 +176,29 @@ select.form-control::-ms-expand {
 }
 
 
+#affix-wrapper {
+	position: relative;
+}
+#affix {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	&.affix-fixed {
+		position: fixed;
+	}
+}
+.widget-affix {
+	margin-bottom: 30px;
+}
+.widget-sidebar {
+	.widget-sidebar-kicker {
+		font-style: italic;
+	}
+	.widget-sidebar-title {
+		font-weight: bold;
+	}
+}
 
 .widget-header {
 	.navbar-default {
