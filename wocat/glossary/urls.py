@@ -7,7 +7,7 @@ from .views import EntryDetailView, EntryListView
 
 urlpatterns = [
     url(
-        regex=r'^list/$',
+        regex=r'^$',
         view=EntryListView.as_view(),
         name='list'
     ),
