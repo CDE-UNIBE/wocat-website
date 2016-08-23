@@ -306,6 +306,13 @@ data = {
             'text': 'Die Fotografie von Geistern',
         },
     },
+    'heading2_b': {
+        'name': 'B',
+        'template': 'widgets/heading2.html',
+        'context': {
+            'text': 'B',
+        },
+    },
     'heading4': {
         'name': 'Heading 4',
         'template': 'widgets/heading4.html',
@@ -1775,8 +1782,17 @@ data = {
         'name': 'Definition',
         'template': 'widgets/definition.html',
         'context': {
-            'tag': 'WOCAT',
+            'tag': 'Wocat',
             'definition': 'Ein Trainer ist nicht ein Idiot! Ein Trainer sei sehen was passieren in Platz.\nIn diese Spiel es waren zwei, drei diese Spieler waren schwach wie eine Flasche leer!',
+        },
+    },
+    'definition_acronym': {
+        'name': 'Definition',
+        'template': 'widgets/definition.html',
+        'context': {
+            'tag': 'LADA',
+            'acronym': True,
+            'definition': ' Land Degradation Assessments in Drylands',
         },
     },
 
