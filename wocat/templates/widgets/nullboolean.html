@@ -1,6 +1,6 @@
 <div class="widget-nullboolean form-group{% if error %} has-error{% endif %}">
 {% if label %}
-<label class="control-label">{{ label }}{% if required %}<span class="asteriskField">*</span>{% endif %}</label>
+<label class="control-label col-sm-2 text-right">{{ label }}{% if required %}<span class="asteriskField">*</span>{% endif %}</label>
 {% endif %}
 
 <div class="widget-options">
@@ -22,4 +22,6 @@
 {% if help %}
 	<p class="help-block">{{ help }}</p>
 {% endif %}
+
+<div class="clearfix"></div>
 </div><!-- widget-nullboolean -->

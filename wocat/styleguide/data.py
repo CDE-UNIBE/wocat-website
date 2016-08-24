@@ -1054,6 +1054,13 @@ data = {
         },
     },
 
+    'dropzone': {
+        'name': 'Dropzone',
+        'template': 'widgets/dropzone.html',
+        'context': {
+            'apiurl': '/static/styleguide/js/dropzone-endpoint.html',
+        },
+    },
 
 
     'columns_1_1': {
