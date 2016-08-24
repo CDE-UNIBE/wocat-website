@@ -3,9 +3,10 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.wagtailsearch import index
 
 
-class Entry(models.Model):
+class Entry(index.Indexed, models.Model):
     title = models.CharField(
         _('Title'),
         max_length=255,
@@ -38,4 +39,10 @@ class Entry(models.Model):
         # FieldPanel('slug'),
         FieldPanel('description'),
         FieldPanel('acronym'),
+    ]
+
+    search_fields = [
+        index.SearchField('title'),
+        index.SearchField('description'),
+        index.FilterField('acronym'),
     ]

@@ -40,7 +40,7 @@ class Header(InclusionTag):
                 ],
                 'onlyxs': only_xs,
             },
-            {'href': '#search', 'text': '<i class="fa fa-search" aria-hidden="true"></i>', 'onlyxs': only_xs},
+            {'href': reverse('search:index'), 'text': '<i class="fa fa-search" aria-hidden="true"></i>', 'onlyxs': only_xs},
         ]
 
     def get_node(self, page, current_page, ancestors):

@@ -77,6 +77,7 @@ LOCAL_APPS = (
     'wocat.medialibrary',
     'wocat.news',
     'wocat.glossary',
+    'wocat.search',
     'wocat.api',
 )
 

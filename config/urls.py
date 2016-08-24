@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^library/media/', include('wocat.medialibrary.urls', namespace='media')),
     url(r'^glossary/', include('wocat.glossary.urls', namespace='glossary')),
+    url(r'^search/', include('wocat.search.urls', namespace='search')),
 
     # Your stuff: custom urls includes go here
     url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),
