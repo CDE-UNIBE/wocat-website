@@ -1,8 +1,10 @@
-<div class="widget-definition">
+<div class="widget-definition" id="{{ tag|slugify }}">
 	<dl>
 		<dt>
-			{{ tag }}
-			{% if acronym %}<i class="fa fa-language"></i>{% endif %}
+			<a href="#{{ tag|slugify }}" class="anchorlink">
+				{{ tag }}
+				{% if acronym %}<i class="fa fa-language"></i>{% endif %}
+			</a>
 		</dt>
 		<dd>
 			{{ definition|linebreaksbr }}
