@@ -13,6 +13,8 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailsearch import urls as wagtailsearch_urls
 
+from wocat.core.views import SwitchLanguageView
+
 BACKEND_NAME = 'WOCAT backend'
 admin.site.site_header = BACKEND_NAME
 admin.site.site_title = BACKEND_NAME
@@ -33,6 +35,8 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),
+
+    url(r'^language/(?P<language>[^/]+)/$', SwitchLanguageView.as_view(), name='switch-language'),
 ]
 # Static files
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
