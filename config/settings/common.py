@@ -276,9 +276,17 @@ ADMIN_URL = r'^admin'
 WAGTAIL_SITE_NAME = 'WOCAT'
 WAGTAILADMIN_NOTIFICATION_USE_HTML = True
 TAGGIT_CASE_INSENSITIVE = True
-# WAGTAIL_USER_EDIT_FORM = 'wocat.cms.forms.CustomUserEditForm'
+# WAGTAIL_USER_EDIT_FORM = 'wocat.cms.formsw.CustomUserEditForm'
 # WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
 # WAGTAIL_USER_CUSTOM_FIELDS = ['gender', 'title']
+ELASTICSEARCH_URL = env('ELASTICSEARCH_URL', default='')
+WAGTAILSEARCH_BACKEND = env('WATAILSEARCH_BACKEND', default='db')
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.wagtailsearch.backends.{}'.format(WAGTAILSEARCH_BACKEND),
+        'URLS': [ELASTICSEARCH_URL],
+    }
+}
 
 
 # EASY THUMBNAILS
