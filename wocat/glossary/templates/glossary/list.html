@@ -5,9 +5,9 @@
 
 {% block content %}
     <h1>{% trans 'Glossary' %}</h1>
-    <p>
+    <p id="section-index">
     {% for entry in entries %}
-        {% ifchanged %}<a href="#section-{{ entry.title.0|lower }}">{{ entry.title.0 }}</a>{% endifchanged %}
+        {% ifchanged %}<a href="#section-{{ entry.title.0|lower }}">{{ entry.title.0 }}&nbsp;</a>{% endifchanged %}
     {% endfor %}
     </p>
     <dl>
@@ -17,4 +17,5 @@
             <br>
         {% endfor %}
     </dl>
+    <a href="#section-index">Top</a>
 {% endblock content %}
