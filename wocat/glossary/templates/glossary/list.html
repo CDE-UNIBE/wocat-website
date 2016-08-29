@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block title %}{{ block.super }} {% trans 'Glossary' %}{% endblock %}
+
 {% block content %}
     <h1>{% trans 'Glossary' %}</h1>
+    <p>
+    {% for entry in entries %}
+        {% ifchanged %}<a href="#section-{{ entry.title.0|lower }}">{{ entry.title.0 }}</a>{% endifchanged %}
+    {% endfor %}
+    </p>
     <dl>
         {% for entry in entries %}
-            {% include 'glossary/widgets/entry.html' %}
+            {% ifchanged %}<h3 id="section-{{ entry.title.0|lower }}">{{ entry.title.0 }}</h3><br>{% endifchanged %}
+            {% include 'widgets/definition.html' with tag=entry.title acronym=entry.acronym definition=entry.description %}
             <br>
         {% endfor %}
     </dl>
