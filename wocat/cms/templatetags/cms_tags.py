@@ -1,5 +1,6 @@
 from classytags.helpers import InclusionTag
 from django import template
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
@@ -29,15 +30,20 @@ class Header(InclusionTag):
     name = 'header'
     template = 'widgets/header.html'
 
+    def get_lanaguage_links(self):
+        current_language = 'en'
+        links = []
+        for code, name in settings.LANGUAGES:
+            active = True if code == current_language else False
+            links.append({'href': '#{0}'.format(code), 'text': name, 'active': active})
+        return links
+
     def get_language_and_search_context(self, only_xs=True):
         return [
             {
                 'dropdown': True,
                 'text': 'EN',
-                'links': [
-                    {'href': '#de', 'text': 'DE', 'active': True,},
-                    {'href': '#fr', 'text': 'FR'},
-                ],
+                'links': self.get_lanaguage_links(),
                 'onlyxs': only_xs,
             },
             {'href': reverse('search:index'), 'text': '<i class="fa fa-search" aria-hidden="true"></i>', 'onlyxs': only_xs},
