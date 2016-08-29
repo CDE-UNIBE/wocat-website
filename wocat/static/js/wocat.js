@@ -199,7 +199,7 @@ $(function() {
 		if (scrollTop < affixTopStop) {
 			//console.log('We are above affix area.');
 			if (state != 'top') {
-				affixElement.removeClass('affix-fixed').css({'top': 0, 'left': 0, 'width': 'auto'});
+				affixElement.removeClass('affix-fixed').css({'top': 0, 'left': 0, 'width': '100%'});
 				state = 'top';
 			}
 			return;
@@ -210,7 +210,7 @@ $(function() {
 			//console.log('We are below affix area.');
 			if (state != 'bottom') {
 				var topOffset = affixBottomStop - affixTopStop - affixHeight;
-				affixElement.removeClass('affix-fixed').css({'top': topOffset, 'left': 0, 'width': 'auto'});
+				affixElement.removeClass('affix-fixed').css({'top': topOffset, 'left': 0, 'width': '100%'});
 				state = 'bottom';
 			}
 			return;
