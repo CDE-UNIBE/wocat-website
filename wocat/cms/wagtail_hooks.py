@@ -40,9 +40,9 @@ class DjangoAdminLinkItem:
     def render(request):
         return '''<div class="wagtail-userbar__item ">
                     <div class="wagtail-action wagtail-icon wagtail-icon-pick">
-                        <a href="/admin/" target="_parent">Admin</a>
+                        <a href="/{0}" target="_parent">Admin</a>
                     </div>
-                </div>'''
+                </div>'''.format(settings.ADMIN_URL)
 
 
 @hooks.register('construct_wagtail_userbar')
@@ -57,8 +57,8 @@ class DjangoAdminMenuItem:
     @staticmethod
     def render_html(request):
         output = '''<li class="menu-item">
-                        <a href="/admin/" class="fa fa-database">Admin</a>
-                    </li>'''
+                        <a href="/{0}" class="fa fa-database">Admin</a>
+                    </li>'''.format(settings.ADMIN_URL)
         return output
 
 
