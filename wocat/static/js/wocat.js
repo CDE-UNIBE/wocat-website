@@ -232,6 +232,74 @@ $(function() {
 
 
 
+
+
+$(function() {
+	// Gibt es auf der Seite eine Infobox mit Tabs?
+	if (!$('.widget-tabinfobox').length) return;
+
+	$('.widget-tabinfobox').each(function() {
+		var tabinfoboxElement = $(this);
+		var hash = false;
+
+		function hashSpy() {
+			var newHash = location.hash.replace('#', '');
+			if (newHash !== hash) {
+				hash = newHash;
+
+				// Iterate sidebar links
+				tabinfoboxElement.find('.widget-tabinfobox-sidebar a').each(function() {
+					var sidebarlinkElement = $(this);
+					if (sidebarlinkElement.attr('href') === '#'+hash) {
+						sidebarlinkElement.parent().addClass('active');
+					} else {
+						sidebarlinkElement.parent().removeClass('active');
+					}
+				});
+				// No tab active?
+				if (tabinfoboxElement.find('.widget-tabinfobox-sidebar li.active').length == 0) {
+					// Activate first tab as default
+					tabinfoboxElement.find('.widget-tabinfobox-sidebar li').first().addClass('active');
+				}
+
+
+				// Iterate sections
+				tabinfoboxElement.find('.widget-tabinfobox-section').each(function() {
+					var sectionElement = $(this);
+					if (sectionElement.attr('id') === hash) {
+						sectionElement.show();
+
+						$('html, body').stop().animate({
+							scrollTop: sectionElement.offset().top
+						}, 600);
+
+					} else {
+						sectionElement.hide();
+					}
+				});
+				// No section active?
+				if (tabinfoboxElement.find('.widget-tabinfobox-section:visible').length == 0) {
+					// Show first tab as default
+					tabinfoboxElement.find('.widget-tabinfobox-section').show();
+				}
+			}
+		}
+		tabinfoboxElement.find('.widget-tabinfobox-sidebar a').click(function(event) {
+			window.location.hash = $(this).attr('href').replace('#', '');
+			hashSpy();
+			event.preventDefault();
+		});
+		$(window).on('hashchange', function() {
+			hashSpy();
+		});
+		hashSpy();
+
+	});
+
+});
+
+
+
 $(function() {
 	$('.widget-multiselect').each(function() {
 		var selectfield = $(this);
@@ -491,7 +559,7 @@ $(function() {
 
 $(function() {
 	// Enable Scrollspy for sidebar affix navigation
-	$('body').scrollspy({ target: '.widget-sidebar' });
+	$('body').scrollspy({ target: '.widget-affix .widget-sidebar' });
 });
 
 
