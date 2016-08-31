@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n cms_tags %}
+
+
+{% block content_container %}
+    {% carousel %}
+    {% overlay %}
+    <div class="container">
+        <br>
+        {% breadcrumb %}
+        <br>
+        {% block content %}
+            <p>
+                {% trans 'Countries' %}:
+                {% for countrypage in page.countries %}
+                    <a href="{{ countrypage.url }}">{{ countrypage }}</a>&nbsp;
+                {% endfor %}
+            </p>
+            {{ page.content }}
+        {% endblock content %}
+    </div>
+{% endblock content_container %}

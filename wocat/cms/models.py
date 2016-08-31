@@ -227,7 +227,7 @@ class RegionsPage(UniquePageMixin, Page):
 
 
 class RegionCountry(Orderable):
-    page = ParentalKey('RegionPage', related_name='countries')
+    page = ParentalKey('RegionPage', related_name='region_countries')
     country = models.ForeignKey(CountryPage, related_name='+')
     panels = [
         FieldPanel('country'),
@@ -235,15 +235,20 @@ class RegionCountry(Orderable):
 
 
 class RegionPage(HeaderPageMixin, Page):
-    template = 'pages/content.html'
+    template = 'pages/region.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
 
     @property
+    def countries(self):
+        countries = [country.country for country in self.region_countries.all()]
+        return countries
+
+    @property
     def country_codes(self):
         codes = []
-        for regioncountry in self.countries.all():
-            codes.append(regioncountry.country.country.alpha3)
+        # for regioncountry in self.region_countries.all():
+        #     codes.append(regioncountry.country.country.alpha3)
         return codes
 
 
@@ -251,7 +256,7 @@ class RegionPage(HeaderPageMixin, Page):
         verbose_name = _('Region')
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
-        InlinePanel('countries', label="Countries"),
+        InlinePanel('region_countries', label="Countries"),
         StreamFieldPanel('content'),
     ]
 
