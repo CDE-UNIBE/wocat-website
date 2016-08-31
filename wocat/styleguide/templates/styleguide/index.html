@@ -8,11 +8,10 @@
 
 {% block content %}
 	{{ header1_output }}
+	{{ carousel_output }}
+	{{ page_lead_overlay_output }}
 
 	<div class="container">
-		<br><br>
-		{{ carousel_output }}
-		{{ page_lead_overlay_output }}
 
 		<div class="row">
 			<div class="col-sm-8">
@@ -30,11 +29,10 @@
 		{{ page_lead_overlay_small_meta }}
 	</div>
 	{{ header2_output }}
+	{{ carousel_widgetchooser_one_output }}
+	{{ page_lead_overlay_small_output }}
 
 	<div class="container">
-		<br><br>
-		{{ carousel_widgetchooser_one_output }}
-		{{ page_lead_overlay_small_output }}
 
 		{{ page_lead_overlay_noimage_meta }}
 	</div>
@@ -85,213 +83,217 @@
 			<div class="col"><div class="h2" style="background-color: #eee; margin: 0 0 30px 0;">Zelle</div></div>
 		</div>
 
-
-		<div class="row">
-			<div class="hidden-xs col-sm-4 col-md-3">
-				<div id="affix-wrapper">
-					<div id="affix">
-					{{ sidebar_output }}
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-8 col-md-9">
-				<div id="affix-headings"></div>
-				{{ heading1 }}
-				{{ heading2 }}
-				{{ heading2_link }}
-				{{ heading3 }}
-				{{ heading3_link }}
-				{{ heading4 }}
-				{{ heading4_link }}
-
-				<div id="affix-carousel"></div>
-				{{ carousel_ugly }}
-				{{ carousel_widgetchooser_two }}
-				{{ carousel_widgetchooser_one }}
-				{{ carousel_widgetchooser_zero }}
-
-				<div id="affix-teaser"></div>
-				{{ teaser_noimg }}
-				{{ teaser_noimg_external }}
-				{{ teaser_lines }}
-				{{ teaser_lines_leftimage }}
-				{{ teaser_lines_rightimage }}
-				{{ teaser_lines_topimage }}
-				{{ teaser_lines_large_rightimage }}
-				{{ teaser_lines_large_leftimage }}
-				{{ teaser_topimg }}
-				{{ teaser_leftimg }}
-				{{ teaser_rightimg }}
-
-				<div id="affix-media"></div>
-				<div class="row cols-sm-4">
-					<div class="col">
-						{{ media }}
-					</div>
-					<div class="col">
-						{{ media_ytimage }}
-					</div>
-					<div class="col">
-						{{ media_highimage }}
-					</div>
-				</div>
-				<div class="row cols-sm-4">
-					<div class="col">
-						{{ media_defaultbook }}
-					</div>
-					<div class="col">
-						{{ media_defaultvideo }}
-					</div>
-					<div class="col">
-						{{ media_defaultbrochure }}
-					</div>
-				</div>
-
-				{{ horizontal_ruler }}
-
-				{{ image }}
-
-				{{ image_nocaption_meta }}
-				{{ overlay_teaser_meta }}
-				{{ image_nocaption_output }}
-				{{ overlay_teaser_output }}
-
-
-
-				{{ image_nocaption_meta }}
-				{{ page_lead_overlay_home_meta }}
-				{{ image_nocaption_output }}
-				{{ page_lead_overlay_home_output }}
-
-
-				{{ image_nocaption_meta }}
-				{{ overlay_teaser_bottom_meta }}
-				{{ image_nocaption_output }}
-				{{ overlay_teaser_bottom_output }}
-				{{ overlay_teaser_widgetchooser }}
-				{{ overlay_teaser_widgetchooser_flapmd }}
-				{{ overlay_teaser_widgetchooser_map }}
-
-				{{ image_gallery }}
-				{{ image_gallery_verticalalign }}
-
-				<div id="affix-richtext"></div>
-				{{ richtext }}
-				{{ embed }}
-
-				{{ definition_meta }}
-				<p>
-					<a href="#a" class="anchorlink">A</a>
-					<a href="#b" class="anchorlink">B</a>
-					<a href="#c" class="anchorlink">C</a>
-					<a href="#d" class="anchorlink">D</a>
-				</p>
-				{{ definition_output }}
-				{{ definition_acronym_output }}
-				<div id="b"></div>
-				{{ heading2_b_output }}
-				{{ definition_output }}
-				{{ definition_acronym_output }}
-
-				<div id="affix-links"></div>
-				{{ readmorelink }}
-				{{ readmorelink_right }}
-				{{ readmorelink_fontawesome }}
-				{{ button }}
-				{{ button_fontawesome }}
-				{{ button_center }}
-				{{ button_right }}
-
-				{{ pagination }}
-				{{ file_link_pdf }}
-				{{ file_link_video }}
-				{{ file_link_xls }}
-
-				{{ breadcrumb }}
-
-
-				<h2>The buttons without widget</h2>
-				<p>
-					<button class="btn btn-default">Default Button</button>
-					<button class="btn btn-primary">Primary Button</button>
-					<button class="btn btn-link">Link Button</button>
-				</p>
-
-				<div id="affix-forms"></div>
-				<h2>Input elements <a href="http://getbootstrap.com/css/#forms-horizontal">(Bootstrap example)</a></h2>
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-						<div class="col-sm-10">
-							<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+		<div class="widget-affix">
+			<div class="row">
+				<div class="hidden-xs col-sm-4 col-md-3">
+					<div id="affix-wrapper">
+						<div id="affix">
+						{{ sidebar_output }}
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-						<div class="col-sm-10">
-							<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<div id="affix-headings"></div>
+					{{ heading1 }}
+					{{ heading2 }}
+					{{ heading2_link }}
+					{{ heading3 }}
+					{{ heading3_link }}
+					{{ heading4 }}
+					{{ heading4_link }}
+
+					<div id="affix-carousel"></div>
+					{{ carousel_ugly }}
+					{{ carousel_widgetchooser_two }}
+					{{ carousel_widgetchooser_one }}
+					{{ carousel_widgetchooser_zero }}
+
+					<div id="affix-teaser"></div>
+					{{ teaser_noimg }}
+					{{ teaser_noimg_external }}
+					{{ teaser_lines }}
+					{{ teaser_lines_leftimage }}
+					{{ teaser_lines_rightimage }}
+					{{ teaser_lines_topimage }}
+					{{ teaser_lines_large_rightimage }}
+					{{ teaser_lines_large_leftimage }}
+					{{ teaser_topimg }}
+					{{ teaser_leftimg }}
+					{{ teaser_rightimg }}
+
+					<div id="affix-media"></div>
+					<div class="row cols-sm-4">
+						<div class="col">
+							{{ media }}
+						</div>
+						<div class="col">
+							{{ media_ytimage }}
+						</div>
+						<div class="col">
+							{{ media_highimage }}
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="inputSelect" class="col-sm-2 control-label">Form Control</label>
-						<div class="col-sm-10">
-							<select class="form-control" id="inputSelect">
-								<option>for Mayor Tom</option>
-								<option>for Chris Hadfield</option>
-								<option>for Fry and Homer</option>
-								<option>for David Bowie</option>
-								<option>for all Muppets</option>
-							</select>
+					<div class="row cols-sm-4">
+						<div class="col">
+							{{ media_defaultbook }}
+						</div>
+						<div class="col">
+							{{ media_defaultvideo }}
+						</div>
+						<div class="col">
+							{{ media_defaultbrochure }}
 						</div>
 					</div>
 
+					{{ horizontal_ruler }}
 
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox">
-								<label>
-									<input type="checkbox"> Remember me
-								</label>
+					{{ image }}
+
+					{{ image_nocaption_meta }}
+					{{ overlay_teaser_meta }}
+					{{ image_nocaption_output }}
+					{{ overlay_teaser_output }}
+
+
+
+					{{ image_nocaption_meta }}
+					{{ page_lead_overlay_home_meta }}
+					{{ image_nocaption_output }}
+					{{ page_lead_overlay_home_output }}
+
+
+					{{ image_nocaption_meta }}
+					{{ overlay_teaser_bottom_meta }}
+					{{ image_nocaption_output }}
+					{{ overlay_teaser_bottom_output }}
+					{{ overlay_teaser_widgetchooser }}
+					{{ overlay_teaser_widgetchooser_flapmd }}
+					{{ overlay_teaser_widgetchooser_map }}
+
+					{{ image_gallery }}
+					{{ image_gallery_verticalalign }}
+
+					<div id="affix-richtext"></div>
+					{{ richtext }}
+					{{ embed }}
+
+					{{ definition_meta }}
+					<p>
+						<a href="#a" class="anchorlink">A</a>
+						<a href="#b" class="anchorlink">B</a>
+						<a href="#c" class="anchorlink">C</a>
+						<a href="#d" class="anchorlink">D</a>
+					</p>
+					{{ definition_output }}
+					{{ definition_acronym_output }}
+					<div id="b"></div>
+					{{ heading2_b_output }}
+					{{ definition_output }}
+					{{ definition_acronym_output }}
+
+					<div id="affix-links"></div>
+					{{ readmorelink }}
+					{{ readmorelink_right }}
+					{{ readmorelink_fontawesome }}
+					{{ button }}
+					{{ button_fontawesome }}
+					{{ button_center }}
+					{{ button_right }}
+
+					{{ pagination }}
+					{{ file_link_pdf }}
+					{{ file_link_video }}
+					{{ file_link_xls }}
+
+					{{ breadcrumb }}
+
+
+					<h2>The buttons without widget</h2>
+					<p>
+						<button class="btn btn-default">Default Button</button>
+						<button class="btn btn-primary">Primary Button</button>
+						<button class="btn btn-link">Link Button</button>
+					</p>
+
+					<div id="affix-forms"></div>
+					<h2>Input elements <a href="http://getbootstrap.com/css/#forms-horizontal">(Bootstrap example)</a></h2>
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
 							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-default">Sign in</button>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputSelect" class="col-sm-2 control-label">Form Control</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="inputSelect">
+									<option>for Mayor Tom</option>
+									<option>for Chris Hadfield</option>
+									<option>for Fry and Homer</option>
+									<option>for David Bowie</option>
+									<option>for all Muppets</option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox"> Remember me
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">Sign in</button>
+							</div>
+						</div>
+					</form>
+
+					{{ avatarfield }}
+
+					{{ nullboolean }}
+					{{ nullboolean_error }}
+					{{ nullboolean_nonull }}
+
+					{{ multiselect_full }}
+					{{ singleselect }}
+					{{ singleselect_nullable }}
+					{{ singleselect_error }}
+
+					{{ dropzone }}
+
+					<div id="affix-map"></div>
+					{{ map_large }}
+					{{ map }}
+					{{ map_small }}
+
+					<div class="row">
+						<div class="col-sm-6">
+							{{ map_teaser_project2 }}
+						</div>
+						<div class="col-sm-6">
+							{{ map_teaser_project }}
 						</div>
 					</div>
-				</form>
 
-				{{ nullboolean }}
-				{{ nullboolean_error }}
-				{{ nullboolean_nonull }}
 
-				{{ multiselect_full }}
-				{{ singleselect }}
-				{{ singleselect_nullable }}
-				{{ singleselect_error }}
-
-				{{ dropzone }}
-
-				<div id="affix-map"></div>
-				{{ map_large }}
-				{{ map }}
-				{{ map_small }}
-
-				<div class="row">
-					<div class="col-sm-6">
-						{{ map_teaser_project2 }}
-					</div>
-					<div class="col-sm-6">
-						{{ map_teaser_project }}
-					</div>
+					<div id="affix-bottom"></div>
 				</div>
+			</div><!-- row -->
+		</div><!-- widget-affix -->
 
-
-				<div id="affix-bottom"></div>
-			</div>
-		</div><!-- row -->
-
+		{{ tab_infobox }}
 
 
 

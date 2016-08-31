@@ -1,0 +1,16 @@
+<div class="widget-tabinfobox">
+		<div class="row">
+			<div class="col-sm-4 col-md-3">
+				<div class="widget-tabinfobox-sidebar">
+					{% include "widgets/sidebar.html" with links=sidebar_links %}
+				</div>
+			</div>
+			<div class="col-sm-8 col-md-9">
+				{% for section in sections %}
+					<div id="{{ section.id }}" class="widget-tabinfobox-section">
+						{{ section.content|safe }}
+					</div>
+				{% endfor %}
+			</div>
+		</div><!-- row -->
+</div><!-- widget-tabinfobox -->

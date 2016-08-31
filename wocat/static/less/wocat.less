@@ -200,6 +200,11 @@ select.form-control::-ms-expand {
 		font-weight: bold;
 	}
 }
+.widget-tabinfobox {
+	margin-bottom: 30px;
+	border: 1px solid @color-neutral;
+	padding: 15px;
+}
 
 .widget-header {
 	.navbar-default {
@@ -1244,6 +1249,40 @@ select.form-control::-ms-expand {
 }
 
 
+
+.widget-avatarfield {
+	margin-bottom: 30px;
+
+	.avatarfield-fileinput {
+		display: inline-block;
+	}
+
+	.avatarfield-cropbox {
+		max-width: 500px;
+		margin: 30px 0 0 0;
+
+		.avatar-cropbox-imagecontainer {
+			position: relative;
+			overflow: hidden;
+
+			.avatarfield-cropbox-image {
+				width: 100%;
+			}
+
+			.avatarfield-cropbox-marker {
+				box-sizing: border-box;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 80px;
+				height: 80px;
+				background-color: transparent;
+				box-shadow: 0 0 0px 10000px rgba(0,0,0,0.7);
+				border: 1px dashed white;
+			}
+		}
+	}
+}
 
 
 .widget-nullboolean, .widget-multiselect {
