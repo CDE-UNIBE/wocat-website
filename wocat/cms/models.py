@@ -246,11 +246,7 @@ class RegionPage(HeaderPageMixin, Page):
 
     @property
     def country_codes(self):
-        codes = []
-        # for regioncountry in self.region_countries.all():
-        #     codes.append(regioncountry.country.country.alpha3)
-        return codes
-
+        return [country.country.alpha3 for country in self.countries]
 
     class Meta:
         verbose_name = _('Region')
