@@ -4,9 +4,10 @@ from django.db import ProgrammingError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel
+from modelcluster.fields import ParentalKey
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 
 from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock
@@ -113,14 +114,25 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
         # subpage_types = ['ProjectPage']
 
 
-class ProjectsAndCountiesPage(UniquePageMixin, Page):
+class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
     template = 'pages/content.html'
+
+    content = StreamField(CORE_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Projects & Countries')
 
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+        index.SearchField('content'),
+    )
+
+
     parent_page_types = ['HomePage']
-    subpage_types = ['ProjectsPage', 'CountriesPage']
+    subpage_types = ['ProjectsPage', 'CountriesPage', 'RegionsPage']
 
 
 class ProjectsPage(UniquePageMixin, Page):
@@ -202,6 +214,54 @@ class CountryPage(HeaderPageMixin, Page):
         if header:
             header['iconsrc'] = self.flag
         return context
+
+
+class RegionsPage(UniquePageMixin, Page):
+    template = 'pages/content.html'
+
+    class Meta:
+        verbose_name = _('Regions')
+
+    parent_page_types = ['ProjectsAndCountiesPage']
+    subpage_types = ['RegionPage']
+
+
+class RegionCountry(Orderable):
+    page = ParentalKey('RegionPage', related_name='countries')
+    country = models.ForeignKey(CountryPage, related_name='+')
+    panels = [
+        FieldPanel('country'),
+    ]
+
+
+class RegionPage(HeaderPageMixin, Page):
+    template = 'pages/content.html'
+
+    content = StreamField(CORE_BLOCKS, blank=True)
+
+    @property
+    def country_codes(self):
+        codes = []
+        for regioncountry in self.countries.all():
+            codes.append(regioncountry.country.country.alpha3)
+        return codes
+
+
+    class Meta:
+        verbose_name = _('Region')
+
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        InlinePanel('countries', label="Countries"),
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+        index.FilterField('countries'),
+        index.SearchField('content'),
+    )
+
+    parent_page_types = ['RegionsPage']
+    subpage_types = []
 
 
 class MembersPage(UniquePageMixin, Page):

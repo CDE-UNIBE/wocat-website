@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load media_tags %}
+
+{% block content %}
+    {% for media in  object_list %}
+        <div class="row cols-sm-3">
+			<div class="col">
+                {% mediateaser %}
+			</div>
+		</div><!-- row -->
+    {% endfor %}
+{% endblock content %}
