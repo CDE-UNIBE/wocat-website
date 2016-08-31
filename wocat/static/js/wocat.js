@@ -280,7 +280,7 @@ $(function() {
 				// No section active?
 				if (tabinfoboxElement.find('.widget-tabinfobox-section:visible').length == 0) {
 					// Show first tab as default
-					tabinfoboxElement.find('.widget-tabinfobox-section').show();
+					tabinfoboxElement.find('.widget-tabinfobox-section').first().show();
 				}
 			}
 		}
