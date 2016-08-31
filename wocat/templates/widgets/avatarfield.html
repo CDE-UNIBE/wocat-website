@@ -1,0 +1,15 @@
+<div class="widget-avatarfield">
+	{% if label %}
+	<label class="control-label col-sm-2 text-right">{{ label }}{% if required %}<span class="asteriskField">*</span>{% endif %}</label>
+	{% endif %}
+
+	<input type="file" accept="image/*" autocomplete="off" class="avatarfield-fileinput" data-cropinfoinput="#{{ id }}-cropinfoinput" data-cropbox="#{{ id }}-cropbox" data-removebutton="#{{ id }}-removebutton" id="{{ id }}-fileinput" name="{{ id }}-avtarfile" />
+	<button class="avatarfield-removebutton btn btn-default" id="{{ id }}-removebutton" style="display:none;">Remove</button>
+	<div id="{{ id }}-cropbox" class="avatarfield-cropbox" style="display:none;">
+		<div class="avatar-cropbox-imagecontainer">
+			<div class="avatarfield-cropbox-marker"></div>
+			<img class="avatarfield-cropbox-image" src="" alt="your image" />
+		</div>
+		<input type="hidden" id="{{ id }}-cropinfoinput" value="{}" autocomplete="off" name="{{ id }}-avatarinfo">
+	</div>
+</div>

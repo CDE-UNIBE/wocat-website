@@ -884,6 +884,14 @@ data = {
         },
     },
 
+    'avatarfield': {
+        'name': 'Avatar Field',
+        'template': 'widgets/avatarfield.html',
+        'context': {
+            'id': 'avatarfield',
+            'label': 'Avatar',
+        },
+    },
     'nullboolean': {
         'name': 'Nullboolean',
         'template': 'widgets/nullboolean.html',
