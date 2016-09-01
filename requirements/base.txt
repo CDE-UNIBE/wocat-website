@@ -4,7 +4,7 @@
 # Verified bug on Python 3.5.1
 wheel==0.29.0
 
-# Bleeding edge Django
+# Not so bleeding edge Django ;)
 django==1.9.6
 
 # Configuration
@@ -15,12 +15,14 @@ django-secure==1.0.1
 django-braces==1.8.1
 django-crispy-forms==1.6.0
 django-floppyforms==1.6.2
+django-classy-tags==0.8.0
 
 # Models
 django-model-utils==2.5
 
 # Images
 Pillow==3.2.0
+easy-thumbnails==2.3
 
 # For user registration, either via email or social
 # Well-built with regular release cycles!
