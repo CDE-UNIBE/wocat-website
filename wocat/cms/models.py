@@ -257,7 +257,7 @@ class RegionPage(HeaderPageMixin, Page):
     ]
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
-        index.FilterField('countries'),
+        # index.FilterField('countries'), TODO: This can't be indexed
         index.SearchField('content'),
     ]
 
