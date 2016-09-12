@@ -45,9 +45,9 @@ class NewsPage(HeaderPageMixin, Page):
         FieldPanel('date'),
     ]
 
-    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    )
+    ]
 
     parent_page_types = ['NewsIndexPage']
     subpage_types = []
