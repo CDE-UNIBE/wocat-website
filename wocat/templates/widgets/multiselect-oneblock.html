@@ -1,0 +1,27 @@
+<div class="widget-multiselect-oneblock form-group{% if error %} has-error{% endif %}{% if singleselect %} widget-multiselect-singleselect{% endif %}">
+{% if label %}
+<label class="control-label col-sm-2 text-right">{{ label }}{% if required %}<span class="asteriskField">*</span>{% endif %}</label>
+{% endif %}
+
+<div class="widget-options col-sm-10">
+{% if selectallbutton %}
+	<label class="checkbox-inline">
+		<input type="{% if singleselect %}radio{% else %}checkbox{% endif %}" value="{{ selectallbutton.value }}"{% if selectallbutton.checked %} checked="checked"{% endif %} name="{{ id }}" class="widget-multiselect-oneblock-selectallbutton" autocomplete="off">
+		<span>{{ selectallbutton.label }}</span>
+	</label>
+{% endif %}
+{% for option in options %}
+	<label class="checkbox-inline">
+		<input type="{% if singleselect %}radio{% else %}checkbox{% endif %}" value="{{ option.value }}"{% if option.checked %} checked="checked"{% endif %} name="{{ id }}" autocomplete="off">
+		<span>{{ option.label }}</span>
+	</label>
+{% endfor %}
+</div>
+
+{% if help %}
+	<div class="clearfix"></div>
+	<p class="help-block">{{ help }}</p>
+{% endif %}
+
+<div class="clearfix"></div>
+</div><!-- widget-multiselect-oneblock -->

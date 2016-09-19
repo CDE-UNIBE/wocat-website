@@ -378,6 +378,44 @@ $(function() {
 });
 
 
+$(function() {
+	$('.widget-multiselect-oneblock').each(function() {
+		var selectfield = $(this);
+		var selectallbutton = selectfield.find('input.widget-multiselect-oneblock-selectallbutton'); // select all button
+		var regularinputs = selectfield.find('input:not(.widget-multiselect-oneblock-selectallbutton)'); // all other inputs
+
+		// Without Select All Button we don't need logic for Select All Button.
+		if (!selectallbutton.length) return;
+
+		// Radio buttons work out of the box. JS is only needed for Checkboxes.
+		if (selectfield.hasClass('widget-multiselect-singleselect')) return;
+
+		selectallbutton.change(function(event) {
+			console.log("c");
+			// uncheck all other buttons
+			regularinputs.removeAttr('checked');
+			// check select-all-button
+			$(this).prop('checked', true);
+
+			// Do not allow unchecking
+			event.preventDefault();
+		});
+		regularinputs.change(function() {
+			// is any regular input checked?
+			if (regularinputs.filter(':checked').length) {
+				// uncheck select-all-button
+				console.log("a");
+				selectallbutton.removeAttr('checked');
+			} else {
+				// check select-all-button
+				console.log("b");
+				selectallbutton.prop('checked', true);
+			}
+		});
+	});
+});
+
+
 
 $(function() {
 

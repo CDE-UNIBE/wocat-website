@@ -58,23 +58,7 @@ data = {
             'text': 'Amélie Häfliger',
         },
     },
-    'findother': {
-        'name': 'Heading 1',
-        'template': 'widgets/heading3.html',
-        'context': {
-            'text': 'Find other members',
-        },
-    },
 
-    'searchbutton': {
-        'name': 'Button',
-        'template': 'widgets/read-more-link.html',
-        'context': {
-            'text': 'search members',
-            'href': 'http://google.de',
-            'button': True,
-        },
-    },
 
     'avatar': {
         'name': 'Image',
@@ -93,5 +77,32 @@ data = {
             'href': 'http://x',
         },
     },
+
+    'teaser_country': {
+        'name': 'Teaser for User search',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'description': '',
+            'href': 'http://sinnwerkstatt.com',
+            'lines': True,
+            'title': 'Find more users from my country',
+            'description': 'Die Mitglieder-Datenbank enthält alle Involvierten bei Wocat.',
+            'readmorelink': {'text': 'search users'},
+        },
+    },
+    'teaser_databases': {
+        'name': 'Teaser for User search',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'description': '',
+            'href': 'http://sinnwerkstatt.com',
+            'lines': True,
+            'title': 'Show user data in Qcat',
+            'description': 'Dieser User hat Daten bei Qcat, der Übersicht der Wocat-Datenbanken.',
+            'readmorelink': {'text': 'Qcat database'},
+        },
+    },
+
+
 }
 
