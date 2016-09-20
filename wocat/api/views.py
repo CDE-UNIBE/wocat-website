@@ -42,9 +42,9 @@ class RegionViewSet(viewsets.ModelViewSet):
 router.register(r'regions', RegionViewSet)
 
 
-# class InstitutionViewSet(viewsets.ModelViewSet):
-#     queryset = Institution.objects.all()
-#     serializer_class = InstitutionSerializer
-#
-#
-# router.register(r'institutions', InstitutionViewSet)
+class InstitutionViewSet(viewsets.ModelViewSet):
+    queryset = Institution.objects.all()
+    serializer_class = InstitutionSerializer
+
+
+router.register(r'institutions', InstitutionViewSet)

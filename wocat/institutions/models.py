@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsnippets.models import register_snippet
 
 
 class Institution(models.Model):
