@@ -5,7 +5,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from modelcluster.fields import ParentalKey
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel, \
+    PageChooserPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
@@ -94,12 +95,33 @@ class ContentPage(HeaderPageMixin, Page):
 class HomePage(UniquePageMixin, HeaderPageMixin, Page):
     template = 'pages/home.html'
 
+    about_page = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    about_link_text = models.CharField(
+        _('About link text'),
+        blank=True,
+        max_length=255,
+    )
+
     content = StreamField(
         CORE_BLOCKS + [('map_teaser', OverlayTeaserMapBlock())],
         blank=True
     )
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        MultiFieldPanel(
+            [
+                PageChooserPanel('about_page', 'cms.ContentPage'),
+                FieldPanel('about_link_text'),
+            ],
+            heading="About",
+            classname="collapsible collapsed"
+        ),
         StreamFieldPanel('content'),
     ]
 
@@ -112,6 +134,14 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
 
         # parent_page_types = ['Root']
         # subpage_types = ['ProjectPage']
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        if self.about_page:
+            context['links'] = [
+                {'href': self.about_page.url, 'text': self.about_link_text}
+            ]
+        return context
 
 
 class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
@@ -129,7 +159,6 @@ class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
         index.SearchField('content'),
     )
-
 
     parent_page_types = ['HomePage']
     subpage_types = ['ProjectsPage', 'CountriesPage', 'RegionsPage']
