@@ -166,8 +166,8 @@ class Footer(InclusionTag):
             {'href': '#faq', 'text': 'FAQ', 'onlyxs': True,},
             {'href': '#glossary', 'text': 'Glossary', 'onlyxs': True,},
             profile_links,
-            {'href': '#imprint', 'text': 'Imprint',},
-            {'href': '#contact', 'text': 'Contact',},
+            {'href': '#imprint', 'text': _('Legal Disclaimer'),},
+            {'href': '#contact', 'text': _('Contact'),},
         ]
         return {'links': links}
 
