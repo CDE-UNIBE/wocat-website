@@ -52,39 +52,39 @@ data = {
     },
 
 
+    'multiselect_language': {
+        'name': 'Multiselect Language',
+        'template': 'widgets/multiselect-oneblock.html',
+        'context': {
+            'id': 'multiselect-language',
+            'label': 'Language',
+            'selectallbutton': {'value':'all', 'label':'all Languages', 'checked': True },
+            'options': [
+                {'value':'alt', 'label':'English', 'checked':False},
+                {'value':'neu', 'label':'Italian', 'checked':False},
+                {'value':'neu', 'label':'German', 'checked':False},
+                {'value':'von gestern', 'label':'French', 'checked':False},
+            ],
+        },
+    },
+
+
     'multiselect_continent': {
         'name': 'Multiselect Continent',
         'template': 'widgets/multiselect-oneblock.html',
         'context': {
             'id': 'multiselect-language',
-            'label': 'Continents',
-            'selectallbutton': {'value':'all', 'label':'all Languages', 'checked': True },
-            'options': [
-                {'value':'alt', 'label':'English (103)', 'checked':False},
-                {'value':'neu', 'label':'Italian (43)', 'checked':False},
-                {'value':'neu', 'label':'German (31)', 'checked':False},
-                {'value':'von gestern', 'label':'French (28)', 'checked':False},
-            ],
-        },
-    },
-
-    'multiselect_language': {
-        'name': 'Multiselect Continent',
-        'template': 'widgets/multiselect-oneblock.html',
-        'context': {
-            'id': 'multiselect-continent',
-            'label': 'Continents',
+            'label': 'Continent',
             'selectallbutton': {'value':'all', 'label':'all Continents', 'checked': True },
             'options': [
                 {'value':'alt', 'label':'Australia', 'checked':False},
-                {'value':'neu', 'label':'America', 'checked':False},
-                {'value':'von gestern', 'label':'Asia', 'checked':False},
-                {'value':'neu 2016', 'label':'Africa', 'checked':False},
+                {'value':'neu', 'label':'Asia', 'checked':False},
+                {'value':'neu', 'label':'Africa', 'checked':False},
+                {'value':'von gestern', 'label':'America', 'checked':False},
                 {'value':'von gestern', 'label':'Europe', 'checked':False},
             ],
         },
     },
-
 
 }
 

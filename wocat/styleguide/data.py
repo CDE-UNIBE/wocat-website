@@ -87,10 +87,10 @@ data = {
 
                 'links1': [
                     { 'href': 'http://google.de/1', 'text': 'Wocat & SLM' },
-                    { 'href': 'http://bing.de/2', 'text': 'SLM Database' },
-                    { 'href': 'http://bing.de/3', 'text': 'Decision support', },
+                    { 'href': 'http://bing.de/2', 'text': 'Global SLM Database' },
+                    { 'href': 'http://bing.de/2', 'text': 'Page FKA Media Library' },
+                    { 'href': 'http://bing.de/3', 'text': 'Decision support for SLM', },
                     { 'href': 'http://bing.de/3', 'text': 'Projects & Countries', },
-                    { 'href': 'http://bing.de/2', 'text': 'Media Library' },
                     { 'href': 'http://bing.de/2', 'text': 'News & Events' },
                     {
                         'dropdown': True,
@@ -1128,6 +1128,20 @@ data = {
     },
 
 
+    'dsf_teaser': {
+        'name': 'DSF Teaser',
+        'template': 'widgets/dsf-teaser.html',
+        'context': {
+            'module1href': 'http://google.de/1',
+            'module2href': 'http://google.de/2',
+            'module3href': 'http://google.de/3',
+            'module4href': 'http://google.de/4',
+            'module5href': 'http://google.de/5',
+            'module6href': 'http://google.de/6',
+            'module7href': 'http://google.de/7',
+        },
+    },
+
     'columns_1_1': {
         'name': 'Columns 1:1',
         'template': 'widgets/columns-1-1.html',
@@ -1655,14 +1669,14 @@ data = {
         'template': 'widgets/sidebar.html',
         'context': {
             'links': [
-                { 'href': '#affix-headings', 'text': 'Headings', 'anchorlink': True },
-                { 'href': '#affix-carousel', 'text': 'Carousel', 'anchorlink': True },
-                { 'href': '#affix-teaser', 'text': 'Teaser', 'anchorlink': True },
-                { 'href': '#affix-media', 'text': 'Media', 'anchorlink': True },
-                { 'href': '#affix-richtext', 'text': 'Richtext', 'anchorlink': True },
-                { 'href': '#affix-links', 'text': 'Links', 'anchorlink': True },
-                { 'href': '#affix-forms', 'text': 'Forms', 'anchorlink': True },
-                { 'href': '#affix-map', 'text': 'Map', 'anchorlink': True },
+                { 'href': '#affix-headings', 'text': 'Headings', 'anchorlink': True, 'color': '#403D38', },
+                { 'href': '#affix-carousel', 'text': 'Carousel', 'anchorlink': True, 'color': '#6E3237', },
+                { 'href': '#affix-teaser', 'text': 'Teaser', 'anchorlink': True, 'color': '#604F3B', },
+                { 'href': '#affix-media', 'text': 'Media', 'anchorlink': True, 'color': '#3B482E', },
+                { 'href': '#affix-richtext', 'text': 'Richtext', 'anchorlink': True, 'color': '#22454E', },
+                { 'href': '#affix-links', 'text': 'Links', 'anchorlink': True, 'color': '#2D446B', },
+                { 'href': '#affix-forms', 'text': 'Forms', 'anchorlink': True, 'color': '#3A3451', },
+                { 'href': '#affix-map', 'text': 'Map', 'anchorlink': True, 'color': '#344351', },
             ],
         },
     },
@@ -1991,11 +2005,11 @@ data = {
         },
     },
     'affix': {
-        'name': 'Footer',
+        'name': 'Affix',
         'template': 'widgets/affix.html',
         'context': {
             'sidebar_links': [
-                { 'href': '#affix-1', 'kicker': 'Module 1', 'text': 'Operational Strategy and Action plan', 'anchorlink': True },
+                { 'href': '#affix-1', 'kicker': 'Module 1', 'text': 'Operational Strategy and Action plan', 'anchorlink': True, },
                 { 'href': '#affix-2', 'kicker': 'Module 2', 'text': 'National and Subnational Level', 'anchorlink': True },
                 { 'href': '#affix-3', 'kicker': 'Module 3', 'text': 'Landscape Level', 'anchorlink': True },
                 { 'href': '#affix-4', 'kicker': 'Module 4', 'text': 'Sea Level', 'anchorlink': True },
@@ -2040,13 +2054,13 @@ data = {
         'template': 'widgets/tab-infobox.html',
         'context': {
             'sidebar_links': [
-                { 'href': '#tabinfobox-1', 'kicker': 'Module 1', 'text': 'Operational Strategy and Action plan', 'anchorlink': True },
-                { 'href': '#tabinfobox-2', 'kicker': 'Module 2', 'text': 'National and Subnational Level', 'anchorlink': True },
-                { 'href': '#tabinfobox-3', 'kicker': 'Module 3', 'text': 'Landscape Level', 'anchorlink': True },
-                { 'href': '#tabinfobox-4', 'kicker': 'Module 4', 'text': 'Sea Level', 'anchorlink': True },
-                { 'href': '#tabinfobox-5', 'kicker': 'Module 5', 'text': 'SLM Territorial Planning', 'anchorlink': True },
-                { 'href': '#tabinfobox-6', 'kicker': 'Module 6', 'text': 'Implementation and scaling out', 'anchorlink': True },
-                { 'href': '#tabinfobox-7', 'kicker': 'Module 7', 'text': 'Knowledge management platform for informed decision making', 'anchorlink': True },
+                { 'href': '#tabinfobox-1', 'kicker': 'Module 1', 'text': 'Operational Strategy and Action plan', 'anchorlink': True, 'color': '#403D38', },
+                { 'href': '#tabinfobox-2', 'kicker': 'Module 2', 'text': 'National and Subnational Level', 'anchorlink': True, 'color': '#6E3237', },
+                { 'href': '#tabinfobox-3', 'kicker': 'Module 3', 'text': 'Landscape Level', 'anchorlink': True, 'color': '#604F3B', },
+                { 'href': '#tabinfobox-4', 'kicker': 'Module 4', 'text': 'Sea Level', 'anchorlink': True, 'color': '#3B482E', },
+                { 'href': '#tabinfobox-5', 'kicker': 'Module 5', 'text': 'SLM Territorial Planning', 'anchorlink': True, 'color': '#22454E', },
+                { 'href': '#tabinfobox-6', 'kicker': 'Module 6', 'text': 'Implementation and scaling out', 'anchorlink': True, 'color': '#2D446B', },
+                { 'href': '#tabinfobox-7', 'kicker': 'Module 7', 'text': 'Knowledge management platform for informed decision making', 'anchorlink': True, 'color': '#3A3451', },
             ],
             'sections': [
                 {
