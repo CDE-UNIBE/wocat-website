@@ -126,9 +126,13 @@ class ReadMoreBlock(StructBlock):
         required=False,
     )
 
-    def __init__(self, required=True, local_blocks=None, *args, **kwargs):
-        super().__init__(local_blocks=local_blocks, *args, **kwargs)
-        self.required = required
+    def __init__(self, required=True, local_blocks=None, **kwargs):
+        super().__init__(local_blocks=local_blocks, **kwargs)
+        self._required = required
+
+    @property
+    def required(self):
+        return self._required
 
     def get_context(self, value):
         page = value.get('page')

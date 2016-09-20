@@ -57,9 +57,9 @@ class HeaderPageMixin(models.Model):
         ),
     ]
 
-    search_fields = (
+    search_fields = [
         index.SearchField('lead'),
-    )
+    ]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -84,9 +84,9 @@ class ContentPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    )
+    ]
 
     class Meta:
         verbose_name = _('Content')
@@ -125,9 +125,9 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    )
+    ]
 
     class Meta:
         verbose_name = _('Home')
@@ -156,9 +156,9 @@ class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    )
+    ]
 
     parent_page_types = ['HomePage']
     subpage_types = ['ProjectsPage', 'CountriesPage', 'RegionsPage']
@@ -186,9 +186,9 @@ class ProjectPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    )
+    ]
 
     parent_page_types = ['ProjectsPage']
     subpage_types = ['ContentPage']
@@ -230,9 +230,9 @@ class CountryPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    )
+    ]
 
     parent_page_types = ['CountriesPage']
     subpage_types = ['ContentPage']
@@ -285,10 +285,10 @@ class RegionPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + HeaderPageMixin.search_fields + (
-        index.FilterField('countries'),
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        # index.FilterField('countries'), TODO: This can't be indexed
         index.SearchField('content'),
-    )
+    ]
 
     parent_page_types = ['RegionsPage']
     subpage_types = []
@@ -303,9 +303,9 @@ class MembersPage(UniquePageMixin, Page):
         StreamFieldPanel('content'),
     ]
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('content'),
-    )
+    ]
 
     # parent_page_types = []
     # subpage_types = []

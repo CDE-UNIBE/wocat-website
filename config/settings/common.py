@@ -286,11 +286,13 @@ TAGGIT_CASE_INSENSITIVE = True
 # WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
 # WAGTAIL_USER_CUSTOM_FIELDS = ['gender', 'title']
 ELASTICSEARCH_URL = env('ELASTICSEARCH_URL', default='')
-WAGTAILSEARCH_BACKEND = env('WATAILSEARCH_BACKEND', default='db')
+WAGTAILSEARCH_BACKEND = env('WAGTAILSEARCH_BACKEND', default='db')
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.wagtailsearch.backends.{}'.format(WAGTAILSEARCH_BACKEND),
         'URLS': [ELASTICSEARCH_URL],
+        'INDEX': 'wocat',
+        'TIMEOUT': 5,
     }
 }
 
