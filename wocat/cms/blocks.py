@@ -178,12 +178,13 @@ class TeaserImageBlock(StructBlock):
 
 
 class TeaserBlock(StructBlock):
-    title = blocks.CharBlock()
+    title = blocks.CharBlock(required=False)
     content = RichTextBlock(required=False)
     image = TeaserImageBlock(required=False)
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
     read_more_text = blocks.CharBlock(required=False)
+    boarderless = blocks.BooleanBlock(required=False)
 
     def get_context(self, value):
         page = value.get('page')
@@ -193,6 +194,7 @@ class TeaserBlock(StructBlock):
         imagepos = image_block.get('position')
         largeimg = image_block.get('large')
         read_more_text = value.get('read_more_text') or _('read more')
+        lines = not value.get('boarderless')
         return {
             'href': page.url if page else link,
             'external': not bool(page),
@@ -202,7 +204,7 @@ class TeaserBlock(StructBlock):
             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
             'imgpos': imagepos,
             'largeimg': largeimg,
-            'lines': True,
+            'lines': lines,
         }
 
     class Meta:
@@ -356,8 +358,9 @@ class ImageGalleryElementBlock(StructBlock):
     description = blocks.CharBlock(required=False)
     shrink = ChoiceBlock(
         choices=[
-            (1, _('Small')),
-            (2, _('Extra small')),
+            (1, _('S')),
+            (2, _('XS')),
+            (3, _('XXS')),
         ],
         required=False,
     )
