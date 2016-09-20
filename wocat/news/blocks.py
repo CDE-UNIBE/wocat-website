@@ -22,14 +22,24 @@ class NewsTeaserBlock(StructBlock):
         news = value.get('news')
         if not news:
             return {}
-        return {
+
+        context = {
             'title': news.title,
             'description': news.lead,
             'author': news.author,
             'date': news.date,
             'href': news.url,
             'readmorelink': {'text': _('read more')},
+            'bottomline': True,
         }
+
+        if news.lead_image:
+            context.update({
+                'imgpos': 'right',
+                'imgsrc': news.lead_image.get_rendition('max-500x500').url,
+            })
+
+        return context
 
     class Meta:
         icon = 'fa fa-newspaper-o'

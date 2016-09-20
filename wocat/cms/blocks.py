@@ -237,6 +237,7 @@ class OverlayTeaserBlock(StructBlock):
                 },
             ],
             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
+            'flapmd': True,
         }
 
     class Meta:

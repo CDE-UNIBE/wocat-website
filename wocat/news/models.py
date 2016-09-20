@@ -39,6 +39,12 @@ class NewsPage(HeaderPageMixin, Page):
         default = timezone.now,
     )
 
+    @property
+    def lead_image(self):
+        images = self.header_images
+        if images:
+            return images[0].value
+
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
         FieldPanel('author'),
