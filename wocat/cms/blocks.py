@@ -99,6 +99,8 @@ class LinkBlock(StructBlock):
 class DocumentBlock(DocumentChooserBlock):
     def get_context(self, value):
         document = value
+        if not document:
+            return {}
         return {
             'title': document.title,
             'fileurl': document.url,

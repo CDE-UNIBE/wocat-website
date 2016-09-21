@@ -10,7 +10,7 @@ register = template.Library()
 
 
 def get_profile_links(user, onlyxs=False):
-    if user.is_authenticated():
+    if user and user.is_authenticated():
         profile_links = {
             'dropdown': True,
             'text': user.email,
