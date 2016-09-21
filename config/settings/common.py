@@ -292,9 +292,10 @@ WAGTAILSEARCH_BACKENDS = {
         'BACKEND': 'wagtail.wagtailsearch.backends.{}'.format(WAGTAILSEARCH_BACKEND),
         'URLS': [ELASTICSEARCH_URL],
         'INDEX': 'wocat',
-        'TIMEOUT': 5,
+        'TIMEOUT': 30,
     }
 }
+WAGTAILDOCS_DOCUMENT_MODEL = 'core.IndexedDocument'
 
 
 # EASY THUMBNAILS
