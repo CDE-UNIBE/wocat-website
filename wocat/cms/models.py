@@ -236,7 +236,7 @@ class ProjectCountryPage(HeaderPageMixin, Page):
         index.SearchField('content'),
     ]
 
-    parent_page_types = ['ProjectPage']
+    parent_page_types = ['ProjectCountriesPage']
     subpage_types = ['ContentPage']
 
 
