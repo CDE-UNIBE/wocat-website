@@ -9,8 +9,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
-from django.utils.translation import ugettext_lazy as _
+
 import environ
+from django.utils.translation import ugettext_lazy as _
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('wocat')
@@ -286,15 +287,27 @@ TAGGIT_CASE_INSENSITIVE = True
 # WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
 # WAGTAIL_USER_CUSTOM_FIELDS = ['gender', 'title']
 ELASTICSEARCH_URL = env('ELASTICSEARCH_URL', default='')
-WAGTAILSEARCH_BACKEND = env('WAGTAILSEARCH_BACKEND', default='db')
+# TODO temporary fix until upstream accepts patch: https://github.com/torchbox/wagtail/pull/2992
+# WAGTAILSEARCH_BACKEND = env('WAGTAILSEARCH_BACKEND', default='db')
+# WAGTAILSEARCH_BACKENDS = {
+#     'default': {
+#         'BACKEND': 'wagtail.wagtailsearch.backends.{}'.format(WAGTAILSEARCH_BACKEND),
+#         'URLS': [ELASTICSEARCH_URL],
+#         'INDEX': 'wocat',
+#         'TIMEOUT': 30,
+#     }
+# }
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.backends.{}'.format(WAGTAILSEARCH_BACKEND),
+        'BACKEND': 'wocat.core.temp_elasticsearch2_backend',
         'URLS': [ELASTICSEARCH_URL],
         'INDEX': 'wocat',
-        'TIMEOUT': 5,
+        'TIMEOUT': 30,
     }
 }
+# END TODO------------------------------------------------------------------
+
+WAGTAILDOCS_DOCUMENT_MODEL = 'core.IndexedDocument'
 
 
 # EASY THUMBNAILS
