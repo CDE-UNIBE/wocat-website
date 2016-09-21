@@ -191,6 +191,29 @@ class ProjectPage(HeaderPageMixin, Page):
     ]
 
     parent_page_types = ['ProjectsPage']
+    subpage_types = ['ContentPage', 'ProjectCountryPage']
+
+
+class ProjectCountryPage(HeaderPageMixin, Page):
+    template = 'pages/content.html'
+
+    content = StreamField(
+        CORE_BLOCKS,
+        blank=True
+    )
+
+    class Meta:
+        verbose_name = _('Project Country')
+
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        index.SearchField('content'),
+    ]
+
+    parent_page_types = ['ProjectPage']
     subpage_types = ['ContentPage']
 
 
