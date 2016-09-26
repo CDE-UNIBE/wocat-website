@@ -66,6 +66,7 @@ THIRD_PARTY_APPS = (
     'django_countries',
     'easy_thumbnails',
     'rest_framework',  # api
+    'mama_cas',
 )
 
 # Apps specific for this project go here.
