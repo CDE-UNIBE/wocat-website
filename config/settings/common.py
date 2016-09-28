@@ -81,6 +81,8 @@ LOCAL_APPS = (
     'wocat.glossary',
     'wocat.search',
     'wocat.api',
+
+    'wocat.countries',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -298,14 +300,6 @@ ELASTICSEARCH_URL = env('ELASTICSEARCH_URL', default='')
 #         'TIMEOUT': 30,
 #     }
 # }
-WAGTAILSEARCH_BACKENDS = {
-    'default': {
-        'BACKEND': 'wocat.core.temp_elasticsearch2_backend',
-        'URLS': [ELASTICSEARCH_URL],
-        'INDEX': 'wocat',
-        'TIMEOUT': 30,
-    }
-}
 # END TODO------------------------------------------------------------------
 
 WAGTAILDOCS_DOCUMENT_MODEL = 'core.IndexedDocument'
