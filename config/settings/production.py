@@ -160,3 +160,12 @@ RAVEN_CONFIG = {
 ADMIN_URL = env('DJANGO_ADMIN_URL')
 
 # Your production stuff: Below this line define 3rd party library settings
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wocat.core.temp_elasticsearch2_backend',
+        'URLS': [ELASTICSEARCH_URL],
+        'INDEX': 'wocat',
+        'TIMEOUT': 30,
+    }
+}

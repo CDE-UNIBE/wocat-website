@@ -13,6 +13,7 @@ from wagtail.wagtailsearch import index
 
 from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock
 from wocat.core.blocks import CORE_BLOCKS
+from wocat.countries.models import Country
 
 __author__ = 'Eraldo Energy'
 
@@ -253,7 +254,10 @@ class CountriesPage(UniquePageMixin, Page):
 class CountryPage(HeaderPageMixin, Page):
     template = 'pages/country.html'
 
-    country = CountryField(unique=True)
+    country = models.ForeignKey(
+        Country,
+        unique=True
+    )
 
     @property
     def flag(self):
