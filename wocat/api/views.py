@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import viewsets, routers
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
@@ -11,11 +12,23 @@ router = routers.DefaultRouter()
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get_queryset(self):
+        """
+        Optionally restricts the returned users by filtering against a
+        `name` query parameter in the URL.
+        """
+        queryset = User.objects.all()
+        name = self.request.query_params.get('name', None)
+        if name is not None:
+            queryset = queryset.filter(
+                Q(first_name__contains=name) | Q(last_name__contains=name)
+            )
+        return queryset
 
-router.register(r'users', UserViewSet)
+
+router.register(r'users', UserViewSet, base_name='user')
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
