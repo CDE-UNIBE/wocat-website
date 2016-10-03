@@ -19,7 +19,7 @@ router.register(r'users', UserViewSet)
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = ProjectPage.objects.all()
+    queryset = ProjectPage.objects.filter(live=True)
     serializer_class = ProjectSerializer
 
 
@@ -27,7 +27,7 @@ router.register(r'projects', ProjectViewSet)
 
 
 class CountryViewSet(viewsets.ModelViewSet):
-    queryset = CountryPage.objects.all()
+    queryset = CountryPage.objects.filter(live=True)
     serializer_class = CountrySerializer
 
 
@@ -35,7 +35,7 @@ router.register(r'countries', CountryViewSet)
 
 
 class RegionViewSet(viewsets.ModelViewSet):
-    queryset = RegionPage.objects.all()
+    queryset = RegionPage.objects.filter(live=True)
     serializer_class = RegionSerializer
 
 
