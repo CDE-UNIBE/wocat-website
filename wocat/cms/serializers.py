@@ -3,17 +3,20 @@ from functools import lru_cache
 
 from django.conf import settings
 from django.core.cache import cache
+from django.template.loader import render_to_string
 
 from rest_framework import serializers
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
 
 
-class GeoJsonMixin:
+class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
     """
     Shared methods for all things geojson.
     """
     filename = 'countries.geo.json'  # todo: move to settings.
+    geojson = serializers.SerializerMethodField()
+    panel_text = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,40 +50,44 @@ class GeoJsonMixin:
     def get_geojson(self, obj) -> list:
         raise NotImplementedError('The field "geojson" is required (frontend).')
 
+    def get_panel_text(self, obj) -> str:
+        return render_to_string('api/partial/panel_text.html', {
+            'title': obj.title,
+            'lead': obj.lead,
+            'url': obj.url
+        })
 
-class ProjectSerializer(GeoJsonMixin, serializers.HyperlinkedModelSerializer):
+
+class ProjectSerializer(GeoJsonSerializer):
     url = serializers.URLField(source='full_url')
-    geojson = serializers.SerializerMethodField()
 
     class Meta:
         model = ProjectPage
-        fields = ('url', 'title', 'geojson')
+        fields = ('url', 'title', 'geojson', 'panel_text', )
 
     def get_geojson(self, obj: ProjectPage) -> list:
         countries = ['ALB', 'DEU', 'CAN']
         return [self.get_country_geojson(country) for country in countries]
 
 
-class CountrySerializer(GeoJsonMixin, serializers.HyperlinkedModelSerializer):
+class CountrySerializer(GeoJsonSerializer):
     url = serializers.URLField(source='full_url')
     code = serializers.CharField(source='country.code')
-    geojson = serializers.SerializerMethodField()
 
     class Meta:
         model = CountryPage
-        fields = ('url', 'title', 'code', 'geojson')
+        fields = ('url', 'title', 'code', 'geojson', 'panel_text', )
 
     def get_geojson(self, obj: CountryPage) -> list:
         return self.get_country_geojson(obj.country.code)
 
 
-class RegionSerializer(GeoJsonMixin, serializers.HyperlinkedModelSerializer):
+class RegionSerializer(GeoJsonSerializer):
     url = serializers.URLField(source='full_url')
-    geojson = serializers.SerializerMethodField()
 
     class Meta:
         model = RegionPage
-        fields = ('url', 'title', 'country_codes', 'geojson')
+        fields = ('url', 'title', 'country_codes', 'geojson', 'panel_text', )
 
     def get_geojson(self, obj: RegionPage) -> list:
         countries = ['ARG', 'ARM']
