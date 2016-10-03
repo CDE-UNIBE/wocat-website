@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load cms_tags %}
+{% load i18n %}
+
+
+{% block content_container %}
+  {% carousel %}
+  {% include 'widgets/overlay-teaser.html' with title='Wocat' description=page.lead style='largebox' %}
+  <div class="container">
+    <br>
+    {% block content %}
+      <div class="row">
+        <div id="map" class="col-md-8" style="width: 600px; height: 400px"></div>
+        <div id="panel" class="col-md-4">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation">
+              <a href="#countries" aria-controls="countries" role="tab" data-toggle="tab" data-url="{% url 'countrypage-list' %}">{% trans "Countries" %}</a>
+            </li>
+            <li role="presentation">
+              <a href="#projects" aria-controls="projects" role="tab" data-toggle="tab" data-url="{% url 'projectpage-list' %}">{% trans "Projects" %}</a>
+            </li>
+            <li role="presentation" class="active">
+              <a href="#regions" aria-controls="regions" role="tab" data-toggle="tab" data-url="{% url 'regionpage-list' %}">{% trans "Regions" %}</a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="countries"></div>
+            <div role="tabpanel" class="tab-pane" id="projects"></div>
+            <div role="tabpanel" class="tab-pane" id="regions"></div>
+          </div>
+        </div>
+      </div>
+    {% endblock content %}
+  </div>
+{% endblock content_container %}
+
+{% block custom_javascript %}
+  <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+  <script>
+    $(function () {
+      /**
+       * Map stuff
+       */
+      var map = L.map('map');
+      map.createPane('labels');
+      // This pane is above markers but below popups
+      map.getPane('labels').style.zIndex = 650;
+      // Layers in this pane are non-interactive and do not obscure mouse/touch events
+      map.getPane('labels').style.pointerEvents = 'none';
+
+      var cartodbAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+
+      var positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+        attribution: cartodbAttribution
+      }).addTo(map);
+
+      var positronLabels = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+        attribution: cartodbAttribution,
+        pane: 'labels'
+      }).addTo(map);
+
+      map.setView({lat: 47.040182144806664, lng: 9.667968750000002}, 1);
+
+      /**
+       * Navigation and data loading.
+       */
+      var layerStore = {};
+      var activeLayer = null;
+      var defaultTab = $('li[role="presentation"].active a')[0];
+
+      // load data for default 'active' layer and clicks on tabs.
+      selectMapContent(defaultTab);
+      $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+        selectMapContent(e.target)
+      });
+
+      // load data (async.) if not available and display it
+      function selectMapContent(target) {
+        var panel = $(target.href.substr(target.href.indexOf('#')));
+
+        if(panel.is(':empty')) {
+          getDataFromAPI(target.dataset.url, prepareMapData, panel);
+        } else {
+          setMapData(panel.attr('id'));
+        }
+      }
+
+      function getDataFromAPI(url, callback, panel) {
+        $.ajax({
+          url: url,
+          method: 'get',
+          dataType: 'json',
+          headers: {
+            'accepts': 'application/json'
+          }
+        }).done(function(data) {
+          callback(data, panel);
+        });
+      }
+
+      function prepareMapData(data, panel) {
+        var countriesJson = [];
+        $.each(data, function (index, page) {
+          panel.append(page.title);
+          // todo: wrap into try/except
+          var geojson = L.geoJson(page.geojson);
+          geojson.eachLayer(function (layer) {
+            layer.bindPopup(layer.feature.properties.name);
+          });
+          countriesJson.push(geojson);
+        });
+        layerStore[panel.attr('id')] = L.layerGroup(countriesJson);
+        setMapData(panel.attr('id'));
+      }
+
+      // make sure just one layer is active at a time.
+      function setMapData(panelId) {
+        if (activeLayer != null) {
+          map.removeLayer(activeLayer);
+        }
+        map.addLayer(layerStore[panelId]);
+        activeLayer = layerStore[panelId];
+      }
+    });
+  </script>
+{% endblock custom_javascript %}
