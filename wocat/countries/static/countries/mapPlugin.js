@@ -28,14 +28,21 @@ jQuery.fn.setMap = function( options ) {
 
     var layerStore = {};  // store references to layergoups (tabs) .
     var activeLayer = null;  // flag for the currently active layer.
+    var defaultStyle = {
+        // border styles
+        "color": "#DA812C",
+        "weight": 1,
+        "opacity": 0.9,
+        // fill styles
+        "fillColor": "#F3D9C0",
+        "fillOpacity": 0.5
+    };
 
     // initialize map.
-    var map = L.map('map');
+    var map = L.map('map').setView([41, -20], 2);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
-    map.setView({lat: 47.040182144806664, lng: 9.667968750000002}, 1);
 
     // attach behavior for click on tabs and load initial content.
     selectMapContent(settings.defaultTab);
@@ -45,6 +52,7 @@ jQuery.fn.setMap = function( options ) {
 
     // register clicks on menu and load more info element.
     $('div.tab-content').on('click', 'a', function () {
+        highlightItem($(this).attr('id'));
         return false;
     });
 
@@ -73,13 +81,9 @@ jQuery.fn.setMap = function( options ) {
         });
     }
 
-    function foo(e) {
-        console.log(e);
-    }
-
-    function onEachFeature(feature, layer) {
-        layer.bindPopup(feature.properties.name);
-        layer.on('click', foo);
+    function highlightItem(identifier) {
+        console.log(identifier);
+        $('#' + identifier).addClass('selected');
     }
 
     // Prepare geojson to use with leafleft
@@ -87,16 +91,21 @@ jQuery.fn.setMap = function( options ) {
         var countriesJson = [];
         $.each(data, function (index, page) {
             panel.append(page.panel_text);
-            // todo: wrap into try/except
-            var geojson = L.geoJson(page.geojson, {
-                onEachFeature: onEachFeature
-            });
-            geojson.on('click', function (e) {
-                console.log(e)
-            });
+            try {
+                var geojson = L.geoJson(page.geojson, {
+                    style: defaultStyle,
+                    onEachFeature: function onEachFeature(feature, layer) {
+                        layer.on('click', function() {
+                            highlightItem(page.identifier);
+                        });
+                        layer.bindPopup(page.title);
+                    }
+                });
+            } catch (Error) {
+                // @maybe: add error text as string?
+            }
             countriesJson.push(geojson);
         });
-        // aaaah - check if click elements are ok for layergroups!
         layerStore[panel.attr('id')] = L.layerGroup(countriesJson);
         setMapData(panel.attr('id'));
     }

@@ -254,7 +254,7 @@ select.form-control::-ms-expand {
 				}
 			}
 
-			.navbar-nav { 
+			.navbar-nav {
 				> li {
 					> a {
 						color: @color-neutral-dark;
@@ -481,7 +481,7 @@ select.form-control::-ms-expand {
 								color: @color-black;
 							}
 						}
-	
+
 						+ li > a {
 							@media(min-width:992px) {
 								border-left: 1px solid @color-neutral;
@@ -1585,6 +1585,21 @@ select.form-control::-ms-expand {
 			color: inherit;
 			font-weight: 600;
 		}
+	}
+}
+
+// ######## Interactive map #########
+
+.left-inner-addon {
+    position: relative;
+
+	& input {
+    	padding-left: 30px;
+	}
+	& i {
+		position: absolute;
+		padding: 10px 12px;
+		pointer-events: none;
 	}
 }
 
