@@ -268,7 +268,7 @@ class OverlayTeaserMapBlock(StructBlock):
         link_text = value.get('link_text') or _('link')
         from wocat.cms.models import CountryPage
         country_pages = CountryPage.objects.live().in_menu()
-        countries = [{'iso_3166_1_alpha_3': country_page.country.alpha3} for country_page in country_pages]
+        countries = [{'iso_3166_1_alpha_3': country_page.country.code} for country_page in country_pages]
 
         return {
             'title': value.get('title'),

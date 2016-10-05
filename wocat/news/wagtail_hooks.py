@@ -13,4 +13,4 @@ class NewsModelAdmin(ModelAdmin):
     list_display = ('title',)
 
     search_fields = ('title', 'content')
-    list_filter = ('author', 'date')
+    list_filter = ('author', 'date', 'country')

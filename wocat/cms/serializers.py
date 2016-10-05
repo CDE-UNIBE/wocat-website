@@ -13,7 +13,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 
 class CountrySerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.URLField(source='full_url')
-    code = serializers.CharField(source='country.alpha3')
+    code = serializers.CharField(source='country.code')
 
     class Meta:
         model = CountryPage

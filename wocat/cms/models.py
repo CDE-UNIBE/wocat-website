@@ -254,9 +254,9 @@ class CountriesPage(UniquePageMixin, Page):
 class CountryPage(HeaderPageMixin, Page):
     template = 'pages/country.html'
 
-    country = models.ForeignKey(
+    country = models.OneToOneField(
         Country,
-        unique=True
+        on_delete=models.PROTECT,
     )
 
     @property
@@ -325,7 +325,7 @@ class RegionPage(HeaderPageMixin, Page):
 
     @property
     def country_codes(self):
-        return [country.country.alpha3 for country in self.countries]
+        return [country.country.code for country in self.countries]
 
     class Meta:
         verbose_name = _('Region')

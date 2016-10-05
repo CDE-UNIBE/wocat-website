@@ -8,6 +8,7 @@ from wagtail.wagtailsearch import index
 
 from wocat.core.blocks import CORE_BLOCKS
 from wocat.cms.models import HeaderPageMixin, UniquePageMixin
+from wocat.countries.models import Country
 
 
 class NewsIndexPage(UniquePageMixin, Page):
@@ -39,6 +40,12 @@ class NewsPage(HeaderPageMixin, Page):
         default = timezone.now,
     )
 
+    country = models.ForeignKey(
+        Country,
+        blank=True, null=True,
+        on_delete=models.PROTECT,
+    )
+
     @property
     def lead_image(self):
         images = self.header_images
@@ -49,9 +56,11 @@ class NewsPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
         FieldPanel('author'),
         FieldPanel('date'),
+        FieldPanel('country'),
     ]
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        index.FilterField('country'),
         index.SearchField('content'),
     ]
 
