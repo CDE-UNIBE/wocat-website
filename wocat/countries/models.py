@@ -1,6 +1,7 @@
 from autoslug import AutoSlugField
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.templatetags.static import static
 from django_countries.fields import CountryField
 from django.utils.translation import ugettext_lazy as _
 
@@ -30,3 +31,7 @@ class Country(models.Model):
 
     def get_absolute_url(self):
         return reverse('countries:detail', args=[self.slug])
+
+    @property
+    def flag(self):
+        return static('countries/flags/flags/png/{code}.png'.format(code=self.code))
