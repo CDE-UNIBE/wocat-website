@@ -103,9 +103,9 @@ class Header(InclusionTag):
         return {
             'id': '1',
             'toplinks': [
-                {'href': '#facebook', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>'},
-                {'href': '#youtube', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>'},
-                {'href': '#twitter', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>'},
+                {'href': '#facebook', 'text': '<i class="fa fa-2x fa-facebook" aria-hidden="true"></i>'},
+                {'href': '#youtube', 'text': '<i class="fa fa-2x fa-youtube" aria-hidden="true"></i>'},
+                {'href': '#twitter', 'text': '<i class="fa fa-2x fa-twitter" aria-hidden="true"></i>'},
                 {'href': '#get-involved', 'text': 'Get involved'},
                 {'href': '#faq', 'text': 'FAQ'},
                 {'href': reverse('glossary:list'), 'text': 'Glossary'},
