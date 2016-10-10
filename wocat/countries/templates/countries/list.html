@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} {% trans 'Countries' %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Countries' %}</h1>
+    {% for country in countries %}
+        {% include 'widgets/read-more-link.html' with href=country.get_absolute_url text=country %}
+    {% endfor %}
+{% endblock content %}
