@@ -58,6 +58,6 @@ class MediaTeaserBlock(StructBlock):
         }
 
     class Meta:
-        icon = 'fa fa-file-o'
+        icon = 'fa fa-file'
         label = _('Media Teaser')
         template = 'widgets/teaser.html'
