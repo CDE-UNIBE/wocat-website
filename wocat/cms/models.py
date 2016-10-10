@@ -212,7 +212,7 @@ class ProjectPage(HeaderPageMixin, Page):
 
 
 class ProjectCountriesPage(HeaderPageMixin, Page):
-    template = 'pages/content.html'
+    template = 'countries/index.html'
 
     content = StreamField(
         CORE_BLOCKS,
@@ -232,6 +232,10 @@ class ProjectCountriesPage(HeaderPageMixin, Page):
 
     parent_page_types = ['ProjectPage']
     subpage_types = ['ProjectCountryPage']
+
+    @property
+    def countries(self):
+        return self.get_children()
 
 
 class ProjectCountryPage(HeaderPageMixin, Page):
