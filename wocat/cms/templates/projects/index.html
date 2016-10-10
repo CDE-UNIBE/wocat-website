@@ -1,0 +1,12 @@
+{% extends 'pages/content.html' %}
+{% load cms_tags projects_tags %}
+
+{% block content %}
+    <div class="row cols-sm-3">
+        {% for project in page.projects %}
+            <div class="col">
+                {% project %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

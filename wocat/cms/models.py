@@ -146,7 +146,7 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
 
 
 class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
-    template = 'pages/content.html'
+    template = 'pages/projects_and_countries.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
 
@@ -164,15 +164,27 @@ class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
     parent_page_types = ['HomePage']
     subpage_types = ['ProjectsPage', 'CountriesPage', 'RegionsPage']
 
+    @property
+    def projects(self):
+        return self.get_descendants().type(ProjectPage).specific()
+
+    @property
+    def countries(self):
+        return self.get_descendants().type(ProjectCountryPage).specific()
+
 
 class ProjectsPage(UniquePageMixin, Page):
-    template = 'pages/content.html'
+    template = 'projects/index.html'
 
     class Meta:
         verbose_name = _('Projects')
 
     parent_page_types = ['ProjectsAndCountiesPage']
     subpage_types = ['ProjectPage']
+
+    @property
+    def projects(self):
+        return self.get_children()
 
 
 class ProjectPage(HeaderPageMixin, Page):
@@ -193,6 +205,10 @@ class ProjectPage(HeaderPageMixin, Page):
 
     parent_page_types = ['ProjectsPage']
     subpage_types = ['ContentPage', 'ProjectCountriesPage']
+
+    @property
+    def countries(self):
+        return self.get_descendants().type(ProjectCountryPage).specific()
 
 
 class ProjectCountriesPage(HeaderPageMixin, Page):
@@ -215,11 +231,26 @@ class ProjectCountriesPage(HeaderPageMixin, Page):
     ]
 
     parent_page_types = ['ProjectPage']
-    subpage_types = ['ContentPage', 'ProjectCountryPage']
+    subpage_types = ['ProjectCountryPage']
 
 
 class ProjectCountryPage(HeaderPageMixin, Page):
     template = 'pages/content.html'
+
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.PROTECT,
+    )
+
+    @property
+    def flag(self):
+        if hasattr(self, 'country'):
+            return self.country.flag
+
+    @property
+    def code(self):
+        if hasattr(self, 'country'):
+            return self.country.code
 
     content = StreamField(
         CORE_BLOCKS,
@@ -230,10 +261,12 @@ class ProjectCountryPage(HeaderPageMixin, Page):
         verbose_name = _('Project Country')
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        FieldPanel('country'),
         StreamFieldPanel('content'),
     ]
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        index.FilterField('country'),
         index.SearchField('content'),
     ]
 
