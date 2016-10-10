@@ -40,10 +40,8 @@ class NewsPage(HeaderPageMixin, Page):
         default = timezone.now,
     )
 
-    country = models.ForeignKey(
+    countries = models.ManyToManyField(
         Country,
-        blank=True, null=True,
-        on_delete=models.PROTECT,
     )
 
     @property
@@ -56,11 +54,11 @@ class NewsPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
         FieldPanel('author'),
         FieldPanel('date'),
-        FieldPanel('country'),
+        FieldPanel('countries'),
     ]
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
-        index.FilterField('country'),
+        index.FilterField('countries'),
         index.SearchField('content'),
     ]
 
