@@ -242,13 +242,17 @@ class ProjectCountryPage(HeaderPageMixin, Page):
 
 
 class CountriesPage(UniquePageMixin, Page):
-    template = 'pages/content.html'
+    template = 'countries/index.html'
 
     class Meta:
         verbose_name = _('Countries')
 
     parent_page_types = ['ProjectsAndCountiesPage']
     subpage_types = ['CountryPage']
+
+    @property
+    def countries(self):
+        return self.get_children()
 
 
 class CountryPage(HeaderPageMixin, Page):
@@ -263,6 +267,11 @@ class CountryPage(HeaderPageMixin, Page):
     def flag(self):
         if hasattr(self, 'country'):
             return self.country.flag
+
+    @property
+    def code(self):
+        if hasattr(self, 'country'):
+            return self.country.code
 
     contact_person = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load cms_tags countries_tags %}
+
+
+{% block content_container %}
+    {% carousel %}
+    {% overlay %}
+    <div class="container">
+        <br>
+        {% breadcrumb %}
+        <br>
+        {% block content %}
+            <div class="row cols-sm-3">
+                {% for country in page.countries %}
+                    <div class="col">
+                        {% country %}
+                    </div>
+                {% endfor %}
+
+            </div>
+        {% endblock content %}
+    </div>
+{% endblock content_container %}
