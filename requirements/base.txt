@@ -48,7 +48,7 @@ redis>=2.10.0
 # Your custom requirements go here
 
 # CMS
-wagtail==1.6.2
+wagtail==1.6.3
 elasticsearch==2.4.0
 
 # Models
