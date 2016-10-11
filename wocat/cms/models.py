@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.db import ProgrammingError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django_countries.fields import CountryField
 from modelcluster.fields import ParentalKey
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel, \
     PageChooserPanel
@@ -440,11 +439,34 @@ class MembersPage(UniquePageMixin, Page):
         return context
 
 
-class NewsAndEventsPage(UniquePageMixin, Page):
+class NewsAndEventsPage(UniquePageMixin, HeaderPageMixin, Page):
     template = 'pages/content.html'
+
+    content = StreamField(CORE_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('News & Events')
 
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        index.SearchField('content'),
+    ]
+
+    def get_news_page_model(self):
+        from wocat.news.models import NewsPage
+        return NewsPage
+
     parent_page_types = ['HomePage']
     subpage_types = ['news.NewsIndexPage']
+
+    @property
+    def news(self):
+        NewsPage = self.get_news_page_model()
+        return self.get_descendants().type(NewsPage).specific()
+    #
+    # @property
+    # def events(self):
+    #     return []  # TODO: Waiting for Events pages to be implemented.
