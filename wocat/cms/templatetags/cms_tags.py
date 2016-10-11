@@ -103,9 +103,12 @@ class Header(InclusionTag):
         return {
             'id': '1',
             'toplinks': [
-                {'href': '#facebook', 'text': '<i class="fa fa-lg fa-facebook" aria-hidden="true"></i>'},
-                {'href': '#youtube', 'text': '<i class="fa fa-lg fa-youtube" aria-hidden="true"></i>'},
-                {'href': '#twitter', 'text': '<i class="fa fa-lg fa-twitter" aria-hidden="true"></i>'},
+                {'href': 'https://www.facebook.com/wocatnet', 'text': '<i class="fa fa-lg fa-facebook" aria-hidden="true"></i>'},
+                {'href': 'https://vimeo.com/user12138600', 'text': '<i class="fa fa-lg fa-vimeo" aria-hidden="true"></i>'},
+                {'href': 'https://www.youtube.com/user/WOCATEER1', 'text': '<i class="fa fa-lg fa-youtube" aria-hidden="true"></i>'},
+                # Issue: https://github.com/FortAwesome/Font-Awesome/issues/1993
+                # {'href': 'https://issuu.com/wocat', 'text': '<i class="fa fa-lg fa-issuu" aria-hidden="true"></i>'},
+                {'href': 'http://www.slideshare.net/wocat', 'text': '<i class="fa fa-lg fa-slideshare" aria-hidden="true"></i>'},
                 {'href': '#get-involved', 'text': 'Get involved'},
                 {'href': '#faq', 'text': 'FAQ'},
                 {'href': reverse('glossary:list'), 'text': 'Glossary'},
