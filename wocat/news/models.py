@@ -42,6 +42,7 @@ class NewsPage(HeaderPageMixin, Page):
 
     countries = models.ManyToManyField(
         Country,
+        blank=True,
     )
 
     @property
