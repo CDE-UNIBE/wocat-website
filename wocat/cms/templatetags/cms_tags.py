@@ -13,7 +13,7 @@ def get_profile_links(user, onlyxs=False):
     if user and user.is_authenticated():
         profile_links = {
             'dropdown': True,
-            'text': user.email,
+            'text': user.first_name or user.email,
             'links': [
                 {'href': reverse('users:detail', args=[user.email]), 'text': _('Profile'), 'active': True,},
                 {'href': reverse('account_logout'), 'text': _('Logout')},
