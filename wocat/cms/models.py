@@ -203,7 +203,7 @@ class ProjectPage(HeaderPageMixin, Page):
     ]
 
     parent_page_types = ['ProjectsPage']
-    subpage_types = ['ContentPage', 'ProjectCountriesPage']
+    subpage_types = ['ContentPage', 'ProjectCountriesPage', 'NewsAndEventsPage']
 
     @property
     def countries(self):
@@ -439,7 +439,7 @@ class MembersPage(UniquePageMixin, Page):
         return context
 
 
-class NewsAndEventsPage(UniquePageMixin, HeaderPageMixin, Page):
+class NewsAndEventsPage(HeaderPageMixin, Page):
     template = 'pages/content.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
@@ -459,7 +459,7 @@ class NewsAndEventsPage(UniquePageMixin, HeaderPageMixin, Page):
         from wocat.news.models import NewsPage
         return NewsPage
 
-    parent_page_types = ['HomePage']
+    parent_page_types = ['HomePage', 'ProjectPage']
     subpage_types = ['news.NewsIndexPage']
 
     @property

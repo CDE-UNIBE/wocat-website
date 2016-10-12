@@ -7,11 +7,10 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 
 from wocat.core.blocks import CORE_BLOCKS
-from wocat.cms.models import HeaderPageMixin, UniquePageMixin
-from wocat.countries.models import Country
+from wocat.cms.models import HeaderPageMixin
 
 
-class NewsIndexPage(UniquePageMixin, HeaderPageMixin, Page):
+class NewsIndexPage(HeaderPageMixin, Page):
     template = 'news/index.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
@@ -55,9 +54,9 @@ class NewsPage(HeaderPageMixin, Page):
         default = timezone.now,
     )
 
-    countries = models.ManyToManyField(
-        Country,
-    )
+    # countries = models.ManyToManyField(
+    #     Country,
+    # )
 
     @property
     def lead_image(self):
@@ -69,11 +68,12 @@ class NewsPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
         FieldPanel('author'),
         FieldPanel('date'),
-        FieldPanel('countries'),
+        # FieldPanel('countries'),
+        # InlinePanel('countries', label=_('Countries')),
     ]
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
-        index.FilterField('countries'),
+        # index.FilterField('countries'),
         index.SearchField('content'),
     ]
 
@@ -86,3 +86,17 @@ class NewsPage(HeaderPageMixin, Page):
 
     def __str__(self):
         return self.title
+
+
+    # class NewsPageCountry(models.Model):
+    #     news = ParentalKey(
+    #         'NewsPage',
+    #         related_name='countries'
+    #     )
+    #     country = models.ForeignKey(
+    #         'Country',
+    #         related_name="+"
+    #     )
+    #     panels = [
+    #         FieldPanel('country')
+    #     ]
