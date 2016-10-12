@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import format_html
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
     StreamBlock, ListBlock
@@ -422,6 +423,31 @@ GALLERY_BLOCKS = [
     ('image_gallery', ImageGalleryBlock()),
 ]
 BASE_BLOCKS += GALLERY_BLOCKS
+
+
+class SubpagesBlock(StructBlock):
+    class Meta:
+        icon = 'fa fa-bars'
+        label = 'Subpages'
+        template = 'cms/page-listing.html'
+
+    def render_form(self, value, prefix='', errors=None):
+        form = super().render_form(value, prefix, errors)
+        return format_html('<strong>{title}</b> {form}', title=_('Subpages'), form=form)
+
+    def render(self, value, context=None):
+        if context:
+            page = context['page']
+            context['pages'] = page.get_children().live().in_menu()
+            context['title'] = _('Subpages')
+        return super().render(value, context)
+
+
+SUBPAGEBLOCKS = [
+    ('subpages', SubpagesBlock()),
+]
+
+BASE_BLOCKS += SUBPAGEBLOCKS
 
 
 class ColumnsBlock(StructBlock):

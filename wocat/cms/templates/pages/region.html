@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n cms_tags %}
+{% load i18n wagtailcore_tags cms_tags %}
 
 
 {% block content_container %}
@@ -16,7 +16,7 @@
                     <a href="{{ countrypage.url }}">{{ countrypage }}</a>&nbsp;
                 {% endfor %}
             </p>
-            {{ page.content }}
+            {% include_block page.content %}
         {% endblock content %}
     </div>
 {% endblock content_container %}

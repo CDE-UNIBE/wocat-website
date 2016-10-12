@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load cms_tags %}
+{% load wagtailcore_tags cms_tags %}
 
 
 {% block content_container %}
@@ -8,7 +8,7 @@
     <div class="container">
         <br>
         {% block content %}
-            {{ page.content }}
+            {% include_block page.content %}
         {% endblock content %}
     </div>
 {% endblock content_container %}

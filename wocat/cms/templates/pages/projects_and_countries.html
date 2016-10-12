@@ -1,8 +1,8 @@
 {% extends 'pages/content.html' %}
-{% load i18n cms_tags projects_tags countries_tags %}
+{% load i18n wagtailcore_tags cms_tags projects_tags countries_tags %}
 
 {% block content %}
-    {{ page.content }}
+    {% include_block page.content %}
     <div class="row cols-sm-3">
         <h3>{% trans 'Projects' %}</h3>
         {% for project in page.projects %}

@@ -1,6 +1,7 @@
 {% extends 'pages/content.html' %}
+{% load wagtailcore_tags %}
 
 {% block content %}
-    {{ page.content }}
+    {% include_block page.content %}
     {% include 'widgets/members-table.html' %}
 {% endblock content %}
