@@ -11,14 +11,29 @@ from wocat.cms.models import HeaderPageMixin, UniquePageMixin
 from wocat.countries.models import Country
 
 
-class NewsIndexPage(UniquePageMixin, Page):
+class NewsIndexPage(UniquePageMixin, HeaderPageMixin, Page):
     template = 'news/index.html'
+
+    content = StreamField(CORE_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('News index')
 
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        index.SearchField('content'),
+    ]
+
     parent_page_types = ['cms.NewsAndEventsPage']
     subpage_types = ['NewsPage']
+
+    @property
+    def news(self):
+        news = NewsPage.objects.descendant_of(self)
+        return news.order_by('-date')
 
 
 class NewsPage(HeaderPageMixin, Page):

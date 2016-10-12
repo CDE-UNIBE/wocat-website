@@ -1,1 +1,13 @@
 {% extends 'pages/content.html' %}
+{% load news_tags %}
+
+{% block content %}
+    {{ page.content }}
+    <div class="row cols-sm-3">
+        {% for news in page.news %}
+            <div class="col">
+                {% news %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
