@@ -22,6 +22,8 @@ from wocat.core.blocks import CORE_BLOCKS
 #     parent_page_types = ['cms.HomePage']
 #     # subpage_types = ['medialibrary.MediaPage']
 #
+from wocat.countries.models import Continent
+
 
 @register_snippet
 class MediaType(models.Model):
@@ -75,6 +77,10 @@ class Media(models.Model):
     country = CountryField(
         blank=True
     )
+    continent = models.ForeignKey(
+        to=Continent,
+        blank=True, null=True,
+    )
     media_type = models.ForeignKey(
         'MediaType',
         verbose_name=_('Type'),
@@ -100,5 +106,6 @@ class Media(models.Model):
         ImageChooserPanel('teaser_image'),
         FieldPanel('author'),
         FieldPanel('country'),
+        FieldPanel('continent'),
         StreamFieldPanel('content'),
     ]
