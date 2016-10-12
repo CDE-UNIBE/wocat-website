@@ -65,6 +65,7 @@ class Media(models.Model):
         null=True, blank=True,
         on_delete=models.PROTECT,
         related_name='+',
+        help_text=_('This field is only used if the content is empty.'),
     )
     author = models.CharField(
         _('Author'),
