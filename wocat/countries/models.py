@@ -35,7 +35,11 @@ class Country(models.Model):
 
     @property
     def flag(self):
-        return static('countries/flags/flags/png/{code}.png'.format(code=self.code))
+        code = self.code
+        if code:
+            return static('countries/flags/flags/png/{code}.png'.format(code=self.code.lower()))
+        else:
+            return ''
 
 
 @register_snippet
