@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
 from django_countries.fields import CountryField
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
@@ -13,8 +14,7 @@ from wagtail.wagtailsnippets.models import register_snippet
 from wocat.cms.models import UniquePageMixin, HeaderPageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
-
-from wocat.countries.models import Continent
+from wocat.countries.models import Continent, Country
 
 
 class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
@@ -37,12 +37,49 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
         verbose_name = _('Media Library')
 
     parent_page_types = ['cms.HomePage']
+
     # subpage_types = ['medialibrary.MediaPage']
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['items'] = Media.objects.all()
+
         context['types'] = MediaType.objects.all()
+        items = Media.objects.all()
+        media_type = request.GET.get('type', request.POST.get('type'))
+        if media_type and media_type != '0':
+            items = items.filter(media_type=media_type)
+            context['type'] = media_type
+
+        search = request.GET.get('search')
+        if search:
+            items = items.filter(
+                Q(title__icontains=search) | Q(abstract__icontains=search) | Q(author__icontains=search) | Q(
+                    content__icontains=search)
+            )
+            context['search'] = search
+
+        context['languages'] = {}
+        language = request.GET.get('language')
+        if language:
+            items = items.filter(
+                # TODO: process language filter
+            )
+            context['language'] = language
+
+        context['continents'] = Continent.objects.all()
+        continent = request.GET.get('continent')
+        if continent:
+            items = items.filter(continent=continent)
+            context['continent'] = continent
+
+        countries = Country.objects.all()
+        context['countries'] = countries
+        country = request.GET.get('country')
+        if country:
+            items = items.filter(country=country)
+            context['country'] = country
+
+        context['items'] = items
         return context
 
 
@@ -99,9 +136,11 @@ class Media(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
     @property
     def image(self):
         return self.teaser_image or self.media_type.image
+
     video = models.URLField(
         verbose_name=_('Video'),
         blank=True,
@@ -122,9 +161,9 @@ class Media(models.Model):
         max_length=255,
         blank=True,
     )
-    country = CountryField(
-        blank=True
-    )
+    # country = CountryField(
+    #     blank=True
+    # )
     continent = models.ForeignKey(
         to=Continent,
         blank=True, null=True,
@@ -153,7 +192,7 @@ class Media(models.Model):
         DocumentChooserPanel('file'),
         ImageChooserPanel('teaser_image'),
         FieldPanel('author'),
-        FieldPanel('country'),
+        # FieldPanel('country'),
         FieldPanel('continent'),
         StreamFieldPanel('content'),
     ]

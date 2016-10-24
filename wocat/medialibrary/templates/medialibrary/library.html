@@ -3,17 +3,77 @@
 
 {% block content %}
     <p>
-        <a href="./&type=all">
-        <strong>all</strong>
+        <a href="./?type=0">
+            <strong>all</strong>
         </a>
-         |
+        |
         {% for type in types %}
-            <a href="#{{ type }}">
+            <a href="./?type={{ type.id }}">
                 <i class="fa fa-{{ type.icon }} " aria-hidden="true"></i> {{ type }}
             </a>
             {% if not forloop.last %} |{% endif %}
         {% endfor %}
     </p>
+    <br>
+    <form>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <input class="form-control" name="search" placeholder="Search" type="text" value="{{ search }}">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <select class="form-control" name="language">
+                        <option value="">{% trans 'all Languages' %}</option>
+                        {% with current=language %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}"
+                                        {% if language == current %}selected{% endif %}>{{ language }}</option>
+                            {% endfor %}
+                        {% endwith %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <select class="form-control" name="continent">
+                        <option value="">{% trans 'all Continents' %}</option>
+                        {% with current=continent %}
+                            {% for continent in continents %}
+                                <option value="{{ continent.id }}"
+                                        {% if continent.pk|stringformat:"i" == current %}selected{% endif %}>{{ continent }}</option>
+                            {% endfor %}
+                        {% endwith %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <select class="form-control" name="country">
+                        <option value="">{% trans 'all Countries' %}</option>
+                        {% with current=country %}
+                            {% for country in countries %}
+                                <option value="{{ country.code }}"
+                                        {% if country.code == current %}selected{% endif %}>{{ country }}</option>
+                            {% endfor %}
+                        {% endwith %}
+                    </select>
+                </div>
+            </div>
+            {% if type %}
+                <input type="hidden" name="type" value="{{ type }}">
+            {% endif %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <button class="btn btn-default btn-block">
+                        apply
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
     <div class="row cols-sm-3">
         {% for media in  items %}
             <div class="col">

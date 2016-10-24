@@ -13,6 +13,7 @@ class Country(models.Model):
         max_length=3,
         primary_key=True,
     )
+
     name = models.CharField(
         verbose_name=_('name'),
         max_length=255,
@@ -24,7 +25,7 @@ class Country(models.Model):
 
     class Meta:
         verbose_name = _('Country')
-        verbose_name_plural = _('Coutries')
+        verbose_name_plural = _('Countries')
         ordering = ['name']
 
     def __str__(self):
