@@ -438,7 +438,37 @@ class MembersPage(UniquePageMixin, Page):
              }
         )
 
-        context['institutions'] = Institution.objects.all()
+        institutions = Institution.objects.filter(memorandum=True)
+        context['institutions'] = institutions
+        institution_years = institutions.values_list('year', flat=True)
+        institution_members = []
+        institution_countries = []
+        institution_years = []
+        institution_contacts = []
+        for institution in institutions:
+            institution_countries.append({'name': institution.country.name})
+            institution_members.append({
+                'avatarsrc': institution.logo.get_rendition('max-1200x1200').url if institution.logo else '',
+                'country': institution.country.name if institution.country else '',
+                'name': institution.name or '',
+                'url': institution.get_absolute_url(),
+                'visible': True,
+            })
+            institution_years.append({
+                'value': institution.year if institution.year else '',
+            })
+
+        context.update(
+            {'institution_countries': institution_countries,
+             'institution_members': institution_members,
+             'institution_years': institution_years,
+             'institution_contacts': institution_contacts,
+             # TODO: set and calculate pages
+             # 'maxpagesize': 3,
+             # 'pages': [1, 2, 3, 4],
+             }
+        )
+
 
         return context
 

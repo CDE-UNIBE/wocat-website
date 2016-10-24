@@ -5,14 +5,10 @@
     {% include_block page.content %}
     {% include 'widgets/members-table.html' %}
 
+
     {% if institutions %}
-        <h3>{% trans 'Institutions' %}</h3>
-        <ul>
-            {% for institution in institutions %}
-                <li>
-                    <a href="{{ institution.get_absolute_url }}">{{ institution }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <br>
+        <h2>{% trans 'Institutions' %}</h2>
+        {% include 'institutions/table.html' with members=institution_members %}
     {% endif %}
 {% endblock content %}
