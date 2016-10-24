@@ -1,7 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
-from django_countries.fields import CountryField
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
@@ -76,7 +75,7 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
         context['countries'] = countries
         country = request.GET.get('country')
         if country:
-            items = items.filter(country=country)
+            items = items.filter(countries__code=country)
             context['country'] = country
 
         context['items'] = items
@@ -161,9 +160,11 @@ class Media(models.Model):
         max_length=255,
         blank=True,
     )
-    # country = CountryField(
-    #     blank=True
-    # )
+    countries = models.ManyToManyField(
+        verbose_name=_('Countries'),
+        to=Country,
+        blank=True,
+    )
     continent = models.ForeignKey(
         to=Continent,
         blank=True, null=True,
@@ -192,7 +193,7 @@ class Media(models.Model):
         DocumentChooserPanel('file'),
         ImageChooserPanel('teaser_image'),
         FieldPanel('author'),
-        # FieldPanel('country'),
+        FieldPanel('countries'),
         FieldPanel('continent'),
         StreamFieldPanel('content'),
     ]

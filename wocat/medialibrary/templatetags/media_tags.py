@@ -20,7 +20,7 @@ class MediaWidget(InclusionTag):
             file = media.file
             teaser_image = media.image.get_rendition('max-1200x1200').url if media.image else ''
             author = media.author
-            country = media.country
+            countries = media.countries
             image_position = 'top'
             content = media.content
             url = media.get_absolute_url()
