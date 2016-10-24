@@ -291,18 +291,18 @@ TAGGIT_CASE_INSENSITIVE = True
 # WAGTAIL_USER_CUSTOM_FIELDS = ['gender', 'title']
 ELASTICSEARCH_URL = env('ELASTICSEARCH_URL', default='')
 # TODO temporary fix until upstream accepts patch: https://github.com/torchbox/wagtail/pull/2992
-# WAGTAILSEARCH_BACKEND = env('WAGTAILSEARCH_BACKEND', default='db')
-# WAGTAILSEARCH_BACKENDS = {
-#     'default': {
-#         'BACKEND': 'wagtail.wagtailsearch.backends.{}'.format(WAGTAILSEARCH_BACKEND),
-#         'URLS': [ELASTICSEARCH_URL],
-#         'INDEX': 'wocat',
-#         'TIMEOUT': 30,
-#     }
-# }
+WAGTAILSEARCH_BACKEND = env('WAGTAILSEARCH_BACKEND', default='db')
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.wagtailsearch.backends.{}'.format(WAGTAILSEARCH_BACKEND),
+        'URLS': [ELASTICSEARCH_URL],
+        'INDEX': 'wocat',
+        'TIMEOUT': 30,
+    }
+}
 # END TODO------------------------------------------------------------------
 
-WAGTAILDOCS_DOCUMENT_MODEL = 'core.IndexedDocument'
+# WAGTAILDOCS_DOCUMENT_MODEL = 'core.IndexedDocument'
 
 
 # EASY THUMBNAILS
