@@ -42,7 +42,7 @@ class MediaTeaserBlock(StructBlock):
         file = media.file
         teaser_image = media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else ''
         author = media.author
-        country = media.country
+        country = media.countries
         image_position = value.get('image_position')
         content = media.content
         url = media.get_absolute_url()
