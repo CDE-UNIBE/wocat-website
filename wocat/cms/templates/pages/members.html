@@ -1,7 +1,18 @@
 {% extends 'pages/content.html' %}
-{% load wagtailcore_tags %}
+{% load i18n wagtailcore_tags %}
 
 {% block content %}
     {% include_block page.content %}
     {% include 'widgets/members-table.html' %}
+
+    {% if institutions %}
+        <h3>{% trans 'Institutions' %}</h3>
+        <ul>
+            {% for institution in institutions %}
+                <li>
+                    <a href="{{ institution.get_absolute_url }}">{{ institution }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock content %}

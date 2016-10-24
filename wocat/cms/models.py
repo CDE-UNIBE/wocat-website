@@ -13,6 +13,7 @@ from wagtail.wagtailsearch import index
 from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock
 from wocat.core.blocks import CORE_BLOCKS
 from wocat.countries.models import Country
+from wocat.institutions.models import Institution
 
 __author__ = 'Eraldo Energy'
 
@@ -436,6 +437,9 @@ class MembersPage(UniquePageMixin, Page):
              # 'pages': [1, 2, 3, 4],
              }
         )
+
+        context['institutions'] = Institution.objects.all()
+
         return context
 
 
