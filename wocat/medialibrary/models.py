@@ -7,22 +7,43 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 
-from wocat.cms.models import UniquePageMixin
+from wocat.cms.models import UniquePageMixin, HeaderPageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
 
-# class MediaLibraryPage(UniquePageMixin, Page):
-#     template = 'pages/content.html'
-#
-#     class Meta:
-#         verbose_name = _('Media Library')
-#
-#     parent_page_types = ['cms.HomePage']
-#     # subpage_types = ['medialibrary.MediaPage']
-#
 from wocat.countries.models import Continent
+
+
+class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
+    template = 'medialibrary/library.html'
+
+    content = StreamField(
+        CORE_BLOCKS,
+        blank=True
+    )
+
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        index.SearchField('content'),
+    ]
+
+    class Meta:
+        verbose_name = _('Media Library')
+
+    parent_page_types = ['cms.HomePage']
+    # subpage_types = ['medialibrary.MediaPage']
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['items'] = Media.objects.all()
+        context['types'] = MediaType.objects.all()
+        return context
 
 
 @register_snippet
@@ -32,9 +53,33 @@ class MediaType(models.Model):
         max_length=255,
         unique=True,
     )
+    icon = models.CharField(
+        _('Icon name'),
+        max_length=255,
+        help_text=_('Fontawesome icon name.'),
+        blank=True,
+    )
+    default_image = models.ForeignKey(
+        'wagtailimages.Image',
+        verbose_name=_('Default image'),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    @property
+    def image(self):
+        return self.default_image
 
     def __str__(self):
         return self.name
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('icon'),
+        ImageChooserPanel('default_image'),
+    ]
 
 
 class Media(models.Model):
@@ -54,6 +99,9 @@ class Media(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    @property
+    def image(self):
+        return self.teaser_image or self.media_type.image
     video = models.URLField(
         verbose_name=_('Video'),
         blank=True,

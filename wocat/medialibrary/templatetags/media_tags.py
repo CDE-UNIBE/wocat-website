@@ -18,7 +18,7 @@ class MediaWidget(InclusionTag):
             media_type = media.media_type
             video = media.video
             file = media.file
-            teaser_image = media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else ''
+            teaser_image = media.image.get_rendition('max-1200x1200').url if media.image else ''
             author = media.author
             country = media.country
             image_position = 'top'

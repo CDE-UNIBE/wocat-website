@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n media_tags %}
+
+{% block content %}
+    <p>
+        <a href="./&type=all">
+        <strong>all</strong>
+        </a>
+         |
+        {% for type in types %}
+            <a href="#{{ type }}">
+                <i class="fa fa-{{ type.icon }} " aria-hidden="true"></i> {{ type }}
+            </a>
+            {% if not forloop.last %} |{% endif %}
+        {% endfor %}
+    </p>
+    <div class="row cols-sm-3">
+        {% for media in  items %}
+            <div class="col">
+                {% mediateaser %}
+            </div>
+        {% endfor %}
+    </div><!-- row -->
+{% endblock content %}
