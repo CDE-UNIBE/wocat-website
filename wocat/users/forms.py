@@ -1,10 +1,33 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, Div, HTML
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django import forms
 from django.core.mail import send_mail
+from django.utils.translation import ugettext_lazy as _
+
+from wocat.countries.models import Country
 
 
 class UserForm(forms.ModelForm):
+    unccd = forms.BooleanField(
+        label=_('I’m responsible for the reporting of UNCCD Best Practices in SLM'),
+        required=False,
+    )
+    unccd_country = forms.ChoiceField(
+        choices=((country.code, country) for country in Country.objects.all()),
+        required=False,
+    )
+    key_work_topics_2 = forms.CharField(
+        max_length=255,
+        required=False,
+        label=_("Other key work topics")
+    )
+    terms_and_conditions = forms.BooleanField(
+        label=_('I accept the terms and conditions.'),
+        required=True,
+    )
+
     class Meta:
         model = get_user_model()
         fields = ['first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function', 'experiences',
@@ -19,6 +42,57 @@ class UserForm(forms.ModelForm):
             for key in self.fields:
                 if key in fields_required:
                     self.fields[key].required = True
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                'gender',
+                'title',
+                'first_name',
+                'last_name',
+                'language',
+                'country',
+                'email',
+                'password1',
+                'password2',
+                'institution',
+                HTML('*If your Institution is missing, please contact the WOCAT Secretariat (email link)<br><br>'),
+            ),
+            Fieldset(
+                _('Address information'),
+                'address',
+                'address_2',
+                'postal_code',
+                'city',
+                'phone',
+                'phone_2',
+                'fax',
+                'fax_2',
+                'second_email',
+                'comments',
+                'avatar',
+            ),
+            Fieldset(
+                '',
+                'unccd',
+                'unccd_country',
+            ),
+            Fieldset(
+                _('Key work topics'),
+                'key_work_topics',
+                'key_work_topics_2',
+            ),
+            Fieldset(
+                _('Function and WOCAT experiences'),
+                'function',
+                'position',
+                'department',
+                'experiences',
+            ),
+            HTML('<br><br>'),
+            'newsletter',
+            'terms_and_conditions',
+        )
 
     def signup(self, request, user):
         user.first_name = self.cleaned_data['first_name']
@@ -52,4 +126,5 @@ class UserForm(forms.ModelForm):
         subject = 'subject'
         message = 'message'
         recipient_list = []
-        send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=recipient_list)
+        send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
+                  recipient_list=recipient_list)
