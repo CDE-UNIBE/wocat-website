@@ -1,11 +1,12 @@
 from django import forms
-from wagtail.wagtailusers.forms import UserEditForm, UserCreationForm
+from wagtail.wagtailusers.forms import UserEditForm as WocatUserEditForm
+from wagtail.wagtailusers.forms import UserCreationForm as WocatUserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
 from wocat.institutions.models import Institution
 
 
-class CustomUserEditForm(UserEditForm):
+class UserEditForm(WocatUserEditForm):
     institution = forms.ModelChoiceField(
         queryset=Institution.objects.all(),
         required=False,
@@ -13,7 +14,7 @@ class CustomUserEditForm(UserEditForm):
     )
 
 
-class CustomUserCreationForm(UserCreationForm):
+class UserCreationForm(WocatUserCreationForm):
     institution = forms.ModelChoiceField(
         queryset=Institution.objects.all(),
         required=False,

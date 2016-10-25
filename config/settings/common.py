@@ -286,9 +286,9 @@ ADMIN_URL = r'^admin'
 WAGTAIL_SITE_NAME = 'WOCAT'
 WAGTAILADMIN_NOTIFICATION_USE_HTML = True
 TAGGIT_CASE_INSENSITIVE = True
-# WAGTAIL_USER_EDIT_FORM = 'wocat.cms.formsw.CustomUserEditForm'
-# WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.CustomUserCreationForm'
-# WAGTAIL_USER_CUSTOM_FIELDS = ['gender', 'title']
+WAGTAIL_USER_EDIT_FORM = 'wocat.cms.forms.UserEditForm'
+WAGTAIL_USER_CREATION_FORM = 'wocat.cms.forms.UserCreationForm'
+WAGTAIL_USER_CUSTOM_FIELDS = ['institution']
 ELASTICSEARCH_URL = env('ELASTICSEARCH_URL', default='')
 # TODO temporary fix until upstream accepts patch: https://github.com/torchbox/wagtail/pull/2992
 WAGTAILSEARCH_BACKEND = env('WAGTAILSEARCH_BACKEND', default='db')
