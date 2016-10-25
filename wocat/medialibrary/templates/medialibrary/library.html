@@ -22,19 +22,19 @@
                     <input class="form-control" name="search" placeholder="Search" type="text" value="{{ search }}">
                 </div>
             </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <select class="form-control" name="language">
-                        <option value="">{% trans 'all Languages' %}</option>
-                        {% with current=language %}
-                            {% for language in languages %}
-                                <option value="{{ language.code }}"
-                                        {% if language == current %}selected{% endif %}>{{ language }}</option>
-                            {% endfor %}
-                        {% endwith %}
-                    </select>
-                </div>
-            </div>
+{#            <div class="col-sm-3">#}
+{#                <div class="form-group">#}
+{#                    <select class="form-control" name="language">#}
+{#                        <option value="">{% trans 'all Languages' %}</option>#}
+{#                        {% with current=language %}#}
+{#                            {% for language in languages %}#}
+{#                                <option value="{{ language.code }}"#}
+{#                                        {% if language == current %}selected{% endif %}>{{ language }}</option>#}
+{#                            {% endfor %}#}
+{#                        {% endwith %}#}
+{#                    </select>#}
+{#                </div>#}
+{#            </div>#}
             <div class="col-sm-3">
                 <div class="form-group">
                     <select class="form-control" name="continent">
