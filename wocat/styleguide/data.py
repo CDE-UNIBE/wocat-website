@@ -506,6 +506,22 @@ data = {
             },
         },
     },
+    'teaser_lines_rightimage_circle': {
+        'name': 'Teaser with lines and circular right image',
+        'template': 'widgets/teaser.html',
+        'context': {
+            'href': 'http://sinnwerkstatt.com',
+            'title': 'Lorem Titel-Ipsum vom Dolor und Amet auch',
+            'lines': True,
+            'imgpos': 'right',
+            'imgcircle': True,
+            'imgsrc': '/static/styleguide/test-images/studio-1by1.jpg',
+            'description': 'Es gibt im Moment20 in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen. Erstens: wir haben nicht offensiv gespielt. Es gibt keine deutsche Mannschaft spielt offensiv und die Name offensiv wie Bayern.',
+            'readmorelink': {
+                'text': 'read more',
+            },
+        },
+    },
     'teaser_lines_large_leftimage': {
         'name': 'Teaser with lines and large left image and external link',
         'template': 'widgets/teaser.html',
