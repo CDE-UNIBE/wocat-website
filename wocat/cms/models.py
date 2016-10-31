@@ -414,29 +414,37 @@ class MembersPage(UniquePageMixin, Page):
         members = []
         countries = []
         expertises = []
+        organisations = []
         # TODO: Update to users with group 'Members' only.
         users = get_user_model().objects.all()
         for user in users:
             countries.append({'name': user.country.name})
-            # expertises.append({'name': user.expertise})
+            expertises += [{'name': experience} for experience in user.experiences.all()]
+            if user.institution:
+                organisations.append({'name': user.institution})
             members.append({
                 'avatarsrc': user.avatar.url if user.avatar else '',
                 'country': user.country.name if user.country else '',
-                # 'expertises': [{'name': user.expertise}] if user.expertise else '',
+                'expertises': expertises,
                 'name': user.name or '',
-                # 'position': 'Manager',
+                'organisation': user.institution or '',
+                'position': user.position or '',
+                'href': user.get_absolute_url(),
                 'url': user.get_absolute_url(),
                 'visible': True,
             })
-        context.update(
-            {'countries': countries,
-             # 'expertises': expertises,
-             'members': members,
-             # TODO: set and calculate pages
-             # 'maxpagesize': 3,
-             # 'pages': [1, 2, 3, 4],
-             }
-        )
+        context.update({
+            'allcountries': 'All Countries',
+            'allexpertises': 'All Expertiese',
+            'allorganisations': 'All Organisations',
+            'countries': countries,
+            'expertises': expertises,
+            'organisations': organisations,
+            'members': members,
+            # TODO: set and calculate pages
+            # 'maxpagesize': 3,
+            # 'pages': [1, 2, 3, 4],
+        })
 
         institutions = Institution.objects.filter(memorandum=True)
         context['institutions'] = institutions
@@ -454,9 +462,8 @@ class MembersPage(UniquePageMixin, Page):
                 'url': institution.get_absolute_url(),
                 'visible': True,
             })
-            institution_years.append({
-                'value': institution.year if institution.year else '',
-            })
+            if institution.year:
+                institution_years.append({'value': institution.year})
 
         context.update(
             {'institution_countries': institution_countries,
@@ -468,7 +475,6 @@ class MembersPage(UniquePageMixin, Page):
              # 'pages': [1, 2, 3, 4],
              }
         )
-
 
         return context
 
@@ -500,7 +506,7 @@ class NewsAndEventsPage(HeaderPageMixin, Page):
     def news(self):
         NewsPage = self.get_news_page_model()
         return self.get_descendants().type(NewsPage).specific()
-    #
-    # @property
-    # def events(self):
-    #     return []  # TODO: Waiting for Events pages to be implemented.
+        #
+        # @property
+        # def events(self):
+        #     return []  # TODO: Waiting for Events pages to be implemented.
