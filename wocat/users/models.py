@@ -184,7 +184,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def full_address(self):
-        return '{0}, {1} {2}'.format(self.address, self.postal_code, self.city)
+        address = self.address
+        if self.postal_code:
+            address += ', {0}'.format(self.postal_code)
+        if self.city:
+            address += ' {0}'.format(self.city)
+        return address
 
     phone = models.CharField(
         _('Phone'),

@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Div, HTML
+from crispy_forms.layout import Layout, Fieldset, Div, HTML, Submit
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django import forms
@@ -93,6 +93,7 @@ class UserForm(forms.ModelForm):
             'newsletter',
             'terms_and_conditions',
         )
+        self.helper.add_input(Submit('submit', _('Update')))
 
     def signup(self, request, user):
         user.first_name = self.cleaned_data['first_name']
