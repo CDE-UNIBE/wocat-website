@@ -5,13 +5,16 @@
 
 {% block content %}
     <h1>{{ user.name }}</h1>
+    {% url 'account_email' as email_url %}
+    {% include 'widgets/read-more-link.html' with fontawesome='envelope' text='edit email settings' href=email_url %}
+
     <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="control-group">
-          <div class="controls">
-            <button type="submit" class="btn">Update</button>
-          </div>
+            <div class="controls">
+                <button type="submit" class="btn">Update</button>
+            </div>
         </div>
     </form>
 {% endblock %}

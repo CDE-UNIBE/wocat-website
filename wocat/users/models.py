@@ -181,6 +181,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_('Country'),
         blank=True,
     )
+
+    @property
+    def full_address(self):
+        return '{0}, {1} {2}'.format(self.address, self.postal_code, self.city)
+
     phone = models.CharField(
         _('Phone'),
         max_length=255,
@@ -243,6 +248,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'email': self.email})
+
+    @property
+    def detail_url(self):
+        return self.get_absolute_url()
+
+    @property
+    def update_url(self):
+        return reverse('users:update')
 
     @property
     def name(self):
