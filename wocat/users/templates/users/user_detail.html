@@ -4,83 +4,78 @@
 {% block title %}User: {{ object.name }}{% endblock %}
 
 {% block content %}
-    <div class="container">
+    {% if object == request.user %}
+        {% include 'widgets/heading1.html' with text=object.name %}
+        <br><br>
+        {{ userprofile_output }}
+        <br>
 
-        {% if object == request.user %}
-            {% include 'widgets/heading1.html' with text=object.name %}
-            <br><br>
-            {{ userprofile_output }}
-            <br>
-
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="row">
-                        {% if object.avatar %}
-                            <div class="col-sm-5 col-md-4">
-                                {% include 'widgets/image.html' with src=object.avatar.url name=object href=object.detail_url %}
-                            </div>
-                        {% endif %}
-                        <div class="col-sm-7 col-md-offset-1">
-                            {% trans 'edit profile' as edit_text %}
-                            {% include 'widgets/read-more-link.html' with fontawesome='pencil' text=edit_text href=object.update_url %}
-
-                            <p>
-                                {% if object.object.email %}
-                                    <a href="mailto:{{ object.email }}"><i
-                                            class="fa fa-envelope fa-fw"></i> {{ object.email }}</a><br>
-                                {% endif %}
-                                {% if object.phone %}
-                                    <a href="tel:{{ object.phone }}"><i
-                                            class="fa fa-phone fa-fw"></i> {{ object.phone }}
-                                    </a><br>
-                                {% endif %}
-                                {% if object.full_address %}
-                                    <a href="http://maps.google.com/?q={{ object.full_address }}"><i
-                                            class="fa fa-map-marker fa-fw"></i> {{ object.full_address }}</a><br>
-                                {% endif %}
-                                {% if object.country %}
-                                    <img src="{{ object.country.flag }}" class="inlineflag"
-                                         alt="Afghanistan"> {{ object.country.name }}
-                                {% endif %}
-
-                            </p>
-                            <br>
-                            <h3>Institution</h3>
-                            <p>
-                                {{ object.institution }}<br>
-                                <em>Position: {{ object.position }}</em>
-                            </p>
-
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="row">
+                    {% if object.avatar %}
+                        <div class="col-sm-5 col-md-4">
+                            {% include 'widgets/image.html' with src=object.avatar.url name=object href=object.detail_url %}
                         </div>
-                    </div><!-- row -->
-                    <br>
-                    <h3>Key Work Topics</h3>
-                    <p>
-                        {% for topic in object.key_work_topics.all %}
-                            <span class="badge">{{ topic }}</span>
-                        {% endfor %}
-                    </p>
+                    {% endif %}
+                    <div class="col-sm-7 col-md-offset-1">
+                        {% trans 'edit profile' as edit_text %}
+                        {% include 'widgets/read-more-link.html' with fontawesome='pencil' text=edit_text href=object.update_url %}
 
-                    <br>
-                    <h3>Wocat Experiences</h3>
-                    <p>
-                        {% for experience in object.experiences.all %}
-                            <span class="badge">{{ experience }}</span>
-                        {% endfor %}
-                    </p>
+                        <p>
+                            {% if object.object.email %}
+                                <a href="mailto:{{ object.email }}"><i
+                                        class="fa fa-envelope fa-fw"></i> {{ object.email }}</a><br>
+                            {% endif %}
+                            {% if object.phone %}
+                                <a href="tel:{{ object.phone }}"><i
+                                        class="fa fa-phone fa-fw"></i> {{ object.phone }}
+                                </a><br>
+                            {% endif %}
+                            {% if object.full_address %}
+                                <a href="http://maps.google.com/?q={{ object.full_address }}"><i
+                                        class="fa fa-map-marker fa-fw"></i> {{ object.full_address }}</a><br>
+                            {% endif %}
+                            {% if object.country %}
+                                <img src="{{ object.country.flag }}" class="inlineflag"
+                                     alt="Afghanistan"> {{ object.country.name }}
+                            {% endif %}
 
-                </div>
-                <div class="col-sm-3 col-sm-offset-1">
-                    {{ users_teaser }}
-                    {{ qcat_teaser }}
-                </div>
-            </div><!-- row -->
+                        </p>
+                        <br>
+                        <h3>Institution</h3>
+                        <p>
+                            {{ object.institution }}<br>
+                            <em>Position: {{ object.position }}</em>
+                        </p>
+
+                    </div>
+                </div><!-- row -->
+                <br>
+                <h3>Key Work Topics</h3>
+                <p>
+                    {% for topic in object.key_work_topics.all %}
+                        <span class="badge">{{ topic }}</span>
+                    {% endfor %}
+                </p>
+
+                <br>
+                <h3>Wocat Experiences</h3>
+                <p>
+                    {% for experience in object.experiences.all %}
+                        <span class="badge">{{ experience }}</span>
+                    {% endfor %}
+                </p>
+
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                {{ users_teaser }}
+                {{ qcat_teaser }}
+            </div>
+        </div><!-- row -->
 
 
-            <br><br>
-        {% endif %}
-
-
-    </div>
+        <br><br>
+    {% endif %}
 {% endblock content %}
 
