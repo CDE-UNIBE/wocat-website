@@ -15,21 +15,33 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="row">
-                        <div class="col-sm-5 col-md-4">
-                            {% include 'widgets/image.html' with src=object.avatar.url name=object href=object.detail_url %}
-                        </div>
+                        {% if object.avatar %}
+                            <div class="col-sm-5 col-md-4">
+                                {% include 'widgets/image.html' with src=object.avatar.url name=object href=object.detail_url %}
+                            </div>
+                        {% endif %}
                         <div class="col-sm-7 col-md-offset-1">
-                            {% include 'widgets/read-more-link.html' with fontawesome='pencil' text='edit profile' href=object.update_url %}
+                            {% trans 'edit profile' as edit_text %}
+                            {% include 'widgets/read-more-link.html' with fontawesome='pencil' text=edit_text href=object.update_url %}
 
                             <p>
-                                <a href="mailto:{{ object.email }}"><i
-                                        class="fa fa-envelope fa-fw"></i> {{ object.email }}</a><br>
-                                <a href="tel:{{ object.phone }}"><i class="fa fa-phone fa-fw"></i> {{ object.phone }}
-                                </a><br>
-                                <a href="http://maps.google.com/?q={{ object.full_address }}"><i
-                                        class="fa fa-map-marker fa-fw"></i> {{ object.full_address }}</a><br>
-                                <img src="{{ object.country.flag }}" class="inlineflag"
-                                     alt="Afghanistan"> {{ object.country.name }}
+                                {% if object.object.email %}
+                                    <a href="mailto:{{ object.email }}"><i
+                                            class="fa fa-envelope fa-fw"></i> {{ object.email }}</a><br>
+                                {% endif %}
+                                {% if object.phone %}
+                                    <a href="tel:{{ object.phone }}"><i
+                                            class="fa fa-phone fa-fw"></i> {{ object.phone }}
+                                    </a><br>
+                                {% endif %}
+                                {% if object.full_address %}
+                                    <a href="http://maps.google.com/?q={{ object.full_address }}"><i
+                                            class="fa fa-map-marker fa-fw"></i> {{ object.full_address }}</a><br>
+                                {% endif %}
+                                {% if object.country %}
+                                    <img src="{{ object.country.flag }}" class="inlineflag"
+                                         alt="Afghanistan"> {{ object.country.name }}
+                                {% endif %}
 
                             </p>
                             <br>
