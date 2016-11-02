@@ -170,7 +170,7 @@ class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
 
     @property
     def countries(self):
-        return self.get_descendants().type(ProjectCountryPage).specific()
+        return self.get_descendants().type(CountryPage).specific()
 
 
 class ProjectsPage(UniquePageMixin, Page):
