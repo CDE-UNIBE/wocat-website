@@ -347,12 +347,101 @@ class OverlayTeaserMapBlock(StructBlock):
 #         template = 'widgets/teaser.html'
 
 
+class DSFTeaserBlock(StructBlock):
+    module_1 = blocks.BooleanBlock(default=True, required=False)
+    module_2 = blocks.BooleanBlock(default=True, required=False)
+    module_3 = blocks.BooleanBlock(default=True, required=False)
+    module_4 = blocks.BooleanBlock(default=True, required=False)
+    module_5 = blocks.BooleanBlock(default=True, required=False)
+    module_6 = blocks.BooleanBlock(default=True, required=False)
+    module_7 = blocks.BooleanBlock(default=True, required=False)
+
+    def get_context(self, value):
+        module_1 = value.get('module_1')
+        module_2 = value.get('module_2')
+        module_3 = value.get('module_3')
+        module_4 = value.get('module_4')
+        module_5 = value.get('module_5')
+        module_6 = value.get('module_6')
+        module_7 = value.get('module_7')
+
+        return {
+            'module1href': '#dsfmodule1' if module_1 else '',
+            'module2href': '#dsfmodule2' if module_2 else '',
+            'module3href': '#dsfmodule3' if module_3 else '',
+            'module4href': '#dsfmodule4' if module_4 else '',
+            'module5href': '#dsfmodule5' if module_5 else '',
+            'module6href': '#dsfmodule6' if module_6 else '',
+            'module7href': '#dsfmodule7' if module_7 else '',
+        }
+
+    class Meta:
+        icon = 'link'
+        label = _('DSF Teaser')
+        template = 'widgets/dsf-teaser.html'
+
+
+class DSFModulesBlock(StructBlock):
+    module_1 = StreamBlock(BASE_BLOCKS)
+    module_2 = StreamBlock(BASE_BLOCKS)
+    module_3 = StreamBlock(BASE_BLOCKS)
+    module_4 = StreamBlock(BASE_BLOCKS)
+    module_5 = StreamBlock(BASE_BLOCKS)
+    module_6 = StreamBlock(BASE_BLOCKS)
+    module_7 = StreamBlock(BASE_BLOCKS)
+
+    def get_context(self, value):
+        module_1 = value.get('module_1')
+        module_2 = value.get('module_2')
+        module_3 = value.get('module_3')
+        module_4 = value.get('module_4')
+        module_5 = value.get('module_5')
+        module_6 = value.get('module_6')
+        module_7 = value.get('module_7')
+        modules = {
+            1: {'content': module_1, 'color': '#403D38', 'text': _('Operational Strategy and Action plan')},
+            2: {'content': module_2, 'color': '#6E3237', 'text': _('National and Subnational Level')},
+            3: {'content': module_3, 'color': '#604F3B', 'text': _('Landscape Level')},
+            4: {'content': module_4, 'color': '#3B482E', 'text': _('Sea Level')},
+            5: {'content': module_5, 'color': '#22454E', 'text': _('SLM Territorial Planning')},
+            6: {'content': module_6, 'color': '#2D446B', 'text': _('Implementation and scaling out')},
+            7: {'content': module_7, 'color': '#3A3451', 'text': _('Knowledge management platform for informed decision making')},
+        }
+
+        sections = []
+        sidebar_links = []
+        for i in range(1, 8):
+            module = modules.get(i)
+            sections.append({
+                'content': module.get('content'),
+                'id': 'module-{0}'.format(i),
+            })
+            sidebar_links.append({
+                'anchorlink': True,
+                'color': module.get('color'),
+                'href': '#module-{0}'.format(i),
+                'kicker': 'Module {0}'.format(i),
+                'text': module.get('text'),
+            })
+        return {
+            'sections': sections,
+            'sidebar_links': sidebar_links,
+        }
+
+    class Meta:
+        icon = 'link'
+        label = _('DSF Modules')
+        template = 'widgets/tab-infobox.html'
+
+
 TEASER_BLOCKS = [
     ('teaser', TeaserBlock()),
     ('overlay_teaser', OverlayTeaserBlock()),
     ('media_teaser', MediaTeaserBlock()),
     ('news_teaser', NewsTeaserBlock()),
     ('user_teaser', UserTeaserBlock()),
+    ('dsf_teaser', DSFTeaserBlock()),
+    ('dsf_modules', DSFModulesBlock()),
 ]
 
 BASE_BLOCKS += TEASER_BLOCKS
@@ -505,157 +594,6 @@ COLUMNS_BLOCKS = [
 ]
 
 CMS_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
-
-# class CarouselBlock(StructBlock):
-#     title = blocks.CharBlock()
-#     content = RichTextBlock(required=False)
-#     images = ListBlock(ImageBlock())
-#     link = OptionalLinkBlock()
-#
-#     def get_context(self, value):
-#         page = value.get('page')
-#         link = value.get('link')
-#         images = value.get('images')
-#         return {
-#             'id': 1,
-#             'external': not bool(page),
-#             'title': value.get('title'),
-#             'description': value.get('content'),
-#             'readmorelink': {'text': 'read more'},
-#             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
-#             'imgpos': imagepos,
-#             'largeimg': largeimg,
-#             'lines': True,
-#         }
-#
-#     class Meta:
-#         icon = 'link'
-#         label = _('Teaser')
-#         template = 'widgets/teaser.html'
-#         help_text = _('Choose either a page or an external link')
-
-# class CarouselSlideBlock(StructBlock):
-#     image = ImageBlock()
-#     name = blocks.CharBlock(required=False)
-#     content = RichTextBlock(required=False)
-#     link = LinkBlock(required=False)
-
-
-# class CarouselBlock(ListBlock(ImageBlock)):
-#
-#     def get_context(self, value):
-#         images = value.get('images')
-#         heading = value.get('heading')
-#         content = value.get('content')
-#         return {
-#             'carousel': {
-#                 'id': 1,
-#                 'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
-#             },
-#             'overlay': {
-#                 'heading': heading,
-#                 'lead': content,
-#             },
-#         }
-#
-#     def render(self, value):
-#         carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
-#         overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
-#         return carousel + overlay
-#
-#     class Meta:
-#         icon = 'picture'
-#         label = _('Carousel')
-
-
-# class CarouselBlock(StructBlock):
-#     images = ListBlock(ImageBlock())
-#     heading = blocks.CharBlock()
-#     content = RichTextBlock(required=False)
-#
-#     def get_context(self, value):
-#         images = value.get('images')
-#         heading = value.get('heading')
-#         content = value.get('content')
-#         return {
-#             'carousel': {
-#                 'id': 1,
-#                 'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
-#             },
-#             'overlay': {
-#                 'heading': heading,
-#                 'lead': content,
-#             },
-#         }
-#
-#     def render(self, value):
-#         carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
-#         overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
-#         return carousel + overlay
-#
-#     class Meta:
-#         icon = 'picture'
-#         label = _('Carousel')
-
-
-# class CarouselHeadingBlock(StructBlock):
-#     images = ListBlock(ImageBlock())
-#     heading = blocks.CharBlock()
-#     content = RichTextBlock(required=False)
-#
-#     def get_context(self, value):
-#         images = value.get('images')
-#         heading = value.get('heading')
-#         content = value.get('content')
-#         return {
-#             'carousel': {
-#                 'id': 1,
-#                 'items': [{'src': image.get_rendition('max-1200x1200').url} for image in images],
-#             },
-#             'overlay': {
-#                 'heading': heading,
-#                 'lead': content,
-#             },
-#         }
-#
-#     def render(self, value):
-#         carousel = render_to_string('widgets/carousel.html', context=self.get_context(value).get('carousel'))
-#         overlay = render_to_string('widgets/page-lead-overlay.html', context=self.get_context(value).get('overlay'))
-#         return carousel + overlay
-#
-#     class Meta:
-#         icon = 'picture'
-#         label = _('Carousel')
-#
-#
-# class CarouselTeaserBlock(StructBlock):
-#     images = ListBlock(CarouselSlideBlock())
-#     name = blocks.CharBlock(required=False)
-#     content = RichTextBlock(required=False)
-#     link = LinkBlock(required=False)
-#
-#     def get_context(self, value):
-#         page = value.get('page')
-#         link = value.get('link')
-#         images = value.get('images')
-#         return {
-#             'id': 1,
-#             'external': not bool(page),
-#             'title': value.get('title'),
-#             'description': value.get('content'),
-#             'readmorelink': {'text': 'read more'},
-#             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
-#             'imgpos': imagepos,
-#             'largeimg': largeimg,
-#             'lines': True,
-#         }
-#
-#     class Meta:
-#         icon = 'link'
-#         label = _('Teaser')
-#         template = 'widgets/teaser.html'
-#         help_text = _('Choose either a page or an external link')
-
 
 IMAGE_BLOCKS = [
     ('image', ImageBlock()),
