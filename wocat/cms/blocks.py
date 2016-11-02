@@ -348,13 +348,13 @@ class OverlayTeaserMapBlock(StructBlock):
 
 
 class DSFTeaserBlock(StructBlock):
-    module_1 = blocks.BooleanBlock(default=True, required=False)
-    module_2 = blocks.BooleanBlock(default=True, required=False)
-    module_3 = blocks.BooleanBlock(default=True, required=False)
-    module_4 = blocks.BooleanBlock(default=True, required=False)
-    module_5 = blocks.BooleanBlock(default=True, required=False)
-    module_6 = blocks.BooleanBlock(default=True, required=False)
-    module_7 = blocks.BooleanBlock(default=True, required=False)
+    module_1 = PageChooserBlock(required=False)
+    module_2 = PageChooserBlock(required=False)
+    module_3 = PageChooserBlock(required=False)
+    module_4 = PageChooserBlock(required=False)
+    module_5 = PageChooserBlock(required=False)
+    module_6 = PageChooserBlock(required=False)
+    module_7 = PageChooserBlock(required=False)
 
     def get_context(self, value):
         module_1 = value.get('module_1')
@@ -366,13 +366,13 @@ class DSFTeaserBlock(StructBlock):
         module_7 = value.get('module_7')
 
         return {
-            'module1href': '#dsfmodule1' if module_1 else '',
-            'module2href': '#dsfmodule2' if module_2 else '',
-            'module3href': '#dsfmodule3' if module_3 else '',
-            'module4href': '#dsfmodule4' if module_4 else '',
-            'module5href': '#dsfmodule5' if module_5 else '',
-            'module6href': '#dsfmodule6' if module_6 else '',
-            'module7href': '#dsfmodule7' if module_7 else '',
+            'module1href': '{0}#module-1'.format(module_1.url) if module_1 else '',
+            'module2href': '{0}#module-2'.format(module_2.url) if module_2 else '',
+            'module3href': '{0}#module-3'.format(module_3.url) if module_3 else '',
+            'module4href': '{0}#module-4'.format(module_4.url) if module_4 else '',
+            'module5href': '{0}#module-5'.format(module_5.url) if module_5 else '',
+            'module6href': '{0}#module-6'.format(module_6.url) if module_6 else '',
+            'module7href': '{0}#module-7'.format(module_7.url) if module_7 else '',
         }
 
     class Meta:
