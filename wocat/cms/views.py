@@ -1,12 +1,9 @@
 from django.http import HttpResponse
-from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 from wagtail.wagtailcore.models import Page, Collection
 from wagtail.wagtaildocs.models import get_document_model
 
 
-# @method_decorator(csrf_exempt, name='dispatch')
 class DocumentUploadView(View):
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
