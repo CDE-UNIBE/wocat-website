@@ -1,5 +1,3 @@
-import uuid
-
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.template.defaultfilters import filesizeformat
@@ -296,70 +294,20 @@ class OverlayTeaserMapBlock(StructBlock):
         help_text = _('Choose either a page or an external link')
 
 
-# class MediaChooserBlock(blocks.ChooserBlock):
-#     widget = Select
-#
-#     @cached_property
-#     def target_model(self):
-#         from wagtail.wagtailcore.models import Page  # TODO: allow limiting to specific page types
-#         return Page
-#
-#     # def __init__(self, required=True, help_text=None, **kwargs):
-#     #     from wocat.medialibrary.models import Media
-#     #     self.target_model = Media
-#     #     super().__init__(self, required=required, help_text=help_text, **kwargs)
-#
-#     # Return the key value for the select field
-#     def value_for_form(self, value):
-#         if isinstance(value, self.target_model):
-#             return value.pk
-#         else:
-#             return value
-#
-#
-# class MediaTeaserBlock(StructBlock):
-#     media = MediaChooserBlock(required=True)
-#     image_position = ChoiceBlock(
-#         choices=[
-#             ('top', _('Top')),
-#             ('left', _('Left')),
-#             ('right', _('Right')),
-#         ],
-#         required=False,
-#     )
-#
-#     def get_context(self, value):
-#         media = value.get('media')
-#         page = media.detail_page
-#         file = media.file
-#         image_position = value.get('image_position')
-#         return {
-#             'href': page.url if page else file.url,
-#             'title': media.title,
-#             'description': media.description,
-#             'author': media.author,
-#             'readmorelink': {'text': _('Detail page') if page else _('Download')},
-#             'imgsrc': media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else '',
-#             'imgpos': image_position or 'top',
-#             'mediastyle': True,
-#         }
-#
-#     class Meta:
-#         icon = 'fa fa-file-o'
-#         label = _('Media Teaser')
-#         template = 'widgets/teaser.html'
-
-
 class DSFTeaserBlock(StructBlock):
-    module_1 = PageChooserBlock(required=False)
-    module_2 = PageChooserBlock(required=False)
-    module_3 = PageChooserBlock(required=False)
-    module_4 = PageChooserBlock(required=False)
-    module_5 = PageChooserBlock(required=False)
-    module_6 = PageChooserBlock(required=False)
-    module_7 = PageChooserBlock(required=False)
+    page = PageChooserBlock(required=False)
+    module_1 = blocks.BooleanBlock(required=False, default=True)
+    module_2 = blocks.BooleanBlock(required=False, default=True)
+    module_3 = blocks.BooleanBlock(required=False, default=True)
+    module_4 = blocks.BooleanBlock(required=False, default=True)
+    module_5 = blocks.BooleanBlock(required=False, default=True)
+    module_6 = blocks.BooleanBlock(required=False, default=True)
+    module_7 = blocks.BooleanBlock(required=False, default=True)
 
     def get_context(self, value):
+        page = value.get('page')
+        url = page.url if page else ''
+
         module_1 = value.get('module_1')
         module_2 = value.get('module_2')
         module_3 = value.get('module_3')
@@ -369,13 +317,13 @@ class DSFTeaserBlock(StructBlock):
         module_7 = value.get('module_7')
 
         return {
-            'module1href': '{0}#module-1'.format(module_1.url) if module_1 else '',
-            'module2href': '{0}#module-2'.format(module_2.url) if module_2 else '',
-            'module3href': '{0}#module-3'.format(module_3.url) if module_3 else '',
-            'module4href': '{0}#module-4'.format(module_4.url) if module_4 else '',
-            'module5href': '{0}#module-5'.format(module_5.url) if module_5 else '',
-            'module6href': '{0}#module-6'.format(module_6.url) if module_6 else '',
-            'module7href': '{0}#module-7'.format(module_7.url) if module_7 else '',
+            'module1href': '{0}#module-1'.format(url) if module_1 else '',
+            'module2href': '{0}#module-2'.format(url) if module_2 else '',
+            'module3href': '{0}#module-3'.format(url) if module_3 else '',
+            'module4href': '{0}#module-4'.format(url) if module_4 else '',
+            'module5href': '{0}#module-5'.format(url) if module_5 else '',
+            'module6href': '{0}#module-6'.format(url) if module_6 else '',
+            'module7href': '{0}#module-7'.format(url) if module_7 else '',
         }
 
     class Meta:
@@ -386,7 +334,6 @@ class DSFTeaserBlock(StructBlock):
 
 class UploadBlock(StructBlock):
     documents = ListBlock(DocumentBlock(required=False))
-    id = blocks.CharBlock(min_length=36, max_length=36)
 
     def get_context(self, value):
         documents = value.get('documents')
@@ -408,9 +355,6 @@ class UploadBlock(StructBlock):
                         apiurl = reverse('cms:upload', kwargs={'page_pk': page.id, 'module_id': module_id})
                         context['apiurl'] = apiurl
         return super().render(value, context)
-
-    def get_default_id(self):
-        return uuid.uuid4()
 
     class Meta:
         icon = 'upload'
@@ -453,6 +397,8 @@ class DSFModulesBlock(StructBlock):
         sidebar_links = []
         for i in range(1, 8):
             module = modules.get(i)
+            content = module.get('content')
+            if not content: continue  # Do not add this section if there is no content.
             sections.append({
                 'content': module.get('content'),
                 'id': 'module-{0}'.format(i),
