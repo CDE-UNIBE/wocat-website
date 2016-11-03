@@ -1,0 +1,6 @@
+{% load i18n %}
+<div class="widget-upload">
+    {{ documents }}
+    {% trans 'File upload' %}:
+    {% include 'widgets/dropzone.html' with apiurl=apiurl %}
+</div>

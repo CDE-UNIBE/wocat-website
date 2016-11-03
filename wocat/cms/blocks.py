@@ -1,11 +1,14 @@
+import uuid
+
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.template.defaultfilters import filesizeformat
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.blocks import RawHTMLBlock, StructBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
-    StreamBlock, ListBlock
+from wagtail.wagtailcore.blocks import RawHTMLBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
+    StreamBlock, ListBlock, StructBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
@@ -381,16 +384,53 @@ class DSFTeaserBlock(StructBlock):
         template = 'widgets/dsf-teaser.html'
 
 
-class DSFModulesBlock(StructBlock):
-    module_1 = StreamBlock(BASE_BLOCKS)
-    module_2 = StreamBlock(BASE_BLOCKS)
-    module_3 = StreamBlock(BASE_BLOCKS)
-    module_4 = StreamBlock(BASE_BLOCKS)
-    module_5 = StreamBlock(BASE_BLOCKS)
-    module_6 = StreamBlock(BASE_BLOCKS)
-    module_7 = StreamBlock(BASE_BLOCKS)
+class UploadBlock(StructBlock):
+    documents = ListBlock(DocumentBlock(required=False))
+    id = blocks.CharBlock(min_length=36, max_length=36)
 
     def get_context(self, value):
+        documents = value.get('documents')
+        return {
+            'documents': self.child_blocks['documents'].render(documents),
+            'context': '/static/styleguide/js/dropzone-endpoint.html',
+            # 'apiurl': '',  # Added by render method.
+        }
+
+    def render(self, value, context=None):
+        # Add the apiurl using the page id of the current page.
+        if context:
+            page = context.get('page')
+            if page:
+                section = context['section']
+                if section:
+                    module_id = section.get('module_id')
+                    if module_id:
+                        apiurl = reverse('cms:upload', kwargs={'page_pk': page.id, 'module_id': module_id})
+                        context['apiurl'] = apiurl
+        return super().render(value, context)
+
+    def get_default_id(self):
+        return uuid.uuid4()
+
+    class Meta:
+        icon = 'upload'
+        label = _('Upload')
+        template = 'widgets/upload.html'
+
+
+DSF_BLOCKS = BASE_BLOCKS + [('upload', UploadBlock())]
+
+
+class DSFModulesBlock(StructBlock):
+    module_1 = StreamBlock(DSF_BLOCKS)
+    module_2 = StreamBlock(DSF_BLOCKS)
+    module_3 = StreamBlock(DSF_BLOCKS)
+    module_4 = StreamBlock(DSF_BLOCKS)
+    module_5 = StreamBlock(DSF_BLOCKS)
+    module_6 = StreamBlock(DSF_BLOCKS)
+    module_7 = StreamBlock(DSF_BLOCKS)
+
+    def get_context(self, value, context=None):
         module_1 = value.get('module_1')
         module_2 = value.get('module_2')
         module_3 = value.get('module_3')
@@ -405,7 +445,8 @@ class DSFModulesBlock(StructBlock):
             4: {'content': module_4, 'color': '#3B482E', 'text': _('Sea Level')},
             5: {'content': module_5, 'color': '#22454E', 'text': _('SLM Territorial Planning')},
             6: {'content': module_6, 'color': '#2D446B', 'text': _('Implementation and scaling out')},
-            7: {'content': module_7, 'color': '#3A3451', 'text': _('Knowledge management platform for informed decision making')},
+            7: {'content': module_7, 'color': '#3A3451',
+                'text': _('Knowledge management platform for informed decision making')},
         }
 
         sections = []
@@ -415,6 +456,7 @@ class DSFModulesBlock(StructBlock):
             sections.append({
                 'content': module.get('content'),
                 'id': 'module-{0}'.format(i),
+                'module_id': i,
             })
             sidebar_links.append({
                 'anchorlink': True,
@@ -426,6 +468,7 @@ class DSFModulesBlock(StructBlock):
         return {
             'sections': sections,
             'sidebar_links': sidebar_links,
+            'context': context,
         }
 
     class Meta:

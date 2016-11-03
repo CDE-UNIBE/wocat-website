@@ -1,3 +1,4 @@
+{% load wagtailcore_tags %}
 <div class="widget-tabinfobox">
 		<div class="row">
 			<div class="col-sm-4 col-md-3">
@@ -8,7 +9,7 @@
 			<div class="col-sm-8 col-md-9">
 				{% for section in sections %}
 					<div id="{{ section.id }}" class="widget-tabinfobox-section">
-						{{ section.content|safe }}
+                        {% include_block section.content %}
 					</div>
 				{% endfor %}
 			</div>
