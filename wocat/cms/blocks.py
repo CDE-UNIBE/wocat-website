@@ -418,7 +418,7 @@ class DSFModulesBlock(StructBlock):
         }
 
     class Meta:
-        icon = 'link'
+        icon = 'fa fa-th-list'
         label = _('DSF Modules')
         template = 'widgets/tab-infobox.html'
 
