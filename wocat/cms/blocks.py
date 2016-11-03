@@ -357,7 +357,7 @@ class UploadBlock(StructBlock):
         return super().render(value, context)
 
     class Meta:
-        icon = 'upload'
+        icon = 'fa fa-upload'
         label = _('Upload')
         template = 'widgets/upload.html'
 
