@@ -6,12 +6,14 @@ from django.db import DataError
 from wocat.institutions.models import Institution
 from wocat.users.models import User
 
+
 class Command(BaseCommand):
     help = 'Create a tree-like structure showing which template includes which'
 
     def handle(self, *args, **options):
         # self.import_institutions()
         self.import_users()
+
     def import_institutions(self):
         Institution.objects.all().delete()
         f = open('export_users_institutions_20160819/wocat_institution_export.csv')
@@ -62,10 +64,10 @@ class Command(BaseCommand):
                         position=row['position'],
                         department=row['department'],
                     )
-                    u1.gender = row['gender'] if row['gender'] in ['m','f'] else None
+                    u1.gender = row['gender'] if row['gender'] in ['m', 'f'] else None
                     u1.language = 'de' if row['lang'] == 'DE' else 'en'
 
-                    if not row['institution_id'] in ['0','NULL']:
+                    if not row['institution_id'] in ['0', 'NULL']:
                         u1.institution = Institution.objects.get(id=row['institution_id'])
                     # TODO: row['quest_id']?
                     # u1.country = TODO !
@@ -74,10 +76,11 @@ class Command(BaseCommand):
                     print(row)
                 except:
                     print(row)
-                    import ipdb; ipdb.set_trace()
+                    import ipdb;
+                    ipdb.set_trace()
 
 
-                # u1 = User.objects.first()
-                # print(u1)
-                # import ipdb; ipdb.set_trace()
-                # print(u1)
+                    # u1 = User.objects.first()
+                    # print(u1)
+                    # import ipdb; ipdb.set_trace()
+                    # print(u1)

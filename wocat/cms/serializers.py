@@ -5,10 +5,11 @@ from wocat.cms.models import ProjectPage, CountryPage, RegionPage
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.URLField(source='full_url')
+    countries = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = ProjectPage
-        fields = ('url', 'title')
+        fields = ['url', 'title', 'countries']
 
 
 class CountrySerializer(serializers.HyperlinkedModelSerializer):
@@ -17,12 +18,13 @@ class CountrySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = CountryPage
-        fields = ('url', 'title', 'code')
+        fields = ['url', 'title', 'code']
 
 
 class RegionSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.URLField(source='full_url')
+    countries = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = RegionPage
-        fields = ('url', 'title', 'country_codes')
+        fields = ['url', 'title', 'countries', 'country_codes']
