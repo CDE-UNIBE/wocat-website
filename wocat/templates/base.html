@@ -1,4 +1,4 @@
-{% load staticfiles i18n core_tags cms_tags wagtailuserbar %}<!DOCTYPE html>
+{% load staticfiles i18n core_tags cms_tags wagtailuserbar piwik_tags %}<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -95,6 +95,7 @@
 	<script src="{% static 'js/dropzone.min.js' %}"></script>
 	<script src="{% static 'js/interact.min.js' %}"></script>
 	<script src="{% static 'js/wocat.js' %}"></script>
+    {% piwik %}
 {% endblock javascript %}
 <div class="widget-cms-userbar">
 	{% wagtailuserbar %}

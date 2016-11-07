@@ -83,6 +83,8 @@ LOCAL_APPS = (
     'wocat.api',
 
     'wocat.countries',
+
+    'wocat.piwik',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
