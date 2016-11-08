@@ -1,11 +1,13 @@
 from rest_framework import serializers
 
+from wocat.countries.models import Country
 from wocat.users.models import User
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     experiences = serializers.StringRelatedField(many=True)
     key_work_topics = serializers.StringRelatedField(many=True)
+    country = serializers.PrimaryKeyRelatedField(many=False, queryset=Country.objects.all())
 
     class Meta:
         model = User
