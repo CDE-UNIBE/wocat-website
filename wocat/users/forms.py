@@ -9,6 +9,12 @@ from django.utils.translation import ugettext_lazy as _
 from wocat.countries.models import Country
 
 
+class FullUserForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        exclude = []
+
+
 class UserForm(forms.ModelForm):
     unccd = forms.BooleanField(
         label=_('I’m responsible for the reporting of UNCCD Best Practices in SLM'),

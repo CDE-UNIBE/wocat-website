@@ -6,12 +6,12 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from easy_thumbnails.fields import ThumbnailerImageField
 from wagtail.wagtailsnippets.models import register_snippet
 
+from wocat.countries.models import Country
 from wocat.institutions.models import Institution
 
 
@@ -78,11 +78,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     first_name = models.CharField(
         verbose_name=_('first name'),
-        max_length=30, blank=True,
+        max_length=50, blank=True,
     )
     last_name = models.CharField(
         verbose_name=_('last name'),
-        max_length=30, blank=True,
+        max_length=50, blank=True,
     )
     is_staff = models.BooleanField(
         _('staff status'),
@@ -177,9 +177,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=255,
         blank=True,
     )
-    country = CountryField(
-        verbose_name=_('Country'),
-        blank=True,
+    country = models.ForeignKey(
+        Country,
+        blank=True, null=True,
+        on_delete=models.PROTECT,
     )
 
     @property
@@ -216,10 +217,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
     ENGLISH = 'en'
-    GERMAN = 'de'
+    FRENCH = 'fr'
+    SPANISH = 'es'
     LANGUAGE_CHOICES = (
         (ENGLISH, _('English')),
-        (GERMAN, _('Deutsch')),
+        (FRENCH, _('French')),
+        (SPANISH, _('Spanish')),
     )
     language = models.CharField(
         verbose_name=_('Language'),

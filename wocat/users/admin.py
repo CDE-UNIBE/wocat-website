@@ -97,11 +97,23 @@ class UserAdmin(AuthUserAdmin):
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (_('Data'), {'fields':
+                         ('first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function',
+                          'experiences',
+                          'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone',
+                          'phone_2',
+                          'fax', 'fax_2', 'second_email', 'language', 'comments', 'newsletter', 'avatar',
+                          'institution'),
+                     }),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2'),
+            'fields': ('email', 'password1', 'password2',
+                       'first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function',
+                       'experiences',
+                       'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone', 'phone_2',
+                       'fax', 'fax_2', 'second_email', 'language', 'comments', 'newsletter', 'avatar', 'institution'),
         }),
     )
 
