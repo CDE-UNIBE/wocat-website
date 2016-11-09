@@ -418,8 +418,7 @@ class MembersPage(UniquePageMixin, Page):
         countries = []
         expertises = []
         organisations = []
-        # TODO: Update to users with group 'Members' only.
-        users = get_user_model().objects.all()
+        users = get_user_model().objects.filter(is_active=True)
         for user in users:
             if user.country:
                 countries.append({'name': user.country.name})
@@ -457,15 +456,43 @@ class MembersPage(UniquePageMixin, Page):
                 'pages': [number + 1 for number in range(ceil(user_count / per_page))],
             })
 
+        return context
+
+
+class InstitutionsPage(UniquePageMixin, Page):
+    template = 'pages/institutions.html'
+    paginate_by = 20
+
+    content = StreamField(CORE_BLOCKS, blank=True)
+
+    content_panels = Page.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField('content'),
+    ]
+
+    parent_page_types = ['MembersPage']
+
+    # subpage_types = []
+
+    class Meta:
+        verbose_name = _('Institutional Members')
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
         institutions = Institution.objects.filter(memorandum=True)
         context['institutions'] = institutions
-        institution_years = institutions.values_list('year', flat=True)
-        institution_members = []
-        institution_countries = []
-        institution_contacts = []
+
+        members = []
+        countries = []
+        contacts = []
+        years = institutions.values_list('year', flat=True)
         for institution in institutions:
-            institution_countries.append({'name': institution.country.name})
-            institution_members.append({
+            countries.append({'name': institution.country.name})
+            members.append({
                 'avatarsrc': institution.logo.get_rendition('max-1200x1200').url if institution.logo else '',
                 'country': institution.country.name if institution.country else '',
                 'name': institution.name or '',
@@ -473,18 +500,27 @@ class MembersPage(UniquePageMixin, Page):
                 'visible': True,
             })
             if institution.year:
-                institution_years.append({'value': institution.year})
+                years.append({'value': institution.year})
 
-        context.update(
-            {'institution_countries': institution_countries,
-             'institution_members': institution_members,
-             'institution_years': institution_years,
-             'institution_contacts': institution_contacts,
-             # TODO: set and calculate pages
-             # 'maxpagesize': 3,
-             # 'pages': [1, 2, 3, 4],
-             }
-        )
+        context.update({
+            'allcountries': 'All Countries',
+            'allyears': 'All Years',
+            'allcontacts': 'All Contacts',
+            'members': members,
+            'countries': countries,
+            'contacts': contacts,
+            'years': years,
+        })
+
+        # Pagination
+        member_count = institutions.count()
+        if member_count:
+            per_page = self.paginate_by
+            context.update({
+                # Calculate pages
+                'maxpagesize': per_page,
+                'pages': [number + 1 for number in range(ceil(member_count / per_page))],
+            })
 
         return context
 

@@ -3,5 +3,5 @@
 
 {% block content %}
     {% include_block page.content %}
-    {% include 'widgets/members-table.html' %}
+    {% include 'institutions/table.html' with members=institution_members %}
 {% endblock content %}
