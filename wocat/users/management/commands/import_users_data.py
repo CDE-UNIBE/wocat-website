@@ -84,7 +84,7 @@ class Command(BaseCommand):
         ]
         read = csv.DictReader(file, delimiter=';', fieldnames=fieldnames)
         next(read)
-        User.objects.exclude(id=1).delete()
+        # User.objects.exclude(id=1).delete()
         for row in read:
 
             id = row['uid']
