@@ -1,3 +1,5 @@
+from math import ceil
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import ProgrammingError
@@ -392,6 +394,7 @@ class RegionPage(HeaderPageMixin, Page):
 
 class MembersPage(UniquePageMixin, Page):
     template = 'pages/members.html'
+    paginate_by = 20
 
     content = StreamField(CORE_BLOCKS, blank=True)
 
@@ -418,7 +421,8 @@ class MembersPage(UniquePageMixin, Page):
         # TODO: Update to users with group 'Members' only.
         users = get_user_model().objects.all()
         for user in users:
-            countries.append({'name': user.country.name})
+            if user.country:
+                countries.append({'name': user.country.name})
             expertises += [{'name': experience} for experience in user.experiences.all()]
             if user.institution:
                 organisations.append({'name': user.institution})
@@ -441,17 +445,23 @@ class MembersPage(UniquePageMixin, Page):
             'expertises': expertises,
             'organisations': organisations,
             'members': members,
-            # TODO: set and calculate pages
-            # 'maxpagesize': 3,
-            # 'pages': [1, 2, 3, 4],
         })
+
+        # Pagination
+        user_count = users.count()
+        if user_count:
+            per_page = self.paginate_by
+            context.update({
+                # Calculate pages
+                'maxpagesize': per_page,
+                'pages': [number + 1 for number in range(ceil(user_count / per_page))],
+            })
 
         institutions = Institution.objects.filter(memorandum=True)
         context['institutions'] = institutions
         institution_years = institutions.values_list('year', flat=True)
         institution_members = []
         institution_countries = []
-        institution_years = []
         institution_contacts = []
         for institution in institutions:
             institution_countries.append({'name': institution.country.name})

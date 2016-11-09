@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django_countries.fields import CountryField
 from easy_thumbnails.fields import ThumbnailerImageField
 from wagtail.wagtailsnippets.models import register_snippet
 
