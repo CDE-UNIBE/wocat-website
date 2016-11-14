@@ -15,9 +15,10 @@ def get_profile_links(user, onlyxs=False):
             'dropdown': True,
             'text': user.first_name or user.email,
             'links': [
-                {'href': reverse('users:detail', args=[user.email]), 'text': _('Profile'), 'active': True,},
+                {'href': reverse('users:detail', args=[user.email]), 'text': _('Profile'), 'active': True},
                 {'href': reverse('account_logout'), 'text': _('Logout')},
             ],
+            'href': reverse('users:detail', args=[user.email]),
             'onlyxs': onlyxs,
         }
     else:
@@ -40,12 +41,12 @@ class Header(InclusionTag):
 
     def get_language_and_search_context(self, only_xs=True):
         return [
-            {
-                'dropdown': True,
-                'text': get_language(),
-                'links': self.get_lanaguage_links(),
-                'onlyxs': only_xs,
-            },
+            # {
+            #     'dropdown': True,
+            #     'text': get_language(),
+            #     'links': self.get_lanaguage_links(),
+            #     'onlyxs': only_xs,
+            # },
             {'href': reverse('search:index'), 'text': '<i class="fa fa-search" aria-hidden="true"></i>', 'onlyxs': only_xs},
         ]
 

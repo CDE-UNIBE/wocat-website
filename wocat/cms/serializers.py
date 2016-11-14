@@ -9,7 +9,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = ProjectPage
-        fields = ['url', 'title', 'countries']
+        fields = ['url', 'title', 'countries', 'contact_person']
 
 
 class CountrySerializer(serializers.HyperlinkedModelSerializer):
@@ -18,7 +18,7 @@ class CountrySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = CountryPage
-        fields = ['url', 'title', 'code']
+        fields = ['url', 'title', 'code', 'contact_person']
 
 
 class RegionSerializer(serializers.HyperlinkedModelSerializer):
@@ -27,4 +27,4 @@ class RegionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = RegionPage
-        fields = ['url', 'title', 'countries', 'country_codes']
+        fields = ['url', 'title', 'countries', 'country_codes', 'contact_person']
