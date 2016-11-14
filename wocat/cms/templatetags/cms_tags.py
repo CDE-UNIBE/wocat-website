@@ -87,7 +87,7 @@ class Header(InclusionTag):
         page = context.get('page')
         project_page = self.get_project_page(page)
         nodes = self.get_nodes(context, root_page=project_page) + self.get_language_and_search_context()
-        user = context.get('user')
+        user = context.get('request').user
         profile_links = get_profile_links(user)
         if project_page:
             depth = 2

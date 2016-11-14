@@ -32,14 +32,15 @@ class UserTeaserBlock(StructBlock):
             'title': user.name,
             'description': format_html(
                 '<p>{institution}<br>{position}<br>{email}</p>',
-                institution=user.institution,
-                position=user.position,
+                institution=user.institution or '',
+                position=user.position or '',
                 email=user.email_safe,
             ),
             'href': user.get_absolute_url(),
             'readmorelink': {'text': _('view profile')},
             'imgpos': 'left',
             'imgsrc': user.avatar.url if user.avatar else '',
+            'imgcircle': True,
         }
 
     class Meta:
