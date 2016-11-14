@@ -175,6 +175,10 @@ class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
     def countries(self):
         return self.get_descendants().type(CountryPage).specific()
 
+    @property
+    def regions(self):
+        return self.get_descendants().type(RegionPage).specific()
+
 
 class ProjectsPage(UniquePageMixin, Page):
     template = 'projects/index.html'
