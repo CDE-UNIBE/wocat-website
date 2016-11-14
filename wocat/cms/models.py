@@ -16,6 +16,7 @@ from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock
 from wocat.core.blocks import CORE_BLOCKS
 from wocat.countries.models import Country
 from wocat.institutions.models import Institution
+from wocat.users.blocks import CONTACT_PERSON_TEASER_BLOCKS
 
 __author__ = 'Eraldo Energy'
 
@@ -200,7 +201,7 @@ class ProjectPage(HeaderPageMixin, Page):
         blank=True, null=True,
     )
 
-    content = StreamField(CORE_BLOCKS, blank=True)
+    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Project')
@@ -328,7 +329,7 @@ class CountryPage(HeaderPageMixin, Page):
         on_delete=models.SET_NULL,
         null=True
     )
-    content = StreamField(CORE_BLOCKS, blank=True)
+    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Country')
@@ -375,7 +376,15 @@ class RegionCountry(Orderable):
 class RegionPage(HeaderPageMixin, Page):
     template = 'pages/region.html'
 
-    content = StreamField(CORE_BLOCKS, blank=True)
+    contact_person = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='region_contact',
+        verbose_name=_('Contact person'),
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
 
     @property
     def countries(self):
@@ -391,6 +400,7 @@ class RegionPage(HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         InlinePanel('region_countries', label="Countries"),
+        FieldPanel('contact_person'),
         StreamFieldPanel('content'),
     ]
 

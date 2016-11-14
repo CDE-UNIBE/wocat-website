@@ -3,6 +3,36 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 from wagtail.wagtailcore.blocks import StructBlock, ChooserBlock
+from wagtail.wagtailcore.blocks.base import accepts_context
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+
+
+class BlockWithContextMixin:
+    def render(self, value, context=None):
+        """
+        Overwrite of Wagtail Block's default:
+        Return a text rendering of 'value', suitable for display on templates. By default, this will
+        use a template (with the passed context, supplemented by the result of get_context) if a
+        'template' property is specified on the block, and fall back on render_basic otherwise.
+
+        Alteration: Call get_context with context if it accepts it.
+        """
+        template = getattr(self.meta, 'template', None)
+        if not template:
+            return self._render_basic_with_context(value, context=context)
+
+        if context is None:
+            new_context = {}
+        else:
+            new_context = dict(context)
+
+        if accepts_context(self.get_context):
+            new_context.update(self.get_context(value, new_context))
+        else:
+            new_context.update(self.get_context(value))
+
+        return mark_safe(render_to_string(template, new_context))
 
 
 class UserChooserBlock(ChooserBlock):
@@ -50,5 +80,57 @@ class UserTeaserBlock(StructBlock):
 
 
 USER_TEASER_BLOCKS = [
+    ('user_teaser', UserTeaserBlock()),
+]
+
+
+class SubpagesBlock(StructBlock):
+    class Meta:
+        icon = 'fa fa-bars'
+        label = 'Subpages'
+        template = 'cms/page-listing.html'
+
+    def render_form(self, value, prefix='', errors=None):
+        form = super().render_form(value, prefix, errors)
+        return format_html('<strong>{title}</b> {form}', title=_('Subpages'), form=form)
+
+
+SUBPAGEBLOCKS = [
+    ('subpages', SubpagesBlock()),
+]
+
+
+class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
+
+    def get_context(self, value, context={}):
+        user = context.get('user')
+        if not user:
+            return {}
+        return {
+            'title': user.name,
+            'description': format_html(
+                '<p>{institution}<br>{position}<br>{email}</p>',
+                institution=user.institution or '',
+                position=user.position or '',
+                email=user.email_safe,
+            ),
+            'href': user.get_absolute_url(),
+            'readmorelink': {'text': _('view profile')},
+            'imgpos': 'left',
+            'imgsrc': user.avatar.url if user.avatar else '',
+            'imgcircle': True,
+        }
+
+    def render_form(self, value, prefix='', errors=None):
+        form = super().render_form(value, prefix, errors)
+        return format_html('<strong>{title}</b> {form}', title=_('Contact Person Teaser'), form=form)
+
+    class Meta:
+        icon = 'fa fa-user'
+        label = _('Contact Person Teaser')
+        template = 'widgets/teaser.html'
+
+
+CONTACT_PERSON_TEASER_BLOCKS = [
     ('user_teaser', UserTeaserBlock()),
 ]
