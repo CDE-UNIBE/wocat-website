@@ -192,12 +192,21 @@ class ProjectsPage(UniquePageMixin, Page):
 class ProjectPage(HeaderPageMixin, Page):
     template = 'pages/content.html'
 
+    contact_person = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        related_name='project_contact',
+        verbose_name=_('Contact person'),
+        on_delete=models.SET_NULL,
+        blank=True, null=True,
+    )
+
     content = StreamField(CORE_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Project')
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        FieldPanel('contact_person'),
         StreamFieldPanel('content'),
     ]
 
@@ -314,6 +323,8 @@ class CountryPage(HeaderPageMixin, Page):
 
     contact_person = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        related_name='country_contact',
+        verbose_name=_('Contact person'),
         on_delete=models.SET_NULL,
         null=True
     )
