@@ -132,5 +132,5 @@ class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
 
 
 CONTACT_PERSON_TEASER_BLOCKS = [
-    ('user_teaser', UserTeaserBlock()),
+    ('contact_person_teaser', ContactPersonTeaserBlock()),
 ]
