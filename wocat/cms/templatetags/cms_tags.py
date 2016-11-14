@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _, get_language
+from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
+
 from wocat.cms.models import HomePage, ProjectPage
 
 register = template.Library()
@@ -26,6 +28,28 @@ def get_profile_links(user, onlyxs=False):
     return profile_links
 
 
+def get_social_links(onlyxs=False):
+    return [
+        {'href': 'https://www.facebook.com/wocatnet',
+         'text': '<i class="fa fa-lg fa-facebook" aria-hidden="true"></i>', 'onlyxs': onlyxs},
+        {'href': 'https://vimeo.com/user12138600', 'text': '<i class="fa fa-lg fa-vimeo" aria-hidden="true"></i>', 'onlyxs': onlyxs},
+        {'href': 'https://www.youtube.com/user/WOCATEER1',
+         'text': '<i class="fa fa-lg fa-youtube" aria-hidden="true"></i>', 'onlyxs': onlyxs},
+        # TODO: Issue: https://github.com/FortAwesome/Font-Awesome/issues/1993 => workaround 'fa-book'
+        {'href': 'https://issuu.com/wocat', 'text': '<i class="fa fa-lg fa-book" aria-hidden="true"></i>', 'onlyxs': onlyxs},
+        {'href': 'http://www.slideshare.net/wocat',
+         'text': '<i class="fa fa-lg fa-slideshare" aria-hidden="true"></i>', 'onlyxs': onlyxs},
+    ]
+
+
+def get_extra_links(context, onlyxs=False):
+    return [
+        {'href': slugurl(context, 'get-involved') or '#get-involved', 'text': 'Get involved', 'onlyxs': onlyxs, },
+        {'href': slugurl(context, 'faq') or '#faq', 'text': 'FAQ', 'onlyxs': onlyxs, },
+        {'href': reverse('glossary:list') or '#glassary', 'text': 'Glossary', 'onlyxs': onlyxs, },
+    ]
+
+
 @register.tag
 class Header(InclusionTag):
     name = 'header'
@@ -36,7 +60,8 @@ class Header(InclusionTag):
         links = []
         for code, name in settings.LANGUAGES:
             active = True if code == current_language else False
-            links.append({'href': reverse('switch-language', kwargs={'language': code}), 'text': name, 'active': active})
+            links.append(
+                {'href': reverse('switch-language', kwargs={'language': code}), 'text': name, 'active': active})
         return links
 
     def get_language_and_search_context(self, only_xs=True):
@@ -47,7 +72,8 @@ class Header(InclusionTag):
             #     'links': self.get_lanaguage_links(),
             #     'onlyxs': only_xs,
             # },
-            {'href': reverse('search:index'), 'text': '<i class="fa fa-search" aria-hidden="true"></i>', 'onlyxs': only_xs},
+            {'href': reverse('search:index'), 'text': '<i class="fa fa-search" aria-hidden="true"></i>',
+             'onlyxs': only_xs},
         ]
 
     def get_node(self, page, current_page, ancestors):
@@ -103,18 +129,7 @@ class Header(InclusionTag):
             brand2 = {}
         return {
             'id': '1',
-            'toplinks': [
-                {'href': 'https://www.facebook.com/wocatnet', 'text': '<i class="fa fa-lg fa-facebook" aria-hidden="true"></i>'},
-                {'href': 'https://vimeo.com/user12138600', 'text': '<i class="fa fa-lg fa-vimeo" aria-hidden="true"></i>'},
-                {'href': 'https://www.youtube.com/user/WOCATEER1', 'text': '<i class="fa fa-lg fa-youtube" aria-hidden="true"></i>'},
-                # TODO: Issue: https://github.com/FortAwesome/Font-Awesome/issues/1993 => workaround 'fa-book'
-                {'href': 'https://issuu.com/wocat', 'text': '<i class="fa fa-lg fa-book" aria-hidden="true"></i>'},
-                {'href': 'http://www.slideshare.net/wocat', 'text': '<i class="fa fa-lg fa-slideshare" aria-hidden="true"></i>'},
-                {'href': '#get-involved', 'text': 'Get involved'},
-                {'href': '#faq', 'text': 'FAQ'},
-                {'href': reverse('glossary:list'), 'text': 'Glossary'},
-                profile_links,
-        ] + self.get_language_and_search_context(only_xs=False),
+            'toplinks': get_social_links() + get_extra_links(context) + [profile_links] + self.get_language_and_search_context(only_xs=False),
             'mainnav': {
                 'depth': depth,
                 # only visible if in or under a project page
@@ -157,21 +172,12 @@ class Footer(InclusionTag):
     template = 'widgets/footer.html'
 
     def get_context(self, context, **kwargs):
-        user = context.get('user')
+        user = context.get('request').user
         profile_links = get_profile_links(user, onlyxs=True)
-        links = [
-            {'href': '#facebook', 'text': '<i class="fa fa-facebook" aria-hidden="true"></i>',
-             'onlyxs': True,},
-            {'href': '#youtube', 'text': '<i class="fa fa-youtube" aria-hidden="true"></i>',
-             'onlyxs': True,},
-            {'href': '#twitter', 'text': '<i class="fa fa-twitter" aria-hidden="true"></i>',
-             'onlyxs': True,},
-            {'href': '#get-involved', 'text': 'Get involved', 'onlyxs': True,},
-            {'href': '#faq', 'text': 'FAQ', 'onlyxs': True,},
-            {'href': '#glossary', 'text': 'Glossary', 'onlyxs': True,},
+        links = get_social_links(onlyxs=True) + get_extra_links(context, onlyxs=True) + [
             profile_links,
-            {'href': '#imprint', 'text': _('Legal Disclaimer'),},
-            {'href': '#contact', 'text': _('Contact'),},
+            {'href': slugurl(context, 'imprint') or '#imprint', 'text': _('Legal Disclaimer'), },
+            {'href': slugurl(context, 'contact') or '#contact', 'text': _('Contact'), },
         ]
         return {'links': links}
 
