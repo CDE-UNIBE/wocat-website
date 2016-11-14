@@ -18,9 +18,10 @@
                     </div>
                 {% endif %}
                 <div class="col-sm-7 col-md-offset-1">
-                    {% trans 'edit profile' as edit_text %}
-                    {% include 'widgets/read-more-link.html' with fontawesome='pencil' text=edit_text href=object.update_url %}
-
+                    {% if user == request.user %}
+                        {% trans 'edit profile' as edit_text %}
+                        {% include 'widgets/read-more-link.html' with fontawesome='pencil' text=edit_text href=object.update_url %}
+                    {% endif %}
                     <p>
                         {% if object.object.email %}
                             <a href="mailto:{{ object.email }}"><i
