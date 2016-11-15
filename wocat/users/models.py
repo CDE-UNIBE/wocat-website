@@ -282,8 +282,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('Accepted terms and conditions'),
         default=False,
     )
-    depricated = models.TextField(
-        verbose_name=_('Depricated data'),
+    deprecated = models.TextField(
+        verbose_name=_('Deprecated data'),
         blank=True,
     )
 

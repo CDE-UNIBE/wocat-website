@@ -109,15 +109,18 @@ class Command(BaseCommand):
                 data['position'] = row['position']
                 data['department'] = row['department']
                 data['password'] = row['password']
+                data['deprecated'] = ''
 
                 # Handle language
                 try:
                     data['language'] = self.clean_language(row['lang'])
                 except ValidationError as error:
                     default_language = 'en'
-                    self.warn(id,
-                              '{message} - Using "{default}".'.format(message=error.message, default=default_language))
+                    message = '{message} - Using "{default}".'.format(message=error.message, default=default_language)
+                    self.warn(id, message)
                     data['language'] = default_language
+                    data['deprecated'] += '{0}\n'.format(message)
+
                 # Accept terms and conditions
                 data['terms_and_conditions'] = True
                 # Handle gender
@@ -125,42 +128,57 @@ class Command(BaseCommand):
                     data['gender'] = self.clean_gender(row['gender'])
                 except ValidationError as error:
                     default_gender = User.MALE
-                    self.warn(id,
-                              '{message} - Using "{default}".'.format(message=error.message, default=default_gender))
+                    message = '{message} - Using "{default}".'.format(message=error.message, default=default_gender)
+                    self.warn(id, message)
                     data['gender'] = default_gender
+                    data['deprecated'] += '{0}\n'.format(message)
                 # Handle Institution
                 try:
                     data['institution'] = self.clean_institution(row['institution_id'])
                 except ValidationError as error:
                     default_institution = None
-                    self.warn(id,
-                              '{message} - Using "{default}".'.format(message=error.message,
-                                                                      default=default_institution))
+                    message = '{message} - Using "{default}".'.format(message=error.message,
+                                                                      default=default_institution)
+                    self.warn(id, message)
                     data['institution'] = default_institution
+                    data['deprecated'] += '{0}\n'.format(message)
                 # Handle Country
                 try:
                     data['country'] = self.clean_country(row['country'])
                 except ValidationError as error:
                     default_country = None
-                    self.warn(id,
-                              '{message} - Using "{default}".'.format(message=error.message, default=default_country))
+                    message = '{message} - Using "{default}".'.format(message=error.message, default=default_country)
+                    self.warn(id, message)
                     data['country'] = default_country
+                    data['deprecated'] += '{0}\n'.format(message)
                 # Handle Creation Date
                 try:
                     data['date_joined'] = self.clean_date_joined(row['creation_date'])
                 except ValidationError as error:
                     default_date_joined = timezone.now()
-                    self.warn(id,
-                              '{message} - Using "{default}".'.format(message=error.message,
-                                                                      default=default_date_joined))
+                    message = '{message} - Using "{default}".'.format(message=error.message,
+                                                                      default=default_date_joined)
+                    self.warn(id, message)
                     data['date_joined'] = default_date_joined
+                    data['deprecated'] += '{0}\n'.format(message)
                 # Handle Email
                 try:
                     data['email'] = self.clean_email(email)
                 except ValidationError as error:
-                    self.error(id,
-                               '{message} - Skipping.'.format(message=error.message))
+                    message = '{message} - Skipping.'.format(message=error.message)
+                    self.error(id, message)
                     continue
+
+                # Handle deprecated field quest_id
+                quest_id = row['quest_id']
+                if quest_id:
+                    message = 'quest_id = {}'.format(quest_id)
+                    data['deprecated'] += '{0}\n'.format(message)
+                # Handle deprecated field lastlogin
+                lastlogin = row['lastlogin']
+                if lastlogin:
+                    message = 'lastlogin = {}'.format(lastlogin)
+                    data['deprecated'] += '{0}\n'.format(message)
 
                 form = UserForm(data)
                 if form.is_valid():
