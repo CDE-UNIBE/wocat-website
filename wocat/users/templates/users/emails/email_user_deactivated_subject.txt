@@ -1,0 +1,1 @@
+Your application for membership with 'the {{ project }} network' has been rejected.

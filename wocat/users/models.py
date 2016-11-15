@@ -108,11 +108,23 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
 
     MALE = 'm'
+    MALE_SALUTATION = _('Mr')
     FEMALE = 'f'
+    FEMALE_SALUTATION = _('Mrs')
     GENDER_CHOICES = (
-        (MALE, _('Mr')),
-        (FEMALE, _('Mrs')),
+        (MALE, MALE_SALUTATION),
+        (FEMALE, FEMALE_SALUTATION),
     )
+
+    @property
+    def salutation(self):
+        if self.gender == self.MALE:
+            return str(self.MALE_SALUTATION)
+        elif self.gender == self.FEMALE:
+            return str(self.FEMALE_SALUTATION)
+        else:
+            return ''
+
     gender = models.CharField(
         verbose_name=_('Salutation'),
         max_length=1,
@@ -147,14 +159,28 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=FUNCTION_CHOICES,
         blank=True, null=True,
     )
+
+    @property
+    def function_display(self):
+        return self.get_function_display()
+
     experiences = models.ManyToManyField(
         UserExperience,
         blank=True,
     )
+
+    @property
+    def experiences_display(self):
+        return ', '.join(str(experience) for experience in self.experiences.all())
+
     key_work_topics = models.ManyToManyField(
         UserKeyWorkTopic,
         blank=True,
     )
+
+    @property
+    def key_work_topics_display(self):
+        return ', '.join(str(experience) for experience in self.experiences.all())
 
     address = models.CharField(
         _('Address Information'),
@@ -233,10 +259,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_('Comments'),
         blank=True,
     )
-    newsletter = models.BooleanField(
-        _('Newsletter subscription'),
-        default=True,
-    )
     avatar = ThumbnailerImageField(
         verbose_name=_('avatar'),
         upload_to='users/avatars',
@@ -248,6 +270,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
+    )
+    newsletter = models.BooleanField(
+        _('Newsletter subscription'),
+        default=True,
+    )
+    terms_and_conditions = models.BooleanField(
+        _('Accepted terms and conditions'),
+        default=False,
+    )
+    depricated = models.TextField(
+        verbose_name=_('Depricated data'),
+        blank=True,
     )
 
     def __str__(self):

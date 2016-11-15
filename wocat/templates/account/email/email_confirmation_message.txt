@@ -1,0 +1,30 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain salutation=user.salutation %}Dear {{ salutation }} {{ user }},
+
+Thank you for your registration on {{ site_name }} online!
+
+To confirm your membership please click on this link
+
+{{ activate_url }}
+Or copy and paste it into your browser
+
+Please be aware that after you confirm your registration, it will need to be reviewed
+by the {{ site_name }} administrator.
+
+If, for any reason, you do not wish to continue the registration process, or you have
+received this message in error, please contact the {{ site_name }} secretariat by mail.
+Please forgive us for any inconvenience we may have caused you.
+
+
+
+Please feel free to ask us any questions, or  tell us anything about the registration
+process, or make any other constructive comments by sending an e-mail to
+wocat@cde.unibe.ch
+
+We would like to welcome you at
+{{ site_name }} Secretariat
+<https://www.{{ site_domain }}/>
+wocat@cde.unibe.ch
+
+__
+You're receiving this e-mail because user {{ user_display }} at {{ site_domain }} has given yours as an e-mail address to connect their account.
+{% endblocktrans %}{% endautoescape %}

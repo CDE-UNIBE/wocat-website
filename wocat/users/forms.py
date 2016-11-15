@@ -1,9 +1,14 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, HTML, Submit
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django import forms
+from django.contrib.auth.models import Group
+from django.contrib.sites.models import Site
 from django.core.mail import send_mail
+from django.template.defaultfilters import linebreaksbr
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from wocat.countries.models import Country
@@ -38,7 +43,8 @@ class UserForm(forms.ModelForm):
         model = get_user_model()
         fields = ['first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function', 'experiences',
                   'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone', 'phone_2',
-                  'fax', 'fax_2', 'second_email', 'language', 'comments', 'newsletter', 'avatar', 'institution']
+                  'fax', 'fax_2', 'second_email', 'language', 'comments', 'avatar', 'institution',
+                  'newsletter', 'terms_and_conditions']
         fields_required = ['first_name', 'last_name', 'gender']
 
     def __init__(self, *args, **kwargs):
@@ -99,11 +105,12 @@ class UserForm(forms.ModelForm):
             'newsletter',
             'terms_and_conditions',
         )
-        self.helper.add_input(Submit('submit', _('Update')))
+        self.helper.add_input(Submit('submit', _('Send')))
 
     def signup(self, request, user):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
+        user.gender = self.cleaned_data['gender']
         user.title = self.cleaned_data['title']
         user.position = self.cleaned_data['position']
         user.department = self.cleaned_data['department']
@@ -122,16 +129,39 @@ class UserForm(forms.ModelForm):
         user.second_email = self.cleaned_data['second_email']
         user.language = self.cleaned_data['language']
         user.comments = self.cleaned_data['comments']
-        user.newsletter = self.cleaned_data['newsletter']
         user.avatar = self.cleaned_data['avatar']
         user.institution = self.cleaned_data['institution']
-        user.is_active = False
+        user.newsletter = self.cleaned_data['newsletter']
+        user.terms_and_conditions = self.cleaned_data['terms_and_conditions']
+        # user.is_active = False
         user.save()
+        self.send_instruction_message(request, user)
         self.notify_moderators(user)
 
+    def send_instruction_message(self, request, user):
+        context = {
+            'salutation': user.salutation,
+            'name': user.name,
+            'email': user.email,
+        }
+        message = render_to_string('users/post_signup_message.html', context=context)
+        message = linebreaksbr(message)
+        messages.info(request, message)
+
     def notify_moderators(self, user):
-        subject = 'subject'
-        message = 'message'
+        context = {
+            'user': user,
+            'project': 'WOCAT',
+            'management_url': 'http://www.{domain}/cms/users/{id}/'.format(
+                domain=Site.objects.get_current(),
+                id=user.id
+            )
+        }
+        subject = render_to_string('users/emails/email_signup_moderation_request_subject.txt', context=context).strip()
+        message = render_to_string('users/emails/email_signup_moderation_request_message.txt', context=context)
         recipient_list = []
+        group, created = Group.objects.get_or_create(name='Signup Moderators')
+        if group:
+            recipient_list += list(group.user_set.values_list('email', flat=True))
         send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
                   recipient_list=recipient_list)

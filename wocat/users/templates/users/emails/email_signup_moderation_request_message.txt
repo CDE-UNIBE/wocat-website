@@ -1,0 +1,28 @@
+To the administrator of {{ project }} online accounts
+
+Please review the application of {{ user }} for a {{ project }} online account. The following data was entered on the registration form:
+
+Mr/Ms: {{ user.salutation }}
+First name: {{ user.first_name }}
+Last name: {{ user.last_name }}
+Title: {{ user.title }}
+Position: {{ user.position }}
+Department: {{ user.department }}
+Function: {{ user.function_display }}
+Institution: {{ user.institution }}
+Experiences: {{ user.experiences_display }}
+Key work topics: {{ user.key_work_topics_display }}
+Institution: {{ user.institution }}
+Address: {{ user.full_address }}
+Telephone: {{ user.phone }}
+Fax: {{ user.fax }}
+E-mail: {{ user.email }}
+Language: {{ user.language }}
+Avatar: {% if user.avatar %}Uploaded{% else %}Not uploaded{% endif %}
+Receive newsletter: {% if user.newsletter %}Yes{% else %}No{% endif %}
+Comments: {{ user.comments }}
+
+You can accept {{ user }}'s account here: {{ management_url|safe }}
+
+Kind regards,
+{{ project }} Secretariat
