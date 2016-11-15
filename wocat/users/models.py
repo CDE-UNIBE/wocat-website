@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
+from allauth.account.signals import user_signed_up
+from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -312,3 +315,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_safe(self):
         email = self.email
         return email.replace('@', '( at )')
+
+
+@receiver(user_signed_up)
+def deactivate_user_on_signup(request, user, **kwargs):
+    user.is_active = False
+    send_email_confirmation(request, user, signup=False)
+    user.save()
