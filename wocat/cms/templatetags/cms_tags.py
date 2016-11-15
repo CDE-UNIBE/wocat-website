@@ -116,7 +116,7 @@ class Header(InclusionTag):
         nodes = self.get_nodes(context, root_page=project_page) + self.get_language_and_search_context()
         request = context.get('request')
         if request:
-            user = register.user
+            user = request.user
         else:
             user = None
         profile_links = get_profile_links(user)
@@ -178,7 +178,7 @@ class Footer(InclusionTag):
     def get_context(self, context, **kwargs):
         request = context.get('request')
         if request:
-            user = register.user
+            user = request.user
         else:
             user = None
         profile_links = get_profile_links(user, onlyxs=True)
