@@ -446,14 +446,17 @@ class MembersPage(UniquePageMixin, Page):
         users = get_user_model().objects.filter(is_active=True)
         for user in users:
             if user.country:
-                countries.append({'name': user.country.name})
-            expertises += [{'name': experience} for experience in user.experiences.all()]
+                country = {'name': user.country.name}
+                if country not in countries:
+                    countries.append(countries)
+            member_experiences = [{'name': experience} for experience in user.experiences.all()]
+            expertises += member_experiences
             if user.institution:
                 organisations.append({'name': user.institution})
             members.append({
                 'avatarsrc': user.avatar.url if user.avatar else '',
                 'country': user.country.name if user.country else '',
-                'expertises': expertises,
+                'expertises': member_experiences,
                 'name': user.name or '',
                 'organisation': user.institution or '',
                 'position': user.position or '',
