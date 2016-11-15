@@ -114,7 +114,11 @@ class Header(InclusionTag):
         page = context.get('page')
         project_page = self.get_project_page(page)
         nodes = self.get_nodes(context, root_page=project_page) + self.get_language_and_search_context()
-        user = context.get('request').user
+        request = context.get('request')
+        if request:
+            user = register.user
+        else:
+            user = None
         profile_links = get_profile_links(user)
         if project_page:
             depth = 2
@@ -172,7 +176,11 @@ class Footer(InclusionTag):
     template = 'widgets/footer.html'
 
     def get_context(self, context, **kwargs):
-        user = context.get('request').user
+        request = context.get('request')
+        if request:
+            user = register.user
+        else:
+            user = None
         profile_links = get_profile_links(user, onlyxs=True)
         links = get_social_links(onlyxs=True) + get_extra_links(context, onlyxs=True) + [
             profile_links,
