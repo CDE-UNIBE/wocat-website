@@ -9,7 +9,11 @@ $(function() {
 		var membersTable = $(this);
 
 		function applyFilters() {
-			var country = membersTable.find('.widget-members-table-countryselector').val();
+			if (membersTable.find('.widget-members-table-countryselector').val() == "all") {
+				var country = "all";
+			} else {
+				var country = membersTable.find('.widget-members-table-countryselector option:selected').text();
+			}
 			var expertise = membersTable.find('.widget-members-table-expertiseselector').val();
 			var organisation = membersTable.find('.widget-members-table-organisationselector').val();
 			var sort = membersTable.find('.widget-members-table-sortselector').val();
@@ -140,6 +144,22 @@ $(function() {
 		membersTable.find('.widget-members-table-headline .widget-members-table-organisation').click(function(event) {
 			membersTable.find('.widget-members-table-sortselector').val('organisation').change();
 		});
+	});
+
+
+
+	$('.widget-members-table').each(function() {
+		// OPTION element with countries
+		var countries = $(this).find('.widget-members-table-countryselector option');
+		// URL hash
+		var hash = window.location.hash.toUpperCase().replace("#", "");
+
+		// Is there a country with the name of the hash?
+		if (countries.filter('[value="'+ hash +'"]').length) {
+			// Change the SELECT to the country
+			$(this).find('.widget-members-table-countryselector').val(hash);
+			$(this).find('.widget-members-table-countryselector').change(); // Doppelt hält besser
+		}
 	});
 
 });
@@ -707,10 +727,10 @@ $(function() {
 							try {
 								// console.log("Test image loaded.");
 								testImage = $(this);
-								testImage.removeAttr("width"); 
+								testImage.removeAttr("width");
 								testImage.removeAttr("height");
 
-								realWidth = testImage.get(0).width; 
+								realWidth = testImage.get(0).width;
 								realHeight = testImage.get(0).height;
 
 
@@ -856,4 +876,3 @@ $(function() {
 
 	}); // each avatarfield
 }); // document ready
-

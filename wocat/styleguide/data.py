@@ -1452,10 +1452,11 @@ data = {
         'template': 'widgets/members-table.html',
         'context': {
             'allcountries': 'All Countries',
+            'allcountriesselected': True,
             'countries': [
-                { 'name': 'Germany', },
-                { 'name': 'Niger', },
-                { 'name': 'Toga', },
+                { 'name': 'Germany', 'iso_3166_1_alpha_3': 'Deu', },
+                { 'name': 'Niger', 'iso_3166_1_alpha_3': 'NeR', },
+                { 'name': 'Toga', 'iso_3166_1_alpha_3': 'tgO', },
             ],
             'allorganisations': 'All Organisations',
             'organisations': [
@@ -1629,6 +1630,8 @@ data = {
             ],
         },
     },
+
+
     'breadcrumb': {
         'name': 'Breadcrumb with 3 entries',
         'template': 'widgets/breadcrumb.html',

@@ -3,7 +3,7 @@
 		<select class="widget-members-table-countryselector form-control" autocomplete="off">
 			<option selected="selected" value="all">{{ allcountries }}</option>
 			{% for country in countries %}
-				<option>{{ country.name }}</option>
+				<option{% if country.iso_3166_1_alpha_3 %} value="{{ country.iso_3166_1_alpha_3|upper }}"{% endif %}>{{ country.name }}</option>
 			{% endfor %}
 		</select>
 		<select class="widget-members-table-organisationselector form-control" autocomplete="off">
