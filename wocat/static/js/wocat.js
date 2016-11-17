@@ -165,6 +165,139 @@ $(function() {
 });
 
 
+
+
+$(function() {
+	// Institutions Table
+	$('.widget-institutions-table').each(function() {
+		var institutionsTable = $(this);
+
+		function applyFilters() {
+			if (institutionsTable.find('.widget-institutions-table-countryselector').val() == "all") {
+				var country = "all";
+			} else {
+				var country = institutionsTable.find('.widget-institutions-table-countryselector option:selected').text();
+			}
+			var sort = institutionsTable.find('.widget-institutions-table-sortselector').val();
+			var page = institutionsTable.data('page');
+			var maxpagesize = institutionsTable.find('.widget-institutions-table-institutions').data('maxpagesize');
+
+			console.log('Filter Country:', country, 'Sort by:', sort, 'maxpagesize:', maxpagesize);
+
+
+			// iterate institutions
+			institutionsTable.find('.widget-institutions-table-institutions .widget-institutions-table-institution').each(function() {
+				var institution = $(this);
+
+				var institutionName = $.trim(institution.find('.widget-institutions-table-name').text());
+				var institutionCountry = $.trim(institution.find('.widget-institutions-table-country').text());
+
+				//console.log('Institution Name:', institutionName, 'Institution Country:', institutionCountry);
+
+				// Country and Expertise and Institution match selection?
+				if ((country != 'all') && (country != institutionCountry)) institution.addClass('institution-hidden');
+			});
+
+			// Sort
+			var sortedTable = $(".widget-institutions-table-institutions .widget-institutions-table-institution").sort(function(a,b) {
+				switch (sort) {
+					case 'name':
+						// Name
+						var valueA = $.trim($(a).find('.widget-institutions-table-name').text());
+						var valueB = $.trim($(b).find('.widget-institutions-table-name').text());
+					break;
+					case 'country':
+						// Country
+						var valueA = $.trim($(a).find('.widget-institutions-table-country').text());
+						var valueB = $.trim($(b).find('.widget-institutions-table-country').text());
+					break;
+				}
+
+				valueA = valueA.toLowerCase();
+				valueB = valueB.toLowerCase();
+
+				// console.log('Values to compare: ', valueA, valueB);
+
+				if (valueA < valueB) //sort string ascending
+					return -1;
+				if (valueA > valueB)
+					return 1;
+				return 0; //default return value (no sorting)
+			});
+			institutionsTable.find('.widget-institutions-table-institutions').html(sortedTable);
+
+
+
+			// Pagination
+			var firstInstitutionNumber = maxpagesize*(page-1);
+			var numberOfPages = Math.ceil(institutionsTable.find('.widget-institutions-table-institutions .widget-institutions-table-institution:not(.institution-hidden)').length / maxpagesize);
+			//console.log('Show page: ', page, 'Max institutions per page: ', maxpagesize, 'First institution: ', firstInstitutionNumber, 'Number of pages available: ', numberOfPages);
+			// disable pagination if only one page
+			if (numberOfPages < 2) {
+				institutionsTable.find('.pages').hide();
+			} else {
+				institutionsTable.find('.pages').show();
+				// disable pagination links
+				institutionsTable.find('.pages .pagination li').show();
+				institutionsTable.find('.pages .pagination li:gt('+ (numberOfPages-1) +')').hide();
+			}
+			// get rid of institutions of previous pages:
+			institutionsTable.find('.widget-institutions-table-institutions .widget-institutions-table-institution:not(.institution-hidden):lt('+ firstInstitutionNumber+')').addClass('institution-hidden');
+			// get rid of institutions of next pages:
+			institutionsTable.find('.widget-institutions-table-institutions .widget-institutions-table-institution:not(.institution-hidden):gt('+ (maxpagesize-1) +')').addClass('institution-hidden');
+
+			institutionsTable.find('.pages .pagination li').removeClass('active');
+			institutionsTable.find('.pages .pagination li:nth-child('+ (page) +')').addClass('active');
+
+
+
+			// Show exactly the institutions we want to see
+			institutionsTable.find('.widget-institutions-table-institutions .widget-institutions-table-institution').each(function() {
+				var institution = $(this);
+
+				if (institution.hasClass('institution-hidden')) {
+					institution.removeClass('institution-hidden').hide();
+				} else {
+					institution.show();
+				}
+			});
+
+			// Show error message when no institution found with filter
+			if (institutionsTable.find('.widget-institutions-table-institutions .widget-institutions-table-institution:not(:hidden)').length) {
+				institutionsTable.find('.widget-institutions-table-nothingfound').hide();
+			} else {
+				institutionsTable.find('.widget-institutions-table-nothingfound').show();
+			}
+
+		}
+
+		institutionsTable.find('.widget-institutions-table-countryselector, .widget-institutions-table-sortselector').change(function() {
+			// reset page
+			institutionsTable.data('page', 1);
+			applyFilters();
+		});
+
+		institutionsTable.find('.pagination a').click(function(event) {
+			event.preventDefault();
+			// set page
+			var page = $(this).data('page');
+			institutionsTable.data('page', page);
+			applyFilters();
+		});
+
+
+		institutionsTable.find('.widget-institutions-table-headline .widget-institutions-table-name').click(function(event) {
+			institutionsTable.find('.widget-institutions-table-sortselector').val('name').change();
+		});
+		institutionsTable.find('.widget-institutions-table-headline .widget-institutions-table-country').click(function(event) {
+			institutionsTable.find('.widget-institutions-table-sortselector').val('country').change();
+		});
+	});
+
+});
+
+
+
 $(function() {
 	// Gibt es auf der Seite ein Affix?
 	if (!$('#affix').length) return;

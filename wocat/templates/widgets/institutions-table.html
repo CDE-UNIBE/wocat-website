@@ -1,0 +1,82 @@
+<div class="widget-institutions-table">
+	<div class="widget-institutions-table-selector">
+		<select class="widget-institutions-table-countryselector form-control" autocomplete="off">
+			<option selected="selected" value="all">{{ allcountries }}</option>
+			{% for country in countries %}
+				<option>{{ country.name }}</option>
+			{% endfor %}
+		</select>
+		<select class="widget-institutions-table-sortselector form-control" autocomplete="off">
+			<option selected="selected" value="name">by Name</option>
+			<option value="country">by Country</option>
+		</select>
+	</div>
+
+	<div class="widget-institutions-table-headline">
+		<div class="widget-institutions-table-name h4">
+			Name
+		</div>
+		<div class="widget-institutions-table-country h4">
+			Country
+		</div>
+		<div class="widget-institutions-table-avatar">
+		</div>
+		<div class="widget-institutions-table-contactperson h4">
+			Contact Person
+		</div>
+	</div>
+
+	<div class="widget-institutions-table-institutions" data-maxpagesize="{{ maxpagesize }}">
+		{% for institution in institutions %}
+			<div class="widget-institutions-table-institution"{% if not institution.visible %} style="display: none;"{% endif %}>
+				<div class="widget-institutions-table-name">
+					{% if institution.href %}
+						<a href="{{ institution.href }}">
+					{% endif %}
+					{{ institution.name }}
+					{% if institution.href %}
+						</a>
+					{% endif %}
+					{% if institution.year %}
+						<div class="institution-year">
+							({{ institution.year }})
+						</div>
+					{% endif %}
+				</div>
+				<div class="widget-institutions-table-country">
+					{{ institution.country }}
+				</div>
+				<div class="widget-institutions-table-avatar">
+					<img src="{{ institution.avatarsrc }}" alt="Avatar">
+				</div>
+				<div class="widget-institutions-table-contactperson">
+					{% if institution.contactpersonhref %}
+						<a href="{{ institution.contactpersonhref }}">
+					{% endif %}
+					{{ institution.contactperson }}
+					{% if institution.contactpersonhref %}
+						</a>
+					{% endif %}
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		{% endfor %}
+	</div>
+
+	{% if pages %}
+	<nav class="pages">
+		<ul class="pagination">
+		{% for pagenumber in pages %}
+			<li{% if forloop.first %} class="active"{% endif %}>
+				<a href="#" data-page="{{ pagenumber }}">{{ pagenumber }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	</nav>
+	{% endif %}
+
+
+	<div class="widget-institutions-table-nothingfound" style="display: none;">
+		No institutions found with this filter.
+	</div>
+</div><!-- widget-institutions-table -->

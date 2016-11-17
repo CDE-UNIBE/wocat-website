@@ -1121,9 +1121,6 @@ select.form-control::-ms-expand {
 			margin-bottom: 15px;
 			margin-left: 10px;
 		}
-		.widget-members-table-countryselector, .widget-members-table-institutionselector, .widget-members-table-expertiseselector {
-		}
-
 	}
 
 	.widget-members-table-headline {
@@ -1263,6 +1260,151 @@ select.form-control::-ms-expand {
 				}
 			}
 		}
+	}
+
+	.pages {
+		.pagination {
+			margin-top: 0;
+		}
+	}
+}
+
+
+
+
+
+.widget-institutions-table {
+	margin-bottom: 30px;
+
+	.widget-institutions-table-selector {
+		text-align: right;
+		overflow: hidden;
+		margin-bottom: 10px;
+
+		.widget-institutions-table-countryselector, .widget-institutions-table-sortselector {
+			width: auto;
+			max-width: 100%;
+			display: inline-block;
+			margin-bottom: 15px;
+			margin-left: 10px;
+		}
+	}
+
+	.widget-institutions-table-headline {
+		margin-bottom: 15px;
+		display: none;
+
+		.h4 {
+			text-transform: none;
+		}
+
+		@media(min-width:768px) {
+			display: block;
+		}
+
+
+		.widget-institutions-table-avatar {
+			display: inline-block;
+			width: 95px;
+			@media(min-width:1200px) { width: 120px; }
+		}
+		.widget-institutions-table-name, .widget-institutions-table-country, .widget-institutions-table-contactperson {
+			display: inline-block;
+			font-weight: bold;
+		}
+	   .widget-institutions-table-country {
+			cursor: pointer;
+
+			&:hover {
+				color: @color-neutral-dark;
+			}
+		}
+
+		.widget-institutions-table-name {
+			@media(min-width:768px) { width: 250px; }
+			@media(min-width:992px) { width: 300px; }
+			@media(min-width:1200px) { width: 370px; }
+		}
+		.widget-institutions-table-country {
+			@media(min-width:768px) { width: 150px; }
+			@media(min-width:992px) { width: 180px; }
+			@media(min-width:1200px) { width: 230px; }
+		}
+		.widget-institutions-table-contactperson {
+			@media(min-width:768px) { width: 213px; }
+			@media(min-width:992px) { width: 353px; }
+			@media(min-width:1200px) { width: 408px; }
+		}
+
+	}
+
+	.widget-institutions-table-institution {
+    // Every single institution (row)
+		margin-bottom: 15px;
+		@media(min-width:1200px) { margin-bottom: 25px; }
+
+		.widget-institutions-table-avatar {
+			display: inline-block;
+			float: left;
+			vertical-align:top;
+			width: 95px;
+			@media(min-width:1200px) { width: 120px; }
+
+			img {
+				display: inline-block;
+				width: 80px;
+				@media(min-width:1200px) { width: 105px; }
+				height: auto;
+			}
+
+			@media(min-width:768px) {
+				float: none;
+			}
+
+		}
+		.widget-institutions-table-name, .widget-institutions-table-country, .widget-institutions-table-contactperson {
+			display: inline-block;
+			vertical-align:top;
+		}
+
+    .widget-institutions-table-name {
+			width: auto;
+			display: block;
+      font-weight: bold;
+			@media(min-width:768px) { display: inline-block; margin-left: 0; width: 250px; }
+			@media(min-width:992px) { width: 300px; }
+			@media(min-width:1200px) { width: 370px; }
+
+      .institution-year {
+        font-style: italic;
+        font-weight: normal;
+        display: inline-block;
+        @media(min-width:768px) { display: block; }
+      }
+		}
+
+
+		.widget-institutions-table-contactperson {
+			width: auto;
+			display: block;
+			margin-left: 100px;
+			@media(min-width:768px) { display: inline-block; margin-left: 0; width: 213px; }
+			@media(min-width:992px) { width: 353px; }
+			@media(min-width:1200px) { width: 408px; }
+
+
+
+		}
+		.widget-institutions-table-country {
+			width: auto;
+			display: block;
+			margin-bottom: 4px;
+			@media(min-width:768px) { display: inline-block; margin-left: 0; margin-bottom: 0; width: 150px; }
+			@media(min-width:992px) { width: 180px; }
+			@media(min-width:1200px) { width: 230px; }
+		}
+
+
 	}
 
 	.pages {
