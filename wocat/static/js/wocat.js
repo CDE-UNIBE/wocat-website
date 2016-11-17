@@ -15,12 +15,12 @@ $(function() {
 				var country = membersTable.find('.widget-members-table-countryselector option:selected').text();
 			}
 			var expertise = membersTable.find('.widget-members-table-expertiseselector').val();
-			var organisation = membersTable.find('.widget-members-table-organisationselector').val();
+			var institution = membersTable.find('.widget-members-table-institutionselector').val();
 			var sort = membersTable.find('.widget-members-table-sortselector').val();
 			var page = membersTable.data('page');
 			var maxpagesize = membersTable.find('.widget-members-table-members').data('maxpagesize');
 
-			// console.log('Filter Country:', country, 'Filter Expertise:', expertise, 'Filter Organisation:', organisation, 'Sort by:', sort);
+			// console.log('Filter Country:', country, 'Filter Expertise:', expertise, 'Filter Institution:', institution, 'Sort by:', sort);
 
 
 			// iterate members
@@ -29,16 +29,16 @@ $(function() {
 
 				var memberName = $.trim(member.find('.widget-members-table-name').text());
 				var memberCountry = $.trim(member.find('.widget-members-table-country').text());
-				var memberOrganisation = $.trim(member.find('.widget-members-table-organisation .member-organisation').text());
+				var memberInstitution = $.trim(member.find('.widget-members-table-institution .member-institution').text());
 				var memberExpertises = member.find('.widget-members-table-expertises .expertise').map(function() {
 						return $.trim($(this).text());
 					}).get();
 
-				// console.log('Member Name:', memberName, 'Member Organisation:', memberOrganisation, 'Member Country:', memberCountry, 'Member Expertises:', memberExpertises);
+				// console.log('Member Name:', memberName, 'Member Institution:', memberInstitution, 'Member Country:', memberCountry, 'Member Expertises:', memberExpertises);
 
-				// Country and Expertise and Organisation match selection?
+				// Country and Expertise and Institution match selection?
 				if ((country != 'all') && (country != memberCountry)) member.addClass('member-hidden');
-				if ((organisation != 'all') && (organisation != memberOrganisation)) member.addClass('member-hidden');
+				if ((institution != 'all') && (institution != memberInstitution)) member.addClass('member-hidden');
 				if ((expertise != 'all') && ($.inArray(expertise, memberExpertises) == -1)) member.addClass('member-hidden');
 			});
 
@@ -55,10 +55,10 @@ $(function() {
 						var valueA = $.trim($(a).find('.widget-members-table-country').text());
 						var valueB = $.trim($(b).find('.widget-members-table-country').text());
 					break;
-					case 'organisation':
-						// Organisation
-						var valueA = $.trim($(a).find('.widget-members-table-organisation .member-organisation').text());
-						var valueB = $.trim($(b).find('.widget-members-table-organisation .member-organisation').text());
+					case 'institution':
+						// Institution
+						var valueA = $.trim($(a).find('.widget-members-table-institution .member-institution').text());
+						var valueB = $.trim($(b).find('.widget-members-table-institution .member-institution').text());
 					break;
 				}
 
@@ -120,7 +120,7 @@ $(function() {
 
 		}
 
-		membersTable.find('.widget-members-table-countryselector, .widget-members-table-organisationselector, .widget-members-table-expertiseselector, .widget-members-table-sortselector').change(function() {
+		membersTable.find('.widget-members-table-countryselector, .widget-members-table-institutionselector, .widget-members-table-expertiseselector, .widget-members-table-sortselector').change(function() {
 			// reset page
 			membersTable.data('page', 1);
 			applyFilters();
@@ -141,8 +141,8 @@ $(function() {
 		membersTable.find('.widget-members-table-headline .widget-members-table-country').click(function(event) {
 			membersTable.find('.widget-members-table-sortselector').val('country').change();
 		});
-		membersTable.find('.widget-members-table-headline .widget-members-table-organisation').click(function(event) {
-			membersTable.find('.widget-members-table-sortselector').val('organisation').change();
+		membersTable.find('.widget-members-table-headline .widget-members-table-institution').click(function(event) {
+			membersTable.find('.widget-members-table-sortselector').val('institution').change();
 		});
 	});
 

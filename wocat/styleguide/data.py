@@ -1458,8 +1458,8 @@ data = {
                 { 'name': 'Niger', 'iso_3166_1_alpha_3': 'NeR', },
                 { 'name': 'Toga', 'iso_3166_1_alpha_3': 'tgO', },
             ],
-            'allorganisations': 'All Organisations',
-            'organisations': [
+            'allinstitutions': 'All Institutions',
+            'institutions': [
                 { 'name': 'Sinnwerkstatt', },
                 { 'name': 'Telekom', },
                 { 'name': 'O2', },
@@ -1487,7 +1487,7 @@ data = {
                     'name': 'Eraldo mit sehr langem Namen',
                     'href': 'http://x',
                     'country': 'Germany',
-                    'organisation': 'Sinnwerkstatt',
+                    'institution': 'Sinnwerkstatt',
                     'position': 'Manager',
                     'expertises': [
                     ],
@@ -1499,7 +1499,7 @@ data = {
                     'name': 'Tomi',
                     'href': 'http://x',
                     'country': 'Niger',
-                    'organisation': 'Telekom',
+                    'institution': 'Telekom',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
@@ -1512,7 +1512,7 @@ data = {
                     'name': 'Udo',
                     'href': 'http://x',
                     'country': 'Germany',
-                    'organisation': 'O2',
+                    'institution': 'O2',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Schrauben drehn', },
@@ -1524,7 +1524,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Matthias',
                     'country': 'Niger',
-                    'organisation': 'Google',
+                    'institution': 'Google',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Werkstatt stehn', },
@@ -1537,7 +1537,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Nuts',
                     'country': 'Toga',
-                    'organisation': 'Microsoft',
+                    'institution': 'Microsoft',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
@@ -1550,7 +1550,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Cheffe',
                     'country': 'Germany',
-                    'organisation': 'Google',
+                    'institution': 'Google',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
@@ -1564,7 +1564,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Riot',
                     'country': 'Niger',
-                    'organisation': 'Adobe',
+                    'institution': 'Adobe',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Werkstatt stehn', },
@@ -1577,7 +1577,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Lene',
                     'country': 'Toga',
-                    'organisation': 'Nutella',
+                    'institution': 'Nutella',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
@@ -1591,7 +1591,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Markus',
                     'country': 'Niger',
-                    'organisation': 'Oranienhof',
+                    'institution': 'Oranienhof',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
@@ -1603,7 +1603,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Johanna',
                     'country': 'Germany',
-                    'organisation': 'Müllermilch',
+                    'institution': 'Müllermilch',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
@@ -1618,7 +1618,7 @@ data = {
                     'url': 'http://google.de',
                     'name': 'Tobi',
                     'country': 'Toga',
-                    'organisation': 'Calumet',
+                    'institution': 'Calumet',
                     'position': 'Manager',
                     'expertises': [
                         { 'name': 'Strippen ziehen', },
