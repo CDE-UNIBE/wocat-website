@@ -294,6 +294,47 @@ class OverlayTeaserMapBlock(StructBlock):
         help_text = _('Choose either a page or an external link')
 
 
+class TocBlock(StructBlock):
+    class Meta:
+        icon = 'fa fa-list'
+        label = _('Table of contents')
+        template = 'cms/toc.html'
+
+    def render_form(self, value, prefix='', errors=None):
+        form = super().render_form(value, prefix, errors)
+        return format_html('<strong>{title}</b> {form}', title=_('Table of contents'), form=form)
+
+    def get_content(self, context):
+        page = context.get('page')
+        if page and hasattr(page, 'content'):
+            return page.content
+
+    def get_headings(self, stream_content):
+        headings = [block.value for block in stream_content if block.block_type == 'heading']
+        return [{'text': heading, 'href': '#heading-{0}'.format(slugify(heading))}
+                for heading in headings]
+
+    def render(self, value, context=None):
+        if context:
+            stream_content = self.get_content(context)
+            if stream_content:
+                context['headings'] = self.get_headings(stream_content)
+                context['title'] = _('Table of contents')
+        return super().render(value, context)
+
+
+TOCBLOCKS = [
+    ('toc', TocBlock()),
+]
+
+
+class DsfTocBlock(TocBlock):
+    def get_content(self, context):
+        section = context.get('section')
+        if section:
+            return section.get('content')
+
+
 class DSFTeaserBlock(StructBlock):
     page = PageChooserBlock(required=False)
     module_1 = blocks.BooleanBlock(required=False, default=True)
@@ -363,6 +404,7 @@ class UploadBlock(StructBlock):
 
 
 DSF_BLOCKS = BASE_BLOCKS + [('upload', UploadBlock())]
+DSF_BLOCKS = DSF_BLOCKS + [('dsf_toc', DsfTocBlock())]
 
 
 class DSFModulesBlock(StructBlock):
@@ -502,31 +544,6 @@ GALLERY_BLOCKS = [
 ]
 BASE_BLOCKS += GALLERY_BLOCKS
 
-
-class TocBlock(StructBlock):
-    class Meta:
-        icon = 'fa fa-list'
-        label = _('Table of contents')
-        template = 'cms/toc.html'
-
-    def render_form(self, value, prefix='', errors=None):
-        form = super().render_form(value, prefix, errors)
-        return format_html('<strong>{title}</b> {form}', title=_('Table of contents'), form=form)
-
-    def render(self, value, context=None):
-        if context:
-            page = context.get('page')
-            if page and hasattr(page, 'content'):
-                stream_content = page.content
-                headings = [block.value for block in stream_content if block.block_type == 'heading']
-                context['title'] = _('Table of contents')
-                context['headings'] = [{'text': heading, 'href': '#heading-{0}'.format(slugify(heading))} for heading in headings]
-        return super().render(value, context)
-
-
-TOCBLOCKS = [
-    ('toc', TocBlock()),
-]
 
 BASE_BLOCKS += TOCBLOCKS
 
