@@ -56,6 +56,7 @@ CMS_APPS = (
     'modelcluster',
 
     'wagtail.contrib.modeladmin',
+    'wagtail.contrib.settings',
 )
 
 THIRD_PARTY_APPS = (

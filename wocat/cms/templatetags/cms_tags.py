@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _, get_language
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
 
-from wocat.cms.models import HomePage, ProjectPage
+from wocat.cms.models import HomePage, ProjectPage, TopNavigationSettings
 
 register = template.Library()
 
@@ -28,26 +28,33 @@ def get_profile_links(user, onlyxs=False):
     return profile_links
 
 
-def get_social_links(onlyxs=False):
-    return [
-        {'href': 'https://www.facebook.com/wocatnet',
-         'text': '<i class="fa fa-lg fa-facebook" aria-hidden="true"></i>', 'onlyxs': onlyxs},
-        {'href': 'https://vimeo.com/user12138600', 'text': '<i class="fa fa-lg fa-vimeo" aria-hidden="true"></i>', 'onlyxs': onlyxs},
-        {'href': 'https://www.youtube.com/user/WOCATEER1',
-         'text': '<i class="fa fa-lg fa-youtube" aria-hidden="true"></i>', 'onlyxs': onlyxs},
-        # TODO: Issue: https://github.com/FortAwesome/Font-Awesome/issues/1993 => workaround 'fa-book'
-        {'href': 'https://issuu.com/wocat', 'text': '<i class="fa fa-lg fa-book" aria-hidden="true"></i>', 'onlyxs': onlyxs},
-        {'href': 'http://www.slideshare.net/wocat',
-         'text': '<i class="fa fa-lg fa-slideshare" aria-hidden="true"></i>', 'onlyxs': onlyxs},
-    ]
+def get_social_links(context, onlyxs=False):
+    links = []
+    request = context['request']
+    settings = TopNavigationSettings.for_site(request.site)
+    if settings:
+        for link in settings.social_media_links.all():
+            links.append({
+                'text': '<i class="fa fa-lg fa-{0}" aria-hidden="true"></i>'.format(link.icon),
+                'href': link.url,
+                'onlyxs': onlyxs
+            })
+    return links
 
 
 def get_extra_links(context, onlyxs=False):
-    return [
-        {'href': slugurl(context, 'get-involved') or '#get-involved', 'text': 'Get involved', 'onlyxs': onlyxs, },
-        {'href': slugurl(context, 'faq') or '#faq', 'text': 'FAQ', 'onlyxs': onlyxs, },
-        {'href': reverse('glossary:list') or '#glassary', 'text': 'Glossary', 'onlyxs': onlyxs, },
-    ]
+    links = []
+    request = context['request']
+    settings = TopNavigationSettings.for_site(request.site)
+    if settings:
+        for link in settings.top_navigation_links.all():
+            links.append({
+                'text': link.name,
+                'href': link.url,
+                'onlyxs': onlyxs
+            })
+    links.append({'href': reverse('glossary:list') or '#glassary', 'text': 'Glossary', 'onlyxs': onlyxs, })
+    return links
 
 
 @register.tag
@@ -133,7 +140,8 @@ class Header(InclusionTag):
             brand2 = {}
         return {
             'id': '1',
-            'toplinks': get_social_links() + get_extra_links(context) + [profile_links] + self.get_language_and_search_context(only_xs=False),
+            'toplinks': get_social_links(context) + get_extra_links(context) + [
+                profile_links] + self.get_language_and_search_context(only_xs=False),
             'mainnav': {
                 'depth': depth,
                 # only visible if in or under a project page
@@ -182,7 +190,7 @@ class Footer(InclusionTag):
         else:
             user = None
         profile_links = get_profile_links(user, onlyxs=True)
-        links = get_social_links(onlyxs=True) + get_extra_links(context, onlyxs=True) + [
+        links = get_social_links(context, onlyxs=True) + get_extra_links(context, onlyxs=True) + [
             profile_links,
             {'href': slugurl(context, 'imprint') or '#imprint', 'text': _('Legal Disclaimer'), },
             {'href': slugurl(context, 'contact') or '#contact', 'text': _('Contact'), },

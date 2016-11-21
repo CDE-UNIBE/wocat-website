@@ -6,6 +6,9 @@ from django.db import ProgrammingError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
+from wagtail.contrib.settings.models import BaseSetting
+from wagtail.contrib.settings.registry import register_setting
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel, \
     PageChooserPanel
 from wagtail.wagtailcore.fields import StreamField
@@ -621,3 +624,71 @@ class EventsPage(HeaderPageMixin, Page):
 
     parent_page_types = ['NewsAndEventsPage']
     subpage_types = []
+
+
+@register_setting
+class TopNavigationSettings(ClusterableModel, BaseSetting):
+    panels = [
+        InlinePanel('social_media_links', label=_("Social Links")),
+        InlinePanel('top_navigation_links', label=_("Top Links")),
+    ]
+
+    class Meta:
+        verbose_name = _('Top navigation settings')
+        #
+        # def __str__(self):
+        #     return _('Top navigation settings')
+
+
+class TopNavigationLink(Orderable, models.Model):
+    navigation = ParentalKey(TopNavigationSettings, related_name='top_navigation_links')
+    name = models.CharField(max_length=255)
+    target = models.ForeignKey('wagtailcore.Page')
+
+    @property
+    def url(self):
+        return self.target.url
+
+    panels = [
+        FieldPanel('name'),
+        PageChooserPanel('target'),
+    ]
+
+
+class SocialMediaLink(Orderable, models.Model):
+    navigation = ParentalKey(TopNavigationSettings, related_name='social_media_links')
+    icon = models.CharField(
+        max_length=255,
+        help_text=_('Fontawesome icon name')
+    )
+    url = models.URLField(
+        help_text=_('Your social media page URL')
+    )
+
+    panels = [
+        FieldPanel('icon'),
+        FieldPanel('url'),
+    ]
+
+
+@register_setting
+class FooterSettings(ClusterableModel, BaseSetting):
+    panels = [
+        InlinePanel('footer_links', label=_("Links")),
+    ]
+
+    class Meta:
+        verbose_name = _('Footer settings')
+
+        # def __str__(self):
+        #     return _('Footer settings')
+
+
+class FooterLink(Orderable, models.Model):
+    footer = ParentalKey(FooterSettings, related_name='footer_links')
+    name = models.CharField(max_length=255)
+    target = models.ForeignKey('wagtailcore.Page')
+    panels = [
+        FieldPanel('name'),
+        PageChooserPanel('target'),
+    ]
