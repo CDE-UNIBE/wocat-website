@@ -591,7 +591,7 @@ class NewsAndEventsPage(HeaderPageMixin, Page):
         return NewsPage
 
     parent_page_types = ['HomePage', 'ProjectPage']
-    subpage_types = ['news.NewsIndexPage']
+    subpage_types = ['news.NewsIndexPage', 'EventsPage']
 
     @property
     def news(self):
@@ -601,3 +601,23 @@ class NewsAndEventsPage(HeaderPageMixin, Page):
         # @property
         # def events(self):
         #     return []  # TODO: Waiting for Events pages to be implemented.
+
+
+class EventsPage(HeaderPageMixin, Page):
+    template = 'pages/events.html'
+
+    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
+
+    class Meta:
+        verbose_name = _('Events')
+
+    content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
+        StreamFieldPanel('content'),
+    ]
+
+    search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
+        index.SearchField('content'),
+    ]
+
+    parent_page_types = ['NewsAndEventsPage']
+    subpage_types = []

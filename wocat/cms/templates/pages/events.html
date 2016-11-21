@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags cms_tags %}
+
+
+{% block content_container %}
+    {% carousel %}
+    {% overlay %}
+    <div class="container">
+        <br>
+        {% breadcrumb %}
+        <br>
+        {% block content %}
+            {% include_block page.content %}
+        {% endblock content %}
+    </div>
+{% endblock content_container %}
