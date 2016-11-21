@@ -4,4 +4,7 @@
 {% block content %}
     {% include_block page.content %}
     {% include 'widgets/members-table.html' %}
+    {% if institutional_members_page_url and institutional_members_page_text %}
+        {% include 'widgets/read-more-link.html' with button=True text=institutional_members_page_text href=institutional_members_page_url %}
+    {% endif %}
 {% endblock content %}

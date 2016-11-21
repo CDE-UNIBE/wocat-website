@@ -3,5 +3,8 @@
 
 {% block content %}
     {% include_block page.content %}
-    {% include 'institutions/table.html' with members=institution_members %}
+    {% include 'widgets/institutions-table.html' with members=institution_members %}
+    {% if members_page_url and members_page_text %}
+        {% include 'widgets/read-more-link.html' with button=True text=members_page_text href=members_page_url %}
+    {% endif %}
 {% endblock content %}

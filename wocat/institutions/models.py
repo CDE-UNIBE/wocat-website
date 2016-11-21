@@ -84,6 +84,7 @@ class Institution(models.Model):
     class Meta:
         verbose_name = _('Institution')
         verbose_name_plural = _('Institutions')
+        ordering = ['name']
 
     def __str__(self):
         return self.name

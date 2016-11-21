@@ -1,13 +1,14 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from modelcluster.fields import ParentalKey
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 
 from wocat.core.blocks import CORE_BLOCKS
-from wocat.cms.models import HeaderPageMixin
+from wocat.cms.models import HeaderPageMixin, CountryPage
 
 
 class NewsIndexPage(HeaderPageMixin, Page):
@@ -35,6 +36,17 @@ class NewsIndexPage(HeaderPageMixin, Page):
         return news.order_by('-date')
 
 
+class NewsCountry(Orderable):
+    page = ParentalKey('NewsPage', related_name='news_countries')
+    country = models.ForeignKey(CountryPage, related_name='+')
+    panels = [
+        FieldPanel('country'),
+    ]
+
+    def __str__(self):
+        return str(self.country)
+
+
 class NewsPage(HeaderPageMixin, Page):
     template = 'news/article.html'
 
@@ -54,9 +66,14 @@ class NewsPage(HeaderPageMixin, Page):
         default = timezone.now,
     )
 
-    # countries = models.ManyToManyField(
-    #     Country,
-    # )
+    @property
+    def countries(self):
+        countries = [country.country for country in self.region_countries.all()]
+        return countries
+
+    @property
+    def country_codes(self):
+        return [country.country.code for country in self.countries]
 
     @property
     def lead_image(self):
@@ -68,13 +85,16 @@ class NewsPage(HeaderPageMixin, Page):
         StreamFieldPanel('content'),
         FieldPanel('author'),
         FieldPanel('date'),
-        # FieldPanel('countries'),
-        # InlinePanel('countries', label=_('Countries')),
+        InlinePanel('news_countries', label="Countries"),
     ]
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
-        # index.FilterField('countries'),
         index.SearchField('content'),
+        index.FilterField('news_countries'),
+        # index.RelatedFields('news_countries', [
+        #     # index.SearchField('name'),
+        #     index.FilterField('country'),
+        # ]),
     ]
 
     parent_page_types = ['NewsIndexPage']
