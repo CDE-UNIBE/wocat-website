@@ -53,7 +53,6 @@ def get_extra_links(context, onlyxs=False):
                 'href': link.url,
                 'onlyxs': onlyxs
             })
-    links.append({'href': reverse('glossary:list') or '#glassary', 'text': 'Glossary', 'onlyxs': onlyxs, })
     return links
 
 

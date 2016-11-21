@@ -32,7 +32,6 @@ urlpatterns = [
     # url(r'^cas/', include('mama_cas.urls')),
     url(r'^library/media/', include('wocat.medialibrary.urls', namespace='media')),
     url(r'^glossary/', include('wocat.glossary.urls', namespace='glossary')),
-    url(r'^glossary/', include('wocat.glossary.urls', namespace='glossary')),
     url(r'^institutions/', include('wocat.institutions.urls', namespace='institutions')),
     url(r'^countries/', include('wocat.countries.urls', namespace='countries')),
     url(r'^search/', include('wocat.search.urls', namespace='search')),

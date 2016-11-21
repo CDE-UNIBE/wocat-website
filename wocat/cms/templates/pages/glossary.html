@@ -1,0 +1,19 @@
+{% extends 'pages/content.html' %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+    {% include_block page.content %}
+    <p id="section-index">
+        {% for entry in entries %}
+            {% ifchanged %}<a href="#section-{{ entry.title.0|lower }}">{{ entry.title.0 }}&nbsp;</a>{% endifchanged %}
+        {% endfor %}
+    </p>
+    <dl>
+        {% for entry in entries %}
+            {% ifchanged %}<h3 id="section-{{ entry.title.0|lower }}">{{ entry.title.0 }}</h3><br>{% endifchanged %}
+            {% include 'widgets/definition.html' with tag=entry.title acronym=entry.acronym definition=entry.description %}
+            <br>
+        {% endfor %}
+    </dl>
+    <a href="#section-index">Top</a>
+{% endblock content %}

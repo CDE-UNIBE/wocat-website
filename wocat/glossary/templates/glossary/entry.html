@@ -4,6 +4,7 @@
 {% block content %}
     <h1>{% trans 'Glossary Entry' %}</h1>
     <dl>
-        {% include 'glossary/widgets/entry.html' %}
+        {% include 'widgets/definition.html' with tag=entry.title acronym=entry.acronym definition=entry.description %}
+{#        {% include 'glossary/widgets/entry.html' %}#}
     </dl>
 {% endblock content %}
