@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
-from django.template.defaultfilters import filesizeformat
+from django.template.defaultfilters import filesizeformat, slugify
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
@@ -501,6 +501,34 @@ GALLERY_BLOCKS = [
     ('image_gallery', ImageGalleryBlock()),
 ]
 BASE_BLOCKS += GALLERY_BLOCKS
+
+
+class TocBlock(StructBlock):
+    class Meta:
+        icon = 'fa fa-list'
+        label = _('Table of contents')
+        template = 'cms/toc.html'
+
+    def render_form(self, value, prefix='', errors=None):
+        form = super().render_form(value, prefix, errors)
+        return format_html('<strong>{title}</b> {form}', title=_('Table of contents'), form=form)
+
+    def render(self, value, context=None):
+        if context:
+            page = context.get('page')
+            if page and hasattr(page, 'content'):
+                stream_content = page.content
+                headings = [block.value for block in stream_content if block.block_type == 'heading']
+                context['title'] = _('Table of contents')
+                context['headings'] = [{'text': heading, 'href': '#heading-{0}'.format(slugify(heading))} for heading in headings]
+        return super().render(value, context)
+
+
+TOCBLOCKS = [
+    ('toc', TocBlock()),
+]
+
+BASE_BLOCKS += TOCBLOCKS
 
 
 class SubpagesBlock(StructBlock):

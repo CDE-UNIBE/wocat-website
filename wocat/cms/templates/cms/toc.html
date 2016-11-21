@@ -1,0 +1,12 @@
+<div class="widget-toc">
+    {% if title and headings %}
+        <h4>{{ title }}</h4>
+        <ul>
+            {% for heading in headings %}
+                <li>
+                    {% include 'widgets/read-more-link.html' with text=heading.text href=heading.href %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
