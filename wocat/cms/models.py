@@ -635,9 +635,6 @@ class TopNavigationSettings(ClusterableModel, BaseSetting):
 
     class Meta:
         verbose_name = _('Top navigation settings')
-        #
-        # def __str__(self):
-        #     return _('Top navigation settings')
 
 
 class TopNavigationLink(Orderable, models.Model):
@@ -673,21 +670,29 @@ class SocialMediaLink(Orderable, models.Model):
 
 @register_setting
 class FooterSettings(ClusterableModel, BaseSetting):
+    content = StreamField(
+        CORE_BLOCKS,
+        blank=True
+    )
+
     panels = [
         InlinePanel('footer_links', label=_("Links")),
+        StreamFieldPanel('content'),
     ]
 
     class Meta:
         verbose_name = _('Footer settings')
-
-        # def __str__(self):
-        #     return _('Footer settings')
 
 
 class FooterLink(Orderable, models.Model):
     footer = ParentalKey(FooterSettings, related_name='footer_links')
     name = models.CharField(max_length=255)
     target = models.ForeignKey('wagtailcore.Page')
+
+    @property
+    def url(self):
+        return self.target.url
+
     panels = [
         FieldPanel('name'),
         PageChooserPanel('target'),

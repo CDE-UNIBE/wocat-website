@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _, get_language
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
 
-from wocat.cms.models import HomePage, ProjectPage, TopNavigationSettings
+from wocat.cms.models import HomePage, ProjectPage, TopNavigationSettings, FooterSettings
 
 register = template.Library()
 
@@ -189,12 +189,39 @@ class Footer(InclusionTag):
         else:
             user = None
         profile_links = get_profile_links(user, onlyxs=True)
-        links = get_social_links(context, onlyxs=True) + get_extra_links(context, onlyxs=True) + [
-            profile_links,
-            {'href': slugurl(context, 'imprint') or '#imprint', 'text': _('Legal Disclaimer'), },
-            {'href': slugurl(context, 'contact') or '#contact', 'text': _('Contact'), },
-        ]
-        return {'links': links}
+        links = get_social_links(context, onlyxs=True) + \
+                get_extra_links(context, onlyxs=True) + \
+                [profile_links] + \
+                self.get_links(context)
+        content = self.get_content(context)
+        return {
+            'links': links,
+            'content': content
+        }
+
+    def get_settings(self, context):
+        request = context.get('request')
+        settings = FooterSettings.for_site(request.site)
+        if settings:
+            return settings
+
+    def get_links(self, context, onlyxs=False):
+        links = []
+        settings = self.get_settings(context)
+        if settings:
+            for link in settings.footer_links.all():
+                links.append({
+                    'text': link.name,
+                    'href': link.url,
+                    'onlyxs': onlyxs
+                })
+        return links
+
+    def get_content(self, context, onlyxs=False):
+        settings = self.get_settings(context)
+        links = []
+        if settings:
+            return settings.content
 
 
 @register.tag
