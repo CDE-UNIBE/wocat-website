@@ -457,7 +457,7 @@ class MembersPage(UniquePageMixin, Page):
             if user.institution:
                 institutions.append({'name': user.institution})
             members.append({
-                'avatarsrc': user.avatar.url if user.avatar else '',
+                'avatarsrc': user.avatar['avatarsquare'].url if user.avatar else '',
                 'country': user.country.name if user.country else '',
                 'expertises': member_experiences,
                 'name': user.name or '',
