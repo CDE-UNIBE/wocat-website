@@ -335,3 +335,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+
+# NEWSLETTER
+# ------------------------------------------------------------------------------
+NEWSLETTER_API_KEY=env('NEWSLETTER_API_KEY', default='')
+NEWSLETTER_LIST_ID=env('NEWSLETTER_LIST_ID', default='')
