@@ -58,18 +58,24 @@ class UserTeaserBlock(StructBlock):
         user = value.get('user')
         if not user:
             return {}
+        if user.country:
+            flag = format_html('<img src="{src}" class="inlineflag" alt="{name}"> {name}',
+                src=user.country.flag, name=user.country.name)
+        else:
+            flag = None
         return {
             'title': user.name,
             'description': format_html(
-                '<p>{institution}<br>{position}<br>{email}</p>',
+                '<p>{institution}{position}{email}{country}</p>',
                 institution=user.institution or '',
-                position=user.position or '',
-                email=user.email_safe,
+                position=format_html('<br>{0}', user.position) if user.position else '',
+                email=format_html('<br>{0}', user.email_safe) if user.email_safe else '',
+                country=format_html('<br>{0}', flag) if flag else '',
             ),
             'href': user.get_absolute_url(),
             'readmorelink': {'text': _('view profile')},
             'imgpos': 'left',
-            'imgsrc': user.avatar.url if user.avatar else '',
+            'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
             'imgcircle': True,
         }
 
@@ -101,23 +107,28 @@ SUBPAGEBLOCKS = [
 
 
 class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
-
     def get_context(self, value, context={}):
         user = context.get('user')
         if not user:
             return {}
+        if user.country:
+            flag = format_html('<img src="{src}" class="inlineflag" alt="{name}"> {name}',
+                src=user.country.flag, name=user.country.name)
+        else:
+            flag = None
         return {
             'title': user.name,
             'description': format_html(
-                '<p>{institution}<br>{position}<br>{email}</p>',
+                '<p>{institution}{position}{email}{country}</p>',
                 institution=user.institution or '',
-                position=user.position or '',
-                email=user.email_safe,
+                position=format_html('<br>{0}', user.position) if user.position else '',
+                email=format_html('<br>{0}', user.email_safe) if user.email_safe else '',
+                country=format_html('<br>{0}', flag) if flag else '',
             ),
             'href': user.get_absolute_url(),
             'readmorelink': {'text': _('view profile')},
             'imgpos': 'left',
-            'imgsrc': user.avatar.url if user.avatar else '',
+            'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
             'imgcircle': True,
         }
 
