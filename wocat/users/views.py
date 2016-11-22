@@ -30,7 +30,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         else:
             members_page = ''
         users_teaser_data = {
-            'href': '{0}#{1}'.format(members_url, user.country.name if user.country else ''),
+            'href': '{0}#{1}'.format(members_url, user.country.code if user.country else ''),
             'external': False,
             'title': _('Find more users from my country'),
             'description': _('Die Mitglieder-Datenbank enthält alle Involvierten bei Wocat.'),
