@@ -1,3 +1,4 @@
+{% load wagtailcore_tags %}
 <div class="widget-footer{% if fixed %} footer-fixed{% endif %}">
 	<div class="container">
 		<div class="widget-footer-navbar">
@@ -11,8 +12,8 @@
 				{% endfor %}
 			</ul>
 		</div>
-		<div class="widget-footer-license">
-			Except where otherwise noted, content on this site is licensed under a <a href="https://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution-NonCommercial 3.0 Unported</a>.
+		<div class="widget-footer-license text-center">
+			{% include_block content %}
 		</div>
 	</div>
 </div><!-- widget-footer -->
