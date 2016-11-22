@@ -58,3 +58,6 @@ django-countries==3.4.1
 djangorestframework==3.4.6
 Markdown==2.6.6
 django-filter==0.15.3
+
+# Newletter
+mailchimp==2.0.9
