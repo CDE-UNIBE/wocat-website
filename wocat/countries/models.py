@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailsnippets.models import register_snippet
 
 
-@register_snippet
+# @register_snippet
 class Country(models.Model):
     code = models.CharField(
         verbose_name=_('code (alpha3)'),
