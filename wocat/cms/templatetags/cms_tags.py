@@ -204,10 +204,12 @@ class Footer(InclusionTag):
         }
 
     def get_settings(self, context):
-        request = context.get('request')
-        settings = FooterSettings.for_site(request.site)
-        if settings:
-            return settings
+        if context:
+            request = context.get('request')
+            if request:
+                settings = FooterSettings.for_site(request.site)
+                if settings:
+                    return settings
 
     def get_links(self, context, onlyxs=False):
         links = []
