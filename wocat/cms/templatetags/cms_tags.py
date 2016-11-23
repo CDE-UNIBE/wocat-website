@@ -30,8 +30,10 @@ def get_profile_links(user, onlyxs=False):
 
 def get_social_links(context, onlyxs=False):
     links = []
-    request = context['request']
-    settings = TopNavigationSettings.for_site(request.site)
+    settings = None
+    request = context.get('request')
+    if request:
+        settings = TopNavigationSettings.for_site(request.site)
     if settings:
         for link in settings.social_media_links.all():
             links.append({
@@ -44,8 +46,10 @@ def get_social_links(context, onlyxs=False):
 
 def get_extra_links(context, onlyxs=False):
     links = []
-    request = context['request']
-    settings = TopNavigationSettings.for_site(request.site)
+    settings = None
+    request = context.get('request')
+    if request:
+        settings = TopNavigationSettings.for_site(request.site)
     if settings:
         for link in settings.top_navigation_links.all():
             links.append({
