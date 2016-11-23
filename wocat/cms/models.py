@@ -444,18 +444,22 @@ class MembersPage(UniquePageMixin, Page):
         context = super().get_context(request, *args, **kwargs)
         members = []
         countries = []
-        expertises = []
+        experiences = []
         institutions = []
         users = get_user_model().objects.filter(is_active=True)
         for user in users:
-            if user.country:
-                country = {'name': user.country.name}
+            if user.country and user.country.name:
+                country = {'iso_3166_1_alpha_3': user.country.code, 'name': user.country.name}
                 if country not in countries:
-                    countries.append(countries)
+                    countries.append(country)
             member_experiences = [{'name': experience} for experience in user.experiences.all()]
-            expertises += member_experiences
+            for experience in member_experiences:
+                if experience not in experiences:
+                    experiences.append(experience)
             if user.institution:
-                institutions.append({'name': user.institution})
+                institution = {'name': user.institution}
+                if institution not in institutions:
+                    institutions.append(institution)
             members.append({
                 'avatarsrc': user.avatar['avatarsquare'].url if user.avatar else '',
                 'country': user.country.name if user.country else '',
@@ -472,7 +476,7 @@ class MembersPage(UniquePageMixin, Page):
             'allexpertises': _('All Expertiese'),
             'allinstitutions': _('All Institutions'),
             'countries': countries,
-            'expertises': expertises,
+            'expertises': experiences,
             'institutions': institutions,
             'members': members,
         })
