@@ -43,7 +43,7 @@ class UserForm(forms.ModelForm):
         model = get_user_model()
         fields = ['first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function', 'experiences',
                   'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone', 'phone_2',
-                  'fax', 'fax_2', 'second_email', 'language', 'comments', 'avatar', 'institution',
+                  'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution',
                   'newsletter', 'terms_and_conditions']
         fields_required = ['first_name', 'last_name', 'gender']
 
@@ -62,7 +62,7 @@ class UserForm(forms.ModelForm):
                 'title',
                 'first_name',
                 'last_name',
-                'language',
+                # 'language',
                 'country',
                 'email',
                 'password1',
@@ -127,7 +127,7 @@ class UserForm(forms.ModelForm):
         user.fax = self.cleaned_data['fax']
         user.fax_2 = self.cleaned_data['fax_2']
         user.second_email = self.cleaned_data['second_email']
-        user.language = self.cleaned_data['language']
+        # user.language = self.cleaned_data['language']
         user.comments = self.cleaned_data['comments']
         user.avatar = self.cleaned_data['avatar']
         user.institution = self.cleaned_data['institution']
