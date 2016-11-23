@@ -24,12 +24,18 @@ class MediaWidget(InclusionTag):
             image_position = 'top'
             content = media.content
             url = media.get_absolute_url()
+            if not content and file:
+                href = file.url
+                readmorelink = _('Download')
+            else:
+                href = url
+                readmorelink = _('Show media')
             return {
-                'href': file.url if file else url,
+                'href': href,
                 'title': title,
                 'description': abstract,
                 'author': media.author,
-                'readmorelink': {'text': _('Show media') if content else _('Download')},
+                'readmorelink': {'text': readmorelink},
                 'imgsrc': teaser_image,
                 'imgpos': image_position or 'top',
                 'mediastyle': True,
