@@ -13,6 +13,8 @@
 	</div>
 
 	<div class="widget-institutions-table-headline">
+		<div class="widget-institutions-table-logo">
+		</div>
 		<div class="widget-institutions-table-name h4">
 			Name
 		</div>
@@ -29,6 +31,11 @@
 	<div class="widget-institutions-table-institutions" data-maxpagesize="{{ maxpagesize }}">
 		{% for institution in institutions %}
 			<div class="widget-institutions-table-institution"{% if not institution.visible %} style="display: none;"{% endif %}>
+				<div class="widget-institutions-table-logo">
+					{% if institution.logosrc %}
+					<img src="{{ institution.logosrc }}" alt="Logo">
+					{% endif %}
+				</div>
 				<div class="widget-institutions-table-name">
 					{% if institution.href %}
 						<a href="{{ institution.href }}">
@@ -46,6 +53,7 @@
 				<div class="widget-institutions-table-country">
 					{{ institution.country }}
 				</div>
+				<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
 				<div class="widget-institutions-table-avatar">
 					<img src="{{ institution.avatarsrc }}" alt="Avatar">
 				</div>
