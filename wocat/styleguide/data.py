@@ -826,6 +826,23 @@ data = {
             ],
         },
     },
+    'overlay_teaser_widgetchooser_flapmd': {
+        'name': 'Overlay Teaser – Widgetchooser – Topposition',
+        'template': 'widgets/overlay-teaser-widgetchooser.html',
+        'context': {
+            'topposition': True,
+            'imgsrc': '/static/styleguide/test-images/surfing.jpg',
+            'style': 'box',
+            'title': 'Overlay Teaser Box',
+            'flapmd': True,
+            'description': 'Es gibt im Moment13bc in diese Mannschaft, oh, einige Spieler vergessen ihnen Profi was sie sind. Ich lese nicht sehr viele Zeitungen, aber ich habe gehört viele Situationen.',
+            'links': [
+                { 'href': 'http://google.de', 'text': 'Google', },
+                { 'href': 'http://facebook.de', 'text': 'Facebook', },
+                { 'href': 'http://bing.de', 'text': 'extern Bing', 'external': True },
+            ],
+        },
+    },
     'overlay_teaser_widgetchooser_map': {
         'name': 'Overlay Teaser – Widgetchooser Map',
         'template': 'widgets/overlay-teaser-widgetchooser.html',

@@ -1,4 +1,8 @@
 <div class="overlay-teaser-widgetchooser">
+	{% if topposition %}
+		{% include "widgets/overlay-teaser.html" %}
+	{% endif %}
+
 	{% if imgsrc %}
 		{% include "widgets/image.html" with src=imgsrc name=title %}
 	{% endif %}
@@ -6,5 +10,7 @@
 		{% include "widgets/map.html" %}
 	{% endif %}
 
-	{% include "widgets/overlay-teaser.html" %}
+	{% if not topposition %}
+		{% include "widgets/overlay-teaser.html" %}
+	{% endif %}
 </div><!-- overlay-teaser-widgetchooser -->
