@@ -295,7 +295,7 @@ class OverlayTeaserMapBlock(StructBlock):
 
 
 class TocBlock(StructBlock):
-    title = blocks.CharBlock(default=_('Table of contents'))
+    title = blocks.CharBlock(default=_('Table of contents'), required=False)
 
     class Meta:
         icon = 'fa fa-list'
