@@ -295,6 +295,8 @@ class OverlayTeaserMapBlock(StructBlock):
 
 
 class TocBlock(StructBlock):
+    title = blocks.CharBlock(default=_('Table of contents'))
+
     class Meta:
         icon = 'fa fa-list'
         label = _('Table of contents')
@@ -319,7 +321,7 @@ class TocBlock(StructBlock):
             stream_content = self.get_content(context)
             if stream_content:
                 context['headings'] = self.get_headings(stream_content)
-                context['title'] = _('Table of contents')
+                context['title'] = value.get('title')
         return super().render(value, context)
 
 
