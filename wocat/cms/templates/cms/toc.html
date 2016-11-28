@@ -1,6 +1,8 @@
 <div class="widget-toc">
     {% if title and headings %}
-        <h4>{{ title }}</h4>
+        {% if title %}
+            <h4>{{ title }}</h4>
+        {% endif %}
         {% for heading in headings %}
             {% if section %}
                 {% include 'widgets/heading4.html' with text=heading.text href=heading.href %}
