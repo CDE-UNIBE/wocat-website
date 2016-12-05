@@ -65,7 +65,6 @@ class DocumentUploadDeleteView(View):
     def post(self, request, *args, **kwargs):
         # get the related document
         document_id = kwargs.get('document_id')
-        print('=> Document ID: ', document_id)
         if document_id:
             # get the document
             document_cls = get_document_model()

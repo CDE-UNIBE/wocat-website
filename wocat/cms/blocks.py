@@ -399,12 +399,8 @@ class UploadBlock(StructBlock):
     def get_context(self, value):
         documents = value.get('documents')
         if documents:
-            documents = [document for document in documents if document is not None]
             return {
-                # 'documents': documents,
-                # 'documents': self.child_blocks['documents'].render(documents),
                 'context': '/static/styleguide/js/dropzone-endpoint.html',
-                # 'apiurl': '',  # Added by render method.
             }
         else:
             return {}
