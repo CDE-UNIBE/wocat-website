@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.template.defaultfilters import slugify
 from django.views import View
 from wagtail.wagtailcore.models import Page, Collection
 from wagtail.wagtaildocs.models import get_document_model
-
+from django.utils.translation import ugettext_lazy as _
 
 class DocumentUploadView(View):
     def post(self, request, *args, **kwargs):
@@ -12,7 +14,7 @@ class DocumentUploadView(View):
         page_pk = kwargs.get('page_pk')
         module_id = kwargs.get('module_id')
         upload_slug = kwargs.get('upload_slug')
-        if file and page_pk and module_id:
+        if file and page_pk and module_id and upload_slug:
             # create a document for this file
             document_cls = get_document_model()
             title = file
@@ -22,7 +24,7 @@ class DocumentUploadView(View):
             except Collection.DoesNotExist:
                 root_collection = Collection.get_first_root_node()
                 collection = root_collection.add_child(name=collection_name)
-            document = document_cls.objects.create(title=title, file=file, collection=collection)
+            document = document_cls.objects.create(title=title, file=file, collection=collection, uploaded_by_user=request.user)
 
             try:
                 page = Page.objects.get(pk=page_pk).specific
@@ -44,7 +46,6 @@ class DocumentUploadView(View):
                         if block.get('type') == 'upload':
                             # module_index = module.index(block)
                             slug = block.get('value').get('upload_slug')
-                            print('==> ', slug, upload_slug)
                             if slug and slugify(slug) == upload_slug:
                                 documents = block.get('value').get('documents')
                                 documents.append(document.pk)
@@ -58,3 +59,24 @@ class DocumentUploadView(View):
             page.save()
 
             return HttpResponse('file uploaded')
+
+
+class DocumentUploadDeleteView(View):
+    def post(self, request, *args, **kwargs):
+        # get the related document
+        document_id = kwargs.get('document_id')
+        print('=> Document ID: ', document_id)
+        if document_id:
+            # get the document
+            document_cls = get_document_model()
+            try:
+                document = document_cls.objects.get(id=document_id)
+            except document_cls.DoesNotExist:
+                return HttpResponse(status=404)
+            # check if the user has permission
+            if document.uploaded_by_user == request.user:
+                # delete the document
+                message = _('File "{document}" has been deleted.'.format(document=document))
+                document.delete()
+                messages.success(request, message)
+            return redirect(self.request.GET.get('next', self.request.META.get('HTTP_REFERER', '/')))

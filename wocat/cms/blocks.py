@@ -5,6 +5,7 @@ from django.forms import CharField, TextInput
 from django.forms.utils import ErrorList
 from django.template.defaultfilters import filesizeformat, slugify
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html, mark_safe
 from wagtail.wagtailcore import blocks
@@ -111,8 +112,21 @@ class DocumentBlock(DocumentChooserBlock):
             'fileurl': document.url,
             'filename': document.filename,
             'filesize': filesizeformat(document.file.size),
+            'owner': document.uploaded_by_user,
             'type': document.file_extension,
         }
+
+    def render(self, value, context=None):
+        # Add the file_delete_url if the current user is owner.
+        if value and context:
+            user = context.get('user')
+            # check permission: "user is owner and document is not older than a day"
+            if user and user == value.uploaded_by_user and \
+                        value.created_at + timezone.timedelta(days=1) > timezone.now():
+                delete_url = reverse('cms:upload-delete', kwargs={'document_id': value.id})
+                context['file_delete_url'] = delete_url
+            return super().render(value, context)
+        return ''
 
     class Meta:
         icon = "doc-empty"
@@ -387,7 +401,8 @@ class UploadBlock(StructBlock):
         if documents:
             documents = [document for document in documents if document is not None]
             return {
-                'documents': self.child_blocks['documents'].render(documents),
+                # 'documents': documents,
+                # 'documents': self.child_blocks['documents'].render(documents),
                 'context': '/static/styleguide/js/dropzone-endpoint.html',
                 # 'apiurl': '',  # Added by render method.
             }
@@ -405,8 +420,10 @@ class UploadBlock(StructBlock):
                     upload_slug = slugify(value.get('upload_slug'))
                     if module_id:
                         apiurl = reverse('cms:upload',
-                                         kwargs={'page_pk': page.id, 'module_id': module_id, 'upload_slug': upload_slug})
+                                         kwargs={'page_pk': page.id, 'module_id': module_id,
+                                                 'upload_slug': upload_slug})
                         context['apiurl'] = apiurl
+            context['documents'] = self.child_blocks['documents'].render(value.get('documents'), context),
         return super().render(value, context)
 
     class Meta:
