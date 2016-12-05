@@ -378,40 +378,8 @@ class DSFTeaserBlock(StructBlock):
         template = 'widgets/dsf-teaser.html'
 
 
-class UUIDWidget(TextInput):
-    def render(self, name, value, attrs=None):
-        if not value:
-            value = uuid4()
-        return mark_safe(
-            """<script type='application/javascript'>document.write('<input type="text" value="' + Date.now() + '" disabled/>')</script>"""
-        )
-
-
-class UUIDField(CharField):
-    widget = UUIDWidget
-
-
-class UUIDBlock(CharBlock):
-    def __init__(self, required=True, help_text=None, max_length=None, min_length=None, **kwargs):
-        # CharField's 'label' and 'initial' parameters are not exposed, as Block handles that functionality natively
-        # (via 'label' and 'default')
-        self.field = UUIDField(
-            required=required,
-            help_text=help_text,
-            max_length=max_length,
-            min_length=min_length
-        )
-        super(CharBlock, self).__init__(**kwargs)
-
-    # def render_form(self, value, prefix='', errors=None):
-    #     return super().render_form()
-
-    def get_searchable_content(self, value):
-        return []
-
-
 class UploadBlock(StructBlock):
-    # uuid = UUIDBlock(required=True)
+    upload_slug = CharBlock(required=True)
     documents = ListBlock(DocumentBlock(required=False))
 
     def get_context(self, value):
@@ -434,8 +402,10 @@ class UploadBlock(StructBlock):
                 section = context['section']
                 if section:
                     module_id = section.get('module_id')
+                    upload_slug = slugify(value.get('upload_slug'))
                     if module_id:
-                        apiurl = reverse('cms:upload', kwargs={'page_pk': page.id, 'module_id': module_id})
+                        apiurl = reverse('cms:upload',
+                                         kwargs={'page_pk': page.id, 'module_id': module_id, 'upload_slug': upload_slug})
                         context['apiurl'] = apiurl
         return super().render(value, context)
 
@@ -585,7 +555,6 @@ GALLERY_BLOCKS = [
     ('image_gallery', ImageGalleryBlock()),
 ]
 BASE_BLOCKS += GALLERY_BLOCKS
-
 
 BASE_BLOCKS += TOCBLOCKS
 

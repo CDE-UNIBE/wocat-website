@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.template.defaultfilters import slugify
 from django.views import View
 from wagtail.wagtailcore.models import Page, Collection
 from wagtail.wagtaildocs.models import get_document_model
@@ -10,6 +11,7 @@ class DocumentUploadView(View):
         # get the related page
         page_pk = kwargs.get('page_pk')
         module_id = kwargs.get('module_id')
+        upload_slug = kwargs.get('upload_slug')
         if file and page_pk and module_id:
             # create a document for this file
             document_cls = get_document_model()
@@ -30,6 +32,7 @@ class DocumentUploadView(View):
             # Add the document to the upload block.
             data = page.content.stream_data
             # ... manipulate data
+            slug_found = False
             for item in data:
                 type = item.get('type')
                 if type == 'dsf_modules':
@@ -40,8 +43,14 @@ class DocumentUploadView(View):
                     for block in module:
                         if block.get('type') == 'upload':
                             # module_index = module.index(block)
-                            documents = block.get('value').get('documents')
-                            documents.append(document.pk)
+                            slug = block.get('value').get('upload_slug')
+                            print('==> ', slug, upload_slug)
+                            if slug and slugify(slug) == upload_slug:
+                                documents = block.get('value').get('documents')
+                                documents.append(document.pk)
+                                slug_found = True
+            if not slug_found:
+                return HttpResponse(status=404)
             # save the new data
             import json
             data_json = json.dumps(data)

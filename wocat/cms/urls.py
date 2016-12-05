@@ -7,7 +7,7 @@ from .views import DocumentUploadView
 
 urlpatterns = [
     url(
-        regex=r'^upload/(?P<page_pk>[0-9]+)/(?P<module_id>[0-9]+)/$',
+        regex=r'^upload/(?P<page_pk>[0-9]+)/(?P<module_id>[0-9]+)/(?P<upload_slug>[-\w]+)/$',
         view=DocumentUploadView.as_view(),
         name='upload'
     ),
