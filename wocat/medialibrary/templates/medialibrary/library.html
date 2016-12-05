@@ -17,25 +17,39 @@
     <br>
     <form>
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="form-group">
                     <input class="form-control" name="search" placeholder="Search" type="text" value="{{ search }}">
                 </div>
             </div>
-{#            <div class="col-sm-3">#}
-{#                <div class="form-group">#}
-{#                    <select class="form-control" name="language">#}
-{#                        <option value="">{% trans 'all Languages' %}</option>#}
-{#                        {% with current=language %}#}
-{#                            {% for language in languages %}#}
-{#                                <option value="{{ language.code }}"#}
-{#                                        {% if language == current %}selected{% endif %}>{{ language }}</option>#}
-{#                            {% endfor %}#}
-{#                        {% endwith %}#}
-{#                    </select>#}
-{#                </div>#}
-{#            </div>#}
-            <div class="col-sm-3">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select class="form-control" name="language">
+                        <option value="">{% trans 'all Languages' %}</option>
+                        {% with current=language %}
+                            {% for language in languages %}
+                                {{ current }} =?= {{ language }}
+                                <option value="{{ language.code }}"
+                                        {% if language.code == current %}selected{% endif %}>{{ language }}</option>
+                            {% endfor %}
+                        {% endwith %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select class="form-control" name="year">
+                        <option value="">{% trans 'all years' %}</option>
+                        {% with current=year %}
+                            {% for year in years %}
+                                <option value="{{ year }}"
+                                        {% if year == current %}selected{% endif %}>{{ year }}</option>
+                            {% endfor %}
+                        {% endwith %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
                 <div class="form-group">
                     <select class="form-control" name="continent">
                         <option value="">{% trans 'all Continents' %}</option>
@@ -48,7 +62,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="form-group">
                     <select class="form-control" name="country">
                         <option value="">{% trans 'all Countries' %}</option>
@@ -64,7 +78,7 @@
             {% if type %}
                 <input type="hidden" name="type" value="{{ type }}">
             {% endif %}
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="form-group">
                     <button class="btn btn-default btn-block">
                         apply

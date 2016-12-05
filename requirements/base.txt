@@ -53,6 +53,7 @@ elasticsearch==2.4.0
 
 # Models
 django-countries==3.4.1
+django-languages==0.1
 
 # API
 djangorestframework==3.4.6

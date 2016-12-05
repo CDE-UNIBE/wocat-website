@@ -1,6 +1,8 @@
 from django.core.urlresolvers import reverse
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
@@ -14,6 +16,7 @@ from wocat.cms.models import UniquePageMixin, HeaderPageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
 from wocat.countries.models import Continent, Country
+from wocat.languages.models import Language
 
 
 class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
@@ -57,12 +60,16 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
             )
             context['search'] = search
 
-        context['languages'] = {}
+        context['years'] = set(Media.objects.values_list('year', flat=True))
+        year = request.GET.get('year')
+        if year:
+            items = items.filter(year=year)
+            context['year'] = int(year)
+
+        context['languages'] = Language.objects.all()
         language = request.GET.get('language')
         if language:
-            items = items.filter(
-                # TODO: process language filter
-            )
+            items = items.filter(languages__code=language)
             context['language'] = language
 
         context['continents'] = Continent.objects.all()
@@ -144,6 +151,20 @@ class Media(models.Model):
         verbose_name=_('Video'),
         blank=True,
     )
+
+    year = models.PositiveIntegerField(
+        _('Year'),
+        default=timezone.now().year,
+        validators=[MaxValueValidator(4000)],
+        blank=True, null=True
+    )
+
+    languages = models.ManyToManyField(
+        verbose_name=_('Languages'),
+        to=Language,
+        blank=True
+    )
+
     content = StreamField(
         CORE_BLOCKS,
         blank=True,
@@ -195,5 +216,7 @@ class Media(models.Model):
         FieldPanel('author'),
         FieldPanel('countries'),
         FieldPanel('continent'),
+        FieldPanel('year'),
+        FieldPanel('languages'),
         StreamFieldPanel('content'),
     ]

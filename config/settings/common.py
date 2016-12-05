@@ -65,6 +65,7 @@ THIRD_PARTY_APPS = (
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'django_countries',
+    'django_languages',
     'easy_thumbnails',
     'rest_framework',  # api
     # 'mama_cas',
@@ -84,6 +85,7 @@ LOCAL_APPS = (
     'wocat.api',
 
     'wocat.countries',
+    'wocat.languages',
 
     'wocat.piwik',
 )
