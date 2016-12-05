@@ -1,12 +1,15 @@
+from uuid import uuid4
+
 from django.core.exceptions import ValidationError
+from django.forms import CharField, TextInput
 from django.forms.utils import ErrorList
 from django.template.defaultfilters import filesizeformat, slugify
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
-    StreamBlock, ListBlock, StructBlock
+    StreamBlock, ListBlock, StructBlock, CharBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
@@ -375,7 +378,40 @@ class DSFTeaserBlock(StructBlock):
         template = 'widgets/dsf-teaser.html'
 
 
+class UUIDWidget(TextInput):
+    def render(self, name, value, attrs=None):
+        if not value:
+            value = uuid4()
+        return mark_safe(
+            """<script type='application/javascript'>document.write('<input type="text" value="' + Date.now() + '" disabled/>')</script>"""
+        )
+
+
+class UUIDField(CharField):
+    widget = UUIDWidget
+
+
+class UUIDBlock(CharBlock):
+    def __init__(self, required=True, help_text=None, max_length=None, min_length=None, **kwargs):
+        # CharField's 'label' and 'initial' parameters are not exposed, as Block handles that functionality natively
+        # (via 'label' and 'default')
+        self.field = UUIDField(
+            required=required,
+            help_text=help_text,
+            max_length=max_length,
+            min_length=min_length
+        )
+        super(CharBlock, self).__init__(**kwargs)
+
+    # def render_form(self, value, prefix='', errors=None):
+    #     return super().render_form()
+
+    def get_searchable_content(self, value):
+        return []
+
+
 class UploadBlock(StructBlock):
+    # uuid = UUIDBlock(required=True)
     documents = ListBlock(DocumentBlock(required=False))
 
     def get_context(self, value):
