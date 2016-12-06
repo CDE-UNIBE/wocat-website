@@ -246,12 +246,14 @@ class OverlayTeaserBlock(StructBlock):
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(required=False)
+    top_box = blocks.BooleanBlock(required=False, default=False)
 
     def get_context(self, value):
         page = value.get('page')
         link = value.get('link')
         image = value.get('image')
         link_text = value.get('link_text') or _('link')
+        top = value.get('top_box')
         return {
             'title': value.get('title'),
             'description': value.get('content'),
@@ -265,6 +267,7 @@ class OverlayTeaserBlock(StructBlock):
             ],
             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
             'flapmd': True,
+            'topposition': top,
         }
 
     class Meta:
