@@ -42,6 +42,8 @@ class MediaTeaserBlock(StructBlock):
         file = media.file
         teaser_image = media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else ''
         author = media.author
+        year = media.year
+        languages = [language.name for language in media.languages.all()]
         country = media.countries
         image_position = value.get('image_position')
         content = media.content
@@ -56,7 +58,12 @@ class MediaTeaserBlock(StructBlock):
             'href': href,
             'title': title,
             'description': abstract,
-            'author': media.author,
+            'author': '{author}{year}{languages}'.format(
+                author='Author: {0}'.format(author) if author else '',
+                year='{0}Year: {1}'.format(', ' if author else '', year) if year else '',
+                languages='{0}Languages: {1}'.format(', ' if author or year else '',
+                                                     ', '.join(languages)) if languages else ''
+            ),
             'readmorelink': {'text': readmorelink},
             'imgsrc': teaser_image,
             'imgpos': image_position or 'top',
