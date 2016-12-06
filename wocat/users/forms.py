@@ -10,7 +10,10 @@ from django.core.mail import send_mail
 from django.template.defaultfilters import linebreaksbr
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
 
+# from wocat.cms.models import ContentPage, TermsSettings
 from wocat.countries.models import Country
 
 
@@ -18,6 +21,15 @@ class FullUserForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         exclude = []
+
+
+def get_terms_url():
+    # settings = TermsSettings.objects.first()
+    # if settings:
+    #     page = settings.target
+    #     if page:
+    #         return page.url
+    return '#terms'
 
 
 class UserForm(forms.ModelForm):
@@ -35,7 +47,8 @@ class UserForm(forms.ModelForm):
         label=_("Other key work topics")
     )
     terms_and_conditions = forms.BooleanField(
-        label=_('I accept the terms and conditions.'),
+        label=_('I accept the {terms}.'.format(
+            terms='<a href="{0}" target="_blank">{1}</a>'.format(get_terms_url(), _('terms and condictions')))),
         required=True,
     )
 

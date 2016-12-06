@@ -701,3 +701,17 @@ class FooterLink(Orderable, models.Model):
         FieldPanel('name'),
         PageChooserPanel('target'),
     ]
+
+
+@register_setting
+class TermsSettings(BaseSetting):
+    name = models.CharField(max_length=255)
+    target = models.ForeignKey('wagtailcore.Page')
+
+    panels = [
+        FieldPanel('name'),
+        PageChooserPanel('target'),
+    ]
+
+    class Meta:
+        verbose_name = _('Terms settings')
