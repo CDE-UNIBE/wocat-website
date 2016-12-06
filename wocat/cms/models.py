@@ -706,7 +706,11 @@ class FooterLink(Orderable, models.Model):
 @register_setting
 class TermsSettings(BaseSetting):
     name = models.CharField(max_length=255)
-    target = models.ForeignKey('wagtailcore.Page')
+    target = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     panels = [
         FieldPanel('name'),
