@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Div, HTML, Submit
+from crispy_forms.layout import Layout, Fieldset, HTML, Submit
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -11,7 +11,7 @@ from django.template.defaultfilters import linebreaksbr
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
-from wocat.cms.models import ContentPage, TermsSettings
+from wocat.cms.models import TermsSettings
 from wocat.countries.models import Country
 
 
@@ -68,60 +68,60 @@ class UserForm(forms.ModelForm):
                 text_link = _('I accept the <a href="{url}" target="_blank">{text}</a>.').format(url=url, text=text)
                 self.fields['terms_and_conditions'].label = text_link
 
-                self.helper = FormHelper()
-                self.helper.layout = Layout(
-                    Fieldset(
-                        '',
-                        'gender',
-                        'title',
-                        'first_name',
-                        'last_name',
-                        # 'language',
-                        'country',
-                        'email',
-                        'password1',
-                        'password2',
-                        'institution',
-                        HTML(
-                            '*If your Institution is missing, please contact the WOCAT Secretariat (email link)<br><br>'),
-                    ),
-                    Fieldset(
-                        _('Address information'),
-                        'address',
-                        'address_2',
-                        'postal_code',
-                        'city',
-                        'phone',
-                        'phone_2',
-                        'fax',
-                        'fax_2',
-                        'second_email',
-                        'comments',
-                        'avatar',
-                    ),
-                    Fieldset(
-                        '',
-                        'unccd',
-                        'unccd_country',
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                'gender',
+                'title',
+                'first_name',
+                'last_name',
+                # 'language',
+                'country',
+                'email',
+                'password1',
+                'password2',
+                'institution',
+                HTML(
+                    '*If your Institution is missing, please contact the WOCAT Secretariat (email link)<br><br>'),
+            ),
+            Fieldset(
+                _('Address information'),
+                'address',
+                'address_2',
+                'postal_code',
+                'city',
+                'phone',
+                'phone_2',
+                'fax',
+                'fax_2',
+                'second_email',
+                'comments',
+                'avatar',
+            ),
+            Fieldset(
+                '',
+                'unccd',
+                'unccd_country',
 
-                    ),
-                    Fieldset(
-                        _('Key work topics'),
-                        'key_work_topics',
-                        'key_work_topics_2',
+            ),
+            Fieldset(
+                _('Key work topics'),
+                'key_work_topics',
+                'key_work_topics_2',
 
-                    ),
-                    Fieldset(
-                        _('Function and WOCAT experiences'),
-                        'function',
-                        'position',
-                        'department',
-                        'experiences',
-                    ),
-                    HTML('<br><br>'),
-                    'newsletter',
-                    'terms_and_conditions',
-                )
+            ),
+            Fieldset(
+                _('Function and WOCAT experiences'),
+                'function',
+                'position',
+                'department',
+                'experiences',
+            ),
+            HTML('<br><br>'),
+            'newsletter',
+            'terms_and_conditions',
+        )
 
         self.helper.add_input(Submit('submit', _('Send')))
 
