@@ -18,6 +18,7 @@ class Command(BaseCommand):
         users = User.objects.all()
         for user in users:
             self.send_reset_link(user)
+        print('>> ...Done processing {} users.'.format(users.count()))
 
     def send_reset_link(self, user):
         site = get_current_site(request=None)
@@ -51,8 +52,11 @@ class Command(BaseCommand):
             "username": user.email
         }
 
+        print('Sending to user #"{}"...'.format(user.pk))
         subject = render_to_string('users/emails/password_reset_key_subject.txt', context=context).strip()
         message = render_to_string('users/emails/password_reset_key_message.txt', context=context)
         recipient_list = [email]
         send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
                   recipient_list=recipient_list)
+        print('...Email sent to "{}"'.format(email))
+
