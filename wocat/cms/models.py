@@ -705,15 +705,24 @@ class FooterLink(Orderable, models.Model):
 
 @register_setting
 class TermsSettings(BaseSetting):
-    name = models.CharField(max_length=255)
+    _name = models.CharField(
+        verbose_name=_('Name'),
+        max_length=255,
+        blank=True,
+        help_text=_('The name of the selected page will be used if this field is left empty.')
+    )
     target = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         on_delete=models.SET_NULL
     )
 
+    @property
+    def name(self):
+        return self._name or self.target
+
     panels = [
-        FieldPanel('name'),
+        FieldPanel('_name'),
         PageChooserPanel('target'),
     ]
 

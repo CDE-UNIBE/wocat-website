@@ -61,12 +61,10 @@ class UserForm(forms.ModelForm):
         # Update terms label link.
         settings = TermsSettings.objects.first()
         if settings:
-            page = settings.target
-            if page:
-                url = page.url
-                text = page
-                text_link = _('I accept the <a href="{url}" target="_blank">{text}</a>.').format(url=url, text=text)
-                self.fields['terms_and_conditions'].label = text_link
+            url = settings.target.url if settings.target else ''
+            text = settings.name
+            text_link = _('I accept the <a href="{url}" target="_blank">{text}</a>.').format(url=url, text=text)
+            self.fields['terms_and_conditions'].label = text_link
 
         self.helper = FormHelper()
         self.helper.layout = Layout(
