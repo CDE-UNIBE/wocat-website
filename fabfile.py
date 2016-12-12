@@ -59,6 +59,20 @@ def migrate():
         run("%(path)s/manage.py migrate %(settings)s" % env)
 
 
+def enable_debug():
+    with virtualenv(env.virtualenv_path):
+        command = "sed -i -e 's/DJANGO_DEBUG=False/DJANGO_DEBUG=True/' %(path)s/.env"
+        run(command % env)
+    reload_webserver()
+
+
+def disable_debug():
+    with virtualenv(env.virtualenv_path):
+        command = "sed -i -e 's/DJANGO_DEBUG=True/DJANGO_DEBUG=False/' %(path)s/.env"
+        run(command % env)
+    reload_webserver()
+
+
 def create_superuser():
     with virtualenv(env.virtualenv_path):
         run("%(path)s/manage.py createsuperuser %(settings)s" % env)
