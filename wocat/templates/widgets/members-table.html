@@ -18,11 +18,6 @@
 				<option>{{ expertise.name }}</option>
 			{% endfor %}
 		</select>
-		<select class="widget-members-table-sortselector form-control" autocomplete="off">
-			<option selected="selected" value="name">by Name</option>
-			<option value="country">by Country</option>
-			<option value="institution">by Institution</option>
-		</select>
 	</div>
 
 	<div class="widget-members-table-headline">
@@ -30,12 +25,24 @@
 		</div>
 		<div class="widget-members-table-name h4">
 			Name
+			<span class="widget-members-table-name-sortarrow">
+				<i class="fa fa-caret-down" aria-hidden="true"></i>
+				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
+			</span>
 		</div>
 		<div class="widget-members-table-country h4">
 			Country
+			<span class="widget-members-table-country-sortarrow">
+				<i class="fa fa-caret-down" aria-hidden="true" style="display:none;"></i>
+				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
+			</span>
 		</div>
 		<div class="widget-members-table-institution h4">
 			Institution
+			<span class="widget-members-table-institution-sortarrow">
+				<i class="fa fa-caret-down" aria-hidden="true" style="display:none;"></i>
+				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
+			</span>
 		</div>
 		<div class="widget-members-table-expertises h4">
 			Expertise
