@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _, get_language
-from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
+from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl, richtext
 
 from wocat.cms.models import HomePage, ProjectPage, TopNavigationSettings, FooterSettings
 
@@ -264,12 +264,12 @@ class Overlay(InclusionTag):
             if page:
                 return {
                     'heading': page.seo_title or page.title,
-                    'lead': page.lead if hasattr(page, 'lead') else '',
+                    'lead': richtext(page.lead) if hasattr(page, 'lead') else '',
                     'noimage': True,
                 }
         return {
             'heading': header.get('title'),
             'heading_iconsrc': header.get('iconsrc'),
-            'lead': header.get('content'),
+            'lead': richtext(header.get('content')) if header.get('content') else '',
             'noimage': not header.get('images'),
         }

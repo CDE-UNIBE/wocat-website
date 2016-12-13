@@ -11,7 +11,7 @@ from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel, \
     PageChooserPanel
-from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 
@@ -45,7 +45,7 @@ class HeaderPageMixin(models.Model):
         IMAGE_BLOCKS,
         blank=True
     )
-    lead = models.TextField(
+    lead = RichTextField(
         _('Lead text'),
         blank=True
     )
