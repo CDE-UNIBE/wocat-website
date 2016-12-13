@@ -87,6 +87,7 @@ LOCAL_APPS = (
     'wocat.countries',
     'wocat.languages',
 
+    'wocat.newsletter',
     'wocat.piwik',
 )
 

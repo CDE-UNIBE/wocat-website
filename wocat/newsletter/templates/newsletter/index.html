@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Newsletter Management</h1>
+    {% if filtered %}
+        <div class="filters pull-right">
+            <button class="btn btn-info" data-toggle="modal" data-target="#modal-filters"
+                    aria-hidden="true"><i class="fa fa-filter"></i> Filters
+            </button>
+            <div class="modal fade" id="modal-filters" tabindex="-1" role="dialog"
+                 aria-labelledby="modal-filters-label" aria-hidden="true">
+                <div class="modal-dialog modal-lg text-black" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="modal-filters-label">Filters</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="get">
+                                <input type="hidden" name="filtered" value="True">
+                                {{ filter.form|crispy }}
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filter
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <form action="" method="get">
+            <input type="hidden" name="filtered" value="True">
+            {{ filter.form|crispy }}
+            <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filter</button>
+        </form>
+    {% endif %}
+    {% if filtered %}
+        <h4>Emails <span class="badge">{{ emails_counter }}</span></h4>
+        <textarea class="form-control" id="bar">{{ emails }}</textarea>
+        <!-- Trigger -->
+        <button class="btn btn-primary copy-btn" data-clipboard-target="#bar">
+            Copy to clipboard
+        </button>
+    {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
+    <script>
+        new Clipboard('.copy-btn');
+    </script>
+{% endblock %}

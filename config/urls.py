@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^countries/', include('wocat.countries.urls', namespace='countries')),
     url(r'^search/', include('wocat.search.urls', namespace='search')),
     url(r'^cmsviews/', include('wocat.cms.urls', namespace='cms')),
+    url(r'^newsletter/', include('wocat.newsletter.urls', namespace='newsletter')),
 
     # Your stuff: custom urls includes go here
     url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),

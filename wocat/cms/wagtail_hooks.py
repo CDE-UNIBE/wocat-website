@@ -57,7 +57,7 @@ class DjangoAdminMenuItem:
     @staticmethod
     def render_html(request):
         output = '''<li class="menu-item">
-                        <a href="/{0}" class="fa fa-database">Admin</a>
+                        <a href="/{0}" class="fa fa-database" target="_blank">Admin</a>
                     </li>'''.format(settings.ADMIN_URL)
         return output
 
