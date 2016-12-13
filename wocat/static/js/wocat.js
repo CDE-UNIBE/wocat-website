@@ -8,6 +8,10 @@ $(function() {
 	$('.widget-members-table').each(function() {
 		var membersTable = $(this);
 
+		// Default order
+		membersTable.data('sort', 'name');
+		membersTable.data('order', 'asc');
+
 		function applyFilters() {
 			if (membersTable.find('.widget-members-table-countryselector').val() == "all") {
 				var country = "all";
@@ -16,7 +20,8 @@ $(function() {
 			}
 			var expertise = membersTable.find('.widget-members-table-expertiseselector').val();
 			var institution = membersTable.find('.widget-members-table-institutionselector').val();
-			var sort = membersTable.find('.widget-members-table-sortselector').val();
+			var sort = membersTable.data('sort');
+			var order = membersTable.data('order');
 			var page = membersTable.data('page');
 			var maxpagesize = membersTable.find('.widget-members-table-members').data('maxpagesize');
 
@@ -67,10 +72,18 @@ $(function() {
 
 				// console.log('Values to compare: ', valueA, valueB);
 
-				if (valueA < valueB) //sort string ascending
-					return -1;
+				if (valueA < valueB)
+					if (order == 'asc') {
+						return -1;
+					} else {
+						return 1;
+					}
 				if (valueA > valueB)
+				if (order == 'asc') {
 					return 1;
+				} else {
+					return -1;
+				}
 				return 0; //default return value (no sorting)
 			});
 			membersTable.find('.widget-members-table-members').html(sortedTable);
@@ -136,13 +149,46 @@ $(function() {
 
 
 		membersTable.find('.widget-members-table-headline .widget-members-table-name').click(function(event) {
-			membersTable.find('.widget-members-table-sortselector').val('name').change();
+			if ((membersTable.data('sort') == 'name') && (membersTable.data('order') == 'asc')) {
+				membersTable.data('order', 'desc');
+				membersTable.find('.widget-members-table-name-sortarrow i.fa-caret-down').hide();
+				membersTable.find('.widget-members-table-name-sortarrow i.fa-caret-up').show();
+			} else {
+				membersTable.data('sort', 'name');
+				membersTable.data('order', 'asc');
+				membersTable.find('.widget-members-table-name-sortarrow i.fa-caret-down').show();
+				membersTable.find('.widget-members-table-name-sortarrow i.fa-caret-up').hide();
+			}
+			membersTable.find('.widget-members-table-country-sortarrow i, .widget-members-table-institution-sortarrow i').hide();
+			applyFilters();
 		});
 		membersTable.find('.widget-members-table-headline .widget-members-table-country').click(function(event) {
-			membersTable.find('.widget-members-table-sortselector').val('country').change();
+			if ((membersTable.data('sort') == 'country') && (membersTable.data('order') == 'asc')) {
+				membersTable.data('order', 'desc');
+				membersTable.find('.widget-members-table-country-sortarrow i.fa-caret-down').hide();
+				membersTable.find('.widget-members-table-country-sortarrow i.fa-caret-up').show();
+			} else {
+				membersTable.data('sort', 'country');
+				membersTable.data('order', 'asc');
+				membersTable.find('.widget-members-table-country-sortarrow i.fa-caret-down').show();
+				membersTable.find('.widget-members-table-country-sortarrow i.fa-caret-up').hide();
+			}
+			membersTable.find('.widget-members-table-name-sortarrow i, .widget-members-table-institution-sortarrow i').hide();
+			applyFilters();
 		});
 		membersTable.find('.widget-members-table-headline .widget-members-table-institution').click(function(event) {
-			membersTable.find('.widget-members-table-sortselector').val('institution').change();
+			if ((membersTable.data('sort') == 'institution') && (membersTable.data('order') == 'asc')) {
+				membersTable.data('order', 'desc');
+				membersTable.find('.widget-members-table-institution-sortarrow i.fa-caret-down').hide();
+				membersTable.find('.widget-members-table-institution-sortarrow i.fa-caret-up').show();
+			} else {
+				membersTable.data('sort', 'institution');
+				membersTable.data('order', 'asc');
+				membersTable.find('.widget-members-table-institution-sortarrow i.fa-caret-down').show();
+				membersTable.find('.widget-members-table-institution-sortarrow i.fa-caret-up').hide();
+			}
+			membersTable.find('.widget-members-table-name-sortarrow i, .widget-members-table-country-sortarrow i').hide();
+			applyFilters();
 		});
 	});
 
@@ -171,6 +217,9 @@ $(function() {
 	// Institutions Table
 	$('.widget-institutions-table').each(function() {
 		var institutionsTable = $(this);
+		// Default order
+		institutionsTable.data('sort', 'name');
+		institutionsTable.data('order', 'asc');
 
 		function applyFilters() {
 			if (institutionsTable.find('.widget-institutions-table-countryselector').val() == "all") {
@@ -178,7 +227,8 @@ $(function() {
 			} else {
 				var country = institutionsTable.find('.widget-institutions-table-countryselector option:selected').text();
 			}
-			var sort = institutionsTable.find('.widget-institutions-table-sortselector').val();
+			var sort = institutionsTable.data('sort');
+			var order = institutionsTable.data('order');
 			var page = institutionsTable.data('page');
 			var maxpagesize = institutionsTable.find('.widget-institutions-table-institutions').data('maxpagesize');
 
@@ -217,11 +267,18 @@ $(function() {
 				valueB = valueB.toLowerCase();
 
 				// console.log('Values to compare: ', valueA, valueB);
-
-				if (valueA < valueB) //sort string ascending
-					return -1;
+				if (valueA < valueB)
+					if (order == 'asc') {
+						return -1;
+					} else {
+						return 1;
+					}
 				if (valueA > valueB)
+				if (order == 'asc') {
 					return 1;
+				} else {
+					return -1;
+				}
 				return 0; //default return value (no sorting)
 			});
 			institutionsTable.find('.widget-institutions-table-institutions').html(sortedTable);
@@ -287,10 +344,34 @@ $(function() {
 
 
 		institutionsTable.find('.widget-institutions-table-headline .widget-institutions-table-name').click(function(event) {
-			institutionsTable.find('.widget-institutions-table-sortselector').val('name').change();
+			if ((institutionsTable.data('sort') == 'name') && (institutionsTable.data('order') == 'asc')) {
+				institutionsTable.data('order', 'desc');
+				institutionsTable.find('.widget-institutions-table-name-sortarrow i.fa-caret-down').hide();
+				institutionsTable.find('.widget-institutions-table-name-sortarrow i.fa-caret-up').show();
+			} else {
+				institutionsTable.data('sort', 'name');
+				institutionsTable.data('order', 'asc');
+				institutionsTable.find('.widget-institutions-table-name-sortarrow i.fa-caret-down').show();
+				institutionsTable.find('.widget-institutions-table-name-sortarrow i.fa-caret-up').hide();
+			}
+			institutionsTable.find('.widget-institutions-table-country-sortarrow i').hide();
+			applyFilters();
+
+
 		});
 		institutionsTable.find('.widget-institutions-table-headline .widget-institutions-table-country').click(function(event) {
-			institutionsTable.find('.widget-institutions-table-sortselector').val('country').change();
+			if ((institutionsTable.data('sort') == 'country') && (institutionsTable.data('order') == 'asc')) {
+				institutionsTable.data('order', 'desc');
+				institutionsTable.find('.widget-institutions-table-country-sortarrow i.fa-caret-down').hide();
+				institutionsTable.find('.widget-institutions-table-country-sortarrow i.fa-caret-up').show();
+			} else {
+				institutionsTable.data('sort', 'country');
+				institutionsTable.data('order', 'asc');
+				institutionsTable.find('.widget-institutions-table-country-sortarrow i.fa-caret-down').show();
+				institutionsTable.find('.widget-institutions-table-country-sortarrow i.fa-caret-up').hide();
+			}
+			institutionsTable.find('.widget-institutions-table-name-sortarrow i').hide();
+			applyFilters();
 		});
 	});
 

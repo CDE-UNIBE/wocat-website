@@ -1539,7 +1539,7 @@ data = {
                 {
                     'avatarsrc': '/static/styleguide/test-images/silhouette-1by1.jpg',
                     'url': 'http://google.de',
-                    'name': 'Matthias',
+                    'name': 'Adam',
                     'country': 'Niger',
                     'institution': 'Google',
                     'position': 'Manager',

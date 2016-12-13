@@ -6,10 +6,6 @@
 				<option>{{ country.name }}</option>
 			{% endfor %}
 		</select>
-		<select class="widget-institutions-table-sortselector form-control" autocomplete="off">
-			<option selected="selected" value="name">by Name</option>
-			<option value="country">by Country</option>
-		</select>
 	</div>
 
 	<div class="widget-institutions-table-headline">
@@ -17,9 +13,17 @@
 		</div>
 		<div class="widget-institutions-table-name h4">
 			Name
+			<span class="widget-institutions-table-name-sortarrow">
+				<i class="fa fa-caret-down" aria-hidden="true"></i>
+				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
+			</span>
 		</div>
 		<div class="widget-institutions-table-country h4">
 			Country
+			<span class="widget-institutions-table-country-sortarrow">
+				<i class="fa fa-caret-down" aria-hidden="true" style="display:none;"></i>
+				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
+			</span>
 		</div>
 		<div class="widget-institutions-table-avatar">
 		</div>
