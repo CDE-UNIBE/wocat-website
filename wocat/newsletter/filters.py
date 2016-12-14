@@ -24,6 +24,7 @@ class UserFilter(django_filters.FilterSet):
     is_staff = django_filters.BooleanFilter()
     is_active = django_filters.BooleanFilter()
     gender = django_filters.ChoiceFilter(
+        label=_('Salutation'),
         choices=ALL_CHOICE + User.GENDER_CHOICES
     )
     position = django_filters.MultipleChoiceFilter(
@@ -47,11 +48,6 @@ class UserFilter(django_filters.FilterSet):
         # choices=(tuple((city, city) for city in cities if city))
     )
 
-    # date_joined = django_filters.DateFilter(
-    #     'date_joined', label=_('With start date'),
-    #     widget=forms.DateInput()
-    # )
-
     class Meta:
         model = User
         fields = [
@@ -59,15 +55,6 @@ class UserFilter(django_filters.FilterSet):
             'postal_code', 'city', 'country', 'language', 'institution',
             'is_staff', 'is_active'
         ]
-        # fields = {
-        #     'is_staff': ['exact'],
-        #     'is_active': ['exact'],
-        #     'gender': ['exact'],
-        #     'position': ['exact'],
-        #     'department': ['exact'],
-        #     'function': ['exact'],
-        #     'experiences': ['exact'],
-        # }
         filter_overrides = {
             models.CharField: {
                 'filter_class': django_filters.CharFilter,

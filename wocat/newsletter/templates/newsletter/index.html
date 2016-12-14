@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
+{% block css %}
+{{ block.super }}
+    <style>
+    .help-block {
+        display: none;
+    }
+    </style>
+{% endblock %}
+
 {% block content %}
     <h1>Newsletter Management</h1>
     {% if filtered %}
