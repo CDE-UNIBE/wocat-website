@@ -36,9 +36,7 @@
 		{% for institution in institutions %}
 			<div class="widget-institutions-table-institution"{% if not institution.visible %} style="display: none;"{% endif %}>
 				<div class="widget-institutions-table-logo">
-					{% if institution.logosrc %}
-					<img src="{{ institution.logosrc }}" alt="Logo">
-					{% endif %}
+					<img src="{% if institution.logosrc %}{{ institution.logosrc }}{% else %}/static/images/institution.png{% endif %}" alt="Logo">
 				</div>
 				<div class="widget-institutions-table-name">
 					{% if institution.href %}
@@ -59,7 +57,7 @@
 				</div>
 				<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
 				<div class="widget-institutions-table-avatar">
-					<img src="{{ institution.avatarsrc }}" alt="Avatar">
+					<img src="{% if institution.avatarsrc %}{{ institution.avatarsrc }}{% else %}/static/images/user.png{% endif %}" alt="Avatar">
 				</div>
 				<div class="widget-institutions-table-contactperson">
 					{% if institution.contactpersonhref %}

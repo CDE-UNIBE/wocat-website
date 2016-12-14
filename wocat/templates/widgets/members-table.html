@@ -53,7 +53,7 @@
 		{% for member in members %}
 			<div class="widget-members-table-member"{% if not member.visible %} style="display: none;"{% endif %}>
 				<div class="widget-members-table-avatar">
-					<img src="{{ member.avatarsrc }}" alt="Avatar">
+					<img src="{% if member.avatarsrc %}{{ member.avatarsrc }}{% else %}/static/images/user.png{% endif %}" alt="Avatar">
 				</div>
 				<div class="widget-members-table-name">
 					{% if member.href %}

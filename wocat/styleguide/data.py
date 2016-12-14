@@ -1511,7 +1511,6 @@ data = {
                     'visible': True,
                 },
                 {
-                    'avatarsrc': '/static/styleguide/test-images/giraffe-1by1.jpg',
                     'url': 'http://google.de',
                     'name': 'Tomi',
                     'href': 'http://x',
@@ -1718,7 +1717,6 @@ data = {
                     'name': 'Atelco',
                     'year': '1848',
                     'href': 'http://sinnwerkstatt',
-                    'avatarsrc': '/static/styleguide/test-images/giraffe-1by1.jpg',
                     'logosrc': '/static/styleguide/test-images/dog-1by1.jpg',
                     'country': 'Niger',
                     'contactpersonhref': 'http://person',
