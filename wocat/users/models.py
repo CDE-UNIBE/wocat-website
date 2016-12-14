@@ -316,6 +316,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         email = self.email
         return email.replace('@', '( at )')
 
+    def unsubscribe(self):
+        self.newsletter = False
+        self.save()
 
 @receiver(user_signed_up)
 def deactivate_user_on_signup(request, user, **kwargs):

@@ -51,8 +51,7 @@ class NewsletterUnsubscribeView(View):
                 return HttpResponseNotFound(
                     "User with email {email} not found.".format(email=email)
                 )
-            user.newsletter = False
-            user.save()
+            user.unsubscribe()
             return HttpResponse(
                 "User with email {email} has been unsubscribed.".format(email=email)
             )
