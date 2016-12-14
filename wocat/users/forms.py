@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Submit
+from crispy_forms.layout import Layout, Fieldset, HTML, Submit, Row, Field, Div
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -57,6 +57,11 @@ class UserForm(forms.ModelForm):
             for key in self.fields:
                 if key in fields_required:
                     self.fields[key].required = True
+                if key == 'institution':
+                    email_link = '(email link)'
+                    self.fields[
+                        key].help_text = '*If your Institution is missing, please contact the WOCAT Secretariat {link}'.format(
+                        link=email_link)
 
         # Update terms label link.
         settings = TermsSettings.objects.first()
@@ -70,114 +75,119 @@ class UserForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 '',
-                'gender',
-                'title',
-                'first_name',
-                'last_name',
-                # 'language',
-                'country',
-                'email',
-                'password1',
-                'password2',
-                'institution',
-                HTML(
-                    '*If your Institution is missing, please contact the WOCAT Secretariat (email link)<br><br>'),
+                Row(
+                    Field('gender', wrapper_class="col-sm-6"),
+                    Field('title', wrapper_class="col-sm-6"),
+                    Field('first_name', wrapper_class="col-sm-6"),
+                    Field('last_name', wrapper_class="col-sm-6"),
+                    # 'language',
+                    Field('country', wrapper_class="col-sm-6"),
+                    Field('email', wrapper_class="col-sm-6"),
+                    Field('password1', wrapper_class="col-sm-6"),
+                    Field('password2', wrapper_class="col-sm-6"),
+                    Field('institution', wrapper_class="col-sm-6"),
+                ),
             ),
             Fieldset(
                 _('Address information'),
-                'address',
-                'address_2',
-                'postal_code',
-                'city',
-                'phone',
-                'phone_2',
-                'fax',
-                'fax_2',
-                'second_email',
-                'comments',
-                'avatar',
-            ),
-            Fieldset(
-                '',
-                'unccd',
-                'unccd_country',
-
+                Row(
+                    Field('address', wrapper_class="col-sm-6"),
+                    Field('address_2', wrapper_class="col-sm-6"),
+                    Field('phone', wrapper_class="col-sm-6"),
+                    Field('phone_2', wrapper_class="col-sm-6"),
+                    Field('fax', wrapper_class="col-sm-6"),
+                    Field('fax_2', wrapper_class="col-sm-6"),
+                    Field('postal_code', wrapper_class="col-sm-6"),
+                    Field('city', wrapper_class="col-sm-6"),
+                    Field('comments', wrapper_class="col-sm-6"),
+                    Field('second_email', wrapper_class="col-sm-6"),
+                    Field('avatar', wrapper_class="col-sm-6"),
+                    Div(
+                        Field('unccd'),
+                        Field('unccd_country'),
+                        css_class="col-sm-6"
+                    ),
+                ),
             ),
             Fieldset(
                 _('Key work topics'),
-                'key_work_topics',
-                'key_work_topics_2',
-
+                Row(
+                    Field('key_work_topics', wrapper_class="col-sm-6"),
+                    Field('key_work_topics_2', wrapper_class="col-sm-6"),
+                ),
             ),
             Fieldset(
                 _('Function and WOCAT experiences'),
-                'function',
-                'position',
-                'department',
-                'experiences',
+                Row(
+                    Field('function', wrapper_class="col-sm-6"),
+                    Field('position', wrapper_class="col-sm-6"),
+                    Field('department', wrapper_class="col-sm-6"),
+                    Field('experiences', wrapper_class="col-sm-6"),
+                ),
             ),
-            HTML('<br><br>'),
             'newsletter',
             'terms_and_conditions',
         )
-
         self.helper.add_input(Submit('submit', _('Send')))
 
-    def signup(self, request, user):
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.gender = self.cleaned_data['gender']
-        user.title = self.cleaned_data['title']
-        user.position = self.cleaned_data['position']
-        user.department = self.cleaned_data['department']
-        user.function = self.cleaned_data['function']
-        user.experiences = self.cleaned_data['experiences']
-        user.key_work_topics = self.cleaned_data['key_work_topics']
-        user.address = self.cleaned_data['address']
-        user.address_2 = self.cleaned_data['address_2']
-        user.postal_code = self.cleaned_data['postal_code']
-        user.city = self.cleaned_data['city']
-        user.country = self.cleaned_data['country']
-        user.phone = self.cleaned_data['phone']
-        user.phone_2 = self.cleaned_data['phone_2']
-        user.fax = self.cleaned_data['fax']
-        user.fax_2 = self.cleaned_data['fax_2']
-        user.second_email = self.cleaned_data['second_email']
-        # user.language = self.cleaned_data['language']
-        user.comments = self.cleaned_data['comments']
-        user.avatar = self.cleaned_data['avatar']
-        user.institution = self.cleaned_data['institution']
-        user.newsletter = self.cleaned_data['newsletter']
-        user.terms_and_conditions = self.cleaned_data['terms_and_conditions']
-        # user.is_active = False
-        user.save()
-        self.send_instruction_message(request, user)
-        self.notify_moderators(user)
 
-    def send_instruction_message(self, request, user):
-        context = {
-            'salutation': user.salutation,
-            'name': user.name,
-            'email': user.email,
-        }
-        message = render_to_string('users/post_signup_message.html', context=context)
-        message = linebreaksbr(message)
-        messages.info(request, message)
+def signup(self, request, user):
+    user.first_name = self.cleaned_data['first_name']
+    user.last_name = self.cleaned_data['last_name']
+    user.gender = self.cleaned_data['gender']
+    user.title = self.cleaned_data['title']
+    user.position = self.cleaned_data['position']
+    user.department = self.cleaned_data['department']
+    user.function = self.cleaned_data['function']
+    user.experiences = self.cleaned_data['experiences']
+    user.key_work_topics = self.cleaned_data['key_work_topics']
+    user.address = self.cleaned_data['address']
+    user.address_2 = self.cleaned_data['address_2']
+    user.postal_code = self.cleaned_data['postal_code']
+    user.city = self.cleaned_data['city']
+    user.country = self.cleaned_data['country']
+    user.phone = self.cleaned_data['phone']
+    user.phone_2 = self.cleaned_data['phone_2']
+    user.fax = self.cleaned_data['fax']
+    user.fax_2 = self.cleaned_data['fax_2']
+    user.second_email = self.cleaned_data['second_email']
+    # user.language = self.cleaned_data['language']
+    user.comments = self.cleaned_data['comments']
+    user.avatar = self.cleaned_data['avatar']
+    user.institution = self.cleaned_data['institution']
+    user.newsletter = self.cleaned_data['newsletter']
+    user.terms_and_conditions = self.cleaned_data['terms_and_conditions']
+    # user.is_active = False
+    user.save()
+    self.send_instruction_message(request, user)
+    self.notify_moderators(user)
 
-    def notify_moderators(self, user):
-        context = {
-            'user': user,
-            'project': 'WOCAT',
-            'management_url': 'http://www.{domain}/cms/users/{id}/'.format(
-                domain=Site.objects.get_current(),
-                id=user.id
-            )
-        }
-        subject = render_to_string('users/emails/email_signup_moderation_request_subject.txt', context=context).strip()
-        message = render_to_string('users/emails/email_signup_moderation_request_message.txt', context=context)
-        recipient_list = []
-        group, created = Group.objects.get_or_create(name='Signup Moderators')
-        if group:
-            recipient_list += list(group.user_set.values_list('email', flat=True))
-        send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
-                  recipient_list=recipient_list)
+
+def send_instruction_message(self, request, user):
+    context = {
+        'salutation': user.salutation,
+        'name': user.name,
+        'email': user.email,
+    }
+    message = render_to_string('users/post_signup_message.html', context=context)
+    message = linebreaksbr(message)
+    messages.info(request, message)
+
+
+def notify_moderators(self, user):
+    context = {
+        'user': user,
+        'project': 'WOCAT',
+        'management_url': 'http://www.{domain}/cms/users/{id}/'.format(
+            domain=Site.objects.get_current(),
+            id=user.id
+        )
+    }
+    subject = render_to_string('users/emails/email_signup_moderation_request_subject.txt', context=context).strip()
+    message = render_to_string('users/emails/email_signup_moderation_request_message.txt', context=context)
+    recipient_list = []
+    group, created = Group.objects.get_or_create(name='Signup Moderators')
+    if group:
+        recipient_list += list(group.user_set.values_list('email', flat=True))
+    send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
+              recipient_list=recipient_list)
