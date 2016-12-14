@@ -63,12 +63,12 @@ class NewsPage(HeaderPageMixin, Page):
 
     date = models.DateField(
         _('Date'),
-        default = timezone.now,
+        default=timezone.now,
     )
 
     @property
     def countries(self):
-        countries = [country.country for country in self.region_countries.all()]
+        countries = [country.country for country in self.news_countries.all()]
         return countries
 
     @property
@@ -108,15 +108,15 @@ class NewsPage(HeaderPageMixin, Page):
         return self.title
 
 
-    # class NewsPageCountry(models.Model):
-    #     news = ParentalKey(
-    #         'NewsPage',
-    #         related_name='countries'
-    #     )
-    #     country = models.ForeignKey(
-    #         'Country',
-    #         related_name="+"
-    #     )
-    #     panels = [
-    #         FieldPanel('country')
-    #     ]
+        # class NewsPageCountry(models.Model):
+        #     news = ParentalKey(
+        #         'NewsPage',
+        #         related_name='countries'
+        #     )
+        #     country = models.ForeignKey(
+        #         'Country',
+        #         related_name="+"
+        #     )
+        #     panels = [
+        #         FieldPanel('country')
+        #     ]
