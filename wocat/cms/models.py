@@ -422,7 +422,7 @@ class RegionPage(HeaderPageMixin, Page):
 
 class MembersPage(UniquePageMixin, Page):
     template = 'pages/members.html'
-    paginate_by = 20
+    paginate_by = 100
 
     content = StreamField(CORE_BLOCKS, blank=True)
 
@@ -501,7 +501,7 @@ class MembersPage(UniquePageMixin, Page):
 
 class InstitutionsPage(UniquePageMixin, Page):
     template = 'pages/institutions.html'
-    paginate_by = 20
+    paginate_by = 100
 
     content = StreamField(CORE_BLOCKS, blank=True)
 
