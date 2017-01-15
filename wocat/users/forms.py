@@ -27,7 +27,7 @@ class UserForm(forms.ModelForm):
         required=False,
     )
     unccd_country = forms.ChoiceField(
-        choices=((country.code, country) for country in Country.objects.all()),
+        choices=[],
         required=False,
     )
     key_work_topics_2 = forms.CharField(
@@ -50,6 +50,8 @@ class UserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['unccd_country'].choices = ((country.code, country) for country in Country.objects.all())
+        self.fields['unccd_country'].widget.choices = self.fields['unccd_country'].choices
 
         # Update the required fields.
         fields_required = getattr(self.Meta, 'fields_required', None)
