@@ -6,8 +6,65 @@ World Overview of Conservation Approaches and Technologies
 
 Settings
 ------------
+* POSTGRES_USER: User for postgres database
+* POSTGRES_PASSWORD: Password for postgres database
+* DJANGO_ADMIN_URL: URL of Django admin interface
+* DJANGO_SETTINGS_MODULE: Python path syntax to django settings module
+* DJANGO_SECRET_KEY: A secret key for a particular Django installation
+* DJANGO_ALLOWED_HOSTS: A list of strings representing the host/domain names that this Django site can serve
+* DJANGO_SERVER_EMAIL: The email address that error messages come from
+* DJANGO_ACCOUNT_ALLOW_REGISTRATION: Allow registration of new users (default True)
+* DJANGO_SENTRY_DSN: DSN for Sentry error tracking
+* ELASTICSEARCH_BACKEND: Elasticsearch backend
+* ELASTICSEARCH_URL: Elasticsearch URL
+* NEWSLETTER_API_KEY: Mailchimp API Key
+* NEWSLETTER_LIST_ID: Mailchimp List ID
 
-TODO: Documenting settings
+Requirements
+------------
+
+* Python >= 3.0
+
+Installation
+------------
+
+
+1. Create and activate virtualenv (optional)
+2. Install requirements
+
+    $ pip install -r requirements/local.txt
+    or for production:
+    $ pip install -r requirements/production.txt
+
+
+3. Install database (Postgres)
+
+.. code-block:: sql
+
+  > create role <USER> with password <PASSWORD>;
+  > create database <DATABASE> with owner <USER>;
+  $ python manage.py migrate
+
+4. Copy „env.example“ to „.env“, adapt settings
+
+5. Collect static files (required only for deployment server)
+
+.. code-block:: bash
+
+  $ python manage.py collectstatic --no-input
+
+5. Run server
+
+.. code-block:: bash
+
+  $ python manage.py runserver
+
+Update
+------------
+
+.. code-block:: bash
+
+  $ pip install -rU requirements.txt
 
 Basic Commands
 --------------
@@ -28,14 +85,12 @@ Test coverage
 
 To run the tests, check your test coverage, and generate an HTML coverage report::
 
-    $ coverage run manage.py test
-    $ coverage html
-    $ open htmlcov/index.html
+  $ coverage run manage.py test
+  $ coverage html
+  $ open htmlcov/index.html
 
 Running tests with py.test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
 
   $ py.test
 
@@ -53,14 +108,19 @@ The system is setup with reasonable defaults, including 404 logging and integrat
 
 You must set the DSN url in production.
 
-
-
-
 Deployment
 ----------
 
+Deployment requires SSH access to the deployment server without password using SSH keychain.
 
+.. code-block:: bash
 
+  # for development:
+  $ fab development deploy 
+  # for staging:
+  $ fab staging deploy
+  # for production:
+  $ fab production deploy
 
 
 Docker
