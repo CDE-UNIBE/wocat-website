@@ -100,9 +100,6 @@ LESS to CSS compilation
 The Style sheet is written in LESS. It will be compiled to a single CSS file while running Fabric. See *compile_less()* in *fabfile.py*.
 
 
-TODO: Documenting.
-
-
 Sentry
 ^^^^^^
 
