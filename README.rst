@@ -97,7 +97,7 @@ Running tests with py.test
 LESS to CSS compilation
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The Style sheet is written in LESS. It will be compiled to a single CSS file while running Fabric. See *compile_less()* in *fabfile.py*.
+The style sheets are written in LESS. They will be compiled to a single CSS file by *$ lessc* while running Fabric. See *compile_less()* in *fabfile.py*.
 
 
 Sentry
