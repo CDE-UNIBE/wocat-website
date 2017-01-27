@@ -24,13 +24,22 @@ Requirements
 ------------
 
 * Python >= 3.0
+* Elasticsearch/Tika
+* CAS/QCAT
 
 Installation
 ------------
 
 
 1. Create and activate virtualenv (optional)
+
+.. code-block:: bash
+   $ virtualenv customenv
+   $ source customenv/bin/activate
+
 2. Install requirements
+
+.. code-block:: bash
 
     $ pip install -r requirements/local.txt
     or for production:
@@ -41,8 +50,8 @@ Installation
 
 .. code-block:: sql
 
-  > create role <USER> with password <PASSWORD>;
-  > create database <DATABASE> with owner <USER>;
+  $ psql -d database_name -c "create role <USER> with password <PASSWORD>";
+  $ psql -d database_name -c "create database <DATABASE> with owner <USER>";
   $ python manage.py migrate
 
 4. Copy „env.example“ to „.env“, adapt settings
@@ -59,12 +68,36 @@ Installation
 
   $ python manage.py runserver
 
-Update
-------------
+Deployment
+----------
+
+Deployment requires SSH access to the deployment server without password using SSH keychain. We recommend using fabric to pull code, update new requirements, collect static files, compile translations and migrate the database.
+
+.. code-block:: bash
+
+  # for development:
+  $ fab development deploy 
+  # for staging:
+  $ fab staging deploy
+  # for production:
+  $ fab production deploy
+
+
+Update of packages
+------------------
+
 
 .. code-block:: bash
 
   $ pip install -rU requirements.txt
+
+CAS and QCAT
+------------
+
+The project requires:
+
+* CAS running at https://wocat.net/cas/ (using https://github.com/jbittel/django-mama-cas)
+* QCAT running at https://qcat.wocat.net/en/wocat/ (using https://github.com/CDE-UNIBE/qcat/tree/feature/1055-new-authentication and https://github.com/mingchen/django-cas-ng)
 
 Basic Commands
 --------------
@@ -80,25 +113,49 @@ Setting Up Your Users
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
-Test coverage
-^^^^^^^^^^^^^
+Import users from CSV
+^^^^^^^^^^^^^^^^^^^^^
 
-To run the tests, check your test coverage, and generate an HTML coverage report::
+To import users from CSV use this command:
 
-  $ coverage run manage.py test
-  $ coverage html
-  $ open htmlcov/index.html
+.. code-block:: bash
 
-Running tests with py.test
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    $ python ../manage.py import_users_data /path/to/institutions.csv /path/to/users.csv
 
-  $ py.test
+The CSV file specs are (sample file: )
+
+* encoding: UTF-8
+* delimiter: ";"
+* quoting: 
+* escape character:
+
+Attention: Please check before the import again whether the data basis is clean, especially regarding the institutes!
+
+Rebuild search index
+^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+    $ ./manage.py update_index [--backend <backend name>]
+
+This command rebuilds the search index from scratch. It is only required when using Elasticsearch.
+
+It is recommended to run this command once a week and at the following times:
+
+whenever any pages have been created through a script (after an import, for example)
+whenever any changes have been made to models or search configuration
+The search may not return any results while this command is running, so avoid running it at peak times.
+
+.. code-block:: bash
+
+    $ ./manage.py search_garbage_collect
+
+Wagtail keeps a log of search queries that are popular on your website. On high traffic websites, this log may get big and you may want to clean out old search queries. This command cleans out all search query logs that are more than one week old (or a number of days configurable through the WAGTAILSEARCH_HITS_MAX_AGE setting).
 
 LESS to CSS compilation
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 The style sheets are written in LESS. They will be compiled to a single CSS file by *$ lessc* while running Fabric. See *compile_less()* in *fabfile.py*.
-
 
 Sentry
 ^^^^^^
@@ -107,24 +164,3 @@ Sentry is an error logging aggregator service. You can sign up for a free accoun
 The system is setup with reasonable defaults, including 404 logging and integration with the WSGI application.
 
 You must set the DSN url in production.
-
-Deployment
-----------
-
-Deployment requires SSH access to the deployment server without password using SSH keychain.
-
-.. code-block:: bash
-
-  # for development:
-  $ fab development deploy 
-  # for staging:
-  $ fab staging deploy
-  # for production:
-  $ fab production deploy
-
-
-Docker
-^^^^^^
-
-TODO: Documenting
-
