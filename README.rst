@@ -122,7 +122,7 @@ To import users from CSV use this command:
 
     $ python ../manage.py import_users_data /path/to/institutions.csv /path/to/users.csv
 
-The CSV file specs are (sample file: )
+The CSV file specs are (check samples files in /import folder)
 
 * encoding: UTF-8
 * delimiter: ";"
