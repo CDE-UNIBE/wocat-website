@@ -17,14 +17,19 @@ from wocat.users.models import User
 class Command(BaseCommand):
     help = 'Import user data from a csv file.'
 
-    def handle(self, *args, **options):
-        self.import_institutions(init=True)
-        self.import_users()
-        self.import_institutions()
+    def add_arguments(self, parser):
+        # Positional arguments
+        parser.add_argument('institutions', nargs='+', type=str)
+        parser.add_argument('users', nargs='+', type=str)
 
-    def import_institutions(self, init=False):
-        print('>> Importing insttitutions...')
-        file = open('local/export_users_institutions_20160819/wocat_institution_export.csv')
+    def handle(self, *args, **options):
+        self.import_institutions(filename=options['institutions'][0], init=True)
+        self.import_users(filename=options['users'][0])
+        self.import_institutions(filename=options['institutions'][0])
+
+    def import_institutions(self, filename, init=False):
+        self.stdout.write('Importing institutions...')
+        file = open(filename)
         fieldnames = ['id', 'name', 'url', 'country', 'contact_user']
         read = csv.DictReader(file, delimiter=';', fieldnames=fieldnames)
         next(read)
@@ -38,19 +43,19 @@ class Command(BaseCommand):
             abbreviation = name
             url = row['url']
             if not name:
-                print('WARNING: No name: ', row)
+                self.stdout.write('WARNING: No name: ', row)
                 warnings += 1
             try:
                 country = Country.objects.get(code=row['country'])
             except Country.DoesNotExist:
-                print('WARNING: Country code `{0}` not found: `{1}`'.format(row['country'], row))
+                self.stdout.write('WARNING: Country code `{0}` not found: `{1}`'.format(row['country'], row))
                 warnings += 1
                 country = None
             try:
                 contact_person = get_user_model().objects.get(id=row['contact_user'])
             except get_user_model().DoesNotExist:
                 if not init:
-                    print('WARNING: User id `{0}` not found: `{1}`'.format(row['contact_user'], row))
+                    self.stdout.write('WARNING: User id `{0}` not found: `{1}`'.format(row['contact_user'], row))
                     warnings += 1
                 contact_person = None
             # print(id, name, abbreviation, url, country, contact_person)
@@ -70,13 +75,13 @@ class Command(BaseCommand):
                     institution.contact_person = contact_person
                     institution.save()
                     updated += 1
-        print('Warnings: {0}'.format(warnings))
-        print('Created: {0}'.format(created))
-        print('Updated: {0}'.format(updated))
+        self.stdout.write('Warnings: {0}'.format(warnings))
+        self.stdout.write('Created: {0}'.format(created))
+        self.stdout.write('Updated: {0}'.format(updated))
 
-    def import_users(self):
-        print('>> Importing users...')
-        file = open('local/export_users_institutions_20160819/wocat_user_export_all.csv')
+    def import_users(self, filename):
+        self.stdout.write('Importing users...')
+        file = open(filename)
         fieldnames = [
             'uid', 'username', 'title', 'firstname', 'lastname', 'gender', 'lang', 'second_email',
             'phone', 'mobile', 'fax', 'country', 'city', 'zip', 'address', 'second_address', 'position',
@@ -246,8 +251,8 @@ class Command(BaseCommand):
 
     @staticmethod
     def warn(id, message):
-        print('WARNING: ID:{0} - {1}'.format(id, message))
+        self.stdout.write('WARNING: ID:{0} - {1}'.format(id, message))
 
     @staticmethod
     def error(id, message):
-        print('ERROR: ID:{0} - {1}'.format(id, message))
+        self.stdout.write('ERROR: ID:{0} - {1}'.format(id, message))
