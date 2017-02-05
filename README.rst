@@ -15,7 +15,7 @@ Settings
 * DJANGO_SERVER_EMAIL: The email address that error messages come from
 * DJANGO_ACCOUNT_ALLOW_REGISTRATION: Allow registration of new users (default True)
 * DJANGO_SENTRY_DSN: DSN for Sentry error tracking
-* ELASTICSEARCH_BACKEND: Elasticsearch backend
+* WAGTAILSEARCH_BACKEND: 'db' for regular Psql, 'elasticsearch' or 'elasticsearch2' for ES1 or 2.
 * ELASTICSEARCH_URL: Elasticsearch URL
 * NEWSLETTER_API_KEY: Mailchimp API Key
 * NEWSLETTER_LIST_ID: Mailchimp List ID
@@ -25,7 +25,7 @@ Requirements
 
 * Python >= 3.0
 * Elasticsearch/Tika
-* CAS/QCAT
+* CAS
 
 Installation
 ------------
@@ -91,13 +91,22 @@ Update of packages
 
   $ pip install -rU requirements.txt
 
-CAS and QCAT
-------------
+Central Authentication Service (CAS)
+------------------------------------
 
-The project requires:
+To use a single sign on for Qcat and Wocat, we agreed on using CAS.
+To use CAS with Django, we set up [Mama CAS](https://github.com/jbittel/django-mama-cas) server on our side
+and any other service wanting to facilitate this server can use [django-cas-ng](https://github.com/mingchen/django-cas-ng) to connect.
+The setup is straight forward and by following the tutorials on each services side, it's up and running in ~5min.
+Sebastian Manger already made [a branch for qcat](https://github.com/CDE-UNIBE/qcat/tree/feature/1055-new-authentication)
 
-* CAS running at https://wocat.net/cas/ (using https://github.com/jbittel/django-mama-cas)
-* QCAT running at https://qcat.wocat.net/en/wocat/ (using https://github.com/CDE-UNIBE/qcat/tree/feature/1055-new-authentication and https://github.com/mingchen/django-cas-ng)
+
+Elasticsearch
+-------------
+To use Elasticsearch as a search-backend, it suffices to just set it up (through your distributions package management) and change the WAGTAILSEARCH_BACKEND-variable accordinly.
+As of writing this, a feature for indexing PDFs and other documents has not made it into upstream wagtail (https://github.com/wagtail/wagtail/pull/3028) . Once this feature is merged,
+we can retroactively index all uploaded documents. (The index engine for ElasticSearch is based on [Tika](https://tika.apache.org/) and can therefore index anything Tika can.)
+
 
 Basic Commands
 --------------
