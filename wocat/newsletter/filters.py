@@ -28,16 +28,16 @@ class UserFilter(django_filters.FilterSet):
         choices=ALL_CHOICE + User.GENDER_CHOICES
     )
     position = django_filters.MultipleChoiceFilter(
-        choices=(tuple((position, position) for position in positions if position))
+        choices=[]
     )
     department = django_filters.MultipleChoiceFilter(
-        choices=(tuple((department, department) for department in departments if department))
+        choices=[]
     )
     function = django_filters.MultipleChoiceFilter(
         choices=User.FUNCTION_CHOICES
     )
     city = django_filters.MultipleChoiceFilter(
-        choices=(tuple((city, city) for city in cities if city))
+        choices=[]
     )
     country = django_filters.ModelMultipleChoiceFilter(
         queryset=Country.objects.all()
@@ -47,6 +47,14 @@ class UserFilter(django_filters.FilterSet):
         queryset=Institution.objects.all()
         # choices=(tuple((city, city) for city in cities if city))
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set choices on init to prevent initial migration errors because of dependencies
+        self.filters['position'].choices = (tuple((position, position) for position in positions if position))
+        self.filters['department'].choices = (tuple((department, department) for department in departments if department))
+        self.filters['city'].choices = (tuple((city, city) for city in cities if city))
+
 
     class Meta:
         model = User
