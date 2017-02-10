@@ -17,7 +17,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from wocat.medialibrary.blocks import MediaTeaserBlock
 from wocat.news.blocks import NewsTeaserBlock
-from wocat.users.blocks import UserTeaserBlock
+from wocat.users.blocks import UserTeaserBlock, CONTACT_PERSON_TEASER_BLOCKS
 
 
 class HeadingBlock(blocks.CharBlock):
@@ -476,7 +476,8 @@ class DSFModulesBlock(StructBlock):
             })
             sidebar_links.append({
                 'anchorlink': True,
-                'color': module.get('color'),
+                'color': 'white',
+                'backgroundcolor': module.get('color'),
                 'href': '#module-{0}'.format(i),
                 'kicker': 'Module {0}'.format(i),
                 'text': module.get('text'),
