@@ -133,6 +133,7 @@ class Media(models.Model):
     )
     abstract = models.TextField(
         _('Abstract'),
+        blank=True
     )
     teaser_image = models.ForeignKey(
         'wagtailimages.Image',
