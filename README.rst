@@ -76,7 +76,7 @@ Deployment requires SSH access to the deployment server without password using S
 .. code-block:: bash
 
   # for development:
-  $ fab development deploy 
+  $ fab development deploy
   # for staging:
   $ fab staging deploy
   # for production:
@@ -100,6 +100,18 @@ and any other service wanting to facilitate this server can use [django-cas-ng](
 The setup is straight forward and by following the tutorials on each services side, it's up and running in ~5min.
 Sebastian Manger already made [a branch for qcat](https://github.com/CDE-UNIBE/qcat/tree/feature/1055-new-authentication)
 
+Newsletter
+----------
+
+The project uses `mailchimp`: https://mailchimp.com/
+
+https://login.mailchimp.com/signup
+Please follow their instructions on how to setup an account and create a list.
+Both the api key and list id need to be set in order for the integration to work.
+(please see settings section for respective environment variable setup)
+
+In oder for unsubscription via newsletter email link to work a webhook needs to be registered:
+http://kb.mailchimp.com/integrations/api-integrations/how-to-set-up-webhooks
 
 Elasticsearch
 -------------
@@ -135,7 +147,7 @@ The CSV file specs are (check samples files in /import folder)
 
 * encoding: UTF-8
 * delimiter: ";"
-* quoting: 
+* quoting:
 * escape character:
 
 Attention: Please check before the import again whether the data basis is clean, especially regarding the institutes!
