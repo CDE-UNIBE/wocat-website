@@ -29,7 +29,7 @@ urlpatterns = [
     # User management
     url(r'^users/', include('wocat.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
-    # url(r'^cas/', include('mama_cas.urls')),
+    url(r'^cas/', include('mama_cas.urls')),
     url(r'^library/media/', include('wocat.medialibrary.urls', namespace='media')),
     url(r'^glossary/', include('wocat.glossary.urls', namespace='glossary')),
     url(r'^institutions/', include('wocat.institutions.urls', namespace='institutions')),
