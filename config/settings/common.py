@@ -68,6 +68,7 @@ THIRD_PARTY_APPS = (
     'django_languages',
     'easy_thumbnails',
     'rest_framework',  # api
+    'rest_framework.authtoken',  # token auth
     'mama_cas',
 )
 

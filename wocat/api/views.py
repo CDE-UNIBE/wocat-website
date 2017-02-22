@@ -1,5 +1,7 @@
 from django.db.models import Q
 from rest_framework import viewsets, routers
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
 from wocat.cms.serializers import ProjectSerializer, CountrySerializer, RegionSerializer
@@ -13,6 +15,8 @@ router = routers.DefaultRouter()
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
         """
