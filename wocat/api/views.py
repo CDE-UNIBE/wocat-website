@@ -27,7 +27,7 @@ class UserViewSet(viewsets.ModelViewSet):
         name = self.request.query_params.get('name', None)
         if name is not None:
             queryset = queryset.filter(
-                Q(first_name__contains=name) | Q(last_name__contains=name)
+                Q(first_name__icontains=name) | Q(last_name__icontains=name)
             )
         return queryset
 
