@@ -24,7 +24,7 @@ class HeadingBlock(blocks.CharBlock):
     class Meta:
         classname = 'full title'
         icon = 'title'
-        template = 'widgets/heading1.html'
+        template = 'widgets/heading3.html'
 
     def get_context(self, value):
         context = super().get_context(value)
