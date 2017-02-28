@@ -13,12 +13,12 @@ from fabric.operations import require
 
 
 ENVIRONMENTS = {
-    'development': {
+    'production': {
         'host_string': environ['WOCAT_BETA_HOST'],
         'source_path': environ['WOCAT_BETA_PATH'],
         'virtualenv_path': environ['WOCAT_BETA_VIRTUALENV'],
         'git_remote': 'origin',
-        'git_branch': 'development',
+        'git_branch': 'production',
         'requirements_file': 'requirements/base.txt',
         'touch_file': environ['WOCAT_BETA_TOUCH_FILE']
     }
@@ -26,13 +26,13 @@ ENVIRONMENTS = {
 
 
 @task
-def development():
-    setup_environment('development')
+def production():
+    setup_environment('production')
 
 
 @task
 def deploy():
-    require('environment', provided_by=(development, ))
+    require('environment', provided_by=(production, ))
     with cd(env.source_path):
         _update_source()
         _install_dependencies()

@@ -21,7 +21,7 @@ build:
 
 branches:
   only:
-    - development
+    - production
 
 integrations:
   notifications:
