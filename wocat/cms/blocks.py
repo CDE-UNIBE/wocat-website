@@ -449,31 +449,30 @@ DSF_BLOCKS = DSF_BLOCKS + [('dsf_toc', DsfTocBlock())]
 
 
 class DSFModulesBlock(StructBlock):
+    module_1_title = CharBlock()
     module_1 = StreamBlock(DSF_BLOCKS)
+    module_2_title = CharBlock()
     module_2 = StreamBlock(DSF_BLOCKS)
+    module_3_title = CharBlock()
     module_3 = StreamBlock(DSF_BLOCKS)
+    module_4_title = CharBlock()
     module_4 = StreamBlock(DSF_BLOCKS)
+    module_5_title = CharBlock()
     module_5 = StreamBlock(DSF_BLOCKS)
+    module_6_title = CharBlock()
     module_6 = StreamBlock(DSF_BLOCKS)
+    module_7_title = CharBlock()
     module_7 = StreamBlock(DSF_BLOCKS)
 
     def get_context(self, value, context=None):
-        module_1 = value.get('module_1')
-        module_2 = value.get('module_2')
-        module_3 = value.get('module_3')
-        module_4 = value.get('module_4')
-        module_5 = value.get('module_5')
-        module_6 = value.get('module_6')
-        module_7 = value.get('module_7')
         modules = {
-            1: {'content': module_1, 'color': '#403D38', 'text': _('Operational Strategy and Action plan')},
-            2: {'content': module_2, 'color': '#6E3237', 'text': _('National and Subnational Level')},
-            3: {'content': module_3, 'color': '#604F3B', 'text': _('Landscape Level')},
-            4: {'content': module_4, 'color': '#3B482E', 'text': _('Sea Level')},
-            5: {'content': module_5, 'color': '#22454E', 'text': _('SLM Territorial Planning')},
-            6: {'content': module_6, 'color': '#2D446B', 'text': _('Implementation and scaling out')},
-            7: {'content': module_7, 'color': '#3A3451',
-                'text': _('Knowledge management platform for informed decision making')},
+            1: {'content': value.get('module_1'), 'color': '#403D38', 'text': value.get('module_1_title')}, # _('Operational Strategy and Action plan')
+            2: {'content': value.get('module_2'), 'color': '#6E3237', 'text': value.get('module_2_title')}, # _('National and Subnational Level')
+            3: {'content': value.get('module_3'), 'color': '#604F3B', 'text': value.get('module_3_title')}, # _('Landscape Level')}
+            4: {'content': value.get('module_4'), 'color': '#3B482E', 'text': value.get('module_4_title')}, # _('Sea Level')
+            5: {'content': value.get('module_5'), 'color': '#22454E', 'text': value.get('module_5_title')}, # _('SLM Territorial Planning')
+            6: {'content': value.get('module_6'), 'color': '#2D446B', 'text': value.get('module_6_title')}, # _('Implementation and scaling out')
+            7: {'content': value.get('module_7'), 'color': '#3A3451', 'text': value.get('module_7_title')}, # _('Knowledge management platform for informed decision making')
         }
 
         sections = []
