@@ -466,13 +466,13 @@ class DSFModulesBlock(StructBlock):
 
     def get_context(self, value, context=None):
         modules = {
-            1: {'content': value.get('module_1'), 'color': '#403D38', 'text': value.get('module_1_title')}, # _('Operational Strategy and Action plan')
-            2: {'content': value.get('module_2'), 'color': '#6E3237', 'text': value.get('module_2_title')}, # _('National and Subnational Level')
-            3: {'content': value.get('module_3'), 'color': '#604F3B', 'text': value.get('module_3_title')}, # _('Landscape Level')}
-            4: {'content': value.get('module_4'), 'color': '#3B482E', 'text': value.get('module_4_title')}, # _('Sea Level')
-            5: {'content': value.get('module_5'), 'color': '#22454E', 'text': value.get('module_5_title')}, # _('SLM Territorial Planning')
-            6: {'content': value.get('module_6'), 'color': '#2D446B', 'text': value.get('module_6_title')}, # _('Implementation and scaling out')
-            7: {'content': value.get('module_7'), 'color': '#3A3451', 'text': value.get('module_7_title')}, # _('Knowledge management platform for informed decision making')
+            1: {'content': value.get('module_1'), 'color': '#403D38', 'text': value.get('module_1_title')},  # _('Operational Strategy and Action plan')
+            2: {'content': value.get('module_2'), 'color': '#6E3237', 'text': value.get('module_2_title')},  # _('National and Subnational Level')
+            3: {'content': value.get('module_3'), 'color': '#604F3B', 'text': value.get('module_3_title')},  # _('Landscape Level')}
+            4: {'content': value.get('module_4'), 'color': '#3B482E', 'text': value.get('module_4_title')},  # _('Sea Level')
+            5: {'content': value.get('module_5'), 'color': '#22454E', 'text': value.get('module_5_title')},  # _('SLM Territorial Planning')
+            6: {'content': value.get('module_6'), 'color': '#2D446B', 'text': value.get('module_6_title')},  # _('Implementation and scaling out')
+            7: {'content': value.get('module_7'), 'color': '#3A3451', 'text': value.get('module_7_title')},  # _('Knowledge management platform for informed decision making')
         }
 
         sections = []
