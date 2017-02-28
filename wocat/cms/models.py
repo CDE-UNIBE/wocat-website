@@ -236,6 +236,11 @@ class ProjectPage(HeaderPageMixin, Page):
     def countries(self):
         return self.get_descendants().type(ProjectCountryPage).specific()
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['contact_person'] = self.contact_person
+        return context
+
 
 class ProjectCountriesPage(HeaderPageMixin, Page):
     template = 'countries/index.html'
@@ -366,6 +371,7 @@ class CountryPage(HeaderPageMixin, Page):
         header = context.get('header')
         if header:
             header['iconsrc'] = self.flag
+        context['contact_person'] = self.contact_person
         return context
 
 
@@ -408,6 +414,11 @@ class RegionPage(HeaderPageMixin, Page):
     @property
     def country_codes(self):
         return [country.country.code for country in self.countries]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['contact_person'] = self.contact_person
+        return context
 
     class Meta:
         verbose_name = _('Region')
