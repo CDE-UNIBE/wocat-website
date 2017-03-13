@@ -2,7 +2,7 @@
 	<ul class="nav nav-pills nav-stacked">
 		{% for link in links %}
 			<li role="presentation">
-				<a href="{{ link.href }}"{% if link.anchorlink %} class="anchorlink"{% endif %}{% if link.color or link.backgroundcolor %} style="{% if link.color %}color:{{ link.color }}; {% endif %}{% if link.backgroundcolor %}background-color: {{ link.backgroundcolor }}; {% endif %}"{% endif %}>
+				<a href="{{ link.href }}"{% if link.anchorlink %} class="anchorlink"{% endif %}>
 					{% if link.kicker %}<span class="widget-sidebar-kicker">{{ link.kicker }}</span><br>{% endif %}
 					<span class="widget-sidebar-title">{{ link.text }}</span></a>
 				</a>
