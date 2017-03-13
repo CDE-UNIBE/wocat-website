@@ -2224,13 +2224,13 @@ data = {
         'template': 'widgets/tab-infobox.html',
         'context': {
             'sidebar_links': [
-                { 'href': '#tabinfobox-1', 'kicker': 'Module 1', 'text': 'Operational Strategy and Action plan', 'anchorlink': True, 'color': '#403D38', },
-                { 'href': '#tabinfobox-2', 'kicker': 'Module 2', 'text': 'National and Subnational Level', 'anchorlink': True, 'color': '#6E3237', },
-                { 'href': '#tabinfobox-3', 'kicker': 'Module 3', 'text': 'Landscape Level', 'anchorlink': True, 'color': '#604F3B', },
-                { 'href': '#tabinfobox-4', 'kicker': 'Module 4', 'text': 'Sea Level', 'anchorlink': True, 'color': '#3B482E', },
-                { 'href': '#tabinfobox-5', 'kicker': 'Module 5', 'text': 'SLM Territorial Planning', 'anchorlink': True, 'color': '#22454E', },
-                { 'href': '#tabinfobox-6', 'kicker': 'Module 6', 'text': 'Implementation and scaling out', 'anchorlink': True, 'color': '#2D446B', },
-                { 'href': '#tabinfobox-7', 'kicker': 'Module 7', 'text': 'Knowledge management platform for informed decision making', 'anchorlink': True, 'color': '#3A3451', },
+                { 'href': '#tabinfobox-1', 'kicker': 'Module 1', 'text': 'Operational Strategy and Action plan', 'anchorlink': True, },
+                { 'href': '#tabinfobox-2', 'kicker': 'Module 2', 'text': 'National and Subnational Level', 'anchorlink': True, },
+                { 'href': '#tabinfobox-3', 'kicker': 'Module 3', 'text': 'Landscape Level', 'anchorlink': True, },
+                { 'href': '#tabinfobox-4', 'kicker': 'Module 4', 'text': 'Sea Level', 'anchorlink': True, },
+                { 'href': '#tabinfobox-5', 'kicker': 'Module 5', 'text': 'SLM Territorial Planning', 'anchorlink': True, },
+                { 'href': '#tabinfobox-6', 'kicker': 'Module 6', 'text': 'Implementation and scaling out', 'anchorlink': True, },
+                { 'href': '#tabinfobox-7', 'kicker': 'Module 7', 'text': 'Knowledge management platform for informed decision making', 'anchorlink': True, },
             ],
             'sections': [
                 {
