@@ -13,6 +13,15 @@ from fabric.operations import require
 
 
 ENVIRONMENTS = {
+    'development': {
+        'host_string': environ['WOCAT_DEV_HOST'],
+        'source_path': environ['WOCAT_DEV_PATH'],
+        'virtualenv_path': environ['WOCAT_DEV_VIRTUALENV'],
+        'git_remote': 'origin',
+        'git_branch': 'development',
+        'requirements_file': 'requirements/base.txt',
+        'touch_file': environ['WOCAT_DEV_TOUCH_FILE']
+    },
     'production': {
         'host_string': environ['WOCAT_BETA_HOST'],
         'source_path': environ['WOCAT_BETA_PATH'],
