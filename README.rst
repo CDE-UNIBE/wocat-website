@@ -110,6 +110,9 @@ Sebastian Manger already made [a branch for qcat](https://github.com/CDE-UNIBE/q
 Newsletter
 ----------
 
+Create mailchimp list
+^^^^^^^^^^^^^^^^^^^^^
+
 The project uses `mailchimp`: https://mailchimp.com/
 
 https://login.mailchimp.com/signup
@@ -117,8 +120,28 @@ Please follow their instructions on how to setup an account and create a list.
 Both the api key and list id need to be set in order for the integration to work.
 (please see settings section for respective environment variable setup)
 
-In oder for unsubscription via newsletter email link to work a webhook needs to be registered:
+Import users to list
+^^^^^^^^^^^^^^^^^^^^
+
+There is a newsletter management interface to create a filtered list of users, that can be pasted into the mailchimp list.
+
+1. Go to https://example.com/newsletter/management/
+2. Select filters and copy output to clipboard
+3. Go to mailchimp list, under „Add contacts“ select „Import contacts“
+4. Select „Copy/paste from file“ and paste from clipboard
+5. Match columns and import
+
+
+Register unsubscribe webhook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To synchronize the newsletter flag upon unsubscription via newsletter email link a webhook needs to be registered.
 http://kb.mailchimp.com/integrations/api-integrations/how-to-set-up-webhooks
+
+1. Go to mailchimp list
+2. Under „Settings“ select „Webhooks“
+3. Select „Create new webhook“ and paste URL: https://example.com/newsletter/unsubscribe/
+4. Select only the checkbox for „Unsubscribes“ and save
 
 Elasticsearch
 -------------
