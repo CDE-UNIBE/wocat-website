@@ -1,6 +1,6 @@
 <ul class="nav navbar-nav{% if align == "right" %} navbar-right{% endif %}">
+    {% include "widgets/language_chooser.html" %}
 	{% for link in links %}
-
 		{% if link.dropdown %}
 			<li class="dropdown{% if link.active %} active{% endif %}{% if link.onlyxs %} hidden-md hidden-lg{% endif %}">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ link.text|safe }} <span class="caret"></span></a>

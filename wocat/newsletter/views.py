@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
-from django.views import View
+from django.views.generic import View
 from django.views.generic import TemplateView
 
 from .filters import UserFilter

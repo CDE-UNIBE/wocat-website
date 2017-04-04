@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.defaultfilters import slugify
-from django.views import View
+from django.views.generic import View
 from wagtail.wagtailcore.models import Page, Collection
 from wagtail.wagtaildocs.models import get_document_model
 from django.utils.translation import ugettext_lazy as _

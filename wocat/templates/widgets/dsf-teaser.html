@@ -1,6 +1,10 @@
 <div class="widget-dsf-teaser">
 	<img src="/static/images/dsslm.jpg">
-	{% if module1href %}<a href="{{ module1href }}" class="widget-dsf-teaser-module1"></a>{% endif %}
+	{% if module1href %}
+        <a href="{{ module1href }}" class="widget-dsf-teaser-module1"></a>
+	    <a href="{{ module1href }}" class="widget-dsf-teaser-phaseb"></a>
+	    <a href="{{ module1href }}" class="widget-dsf-teaser-phasec"></a>
+    {% endif %}
 	{% if module2href %}<a href="{{ module2href }}" class="widget-dsf-teaser-module2"></a>{% endif %}
 	{% if module3href %}<a href="{{ module3href }}" class="widget-dsf-teaser-module3"></a>{% endif %}
 	{% if module4href %}<a href="{{ module4href }}" class="widget-dsf-teaser-module4"></a>{% endif %}

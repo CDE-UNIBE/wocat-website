@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.forms import CharField, TextInput
 from django.forms.utils import ErrorList
 from django.template.defaultfilters import filesizeformat, slugify
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html, mark_safe
@@ -366,6 +366,8 @@ class DSFTeaserBlock(StructBlock):
     module_5 = blocks.BooleanBlock(required=False, default=True)
     module_6 = blocks.BooleanBlock(required=False, default=True)
     module_7 = blocks.BooleanBlock(required=False, default=True)
+    phase_b = blocks.BooleanBlock(required=False, default=True)
+    phase_c = blocks.BooleanBlock(required=False, default=True)
 
     def get_context(self, value):
         page = value.get('page')

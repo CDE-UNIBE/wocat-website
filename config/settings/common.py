@@ -57,6 +57,7 @@ CMS_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
+    'wagtail_modeltranslation',
 )
 
 THIRD_PARTY_APPS = (
@@ -108,6 +109,7 @@ MIDDLEWARE_CLASSES = (
     # wagtail cms
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 # MIGRATIONS CONFIGURATION
