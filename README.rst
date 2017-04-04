@@ -154,11 +154,13 @@ Attention: Please check before the import again whether the data basis is clean,
 
 Send reset password link to users
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 After the final import of the users, they are informed by e-mail that they have to re-assign their password.
 This mail to the user contains a personal link, which allows you to set a password directly (without having to go through the password-forgotten function).
 The mail is therefore sent by the CMS, implemented here for a command which triggers the emails:
 
 .. code-block:: bash
+
     $ python manage.py send_user_password_reset_links
 
 
