@@ -4,8 +4,8 @@ WOCAT
 World Overview of Conservation Approaches and Technologies
 
 
-Settings
-------------
+Settings (defined in .env)
+--------------------------
 * POSTGRES_USER: User for postgres database
 * POSTGRES_PASSWORD: Password for postgres database
 * DJANGO_ADMIN_URL: URL of Django admin interface
