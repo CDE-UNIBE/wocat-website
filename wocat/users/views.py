@@ -28,7 +28,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         if members_page:
             members_url = members_page.url
         else:
-            members_page = ''
+            members_url = ''
         users_teaser_data = {
             'href': '{0}#{1}'.format(members_url, user.country.code if user.country else ''),
             'external': False,

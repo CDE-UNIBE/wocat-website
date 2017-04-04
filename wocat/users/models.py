@@ -320,6 +320,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.newsletter = False
         self.save()
 
+    class Meta(AbstractBaseUser.Meta):
+        ordering = ('first_name', 'last_name')
+
 @receiver(user_signed_up)
 def deactivate_user_on_signup(request, user, **kwargs):
     user.is_active = False

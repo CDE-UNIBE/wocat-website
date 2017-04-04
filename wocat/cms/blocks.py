@@ -322,9 +322,9 @@ class TocBlock(StructBlock):
         label = _('Table of contents')
         template = 'cms/toc.html'
 
-    def render_form(self, value, prefix='', errors=None):
-        form = super().render_form(value, prefix, errors)
-        return format_html('<strong>{title}</b> {form}', title=_('Table of contents'), form=form)
+    #def render_form(self, value, prefix='', errors=None):
+    #    form = super().render_form(value, prefix, errors)
+    #    return format_html('<strong>{title}</b> {form}', title=_('Table of contents'), form=form)
 
     def get_content(self, context):
         page = context.get('page')

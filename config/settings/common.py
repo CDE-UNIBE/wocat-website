@@ -70,6 +70,7 @@ THIRD_PARTY_APPS = (
     'easy_thumbnails',
     'rest_framework',  # api
     # 'mama_cas',
+    'compressor',
 )
 
 # Apps specific for this project go here.
@@ -238,6 +239,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # MEDIA CONFIGURATION

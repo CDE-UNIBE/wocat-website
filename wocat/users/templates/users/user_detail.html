@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
-{% block title %}User: {{ object.name }}{% endblock %}
+{% block title %}{% trans "User" %}: {{ object.name }}{% endblock %}
 
 {% block content %}
     {% include 'widgets/heading1.html' with text=object.name %}

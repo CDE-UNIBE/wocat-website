@@ -1,4 +1,4 @@
-{% load staticfiles i18n core_tags cms_tags wagtailuserbar piwik_tags %}<!DOCTYPE html>
+{% load staticfiles i18n core_tags cms_tags wagtailuserbar piwik_tags compress %}<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -39,19 +39,20 @@
 	<meta name="msapplication-config" content="/static/images/favicons/browserconfig.xml">
 	<meta name="theme-color" content="#da812c">
 
+    {% compress css %}
 	{% block css %}
 		<!-- Your stuff: Third-party css libraries go here -->
 		<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/leaflet.css' %}">
-
-		{% if debug %}
-			<link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
-			<script src="{% static 'js/less.min.js' %}"></script>
-		{% else %}
-			<link href="{% static 'css/wocat.css' %}" rel="stylesheet">
-		{% endif %}
+		<link href="{% static 'css/wocat.css' %}" rel="stylesheet">
 		<link href="{% static 'cms/css/index.css' %}" rel="stylesheet">
 	{% endblock %}
+    {% endcompress %}
+    {% if debug %}
+        <link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
+        <script src="{% static 'js/less.min.js' %}"></script>
+    {% endif %}
+
 </head>
 
 <body>
@@ -88,6 +89,7 @@
 {% endblock modal %}
 
 <!-- Le javascript -->
+{% compress js %}
 {% block javascript %}
 	<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -97,6 +99,7 @@
 	<script src="{% static 'js/wocat.js' %}"></script>
     {% piwik %}
 {% endblock javascript %}
+{% endcompress %}
 <div class="widget-cms-userbar">
 	{% wagtailuserbar %}
 </div>

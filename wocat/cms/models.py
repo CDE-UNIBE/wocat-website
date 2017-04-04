@@ -474,7 +474,7 @@ class MembersPage(UniquePageMixin, Page):
             })
         context.update({
             'allcountries': _('All Countries'),
-            'allexpertises': _('All Expertiese'),
+            'allexpertises': _('All Expertises'),
             'allinstitutions': _('All Institutions'),
             'countries': countries,
             'expertises': experiences,
@@ -573,7 +573,7 @@ class InstitutionsPage(UniquePageMixin, Page):
 
         members_page = MembersPage.objects.first()
         if members_page:
-            context['members_page_text'] = _('Non-institutional members')
+            context['members_page_text'] = _('Back to WOCAT members')
             context['members_page_url'] = members_page.url
         return context
 
