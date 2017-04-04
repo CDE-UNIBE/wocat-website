@@ -161,6 +161,7 @@ The mail is therefore sent by the CMS, implemented here for a command which trig
 .. code-block:: bash
     $ python manage.py send_user_password_reset_links
 
+
 Rebuild search index
 ^^^^^^^^^^^^^^^^^^^^
 
