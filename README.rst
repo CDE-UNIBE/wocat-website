@@ -12,13 +12,20 @@ Settings
 * DJANGO_SETTINGS_MODULE: Python path syntax to django settings module
 * DJANGO_SECRET_KEY: A secret key for a particular Django installation
 * DJANGO_ALLOWED_HOSTS: A list of strings representing the host/domain names that this Django site can serve
-* DJANGO_SERVER_EMAIL: The email address that error messages come from
 * DJANGO_ACCOUNT_ALLOW_REGISTRATION: Allow registration of new users (default True)
 * DJANGO_SENTRY_DSN: DSN for Sentry error tracking
 * WAGTAILSEARCH_BACKEND: 'db' for regular Psql, 'elasticsearch' or 'elasticsearch2' for ES1 or 2.
 * ELASTICSEARCH_URL: Elasticsearch URL
 * NEWSLETTER_API_KEY: Mailchimp API Key
 * NEWSLETTER_LIST_ID: Mailchimp List ID
+* DJANGO_EMAIL_HOST: The host to use for sending email
+* DJANGO_EMAIL_HOST_USER: Username to use for the SMTP server
+* DJANGO_EMAIL_HOST_PASSWORD: Password to use for the SMTP server
+* DJANGO_EMAIL_PORT: Port to use for the SMTP server
+* DJANGO_EMAIL_USE_TLS: Whether to use a TLS (secure) connection when talking to the SMTP server
+* DJANGO_EMAIL_USE_SSL: Whether to use an implicit TLS (secure) connection when talking to the SMTP server
+* DJANGO_DEFAULT_FROM_EMAIL: Default email address to use for various automated correspondence from the site manager(s)
+* DJANGO_SERVER_EMAIL: The email address that error messages come from
 
 Requirements
 ------------
