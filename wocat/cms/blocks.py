@@ -332,9 +332,21 @@ class TocBlock(StructBlock):
             return page.content
 
     def get_headings(self, stream_content):
-        headings = [block.value for block in stream_content if block.block_type == 'heading']
-        return [{'text': heading, 'href': '#heading-{0}'.format(slugify(heading))}
-                for heading in headings]
+        headings = []
+        for block in stream_content:
+            if block.block_type == 'heading':
+                headings.append({
+                    'text': block.value,
+                    'href': '#heading-{0}'.format(slugify(block.value))
+                })
+            elif block.block_type in ('columns_1_to_1', 'columns_1_to_2', 'columns_2_to_1'):
+                headings.extend(self.get_headings(block.value.get('left_column')))
+                headings.extend(self.get_headings(block.value.get('right_column')))
+            elif block.block_type == 'columns_1_to_1_to_1':
+                headings.extend(self.get_headings(block.value.get('left_column')))
+                headings.extend(self.get_headings(block.value.get('middle_column')))
+                headings.extend(self.get_headings(block.value.get('right_column')))
+        return headings
 
     def render(self, value, context=None):
         if context:

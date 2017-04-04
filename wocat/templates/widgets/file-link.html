@@ -1,4 +1,4 @@
-<div class="widget-filelink">
+{% load i18n %}<div class="widget-filelink">
     <a href="{{ fileurl }}" class="widget-filelink-type">
         {% if type == "pdf" %}
             <i class="fa fa-file-pdf-o fa-fw" aria-hidden="true"></i>
@@ -19,18 +19,18 @@
     <div class="widget-filelink-button">
         <a href="{{ fileurl }}" class="btn btn-link">
             {% if type == "pdf" %}
-                View Document
+                {% trans "Download" %}
             {% elif type == "video" %}
-                Play Video
+                {% trans "Play Video" %}
             {% else %}
-                Download File
+                {% trans "Download" %}
             {% endif %}
         </a>
     {% if file_delete_url %}
         |
         <div class="widget-filelink-delete" style="display: inline-block">
             <form action="{{ file_delete_url }}" method="post">{% csrf_token %}
-                <button class="btn btn-link">Delete File</button>
+                <button class="btn btn-link">{% trans "Delete File" %}</button>
             </form>
         </div>
     {% endif %}
