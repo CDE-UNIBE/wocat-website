@@ -17,7 +17,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from wocat.medialibrary.blocks import MediaTeaserBlock
 from wocat.news.blocks import NewsTeaserBlock
-from wocat.users.blocks import UserTeaserBlock, CONTACT_PERSON_TEASER_BLOCKS
+from wocat.users.blocks import UserTeaserBlock
 
 
 class HeadingBlock(blocks.CharBlock):

@@ -132,9 +132,9 @@ class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
             'imgcircle': True,
         }
 
-    def render_form(self, value, prefix='', errors=None):
-        form = super().render_form(value, prefix, errors)
-        return format_html('<strong>{title}</b> {form}', title=_('Contact Person Teaser'), form=form)
+    #def render_form(self, value, prefix='', errors=None):
+    #    form = super().render_form(value, prefix, errors)
+    #    return format_html('<strong>{title}</b> {form}', title=_('Contact Person Teaser'), form=form)
 
     class Meta:
         icon = 'fa fa-user'

@@ -201,7 +201,7 @@ class ProjectsPage(UniquePageMixin, Page):
 class ProjectPage(HeaderPageMixin, Page):
     template = 'pages/content.html'
 
-    contact_person = models.OneToOneField(
+    contact_person = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='project_contact',
         verbose_name=_('Contact person'),

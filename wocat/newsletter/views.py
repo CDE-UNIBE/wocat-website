@@ -70,7 +70,7 @@ class GroupRequiredMixin(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         newsletter_group, created = Group.objects.get_or_create(name=self.required_group)
-        if user and newsletter_group in user.groups.all():
+        if user and (newsletter_group in user.groups.all() or user.is_superuser):
             return super().dispatch(request, *args, **kwargs)
         else:
             return self.handle_no_permission()
@@ -85,8 +85,8 @@ class NewsletterManagementView(GroupRequiredMixin, TemplateView):
             context['filtered'] = True
             filter = UserFilter(self.request.GET, queryset=User.objects.filter(newsletter=True))
             context['filter'] = filter
-            context['emails'] = ', '.join(
-                '{name} <{email}>'.format(name=user.name, email=user.email) for user in filter.qs)
+            context['emails'] = "\n".join(
+                "{email}\t{name}".format(name=user.name, email=user.email) for user in filter.qs)
             # context['emails'] = ', '.join(user.email for user in filter.qs)
             context['emails_counter'] = len(filter.qs)
         else:

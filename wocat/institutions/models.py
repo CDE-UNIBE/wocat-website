@@ -40,7 +40,7 @@ class Institution(models.Model):
         blank=True, null=True,
         on_delete=models.PROTECT,
     )
-    contact_person = models.OneToOneField(
+    contact_person = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='institution_contact',
         verbose_name=_('Contact person'),
