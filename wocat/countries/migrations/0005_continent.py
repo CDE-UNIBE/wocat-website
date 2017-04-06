@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Continent',
                 'ordering': ['name'],
-                'verbose_name_plural': 'Countinents',
+                'verbose_name_plural': 'Continents',
             },
         ),
     ]

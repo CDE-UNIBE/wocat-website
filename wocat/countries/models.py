@@ -57,7 +57,7 @@ class Continent(models.Model):
 
     class Meta:
         verbose_name = _('Continent')
-        verbose_name_plural = _('Countinents')
+        verbose_name_plural = _('Continents')
         ordering = ['name']
 
     def __str__(self):

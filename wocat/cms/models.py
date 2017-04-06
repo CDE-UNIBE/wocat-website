@@ -524,8 +524,8 @@ class InstitutionsPage(UniquePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
-        # institutions = Institution.objects.filter(memorandum=True)
-        institutions = Institution.objects.all()
+        institutions = Institution.objects.filter(memorandum=True)
+        #institutions = Institution.objects.all()
         context['institutions'] = institutions
 
         members = []

@@ -90,7 +90,7 @@ class NewsPage(HeaderPageMixin, Page):
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-        index.FilterField('news_countries'),
+        #index.FilterField('news_countries'),
         # index.RelatedFields('news_countries', [
         #     # index.SearchField('name'),
         #     index.FilterField('country'),
