@@ -1,0 +1,40 @@
+# Shippable CI/CD configuration file.
+# http://docs.shippable.com/en/latest/config.html#configuration
+language:
+  python
+
+python:
+  - 3.5
+
+env:
+  global:
+    - secure: J/+iJJYDPhwiwO8ap2U5vsR4oy/ng0Dbrp8Oi75+6uJuX4TdoergeoYVVBQoBCfqVDG3lxeGoiNrvj9jyznDkejSZgXVzdC8gdCLkDOO2z3x5ehps/Uj6WrCN7aPWt5MHrMYm14mCWH190POg2jamQ79Zm9tOkBX0z0Obsy6w22JduljXRjja703EFOUY55qV+FOIZMnpPGdnww3DXgOewIDxgAu2vKDIfn4Yk/+NwitWcz+73Fbs/OZrUisguCfFYhKxiyGNvceEqfTLLRngx05MvQ6oUi783eeefquAUKb6xrFiE9lqQnOUtMEPN9h4H0+DHAFnTJl+jyHNkHli5ul/HOhSVtde2Fou7Rhkys4vp2QN2HSv9NcmD3kNw6T4USrzxp2e8B0VKtx5ZzJFQCoGZg0Ju+V0sUW9Hr0ft2Ur5VKFlzTISttXyKm6p4fogwEnqOlf9IdyMHpI/txaaC/uDMqjIob0y4jcoF36gfpPf3tJ63kG7zNcLxqyiHPmlnRD25yz7VpcUV5r5Vh5A8FUwfBRJJpB+Q+x0XaPqbC1exKTUWI3TlTfBUrIv2hVedBW6Dbi9vj0dBhEttPccz+jPcgV4tPEC2scbzpf50zQSeW52+RYUe1upEStXDR/++yIdXbdlnDDC7sCyrWr6uGtid+bO1gwfR0fOzvrT2FYGY0qBYfsHvtRVIwkmiuRHwjYvvyu9z3seqJE1qDjVBpjTn0RBejUd3MFAGybCizgSnSHumDz7NjB14j0WPFcF5aK1pf4yMtzBzBoLmnYb14BeG0VMqGzb2dJkYkGsr/ZBfu52cOlAYkjCI9iYcOxYLRyl50WYNt8TMPbj/9/Wtqlqx96sbdyrzz2qwkRRNKHsZnVJzZ9MamWWIQUfDgonERIhQyMOmGrBegzWpmtJ7dKw/ag3zcKFvCyieLxT/LBpw3oWGsgBWUjmaT4IWT/a+jD78LBlwFwB5a5gL8SJtq/vRAGJCJnC0zo0r24ZjrAPFGt0xmod+2ozpy6PIA
+
+build:
+  ci:
+    - pip install Fabric3
+
+  on_success:
+    - fab -f fabric-cde.py $BRANCH deploy
+
+  cache: true
+
+branches:
+  only:
+    - development
+    - production
+
+integrations:
+  notifications:
+    - integrationName: slack-integration
+      type: slack
+      recipients:
+        - "#server-info"
+      on_success: always
+      on_failure: always
+
+    - integrationName: email
+      type: email
+      on_success: never
+      on_failure: never
+      on_pull_request: never

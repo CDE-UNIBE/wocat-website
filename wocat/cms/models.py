@@ -208,6 +208,11 @@ class ProjectPage(HeaderPageMixin, Page):
         on_delete=models.SET_NULL,
         blank=True, null=True,
     )
+    included_countries = models.ManyToManyField(
+        verbose_name=_('Countries without country page'),
+        to=Country,
+        blank=True,
+    )
 
     content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
 
@@ -217,6 +222,7 @@ class ProjectPage(HeaderPageMixin, Page):
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         FieldPanel('contact_person'),
         StreamFieldPanel('content'),
+        FieldPanel('included_countries'),
     ]
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
