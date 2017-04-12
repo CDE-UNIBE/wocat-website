@@ -314,6 +314,7 @@ WAGTAILSEARCH_BACKENDS = {
 # END TODO------------------------------------------------------------------
 
 # WAGTAILDOCS_DOCUMENT_MODEL = 'core.IndexedDocument'
+WAGTAIL_APPEND_SLASH = False
 
 
 # EASY THUMBNAILS
