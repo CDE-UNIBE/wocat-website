@@ -560,6 +560,7 @@ class InstitutionsPage(UniquePageMixin, Page):
             # if institution.year:
             #     years.append({'value': institution.year})
 
+        countries.sort(key=lambda o: o['name'])
         context.update({
             'allcountries': 'All Countries',
             'allyears': 'All Years',
