@@ -20,17 +20,17 @@ urlpatterns = [
         name='redirect'
     ),
 
-    # URL pattern for the UserDetailView
-    url(
-        regex=r'^(?P<email>[\w.@+-]+)/$',
-        view=views.UserDetailView.as_view(),
-        name='detail'
-    ),
-
     # URL pattern for the UserUpdateView
     url(
         regex=r'^~update/$',
         view=views.UserUpdateView.as_view(),
         name='update'
+    ),
+
+    # URL pattern for the UserDetailView
+    url(
+        regex=r'^(?P<email>[\w.@+-]*)/$',
+        view=views.UserDetailView.as_view(),
+        name='detail'
     ),
 ]
