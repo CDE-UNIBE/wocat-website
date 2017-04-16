@@ -479,8 +479,8 @@ class MembersPage(UniquePageMixin, Page):
                 'visible': True,
             })
         countries.sort(key=lambda o: o['name'])
-        experiences.sort(key=lambda o: o.name)
-        institutions.sort(key=lambda o: o['name'])
+        experiences.sort(key=lambda o: o['name'].name)
+        institutions.sort(key=lambda o: o['name'].name)
         context.update({
             'allcountries': _('All Countries'),
             'allexpertises': _('All Expertises'),
