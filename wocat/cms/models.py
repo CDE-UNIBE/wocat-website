@@ -478,6 +478,9 @@ class MembersPage(UniquePageMixin, Page):
                 'url': user.get_absolute_url(),
                 'visible': True,
             })
+        countries.sort()
+        experiences.sort()
+        institutions.sort()
         context.update({
             'allcountries': _('All Countries'),
             'allexpertises': _('All Expertises'),
