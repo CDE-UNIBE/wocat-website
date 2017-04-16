@@ -125,8 +125,7 @@ class DocumentBlock(DocumentChooserBlock):
                         value.created_at + timezone.timedelta(days=1) > timezone.now():
                 delete_url = reverse('cms:upload-delete', kwargs={'document_id': value.id})
                 context['file_delete_url'] = delete_url
-            return super().render(value, context)
-        return ''
+        return super().render(value, context)
 
     class Meta:
         icon = "doc-empty"

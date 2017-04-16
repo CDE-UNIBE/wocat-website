@@ -4,7 +4,7 @@
 {% block content %}
     <p>
         <a href="./?type=0">
-            <strong>all</strong>
+            <strong>{% trans "all" %}</strong>
         </a>
         |
         {% for type in types %}
@@ -25,7 +25,7 @@
             <div class="col-sm-2">
                 <div class="form-group">
                     <select class="form-control" name="language">
-                        <option value="">{% trans 'all Languages' %}</option>
+                        <option value="">{% trans 'All languages' %}</option>
                         {% with current=language %}
                             {% for language in languages %}
                                 {{ current }} =?= {{ language }}
@@ -39,7 +39,7 @@
             <div class="col-sm-2">
                 <div class="form-group">
                     <select class="form-control" name="year">
-                        <option value="">{% trans 'all years' %}</option>
+                        <option value="">{% trans 'All years' %}</option>
                         {% with current=year %}
                             {% for year in years %}
                                 <option value="{{ year }}"
@@ -52,7 +52,7 @@
             <div class="col-sm-2">
                 <div class="form-group">
                     <select class="form-control" name="continent">
-                        <option value="">{% trans 'all Continents' %}</option>
+                        <option value="">{% trans 'All continents' %}</option>
                         {% with current=continent %}
                             {% for continent in continents %}
                                 <option value="{{ continent.id }}"
@@ -65,7 +65,7 @@
             <div class="col-sm-2">
                 <div class="form-group">
                     <select class="form-control" name="country">
-                        <option value="">{% trans 'all Countries' %}</option>
+                        <option value="">{% trans 'All countries' %}</option>
                         {% with current=country %}
                             {% for country in countries %}
                                 <option value="{{ country.code }}"
