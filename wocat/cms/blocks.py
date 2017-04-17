@@ -17,8 +17,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from wocat.medialibrary.blocks import MediaTeaserBlock
 from wocat.news.blocks import NewsTeaserBlock
-from wocat.users.blocks import UserTeaserBlock
-
+from wocat.users.blocks import UserTeaserBlock, CONTACT_PERSON_TEASER_BLOCKS
 
 class HeadingBlock(blocks.CharBlock):
     class Meta:
@@ -615,8 +614,8 @@ BASE_BLOCKS += SUBPAGEBLOCKS
 
 
 class ColumnsBlock(StructBlock):
-    left_column = StreamBlock(BASE_BLOCKS)
-    right_column = StreamBlock(BASE_BLOCKS)
+    left_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
+    right_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
 
     def get_context(self, value):
         context = super().get_context(value)
@@ -685,3 +684,9 @@ EXTRA_BLOCKS = COLUMNS_BLOCKS + [
 ]
 
 ALL_BLOCKS = CMS_BLOCKS + EXTRA_BLOCKS
+
+
+PROJECT_BLOCKS = CMS_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS
+COUNTRY_BLOCKS = PROJECT_BLOCKS
+REGION_BLOCKS = PROJECT_BLOCKS
+EVENTS_BLOCKS = PROJECT_BLOCKS

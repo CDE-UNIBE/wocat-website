@@ -16,11 +16,11 @@ from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 from wagtail_modeltranslation.models import TranslationMixin
 
-from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock
+from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock, PROJECT_BLOCKS, \
+    REGION_BLOCKS, COUNTRY_BLOCKS, EVENTS_BLOCKS
 from wocat.core.blocks import CORE_BLOCKS
 from wocat.countries.models import Country
 from wocat.institutions.models import Institution
-from wocat.users.blocks import CONTACT_PERSON_TEASER_BLOCKS
 
 __author__ = 'Eraldo Energy'
 
@@ -214,7 +214,7 @@ class ProjectPage(HeaderPageMixin, Page):
         blank=True,
     )
 
-    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
+    content = StreamField(PROJECT_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Project')
@@ -343,7 +343,7 @@ class CountryPage(HeaderPageMixin, Page):
         on_delete=models.SET_NULL,
         null=True
     )
-    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
+    content = StreamField(COUNTRY_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Country')
@@ -398,7 +398,7 @@ class RegionPage(HeaderPageMixin, Page):
         null=True
     )
 
-    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
+    content = StreamField(REGION_BLOCKS, blank=True)
 
     @property
     def countries(self):
@@ -624,7 +624,7 @@ class NewsAndEventsPage(HeaderPageMixin, Page):
 class EventsPage(HeaderPageMixin, Page):
     template = 'pages/events.html'
 
-    content = StreamField(CORE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, blank=True)
+    content = StreamField(EVENTS_BLOCKS, blank=True)
 
     class Meta:
         verbose_name = _('Events')
