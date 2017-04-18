@@ -44,7 +44,7 @@ class UserForm(forms.ModelForm):
         model = get_user_model()
         fields = ['first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function', 'experiences',
                   'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone', 'phone_2',
-                  'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution', 'email',
+                  'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution',
                   'newsletter', 'terms_and_conditions']
         fields_required = ['first_name', 'last_name', 'gender']
 
@@ -137,6 +137,7 @@ def signup(self, request, user):
     user.first_name = self.cleaned_data['first_name']
     user.last_name = self.cleaned_data['last_name']
     user.gender = self.cleaned_data['gender']
+    user.email = self.cleaned_data['email']
     user.title = self.cleaned_data['title']
     user.position = self.cleaned_data['position']
     user.department = self.cleaned_data['department']
