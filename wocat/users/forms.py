@@ -134,10 +134,10 @@ class UserForm(forms.ModelForm):
 
 
 def signup(self, request, user):
+    user.email = self.cleaned_data['email']
     user.first_name = self.cleaned_data['first_name']
     user.last_name = self.cleaned_data['last_name']
     user.gender = self.cleaned_data['gender']
-    user.email = self.cleaned_data['email']
     user.title = self.cleaned_data['title']
     user.position = self.cleaned_data['position']
     user.department = self.cleaned_data['department']
