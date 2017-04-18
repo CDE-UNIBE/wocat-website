@@ -44,7 +44,7 @@ class UserForm(forms.ModelForm):
         model = get_user_model()
         fields = ['first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function', 'experiences',
                   'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone', 'phone_2',
-                  'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution',
+                  'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution', 'email',
                   'newsletter', 'terms_and_conditions']
         fields_required = ['first_name', 'last_name', 'gender']
 
