@@ -184,6 +184,10 @@ USE_L10N = True
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
+LOCALE_PATHS = (
+    str(ROOT_DIR.path('locale')),
+)
+
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#templates

@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: api/templates/rest_framework/base.html:4
 #: api/templates/rest_framework/base.html:8
@@ -972,7 +972,7 @@ msgstr ""
 
 #: users/forms.py:115 users/models.py:35
 msgid "Key work topics"
-msgstr "Test"
+msgstr "Thèmes de travail clés"
 
 #: users/forms.py:122
 msgid "Function and WOCAT experiences"
