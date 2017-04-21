@@ -230,13 +230,21 @@ There are two kinds of translations:
 
 Steps required to collect, translate and compile translations with the Django translations:
 
+1. Add new translations to PO file (e.g. DE for german)
+
 .. code-block:: bash
 
-    # Add new translations to PO file (e.g. DE for german)
     $ python manage.py makemessages -l <LANGUAGE>
-    # Translate strings manually (msgid to msgstr) in locale/<LANGUAGE>/django.po (e.g. by using POEdit translation editor)
-    # Compile translations
+
+2. Translate strings manually (msgid to msgstr) in locale/<LANGUAGE>/django.po (e.g. by using POEdit translation editor)
+3. Compile translations
+
+.. code-block:: bash
+
     $ python manage.py compilemessages
+
+4. Restart webserver 
+    
     
 
 Sentry
