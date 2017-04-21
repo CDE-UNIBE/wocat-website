@@ -48,9 +48,10 @@ django-compressor==2.1.1
 # Your custom requirements go here
 
 # CMS
-wagtail==1.7
+wagtail==1.9
 #git+git://github.com/sinnwerkstatt/wagtail-modeltranslation.git@django1.9
 elasticsearch==2.4.0
+django-modelcluster>=3.0,<4.0
 
 # Models
 django-countries==3.4.1

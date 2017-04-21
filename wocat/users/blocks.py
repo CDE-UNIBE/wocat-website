@@ -3,7 +3,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 from wagtail.wagtailcore.blocks import StructBlock, ChooserBlock
-from wagtail.wagtailcore.blocks.base import accepts_context
+#from wagtail.wagtailcore.blocks.base import accepts_context
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
@@ -27,10 +27,10 @@ class BlockWithContextMixin:
         else:
             new_context = dict(context)
 
-        if accepts_context(self.get_context):
-            new_context.update(self.get_context(value, new_context))
-        else:
-            new_context.update(self.get_context(value))
+        #if accepts_context(self.get_context):
+        new_context.update(self.get_context(value, new_context))
+        #else:
+        #    new_context.update(self.get_context(value))
 
         return mark_safe(render_to_string(template, new_context))
 
