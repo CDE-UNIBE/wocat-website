@@ -338,7 +338,7 @@ def send_email_confirmation_on_signup(request, user, **kwargs):
 
 # Step 2: Email confirmed
 @receiver(email_confirmed)
-def deactivate_user_on_email_confirmation(request, email_address, **kwargs):
+def deactivate_user_on_email_confirmation(email_address, **kwargs):
     user = User.objects.get(email=email_address)
     user.is_active = False
     user.save()
