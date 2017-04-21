@@ -5,7 +5,7 @@ from allauth.account.signals import user_signed_up
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone

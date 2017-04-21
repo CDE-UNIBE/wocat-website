@@ -1,7 +1,7 @@
 from classytags.helpers import InclusionTag
 from django import template
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _, get_language
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl, richtext

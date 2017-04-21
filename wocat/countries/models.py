@@ -1,5 +1,5 @@
 from autoslug import AutoSlugField
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.templatetags.static import static
 from django.utils.translation import ugettext_lazy as _

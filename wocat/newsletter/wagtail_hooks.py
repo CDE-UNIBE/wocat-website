@@ -1,5 +1,5 @@
 from django.contrib.auth.models import Group
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore import hooks
 

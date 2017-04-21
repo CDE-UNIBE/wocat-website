@@ -57,7 +57,7 @@ CMS_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
-    'wagtail_modeltranslation',
+    #'wagtail_modeltranslation',
 )
 
 THIRD_PARTY_APPS = (
@@ -167,10 +167,9 @@ TIME_ZONE = 'Europe/Berlin'
 LANGUAGE_CODE = 'en'
 
 LANGUAGES = [
-    # ('de', _('Deutsch')),
     ('en', _('English')),
-    ('fr', _('Français')),
-    ('es', _('Español')),
+#    ('fr', _('Français')),
+#    ('es', _('Español')),
 ]
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1

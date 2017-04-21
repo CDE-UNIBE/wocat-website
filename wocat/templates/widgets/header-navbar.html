@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav{% if align == "right" %} navbar-right{% endif %}">
-    {% include "widgets/language_chooser.html" %}
+    {#% include "widgets/language_chooser.html" %#}
 	{% for link in links %}
 		{% if link.dropdown %}
 			<li class="dropdown{% if link.active %} active{% endif %}{% if link.onlyxs %} hidden-md hidden-lg{% endif %}">
