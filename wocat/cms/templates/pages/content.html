@@ -10,7 +10,7 @@
         {% breadcrumb %}
         <br>
         {% block content %}
-            {% render_streamfield page.content %}
+            {% include_block page.content %}
         {% endblock content %}
     </div>
 {% endblock content_container %}
