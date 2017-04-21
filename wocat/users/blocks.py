@@ -108,7 +108,7 @@ SUBPAGEBLOCKS = [
 
 class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
     def get_context(self, value, context={}):
-        page = context.get('page')\
+        page = context.get('page')
         if page and page.contact_person:
             user = page.contact_person
         else:

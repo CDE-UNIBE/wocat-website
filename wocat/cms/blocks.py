@@ -617,8 +617,7 @@ class ColumnsBlock(StructBlock):
     left_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
     right_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
 
-    def get_context(self, value):
-        context = super().get_context(value)
+    def get_context(self, value, context={}):
         context['left_column'] = value.get('left_column')
         context['right_column'] = value.get('right_column')
         return context
@@ -654,8 +653,7 @@ class Columns1To1To1Block(ColumnsBlock):
         label = 'Columns 1:1:1'
         template = 'widgets/columns-1-1-1.html'
 
-    def get_context(self, value):
-        context = super().get_context(value)
+    def get_context(self, value, context={}):
         context['middle_column'] = value.get('middle_column')
         return context
 
