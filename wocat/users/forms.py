@@ -1,14 +1,7 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Submit, Row, Field, Div
-from django.conf import settings
-from django.contrib import messages
+from crispy_forms.layout import Layout, Fieldset, Submit, Row, Field, Div
 from django.contrib.auth import get_user_model
 from django import forms
-from django.contrib.auth.models import Group
-from django.contrib.sites.models import Site
-from django.core.mail import send_mail
-from django.template.defaultfilters import linebreaksbr
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from wocat.cms.models import TermsSettings

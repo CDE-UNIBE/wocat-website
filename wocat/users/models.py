@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, PermissionsMixin, Group
 from django.urls import reverse
 from django.db import models
 from django.dispatch import receiver
