@@ -15,8 +15,8 @@ from .models import User
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     # These next two lines tell the view to index lookups by email
-    slug_field = 'email'
-    slug_url_kwarg = 'email'
+    #slug_field = 'email'
+    #slug_url_kwarg = 'email'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,7 +64,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self):
         return reverse('users:detail',
-                       kwargs={'email': self.request.user.email})
+                       kwargs={'pk': self.request.user.id})
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -73,7 +73,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('users:detail',
-                       kwargs={'email': self.request.user.email})
+                       kwargs={'pk': self.request.user.id})
 
     def get_object(self):
         return User.objects.get(email=self.request.user.email)
@@ -82,5 +82,5 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 class UserListView(LoginRequiredMixin, ListView):
     model = User
     # These next two lines tell the view to index lookups by email
-    slug_field = 'email'
-    slug_url_kwarg = 'email'
+    #slug_field = 'email'
+    #slug_url_kwarg = 'email'

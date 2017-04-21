@@ -17,10 +17,10 @@ def get_profile_links(user, onlyxs=False):
             'dropdown': True,
             'text': user.first_name or user.email,
             'links': [
-                {'href': reverse('users:detail', args=[user.email]), 'text': _('Profile'), 'active': True},
+                {'href': reverse('users:detail', kwargs={'pk': user.id}), 'text': _('Profile'), 'active': True},
                 {'href': reverse('account_logout'), 'text': _('Logout')},
             ],
-            'href': reverse('users:detail', args=[user.email]),
+            'href': reverse('users:detail', kwargs={'pk': user.id}),
             'onlyxs': onlyxs,
         }
     else:

@@ -23,7 +23,7 @@
                         {% include 'widgets/read-more-link.html' with fontawesome='pencil' text=edit_text href=object.update_url %}
                     {% endif %}
                     <p>
-                        {% if object.object.email %}
+                        {% if object.email %}
                             <a href="mailto:{{ object.email }}"><i
                                     class="fa fa-envelope fa-fw"></i> {{ object.email }}</a><br>
                         {% endif %}

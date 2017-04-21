@@ -293,7 +293,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('users:detail', kwargs={'email': self.email})
+        return reverse('users:detail', kwargs={'pk': self.id})
 
     @property
     def detail_url(self):
