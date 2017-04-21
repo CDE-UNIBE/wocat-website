@@ -234,8 +234,8 @@ Steps required to collect, translate and compile translations with the Django tr
 
     # Add new translations to PO file (e.g. DE for german)
     $ python manage.py makemessages -l <LANGUAGE>
-    # Translate strings (msgid to msgstr) in locale/<LANGUAGE>/django.po
-    # Translate strings
+    # Translate strings manually (msgid to msgstr) in locale/<LANGUAGE>/django.po (e.g. by using POEdit translation editor)
+    # Compile translations
     $ python manage.py compilemessages
     
 
