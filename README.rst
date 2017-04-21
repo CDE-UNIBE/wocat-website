@@ -231,6 +231,7 @@ There are two kinds of translations:
 Steps required to collect, translate and compile translations with the Django translations:
 
 .. code-block:: bash
+
     # Add new translations to PO file (e.g. DE for german)
     $ python manage.py makemessages -l <LANGUAGE>
     # Translate strings (msgid to msgstr) in locale/<LANGUAGE>/django.po
