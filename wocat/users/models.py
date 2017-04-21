@@ -10,8 +10,8 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
 from django.conf import settings
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-from django.db.models import signals
 from easy_thumbnails.fields import ThumbnailerImageField
 from wagtail.wagtailsnippets.models import register_snippet
 
@@ -342,6 +342,7 @@ def deactivate_user_on_email_confirmation(request, email_address, **kwargs):
     user.is_active = False
     user.save()
     notify_moderators(user)
+
 
 def notify_moderators(user):
     context = {
