@@ -108,8 +108,7 @@ SUBPAGEBLOCKS = [
 
 class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
     def get_context(self, value, context={}):
-        context = super().get_context(value, context)
-        user = context.get('user')
+        user = context.get('page').contact_person
         if not user:
             return {}
         if user.country:
