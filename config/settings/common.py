@@ -280,6 +280,7 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'wocat.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'wocat.users.adapters.SocialAccountAdapter'
 ACCOUNT_SIGNUP_FORM_CLASS = 'wocat.users.forms.UserForm'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/accounts/inactive/'
 
 # Custom user app defaults
 # Select the correct user model

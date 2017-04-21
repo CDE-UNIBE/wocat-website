@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
-from allauth.account.signals import user_signed_up
+from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
@@ -9,9 +9,12 @@ from django.urls import reverse
 from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import signals
 from easy_thumbnails.fields import ThumbnailerImageField
 from wagtail.wagtailsnippets.models import register_snippet
+
 
 from wocat.countries.models import Country
 from wocat.institutions.models import Institution
@@ -325,8 +328,35 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta(AbstractBaseUser.Meta):
         ordering = ('first_name', 'last_name')
 
+
+# Step 1: Signed up
 @receiver(user_signed_up)
-def deactivate_user_on_signup(request, user, **kwargs):
-    #user.is_active = False
+def send_email_confirmation_on_signup(request, user, **kwargs):
     send_email_confirmation(request, user, signup=False)
+
+
+# Step 2: Email confirmed
+@receiver(email_confirmed)
+def deactivate_user_on_email_confirmation(request, user, **kwargs):
+    user.is_active = False
     user.save()
+    notify_moderators(user)
+
+def notify_moderators(user):
+    context = {
+        'user': user,
+        'project': 'WOCAT',
+        'management_url': 'http://www.{domain}/cms/users/{id}/'.format(
+            domain=Site.objects.get_current(),
+            id=user.id
+        )
+    }
+    subject = render_to_string('users/emails/email_signup_moderation_request_subject.txt', context=context).strip()
+    message = render_to_string('users/emails/email_signup_moderation_request_message.txt', context=context)
+    recipient_list = []
+    group, created = Group.objects.get_or_create(name='Signup Moderators')
+    if group:
+        recipient_list += list(group.user_set.values_list('email', flat=True))
+    send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
+              recipient_list=recipient_list)
+

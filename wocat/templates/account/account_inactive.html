@@ -1,0 +1,17 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Account Inactive" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+        <h2>{% trans "Account Inactive" %}</h2>
+
+        <p>{% blocktrans %}Your registration is currently being reviewed by the WOCAT administrators. We will send you an email notification once it has been approved.{% endblocktrans %}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

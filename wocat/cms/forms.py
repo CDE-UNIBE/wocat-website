@@ -23,29 +23,12 @@ class UserEditForm(WocatUserEditForm):
         if self.has_changed() and 'is_active' in self.changed_data:
             if self.cleaned_data['is_active']:
                 # User has been activated
-                self.user_activated_notification(user)
+                notify_user(user)
             else:
                 # User has been deactivated
                 # print('>> DEACTIVATED')
                 pass
         return user
-
-    def user_activated_notification(self, user):
-        domain = Site.objects.get_current()
-        context = {
-            'user': user,
-            'project': 'WOCAT',
-            'domain': domain,
-            'login_url': 'http://www.{domain}{path}'.format(
-                domain=domain,
-                path=reverse('account_login')
-            )
-        }
-        subject = render_to_string('users/emails/email_user_activated_subject.txt', context=context).strip()
-        message = render_to_string('users/emails/email_user_activated_message.txt', context=context)
-        recipient_list = [user.email]
-        send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
-                  recipient_list=recipient_list)
 
 
 class UserCreationForm(WocatUserCreationForm):
@@ -54,3 +37,21 @@ class UserCreationForm(WocatUserCreationForm):
         required=False,
         label=_('Institution'),
     )
+
+
+def notify_user(user):
+    domain = Site.objects.get_current()
+    context = {
+        'user': user,
+        'project': 'WOCAT',
+        'domain': domain,
+        'login_url': 'http://www.{domain}{path}'.format(
+            domain=domain,
+            path=reverse('account_login')
+        )
+    }
+    subject = render_to_string('users/emails/email_user_activated_subject.txt', context=context).strip()
+    message = render_to_string('users/emails/email_user_activated_message.txt', context=context)
+    recipient_list = [user.email]
+    send_mail(subject=subject, message=message, from_email=settings.DEFAULT_FROM_EMAIL,
+              recipient_list=recipient_list)
