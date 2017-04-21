@@ -19,7 +19,7 @@ class UserEditForm(WocatUserEditForm):
     )
 
     def save(self, commit=True):
-        user = super().save(commit=True)
+        user = super().save(commit=commit)
         if self.has_changed() and 'is_active' in self.changed_data:
             if self.cleaned_data['is_active']:
                 # User has been activated

@@ -350,7 +350,7 @@ def notify_moderators(user):
     context = {
         'user': user,
         'project': 'WOCAT',
-        'management_url': 'http://www.{domain}/cms/users/{id}/'.format(
+        'management_url': 'https://{domain}/cms/users/{id}/'.format(
             domain=Site.objects.get_current(),
             id=user.id
         )
