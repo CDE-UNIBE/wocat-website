@@ -108,8 +108,10 @@ SUBPAGEBLOCKS = [
 
 class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
     def get_context(self, value, context={}):
-        user = context.get('page').contact_person
-        if not user:
+        page = context.get('page')\
+        if page and page.contact_person:
+            user = page.contact_person
+        else:
             return {}
         if user.country:
             flag = format_html('<img src="{src}" class="inlineflag" alt="{name}"> {name}',
