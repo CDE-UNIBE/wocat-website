@@ -108,6 +108,7 @@ SUBPAGEBLOCKS = [
 
 class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
     def get_context(self, value, context={}):
+        context = super().get_context(value, context)
         user = context.get('user')
         if not user:
             return {}
@@ -126,7 +127,7 @@ class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
                 country=format_html('<br>{0}', flag) if flag else '',
             ),
             'href': user.get_absolute_url(),
-            'readmorelink': {'text': _('view profile')},
+            'readmorelink': {'text': _('View profile')},
             'imgpos': 'left',
             'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
             'imgcircle': True,

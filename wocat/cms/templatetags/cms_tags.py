@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _, get_language
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl, richtext
+from wagtail.wagtailcore.blocks.base import Block
 
 from wocat.cms.models import HomePage, ProjectPage, TopNavigationSettings, FooterSettings
 
@@ -273,3 +274,23 @@ class Overlay(InclusionTag):
             'lead': richtext(header.get('content')) if header.get('content') else '',
             'noimage': not header.get('images'),
         }
+
+
+'''
+    Registers render_streamfield tag to add current page context to all block templates.
+    Usage: {% render_streamfield a_streamfield %}
+
+    Author: github.com/mgd020
+'''
+
+
+@register.simple_tag(takes_context=True)
+def render_streamfield(context, value):
+    def get_context(self, value):
+        return dict(context.flatten(), **{
+            'self': value,
+            self.TEMPLATE_VAR: value,
+        })
+
+    Block.get_context = get_context
+    return str(value)
