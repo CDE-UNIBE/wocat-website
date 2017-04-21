@@ -327,6 +327,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 @receiver(user_signed_up)
 def deactivate_user_on_signup(request, user, **kwargs):
-    user.is_active = False
+    #user.is_active = False
     send_email_confirmation(request, user, signup=False)
     user.save()
