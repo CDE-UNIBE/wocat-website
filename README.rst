@@ -220,6 +220,24 @@ LESS to CSS compilation
 
 The style sheets are written in LESS. They will be compiled to a single CSS file by *$ lessc* while running Fabric. See *compile_less()* in *fabfile.py*.
 
+Translations (PO to MO compilation)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There are two kinds of translations:
+
+* CMS translations: Can be added directly through the CMS admin interface (if multiple languages are enabled)
+* Other translations: All other translations (like forms or captions) are handled by Django translation.
+
+Steps required to collect, translate and compile translations with the Django translations:
+
+.. code-block:: bash
+    # Add new translations to PO file (e.g. DE for german)
+    $ python manage.py makemessages -l <LANGUAGE>
+    # Translate strings (msgid to msgstr) in locale/<LANGUAGE>/django.po
+    # Translate strings
+    $ python manage.py compilemessages
+    
+
 Sentry
 ^^^^^^
 
