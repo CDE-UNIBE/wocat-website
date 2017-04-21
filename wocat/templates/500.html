@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Server Error{% endblock %}
+{% block title %}{% blocktrans %}Server Error{% endblocktrans %}{% endblock %}
 
 {% block content %}
-<h1>Ooops!!! 500</h1>
+<h1>{% blocktrans %}Ooops! 500{% endblocktrans %}</h1>
 
-<h3>Looks like something went wrong!</h3>
+<h3>{% blocktrans %}Looks like something went wrong!{% endblocktrans %}</h3>
 
-<p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.</p>
+<p>{% blocktrans %}We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.{% endblocktrans %}</p>
 {% endblock content %}
 
 

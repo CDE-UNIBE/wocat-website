@@ -44,17 +44,17 @@
                     </p>
                     {% if object.institution %}
                         <br>
-                        <h3>Institution</h3>
+                        <h3>{% trans "Institution" %}</h3>
                         <p>
                             {{ object.institution }}<br>
-                            <em>Position: {{ object.position }}</em>
+                            <em>{% trans "Position" %}: {{ object.position }}</em>
                         </p>
                     {% endif %}
                 </div>
             </div><!-- row -->
             {% if object.key_work_topics.exists %}
                 <br>
-                <h3>Key Work Topics</h3>
+                <h3>{% blocktrans %}Key Work Topics{% endblocktrans %}</h3>
                 <p>
                     {% for topic in object.key_work_topics.all %}
                         <span class="badge">{{ topic }}</span>
@@ -63,7 +63,7 @@
             {% endif %}
             {% if object.experiences.exists %}
                 <br>
-                <h3>Wocat Experiences</h3>
+                <h3>{% blocktrans %}WOCAT Experiences{% endblocktrans %}</h3>
                 <p>
                     {% for experience in object.experiences.all %}
                         <span class="badge">{{ experience }}</span>

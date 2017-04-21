@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="widget-members-table">
 	<div class="widget-members-table-selector">
 		<select class="widget-members-table-countryselector form-control" autocomplete="off">
@@ -29,16 +30,16 @@
 		<div class="widget-members-table-avatar">
 		</div>
 		<div class="widget-members-table-name h4">
-			Name
+            {% trans "Name" %}
 		</div>
 		<div class="widget-members-table-country h4">
-			Country
+            {% trans "Country" %}
 		</div>
 		<div class="widget-members-table-organisation h4">
-			Organisation
+            {% trans "Organisation" %}
 		</div>
 		<div class="widget-members-table-expertises h4">
-			Expertise
+            {% trans "Expertise" %}
 		</div>
 	</div>
 
@@ -94,6 +95,6 @@
 
 
 	<div class="widget-members-table-nothingfound" style="display: none;">
-		No member found with this filter.
+		{% blocktrans %}No member found with this filter.{% endblocktrans %}
 	</div>
 </div><!-- widget-members-table -->

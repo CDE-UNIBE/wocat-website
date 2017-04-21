@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags i18n %}
 
-{% block title %}Search{% endblock %}
+{% block title %}{% trans "Search" %}{% endblock %}
 
 {% block content %}
     <h1>{% trans 'Search' %}</h1>
@@ -18,7 +18,7 @@
     {% endif %}
   {% else %}
     {% if page_results %}
-      <h3>Matching Pages</h3>
+      <h3>{% blocktrans %}Matching Pages{% endblocktrans %}</h3>
         <ul>
             {% for result in page_results %}
                 <li>
@@ -31,7 +31,7 @@
         </ul>
     {% endif %}
       {% if glossary_results %}
-      <h3>Matching Glossary</h3>
+      <h3>{% blocktrans %}Matching Glossary{% endblocktrans %}</h3>
         <ul>
             {% for result in glossary_results %}
                 <li>
@@ -44,7 +44,7 @@
         </ul>
     {% endif %}
       {% if document_results %}
-      <h3>Matching Documents</h3>
+      <h3>{% blocktrans %}Matching Documents{% endblocktrans %}</h3>
         <ul>
             {% for result in document_results %}
                 <li>
