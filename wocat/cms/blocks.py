@@ -19,6 +19,7 @@ from wocat.medialibrary.blocks import MediaTeaserBlock
 from wocat.news.blocks import NewsTeaserBlock
 from wocat.users.blocks import UserTeaserBlock, CONTACT_PERSON_TEASER_BLOCKS
 
+
 class HeadingBlock(blocks.CharBlock):
     class Meta:
         classname = 'full title'
@@ -647,7 +648,7 @@ class Columns2To1Block(ColumnsBlock):
 
 
 class Columns1To1To1Block(ColumnsBlock):
-    middle_column = StreamBlock(BASE_BLOCKS)
+    middle_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
 
     class Meta:
         label = 'Columns 1:1:1'
