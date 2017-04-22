@@ -113,10 +113,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
-
     MALE = 'm'
     MALE_SALUTATION = _('Mr')
     FEMALE = 'f'
@@ -329,6 +325,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta(AbstractBaseUser.Meta):
         ordering = ('first_name', 'last_name')
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
+    def save(self, *args, **kwargs):
+        settings.COUNT += 1
+        if settings.COUNT > 1:
+            raise IOError("ok")
+        return super().save(*args, **kwargs)
+
 
 
 # Step 1: Signed up

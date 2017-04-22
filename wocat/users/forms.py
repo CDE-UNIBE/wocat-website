@@ -35,9 +35,9 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function', 'experiences',
-                  'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone', 'phone_2',
-                  'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution',
+        fields = ['email', 'first_name', 'last_name', 'gender', 'title', 'position', 'department', 'function',
+                  'experiences', 'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone',
+                  'phone_2', 'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution',
                   'newsletter', 'terms_and_conditions']
         fields_required = ['first_name', 'last_name', 'gender']
 
@@ -124,3 +124,7 @@ class UserForm(forms.ModelForm):
             'terms_and_conditions',
         )
         self.helper.add_input(Submit('submit', _('Send')))
+
+    def signup(self, request, user):
+        # Required to prevent multiple save
+        pass
