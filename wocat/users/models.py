@@ -81,9 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name=_('email address'),
         max_length=255,
-        #unique=True,
-        # Attention: Email cannot be unique, since after signup it is set to NULL until verification.
-        # There can be multiple signup processes at the same time, which are all set to NULL.
+        unique=True,
     )
     first_name = models.CharField(
         verbose_name=_('first name'),
