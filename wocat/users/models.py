@@ -328,11 +328,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
-    def save(self, *args, **kwargs):
-        settings.COUNT += 1
-        if settings.COUNT > 1:
-            raise IOError("ok")
-        return super().save(*args, **kwargs)
 
 
 
