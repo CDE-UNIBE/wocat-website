@@ -12,7 +12,6 @@ Function: {{ user.function_display }}
 Institution: {{ user.institution }}
 Experiences: {{ user.experiences_display }}
 Key work topics: {{ user.key_work_topics_display }}
-Institution: {{ user.institution }}
 Address: {{ user.full_address }}
 Telephone: {{ user.phone }}
 Fax: {{ user.fax }}

@@ -126,5 +126,30 @@ class UserForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', _('Send')))
 
     def signup(self, request, user):
-        # Required to prevent multiple save
-        pass
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.gender = self.cleaned_data['gender']
+        user.title = self.cleaned_data['title']
+        user.position = self.cleaned_data['position']
+        user.department = self.cleaned_data['department']
+        user.function = self.cleaned_data['function']
+        user.experiences = self.cleaned_data['experiences']
+        user.key_work_topics = self.cleaned_data['key_work_topics']
+        user.address = self.cleaned_data['address']
+        user.address_2 = self.cleaned_data['address_2']
+        user.postal_code = self.cleaned_data['postal_code']
+        user.city = self.cleaned_data['city']
+        user.country = self.cleaned_data['country']
+        user.phone = self.cleaned_data['phone']
+        user.phone_2 = self.cleaned_data['phone_2']
+        user.fax = self.cleaned_data['fax']
+        user.fax_2 = self.cleaned_data['fax_2']
+        user.second_email = self.cleaned_data['second_email']
+        # user.language = self.cleaned_data['language']
+        user.comments = self.cleaned_data['comments']
+        user.avatar = self.cleaned_data['avatar']
+        user.institution = self.cleaned_data['institution']
+        user.newsletter = self.cleaned_data['newsletter']
+        user.terms_and_conditions = self.cleaned_data['terms_and_conditions']
+        user.is_active = True
+        user.save()
