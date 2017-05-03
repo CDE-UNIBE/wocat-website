@@ -184,7 +184,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def key_work_topics_display(self):
-        return ', '.join(str(experience) for experience in self.experiences.all())
+        return ', '.join(str(topic) for topic in self.key_work_topics.all())
 
     address = models.CharField(
         _('Address Information'),
