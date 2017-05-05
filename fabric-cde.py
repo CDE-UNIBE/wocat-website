@@ -22,7 +22,7 @@ ENVIRONMENTS = {
         'requirements_file': 'requirements/base.txt',
         'touch_file': environ['WOCAT_DEV_TOUCH_FILE']
     },
-    'production': {
+    'master': {
         'host_string': environ['WOCAT_BETA_HOST'],
         'source_path': environ['WOCAT_BETA_PATH'],
         'virtualenv_path': environ['WOCAT_BETA_VIRTUALENV'],
@@ -35,13 +35,13 @@ ENVIRONMENTS = {
 
 
 @task
-def production():
-    setup_environment('production')
+def master():
+    setup_environment('master')
 
 
 @task
 def deploy():
-    require('environment', provided_by=(production, ))
+    require('environment', provided_by=(master, ))
     with cd(env.source_path):
         _update_source()
         _install_dependencies()
