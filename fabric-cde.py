@@ -27,7 +27,7 @@ ENVIRONMENTS = {
         'source_path': environ['WOCAT_BETA_PATH'],
         'virtualenv_path': environ['WOCAT_BETA_VIRTUALENV'],
         'git_remote': 'origin',
-        'git_branch': 'production',
+        'git_branch': 'master',
         'requirements_file': 'requirements/base.txt',
         'touch_file': environ['WOCAT_BETA_TOUCH_FILE']
     }

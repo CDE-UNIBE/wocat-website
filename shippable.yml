@@ -22,7 +22,7 @@ build:
 branches:
   only:
     - development
-    - production
+    - master
 
 integrations:
   notifications:
