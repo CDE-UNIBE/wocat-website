@@ -15,7 +15,7 @@ build:
     - pip install Fabric3
 
   on_success:
-    - fab -f fabric-cde.py $BRANCH deploy
+    - fab $BRANCH deploy
 
   cache: true
 
