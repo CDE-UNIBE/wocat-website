@@ -14,7 +14,6 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
-from wagtail_modeltranslation.models import TranslationMixin
 
 from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock, PROJECT_BLOCKS, \
     REGION_BLOCKS, COUNTRY_BLOCKS, EVENTS_BLOCKS
@@ -80,7 +79,7 @@ class HeaderPageMixin(models.Model):
         return context
 
 
-class ContentPage(TranslationMixin, HeaderPageMixin, Page):
+class ContentPage(HeaderPageMixin, Page):
     template = 'pages/content.html'
 
     content = StreamField(
