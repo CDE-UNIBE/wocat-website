@@ -186,7 +186,7 @@ class Command(BaseCommand):
 
     def _get_is_active(self, **row):
         for key in ['user_disable', 'user_deleted', 'hidden']:
-            if row[key]:
+            if row[key] in ['1', 1]:
                 return False
         return True
 
