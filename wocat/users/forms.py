@@ -11,7 +11,7 @@ from wocat.countries.models import Country
 class FullUserForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        exclude = []
+        exclude = ['email', 'password']
 
 
 class UserForm(forms.ModelForm):
