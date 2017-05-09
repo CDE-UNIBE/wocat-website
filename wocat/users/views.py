@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+import contextlib
+
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
+
+from mama_cas.views import LoginView
 
 from wocat.users.forms import UserForm
 from .models import User
@@ -63,8 +67,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
-        return reverse('users:detail',
-                       kwargs={'pk': self.request.user.id})
+        return reverse('users:detail', kwargs={'pk': self.request.user.id})
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -72,8 +75,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserForm
 
     def get_success_url(self):
-        return reverse('users:detail',
-                       kwargs={'pk': self.request.user.id})
+        return reverse('users:detail', kwargs={'pk': self.request.user.id})
 
     def get_object(self):
         return User.objects.get(email=self.request.user.email)
@@ -81,6 +83,16 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class UserListView(LoginRequiredMixin, ListView):
     model = User
-    # These next two lines tell the view to index lookups by email
-    #slug_field = 'email'
-    #slug_url_kwarg = 'email'
+
+
+class CASLoginView(LoginView):
+
+    def form_invalid(self, form):
+        """
+        For inactive users: redirect to 're-activate' view.
+        """
+        with contextlib.suppress(User.DoesNotExist):
+            user = User.objects.get(email=form.cleaned_data['username'])
+            if not user.is_active:
+                return HttpResponseRedirect(reverse('account_inactive'))
+        return super().form_invalid(form=form)
