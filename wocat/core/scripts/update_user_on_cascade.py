@@ -1,0 +1,34 @@
+from django.db import connection
+
+
+def run():
+    """
+    change references to the user to 'on cascade update' so the user_id can
+    change. this is required for the user_import script.
+    """
+    queries = [
+        "alter table authtoken_token drop constraint authtoken_token_user_id_35299eff_fk_users_user_id, add constraint authtoken_token_user_id_35299eff_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table account_emailaddress drop constraint account_emailaddress_user_id_2c513194_fk_users_user_id, add constraint account_emailaddress_user_id_2c513194_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table cms_countrypage drop constraint cms_countrypage_contact_person_id_809cc6fe_fk_users_user_id, add constraint cms_countrypage_contact_person_id_809cc6fe_fk_users_user_id FOREIGN KEY (contact_person_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table cms_projectpage drop constraint cms_projectpage_contact_person_id_663d21ce_fk_users_user_id, add constraint cms_projectpage_contact_person_id_663d21ce_fk_users_user_id FOREIGN KEY (contact_person_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table cms_regionpage drop constraint cms_regionpage_contact_person_id_999dd33a_fk_users_user_id, add constraint cms_regionpage_contact_person_id_999dd33a_fk_users_user_id FOREIGN KEY (contact_person_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table django_admin_log drop constraint django_admin_log_user_id_c564eba6_fk_users_user_id, add constraint django_admin_log_user_id_c564eba6_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table institutions_institution drop constraint institutions_instit_contact_person_id_394beca8_fk_users_user_id, add constraint institutions_instit_contact_person_id_394beca8_fk_users_user_id FOREIGN KEY (contact_person_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table mama_cas_proxygrantingticket drop constraint mama_cas_proxygrantingticket_user_id_21745880_fk_users_user_id, add constraint mama_cas_proxygrantingticket_user_id_21745880_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table mama_cas_proxyticket drop constraint mama_cas_proxyticket_user_id_01b00e10_fk_users_user_id, add constraint mama_cas_proxyticket_user_id_01b00e10_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table mama_cas_serviceticket drop constraint mama_cas_serviceticket_user_id_f6589ff3_fk_users_user_id, add constraint mama_cas_serviceticket_user_id_f6589ff3_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table socialaccount_socialaccount drop constraint socialaccount_socialaccount_user_id_8146e70c_fk_users_user_id, add constraint socialaccount_socialaccount_user_id_8146e70c_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table users_user_experiences drop constraint users_user_experiences_user_id_09e930bf_fk_users_user_id, add constraint users_user_experiences_user_id_09e930bf_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table users_user_groups drop constraint users_user_groups_user_id_5f6f5a90_fk_users_user_id, add constraint users_user_groups_user_id_5f6f5a90_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table users_user_key_work_topics drop constraint users_user_key_work_topics_user_id_66d5cf37_fk_users_user_id, add constraint users_user_key_work_topics_user_id_66d5cf37_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table users_user_user_permissions drop constraint users_user_user_permissions_user_id_20aca447_fk_users_user_id, add constraint users_user_user_permissions_user_id_20aca447_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table wagtailcore_page drop constraint wagtailcore_page_owner_id_fbf7c332_fk_users_user_id, add constraint wagtailcore_page_owner_id_fbf7c332_fk_users_user_id FOREIGN KEY (owner_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table wagtailcore_pagerevision drop constraint wagtailcore_pagerevision_user_id_2409d2f4_fk_users_user_id, add constraint wagtailcore_pagerevision_user_id_2409d2f4_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table wagtaildocs_document drop constraint wagtaildocs_docum_uploaded_by_user_id_17258b41_fk_users_user_id, add constraint wagtaildocs_docum_uploaded_by_user_id_17258b41_fk_users_user_id FOREIGN KEY (uploaded_by_user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table wagtailimages_image drop constraint wagtailimages_ima_uploaded_by_user_id_5d73dc75_fk_users_user_id, add constraint wagtailimages_ima_uploaded_by_user_id_5d73dc75_fk_users_user_id FOREIGN KEY (uploaded_by_user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;",
+        "alter table wagtailusers_userprofile drop constraint wagtailusers_userprofile_user_id_59c92331_fk_users_user_id, add constraint wagtailusers_userprofile_user_id_59c92331_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;"
+    ]
+
+    with connection.cursor() as c:
+        for query in queries:
+            c.execute(query)
