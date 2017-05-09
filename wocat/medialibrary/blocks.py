@@ -32,8 +32,8 @@ class MediaTeaserBlock(StructBlock):
         required=False,
     )
 
-    def get_context(self, value):
-        context = {}
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         media = value.get('media')
         title = media.title
         abstract = media.abstract

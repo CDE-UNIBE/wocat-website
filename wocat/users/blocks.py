@@ -54,16 +54,17 @@ class UserChooserBlock(ChooserBlock):
 class UserTeaserBlock(StructBlock):
     user = UserChooserBlock(required=True)
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         user = value.get('user')
         if not user:
-            return {}
+            return context
         if user.country:
             flag = format_html('<img src="{src}" class="inlineflag" alt="{name}"> {name}',
                 src=user.country.flag, name=user.country.name)
         else:
             flag = None
-        return {
+        context.update({
             'title': user.name,
             'description': format_html(
                 '<p>{institution}{position}{email}{country}</p>',
@@ -77,7 +78,8 @@ class UserTeaserBlock(StructBlock):
             'imgpos': 'left',
             'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
             'imgcircle': True,
-        }
+        })
+        return context
 
     class Meta:
         icon = 'fa fa-user'
@@ -107,18 +109,19 @@ SUBPAGEBLOCKS = [
 
 
 class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
-    def get_context(self, value, context={}):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         page = context.get('page')
         if page and page.contact_person:
             user = page.contact_person
         else:
-            return {}
+            return context
         if user.country:
             flag = format_html('<img src="{src}" class="inlineflag" alt="{name}"> {name}',
                 src=user.country.flag, name=user.country.name)
         else:
             flag = None
-        return {
+        context.update({
             'title': user.name,
             'description': format_html(
                 '<p>{institution}{position}{email}{country}</p>',
@@ -132,7 +135,8 @@ class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
             'imgpos': 'left',
             'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
             'imgcircle': True,
-        }
+        })
+        return context
 
     #def render_form(self, value, prefix='', errors=None):
     #    form = super().render_form(value, prefix, errors)

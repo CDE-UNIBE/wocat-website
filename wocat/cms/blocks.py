@@ -26,8 +26,8 @@ class HeadingBlock(blocks.CharBlock):
         icon = 'title'
         template = 'widgets/heading3.html'
 
-    def get_context(self, value):
-        context = super().get_context(value)
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         context['text'] = value
         return context
 
@@ -37,8 +37,8 @@ class RichTextBlock(blocks.RichTextBlock):
         icon = 'pilcrow'
         template = 'widgets/richtext.html'
 
-    def get_context(self, value):
-        context = super().get_context(value)
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         context['content'] = value
         return context
 
@@ -48,8 +48,8 @@ class ImageBlock(ImageChooserBlock):
         icon = 'image'
         template = 'widgets/image.html'
 
-    def get_context(self, value):
-        context = super().get_context(value)
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         context['src'] = value.get_rendition('max-1200x1200').url
         context['name'] = value.title
         return context
@@ -60,10 +60,9 @@ class EmbedBlock(WagtailEmbedBlock):
         icon = 'media'
         template = 'widgets/embed.html'
 
-    def get_context(self, value):
-        context = super().get_context(value)
-        embed = value
-        context['embed'] = embed
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
+        context['embed'] = value
         return context
 
 
@@ -84,14 +83,16 @@ class LinkBlock(StructBlock):
         super().__init__(*args, **kwargs)
         self.required = required
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         page = value.get('page')
         link = value.get('link')
-        return {
+        context.update({
             'href': page.url if page else link,
             'external': not bool(page),
             'text': value.get('name') or _('read more'),
-        }
+        })
+        return context
 
     def clean(self, value):
         at_lest_one_field_required_fields = ['page', 'url']
@@ -103,18 +104,20 @@ class LinkBlock(StructBlock):
 
 
 class DocumentBlock(DocumentChooserBlock):
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         document = value
         if not document:
-            return {}
-        return {
+            return context
+        context.update({
             'title': document.title,
             'fileurl': document.url,
             'filename': document.filename,
             'filesize': filesizeformat(document.file.size),
             'owner': document.uploaded_by_user,
             'type': document.file_extension,
-        }
+        })
+        return context
 
     def render(self, value, context=None):
         # Add the file_delete_url if the current user is owner.
@@ -154,16 +157,18 @@ class ReadMoreBlock(StructBlock):
     def required(self):
         return self._required
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         page = value.get('page')
         link = value.get('link')
-        return {
+        context.update({
             'href': page.url if page else link,
             'external': not bool(page),
             'text': value.get('name') or _('read more'),
             'align': value.get('alignment'),
             'button': value.get('button'),
-        }
+        })
+        return context
 
     def clean(self, value):
         at_lest_one_field_required_fields = ['page', 'link']
@@ -210,7 +215,8 @@ class TeaserBlock(StructBlock):
     read_more_text = blocks.CharBlock(required=False)
     boarderless = blocks.BooleanBlock(required=False)
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         page = value.get('page')
         link = value.get('link')
         image_block = value.get('image')
@@ -219,7 +225,7 @@ class TeaserBlock(StructBlock):
         largeimg = image_block.get('large')
         read_more_text = value.get('read_more_text') or _('read more')
         lines = not value.get('boarderless')
-        return {
+        context.update({
             'href': page.url if page else link,
             'external': not bool(page),
             'title': value.get('title'),
@@ -229,7 +235,8 @@ class TeaserBlock(StructBlock):
             'imgpos': imagepos,
             'largeimg': largeimg,
             'lines': lines,
-        }
+        })
+        return context
 
     class Meta:
         icon = 'link'
@@ -247,13 +254,14 @@ class OverlayTeaserBlock(StructBlock):
     link_text = blocks.CharBlock(required=False)
     top_box = blocks.BooleanBlock(required=False, default=False)
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         page = value.get('page')
         link = value.get('link')
         image = value.get('image')
         link_text = value.get('link_text') or _('link')
         top = value.get('top_box')
-        return {
+        context.update({
             'title': value.get('title'),
             'description': value.get('content'),
             'style': 'box',
@@ -267,7 +275,8 @@ class OverlayTeaserBlock(StructBlock):
             'imgsrc': image.get_rendition('max-1200x1200').url if image else '',
             'flapmd': True,
             'topposition': top,
-        }
+        })
+        return context
 
     class Meta:
         icon = 'link'
@@ -283,7 +292,8 @@ class OverlayTeaserMapBlock(StructBlock):
     link = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(required=False)
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         page = value.get('page')
         link = value.get('link')
         link_text = value.get('link_text') or _('link')
@@ -291,7 +301,7 @@ class OverlayTeaserMapBlock(StructBlock):
         country_pages = CountryPage.objects.live().in_menu()
         countries = [{'iso_3166_1_alpha_3': country_page.country.code} for country_page in country_pages]
 
-        return {
+        context.update({
             'title': value.get('title'),
             'description': value.get('content'),
             'style': 'box',
@@ -304,7 +314,8 @@ class OverlayTeaserMapBlock(StructBlock):
             ],
             'countries': countries,
             'size': 'large',
-        }
+        })
+        return context
 
     class Meta:
         icon = 'link'
@@ -380,7 +391,8 @@ class DSFTeaserBlock(StructBlock):
     phase_b = blocks.BooleanBlock(required=False, default=True)
     phase_c = blocks.BooleanBlock(required=False, default=True)
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         page = value.get('page')
         url = page.url if page else ''
 
@@ -392,7 +404,7 @@ class DSFTeaserBlock(StructBlock):
         module_6 = value.get('module_6')
         module_7 = value.get('module_7')
 
-        return {
+        context.update({
             'module1href': '{0}#module-1'.format(url) if module_1 else '',
             'module2href': '{0}#module-2'.format(url) if module_2 else '',
             'module3href': '{0}#module-3'.format(url) if module_3 else '',
@@ -400,7 +412,8 @@ class DSFTeaserBlock(StructBlock):
             'module5href': '{0}#module-5'.format(url) if module_5 else '',
             'module6href': '{0}#module-6'.format(url) if module_6 else '',
             'module7href': '{0}#module-7'.format(url) if module_7 else '',
-        }
+        })
+        return context
 
     class Meta:
         icon = 'link'
@@ -412,14 +425,14 @@ class UploadBlock(StructBlock):
     upload_slug = CharBlock(required=True)
     documents = ListBlock(DocumentBlock(required=False))
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         documents = value.get('documents')
         if documents:
-            return {
+            context.update({
                 'context': '/static/styleguide/js/dropzone-endpoint.html',
-            }
-        else:
-            return {}
+            })
+        return context
 
     def render(self, value, context=None):
         # Add the apiurl using the page id of the current page.
@@ -464,7 +477,8 @@ class DSFModulesBlock(StructBlock):
     module_7_title = CharBlock()
     module_7 = StreamBlock(DSF_BLOCKS)
 
-    def get_context(self, value, context=None):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         modules = {
             1: {'content': value.get('module_1'), 'color': '#403D38', 'text': value.get('module_1_title')},  # _('Operational Strategy and Action plan')
             2: {'content': value.get('module_2'), 'color': '#6E3237', 'text': value.get('module_2_title')},  # _('National and Subnational Level')
@@ -494,11 +508,12 @@ class DSFModulesBlock(StructBlock):
                 'kicker': 'Module {0}'.format(i),
                 'text': module.get('text'),
             })
-        return {
+        context.update({
             'sections': sections,
             'sidebar_links': sidebar_links,
             'context': context,
-        }
+        })
+        return context
 
     class Meta:
         icon = 'fa fa-th-list'
@@ -546,8 +561,8 @@ class ImageGalleryBlock(StructBlock):
     elements = ListBlock(ImageGalleryElementBlock())
     vertical_align = blocks.BooleanBlock(required=False)
 
-    def get_context(self, value):
-        context = super().get_context(value)
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         columns = value.get('columns')
         vertical_align = value.get('vertical_align')
         elements = []
@@ -617,7 +632,8 @@ class ColumnsBlock(StructBlock):
     left_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
     right_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
 
-    def get_context(self, value, context={}):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         context['left_column'] = value.get('left_column')
         context['right_column'] = value.get('right_column')
         return context
@@ -653,7 +669,8 @@ class Columns1To1To1Block(ColumnsBlock):
         label = 'Columns 1:1:1'
         template = 'widgets/columns-1-1-1.html'
 
-    def get_context(self, value, context={}):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         context['middle_column'] = value.get('middle_column')
         return context
 

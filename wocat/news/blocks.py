@@ -18,12 +18,13 @@ class NewsChooserBlock(PageChooserBlock):
 class NewsTeaserBlock(StructBlock):
     news = NewsChooserBlock(required=True)
 
-    def get_context(self, value):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
         news = value.get('news')
         if not news:
-            return {}
+            return context
 
-        context = {
+        context.update({
             'title': news.title,
             'description': news.lead,
             'author': news.author,
@@ -31,7 +32,7 @@ class NewsTeaserBlock(StructBlock):
             'href': news.url,
             'readmorelink': {'text': _('read more')},
             'bottomline': True,
-        }
+        })
 
         if news.lead_image:
             context.update({
