@@ -8,6 +8,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     experiences = serializers.StringRelatedField(many=True)
     key_work_topics = serializers.StringRelatedField(many=True)
     country = serializers.PrimaryKeyRelatedField(many=False, queryset=Country.objects.all())
+    full_name = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -17,5 +18,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'key_work_topics', 'address', 'address_2', 'postal_code', 'city',
             'country', 'phone', 'phone_2', 'fax', 'fax_2', 'second_email',
             'language', 'comments', 'newsletter', 'avatar', 'institution',
-            'date_joined', 'is_active', 'is_staff',
+            'full_name',
         ]
+
+    def get_full_name(self, obj):
+        return obj.get_full_name()
