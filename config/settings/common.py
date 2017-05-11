@@ -68,10 +68,10 @@ THIRD_PARTY_APPS = (
     'django_countries',
     'django_languages',
     'easy_thumbnails',
-    'rest_framework',  # api
     'compressor',
+    'rest_framework',  # api
     'rest_framework.authtoken',  # token auth
-    'mama_cas',
+    'rest_framework_swagger',  # api docs
     'maintenancemode',
 )
 
@@ -344,10 +344,8 @@ THUMBNAIL_BASEDIR = 'thumbnails'
 
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticated',
     ]
 }
 

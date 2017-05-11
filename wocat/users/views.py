@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-import contextlib
-
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
-
-from mama_cas.views import LoginView
 
 from wocat.users.forms import UserForm
 from .models import User
@@ -83,16 +78,3 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class UserListView(LoginRequiredMixin, ListView):
     model = User
-
-
-class CASLoginView(LoginView):
-
-    def form_invalid(self, form):
-        """
-        For inactive users: redirect to 're-activate' view.
-        """
-        with contextlib.suppress(User.DoesNotExist):
-            user = User.objects.get(email=form.cleaned_data['username'])
-            if not user.is_active:
-                return HttpResponseRedirect(reverse('account_inactive'))
-        return super().form_invalid(form=form)

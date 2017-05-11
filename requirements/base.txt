@@ -26,8 +26,6 @@ easy-thumbnails==2.3
 # For user registration, either via email or social
 # Well-built with regular release cycles!
 django-allauth==0.25.2
-# For Central Authentication Service: qcat <> wocat
-django-mama-cas==2.1.0
 
 # Python-PostgreSQL Database Adapter
 psycopg2==2.7.1
@@ -55,6 +53,7 @@ django-languages==0.1
 djangorestframework==3.4.6
 Markdown==2.6.6
 django-filter==0.15.3
+django-rest-swagger==2.1.2
 
 # Newletter
 mailchimp==2.0.9

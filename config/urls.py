@@ -14,7 +14,6 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailsearch import urls as wagtailsearch_urls
 
 from wocat.core.views import SwitchLanguageView
-from wocat.users.views import CASLoginView
 
 BACKEND_NAME = 'WOCAT backend'
 admin.site.site_header = BACKEND_NAME
@@ -30,8 +29,6 @@ urlpatterns = [
     # User management
     url(r'^users/', include('wocat.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^cas/login/?$', CASLoginView.as_view(), name='cas_login'),
-    url(r'^cas/', include('mama_cas.urls')),
     url(r'^library/media/', include('wocat.medialibrary.urls', namespace='media')),
     url(r'^glossary/', include('wocat.glossary.urls', namespace='glossary')),
     url(r'^institutions/', include('wocat.institutions.urls', namespace='institutions')),

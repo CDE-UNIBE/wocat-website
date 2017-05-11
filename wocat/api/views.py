@@ -1,7 +1,11 @@
+from django.contrib.auth.forms import AuthenticationForm
 from django.db.models import Q
+from rest_framework import status
 from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
 from wocat.cms.serializers import ProjectSerializer, CountrySerializer, RegionSerializer
@@ -65,3 +69,33 @@ class InstitutionViewSet(viewsets.ModelViewSet):
 
 
 router.register(r'institutions', InstitutionViewSet)
+
+
+class LoginView(APIView):
+    """
+    Endpoint for authentication, expects username and password in the request
+    body.
+
+    Selected response messages:
+    * 200 (User object as response)
+    * 403 (Forbidden; Token in the request header not valid)
+    * 401 (Login failed for given user and password)
+
+    Example request:
+
+    `curl -X POST https://beta.wocat.net/api/v1/auth/login/ \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Token <token>' \
+    -d '{"username": "<email>", "password": "<password>"}'`
+
+    """
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated, )
+
+    def post(self, request, *args, **kwargs):
+        form = AuthenticationForm(request, data=request.data)
+        if form.is_valid():
+            user = form.get_user()
+            return Response(data=UserSerializer(instance=user).data)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
