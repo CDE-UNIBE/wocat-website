@@ -17,7 +17,7 @@ from wocat.users.serializers import UserSerializer
 router = routers.DefaultRouter()
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, )
@@ -39,7 +39,7 @@ class UserViewSet(viewsets.ModelViewSet):
 router.register(r'users', UserViewSet, base_name='user')
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ProjectPage.objects.all()
     serializer_class = ProjectSerializer
 
@@ -47,7 +47,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 router.register(r'projects', ProjectViewSet)
 
 
-class CountryViewSet(viewsets.ModelViewSet):
+class CountryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = CountryPage.objects.all()
     serializer_class = CountrySerializer
 
@@ -55,7 +55,7 @@ class CountryViewSet(viewsets.ModelViewSet):
 router.register(r'countries', CountryViewSet)
 
 
-class RegionViewSet(viewsets.ModelViewSet):
+class RegionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = RegionPage.objects.all()
     serializer_class = RegionSerializer
 
@@ -63,7 +63,7 @@ class RegionViewSet(viewsets.ModelViewSet):
 router.register(r'regions', RegionViewSet)
 
 
-class InstitutionViewSet(viewsets.ModelViewSet):
+class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
 
