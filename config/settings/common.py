@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = (
     'compressor',
     'rest_framework.authtoken',  # token auth
     'mama_cas',
+    'maintenancemode',
 )
 
 # Apps specific for this project go here.
@@ -108,6 +109,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    # maintenance mode
+    'maintenancemode.middleware.MaintenanceModeMiddleware',
     # wagtail cms
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
@@ -354,3 +357,6 @@ REST_FRAMEWORK = {
 NEWSLETTER_API_KEY=env('NEWSLETTER_API_KEY', default='')
 NEWSLETTER_LIST_ID=env('NEWSLETTER_LIST_ID', default='')
 FILTERS_DISABLE_HELP_TEXT = True
+
+# Maintenance mode flag
+MAINTENANCE_MODE = False

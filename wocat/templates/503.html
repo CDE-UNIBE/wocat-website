@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}Server Error{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<h1>{% blocktrans %}Maintenance{% endblocktrans %}</h1>
+
+<p>{% blocktrans %}We are updating the wocat website, please try refreshing in a couple of minutes.{% endblocktrans %}</p>
+{% endblock content %}
+
+

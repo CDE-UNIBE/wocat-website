@@ -58,3 +58,6 @@ django-filter==0.15.3
 
 # Newletter
 mailchimp==2.0.9
+
+# Maintenance mode
+django-maintenancemode==0.11.2

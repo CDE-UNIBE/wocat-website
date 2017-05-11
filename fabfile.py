@@ -48,12 +48,13 @@ def master():
 def deploy():
     require('environment', provided_by=(develop, master, ))
     with cd(env.source_path):
+        _set_maintenance('on')
         _update_source()
         _install_dependencies()
         _compile_less()
         _collectstatic()
         _migrate()
-        _reload_webserver()
+        _set_maintenance('off')
 
 
 def _update_source():
@@ -77,6 +78,12 @@ def _collectstatic():
 def _migrate():
     with virtualenv():
         run("python manage.py migrate")
+
+
+def _set_maintenance(switch: str):
+    with virtualenv():
+        run("python manage.py maintenance %s" % switch)
+    _reload_webserver()
 
 
 def _reload_webserver():
