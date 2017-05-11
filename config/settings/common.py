@@ -100,7 +100,7 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + CMS_APPS + THIRD_PARTY_APPS
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE_CLASSES = (
-    # Make sure djangosecure.middleware.SecurityMiddleware is listed first
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,7 +111,6 @@ MIDDLEWARE_CLASSES = (
     # wagtail cms
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
 )
 
 # MIGRATIONS CONFIGURATION
