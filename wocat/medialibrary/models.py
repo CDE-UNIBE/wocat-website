@@ -110,6 +110,10 @@ class MediaType(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    order = models.PositiveIntegerField(default=None, null=True)
+
+    class Meta:
+        ordering = ['order', 'name']
 
     @property
     def image(self):
@@ -122,6 +126,7 @@ class MediaType(models.Model):
         FieldPanel('name'),
         FieldPanel('icon'),
         ImageChooserPanel('default_image'),
+        FieldPanel('order'),
     ]
 
 

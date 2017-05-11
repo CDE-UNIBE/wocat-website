@@ -3,12 +3,12 @@
 
 {% block content %}
     <p>
-        <a href="./?type=0">
+        <a href="?type=0">
             <strong>{% trans "all" %}</strong>
         </a>
         |
         {% for type in types %}
-            <a href="./?type={{ type.id }}">
+            <a href="?type={{ type.id }}">
                 <i class="fa fa-{{ type.icon }} " aria-hidden="true"></i> {{ type }}
             </a>
             {% if not forloop.last %} |{% endif %}
