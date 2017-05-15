@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
-from allauth.account.signals import user_signed_up, email_confirmed
+from allauth.account.signals import user_signed_up, email_confirmed, \
+    password_reset
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, Group
@@ -342,6 +343,12 @@ def deactivate_user_on_email_confirmation(email_address, **kwargs):
     user.is_active = False
     user.save()
     notify_moderators(user)
+
+# Reactivate users after resetting password.
+@receiver(signal=password_reset)
+def reactivate_account(user, **kwargs):
+    user.is_active = True
+    user.save()
 
 
 def notify_moderators(user):

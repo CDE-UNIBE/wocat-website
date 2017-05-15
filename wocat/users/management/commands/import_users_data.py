@@ -153,7 +153,8 @@ class Command(BaseCommand):
             for row in read:
                 data = dict(self.get_imported_row(row))
                 # multiple fields affect 'is_active'
-                data['is_active'] = self._get_is_active(**row)
+                data['is_active'] = False
+                data['newsletter'] = True
                 user_form = UserForm(data=data)
                 if user_form.is_valid():
                     self.update_or_create_user(

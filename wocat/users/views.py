@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
+from allauth.account.views import PasswordResetView
 
 from wocat.users.forms import UserForm
 from .models import User
@@ -78,3 +79,14 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class UserListView(LoginRequiredMixin, ListView):
     model = User
+
+
+class ReactivateAccountView(PasswordResetView):
+    """
+    Specific view for reactivating the account after the migration of the users
+    from the old typo3 website.
+    All accounts are migrated as `is_active=False`, this view sets a new
+    password and reactivates the account.
+
+    """
+    template_name = 'account/reactivate_account.html'
