@@ -346,7 +346,10 @@ THUMBNAIL_BASEDIR = 'thumbnails'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '60/m',
+    },
 }
 
 

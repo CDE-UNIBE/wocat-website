@@ -5,6 +5,7 @@ from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
@@ -91,6 +92,7 @@ class LoginView(APIView):
     """
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, )
+    throttle_classes = (UserRateThrottle, )
 
     def post(self, request, *args, **kwargs):
         form = AuthenticationForm(request, data=request.data)
