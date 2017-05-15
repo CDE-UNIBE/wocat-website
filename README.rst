@@ -98,14 +98,6 @@ Update of packages
 
   $ pip install -rU requirements.txt
 
-Central Authentication Service (CAS)
-------------------------------------
-
-To use a single sign on for Qcat and Wocat, we agreed on using CAS.
-To use CAS with Django, we set up [Mama CAS](https://github.com/jbittel/django-mama-cas) server on our side
-and any other service wanting to facilitate this server can use [django-cas-ng](https://github.com/mingchen/django-cas-ng) to connect.
-The setup is straight forward and by following the tutorials on each services side, it's up and running in ~5min.
-Sebastian Manger already made [a branch for qcat](https://github.com/CDE-UNIBE/qcat/tree/feature/1055-new-authentication)
 
 Newsletter
 ----------
@@ -243,9 +235,9 @@ Steps required to collect, translate and compile translations with the Django tr
 
     $ python manage.py compilemessages
 
-4. Restart webserver 
-    
-    
+4. Restart webserver
+
+
 
 Sentry
 ^^^^^^
