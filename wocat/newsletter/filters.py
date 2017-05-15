@@ -1,5 +1,4 @@
 import django_filters
-from django import forms
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -54,7 +53,6 @@ class UserFilter(django_filters.FilterSet):
         self.filters['position'].choices = (tuple((position, position) for position in positions if position))
         self.filters['department'].choices = (tuple((department, department) for department in departments if department))
         self.filters['city'].choices = (tuple((city, city) for city in cities if city))
-
 
     class Meta:
         model = User
