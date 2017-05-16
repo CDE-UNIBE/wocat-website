@@ -219,7 +219,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                # Your stuff: custom template context processors go here
+                'wocat.core.context_processors.webmaster_tools_key',
             ],
         },
     },
@@ -361,3 +361,6 @@ FILTERS_DISABLE_HELP_TEXT = True
 
 # Maintenance mode flag
 MAINTENANCE_MODE = False
+
+# Google webmaster tools
+GOOGLE_WEBMASTER_TOOLS_KEY = env('GOOGLE_WEBMASTER_TOOLS_KEY', default='')
