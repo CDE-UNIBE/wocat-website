@@ -18,7 +18,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'key_work_topics', 'address', 'address_2', 'postal_code', 'city',
             'country', 'phone', 'phone_2', 'fax', 'fax_2', 'second_email',
             'language', 'comments', 'newsletter', 'avatar', 'institution',
-            'full_name',
+            'full_name', 'is_active',
         ]
 
     def get_full_name(self, obj):
