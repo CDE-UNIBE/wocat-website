@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from wagtail.contrib.wagtailsitemaps.views import sitemap
 
 from wagtail.wagtailcore import urls as wagtail_urls
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
@@ -23,6 +24,7 @@ admin.site.site_title = BACKEND_NAME
 urlpatterns = [
     url(r'^home/$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url('^sitemap\.xml$', sitemap),
 
     # Django Admin, use {% url 'admin:index' %}
     url(r'^{}/'.format(settings.ADMIN_URL), include(admin.site.urls)),
