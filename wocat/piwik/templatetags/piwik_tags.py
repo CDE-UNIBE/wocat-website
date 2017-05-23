@@ -13,4 +13,5 @@ class Piwik(InclusionTag):
         return {
             'domain': 'wocat.net',
             'site_id': 7,
+            'user_id': context.request.user.id if context.request.user.is_authenticated else ''
         }

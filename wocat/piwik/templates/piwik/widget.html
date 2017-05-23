@@ -1,6 +1,7 @@
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
+  {% if user_id %}_paq.push(['setUserId', '{{ user_id }}']);{% endif %}
   _paq.push(["setDomains", ["*.{{ domain }}"]]);
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
