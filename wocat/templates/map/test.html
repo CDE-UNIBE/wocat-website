@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load cms_tags %}
+{% load i18n %}
+{% load static %}
+
+{% block content_container %}
+  {% carousel %}
+  {% include 'widgets/overlay-teaser.html' with title='Wocat' description=page.lead style='largebox' %}
+  <div class="container">
+    <br>
+    {% block content %}
+      {% include 'countries/map.html' %}
+    {% endblock content %}
+  </div>
+{% endblock content_container %}
+
+{% block custom_javascript %}
+  <script src="{% static 'countries/mapPlugin.js' %}"></script>
+  <script>
+    $('#map').setMap();
+  </script>
+{% endblock custom_javascript %}
