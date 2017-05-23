@@ -103,7 +103,7 @@ class RegionSerializer(GeoJsonSerializer):
 
     class Meta:
         model = RegionPage
-        fields = ('identifier', 'url', 'title', 'country_codes',
+        fields = ('identifier', 'url', 'title', 'countries', 'country_codes',
                   'contact_person', 'geojson', 'panel_text', )
 
     def get_geojson(self, obj: RegionPage) -> list:

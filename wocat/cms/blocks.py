@@ -676,6 +676,17 @@ class Columns1To1To1Block(ColumnsBlock):
         return context
 
 
+class MapBlock(StructBlock):
+    class Meta:
+        label = 'Map'
+        template = 'map/map.html'
+        icon = 'fa fa-map'
+
+
+MAP_BLOCKS = [
+    ('map', MapBlock())
+]
+
 COLUMNS_BLOCKS = [
     ('columns_1_to_1', Columns1To1Block()),
     ('columns_1_to_2', Columns1To2Block()),
@@ -683,7 +694,7 @@ COLUMNS_BLOCKS = [
     ('columns_1_to_1_to_1', Columns1To1To1Block()),
 ]
 
-CMS_BLOCKS = BASE_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
+CMS_BLOCKS = BASE_BLOCKS + MAP_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 
 IMAGE_BLOCKS = [
     ('image', ImageBlock()),

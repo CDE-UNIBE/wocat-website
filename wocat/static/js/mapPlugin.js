@@ -1,25 +1,3 @@
-/**
- * mapPlugin
- * ---------
- * jQuery Plugin for the interactive map; also include the template:
- * 'countries/map.html'
- *
- * @maybe: load this plugin in the map.html template? independent loading allows
- * more flexibility regarding plugin loading, so leave it as is right now.
- *
- * Usage example:
- *---------------
- * {% load static %}
- *
- * {% include 'countries/map.html' %}
- * <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
- * <script src="{% static 'countries/mapPlugin.js' %}"></script>
- * <script>
- *   $('#map').setMap();
- * </script>
- *
- */
-
 jQuery.fn.setMap = function( options ) {
     var settings = $.extend({
         defaultTab: $('li[role="presentation"].active a')[0],
