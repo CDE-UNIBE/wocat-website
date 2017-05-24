@@ -15,6 +15,7 @@ jQuery.fn.setMap = function( options ) {
         "fillColor": "#F3D9C0",
         "fillOpacity": 0.5
     };
+    var mapFilter = $('.map-filter');
 
     // initialize map.
     var map = L.map('map').setView([41, -20], 2);
@@ -32,6 +33,17 @@ jQuery.fn.setMap = function( options ) {
     $('div.tab-content').on('click', 'a', function () {
         highlightItem($(this).attr('id'));
         return false;
+    });
+
+    mapFilter.on('change', function() {
+        var target = $('li[role="presentation"].active a')[0];
+        var panel = $(target.href.substr(target.href.indexOf('#')));
+        panel.empty();
+        getDataFromAPI(
+           target.dataset.url+'?q='+$(this).val(),
+           prepareMapData,
+           panel
+       );
     });
 
     // Load data just initially, and after that display the stored layer on

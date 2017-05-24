@@ -45,29 +45,46 @@ router.register(r'users', UserViewSet, base_name='user')
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
-    queryset = ProjectPage.objects.all()
     serializer_class = ProjectSerializer
 
+    def get_queryset(self):
+        query_string = self.request.GET.get('q')
+        if query_string:
+            return ProjectPage.objects.search(query_string)
+        else:
+            return ProjectPage.objects.all()
 
-router.register(r'projects', ProjectViewSet)
+router.register(r'projects', ProjectViewSet, base_name='projectpage')
 
 
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny, )
-    queryset = CountryPage.objects.all()
     serializer_class = CountrySerializer
 
+    def get_queryset(self):
+        query_string = self.request.GET.get('q')
+        if query_string:
+            return CountryPage.objects.search(query_string)
+        else:
+            return CountryPage.objects.all()
 
-router.register(r'countries', CountryViewSet)
+
+router.register(r'countries', CountryViewSet, base_name='countrypage')
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
-    queryset = RegionPage.objects.all()
     serializer_class = RegionSerializer
 
+    def get_queryset(self):
+        query_string = self.request.GET.get('q')
+        if query_string:
+            return RegionPage.objects.search(query_string)
+        else:
+            return RegionPage.objects.all()
 
-router.register(r'regions', RegionViewSet)
+
+router.register(r'regions', RegionViewSet, base_name='regionpage')
 
 
 class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
