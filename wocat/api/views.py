@@ -6,7 +6,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework import status
 from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
@@ -44,6 +44,7 @@ router.register(r'users', UserViewSet, base_name='user')
 
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
     queryset = ProjectPage.objects.all()
     serializer_class = ProjectSerializer
 
@@ -52,6 +53,7 @@ router.register(r'projects', ProjectViewSet)
 
 
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = (AllowAny, )
     queryset = CountryPage.objects.all()
     serializer_class = CountrySerializer
 
@@ -60,6 +62,7 @@ router.register(r'countries', CountryViewSet)
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
     queryset = RegionPage.objects.all()
     serializer_class = RegionSerializer
 

@@ -55,11 +55,15 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
         """
         Get the text on display in the right panel.
         """
+        image = ''
+        if obj.header_images:
+            image = obj.header_images[0].value.get_rendition('max-500x500').url
         return render_to_string('api/partial/panel_text.html', {
             'identifier': self.get_identifier(obj),
             'title': obj.title,
             'lead': obj.lead,
-            'url': obj.url
+            'url': obj.url,
+            'image': image
         })
 
     def get_identifier(self, obj) -> str:
