@@ -1,3 +1,6 @@
+{% load i18n %}
+
+
 {% comment %}
   Helper to build the text for the info panel on the interactive map.
 {% endcomment %}
@@ -8,19 +11,18 @@
       <div class="col-sm-4 col-sm-push-8">
         <div class="widget-teaser-image">
           {% if image %}
-            <a href="{{ url }}">
-              <img src="{{ image }}" alt="" class="widget-teaser-imgright">
-            </a>
+            <img src="{{ image }}" alt="" class="widget-teaser-imgright">
           {% endif %}
         </div>
       </div>
       <div class="col-sm-8 col-sm-pull-4">
         <a class="h4 widget-teaser-title widget-teaser-title-withreadmorelink" href="{{ url }}" id="{{ identifier }}">
-          <h4>{{ title }}</h4>
+          <span class="h4 widget-teaser-title widget-teaser-title-withreadmorelink">{{ title }}</span>
         </a>
         <p class="widget-teaser-description">
           {{ lead|safe }}
         </p>
+        <a href="{{ url }}" class="map-detail-page">{% trans "Go to detail page" %}</a>
         <div class="widget-teaser-textbottom-spacer"></div>
       </div>
     </div>
