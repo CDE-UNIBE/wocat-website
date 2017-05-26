@@ -6,13 +6,13 @@
   <div class="col-md-8">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active">
+        <a href="#regions" aria-controls="regions" role="tab" data-toggle="tab" data-url="{% url 'regionpage-list' %}">{% trans "Initiatives" %}</a>
+      </li>
+      <li role="presentation">
         <a href="#countries" aria-controls="countries" role="tab" data-toggle="tab" data-url="{% url 'countrypage-list' %}">{% trans "Countries" %}</a>
       </li>
       <li role="presentation">
         <a href="#projects" aria-controls="projects" role="tab" data-toggle="tab" data-url="{% url 'projectpage-list' %}">{% trans "Projects" %}</a>
-      </li>
-      <li role="presentation">
-        <a href="#regions" aria-controls="regions" role="tab" data-toggle="tab" data-url="{% url 'regionpage-list' %}">{% trans "Regions" %}</a>
       </li>
     </ul>
   </div>
@@ -29,9 +29,9 @@
   </div>
   <div id="panel" class="col-md-4">
     <div class="tab-content map-content">
-      <div role="tabpanel" class="tab-pane active" id="countries"></div>
+      <div role="tabpanel" class="tab-pane active" id="regions"></div>
+      <div role="tabpanel" class="tab-pane" id="countries"></div>
       <div role="tabpanel" class="tab-pane" id="projects"></div>
-      <div role="tabpanel" class="tab-pane" id="regions"></div>
     </div>
   </div>
 </div>

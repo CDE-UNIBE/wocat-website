@@ -1,0 +1,10 @@
+<div class="h4 widget-teaser-title">{{ title }}</div>
+<ul>
+{% for descendant in descendants %}
+  <li>
+    <a class="get-descendant-detail" href="#" data-target-tab="{{ tab }}" data-target-id="{{ descendant.id }}">
+      {{ descendant }}
+    </a>
+  </li>
+{% endfor %}
+</ul>

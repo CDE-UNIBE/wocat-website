@@ -16,6 +16,8 @@ jQuery.fn.setMap = function( options ) {
         "fillOpacity": 0.5
     };
     var mapFilter = $('.map-filter');
+    var tabContent = $('div.tab-content');
+
     // initialize map.
     var map = L.map('map').setView([41, -20], 2);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -30,8 +32,19 @@ jQuery.fn.setMap = function( options ) {
 
     // register clicks on menu and load more info element; excluding links to
     // the detail-page.
-    $('div.tab-content').on('click', 'a:not(.map-detail-page)', function () {
+    tabContent.on('click', 'a.get-descendants', function () {
+        var clickedElement = $(this);
+        $.get(clickedElement.attr('href')).done(function(data) {
+            $(clickedElement).parent().html(data.descendants)
+        });
         highlightItem($(this).attr('id'));
+        return false;
+    });
+    // Switch tab if descendant detail is clicked.
+    tabContent.on('click', 'a.get-descendant-detail', function () {
+        $('a[href$="#' + $(this).data('target-tab') + '"]').tab('show');
+        //call filter for given element.
+        //mapFilter.val($(this).data('target-id'));
         return false;
     });
 

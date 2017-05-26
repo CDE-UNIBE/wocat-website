@@ -22,7 +22,12 @@
         <p class="widget-teaser-description">
           {{ lead|safe }}
         </p>
-        <a href="{{ url }}" class="map-detail-page">{% trans "Go to detail page" %}</a>
+        <p>
+          <a href="{{ get_detail_url }}" class="get-descendants">{% trans "show more" %}</a>
+        </p>
+        <p>
+          <a href="{{ url }}">{% trans "Go to detail page" %}</a>
+        </p>
         <div class="widget-teaser-textbottom-spacer"></div>
       </div>
     </div>

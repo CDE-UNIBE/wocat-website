@@ -4,6 +4,8 @@ from functools import lru_cache
 from django.conf import settings
 from django.core.cache import cache
 from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
@@ -67,7 +69,11 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
             'title': obj.title,
             'lead': obj.lead,
             'url': obj.url,
-            'image': image
+            'image': image,
+            'get_detail_url': reverse(
+                '{model}-detail'.format(model=self.Meta.model.__name__.lower()),
+                kwargs={'pk': obj.id}
+            )
         })
 
     def get_identifier(self, obj) -> str:
@@ -111,13 +117,27 @@ class CountrySerializer(GeoJsonSerializer):
 
 
 class RegionSerializer(GeoJsonSerializer):
-    url = serializers.URLField(source='full_url')
-    countries = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = RegionPage
-        fields = ('identifier', 'url', 'title', 'countries', 'country_codes',
-                  'contact_person', 'geojson', 'panel_text', )
+        fields = ('identifier', 'geojson', 'panel_text', )
 
     def get_geojson(self, obj: RegionPage) -> list:
         return [self.get_country_geojson(code) for code in obj.country_codes]
+
+
+class RegionDetailSerializer(serializers.ModelSerializer):
+    descendants = serializers.SerializerMethodField()
+
+    class Meta:
+        model = RegionPage
+        fields = ('descendants', )
+
+    def get_descendants(self, obj):
+        return render_to_string('api/partial/panel_descendants.html', context={
+            'title': _('Countries'),
+            'tab': 'countries',
+            'descendants': (
+                (country for country in obj.countries)
+            )
+        })
