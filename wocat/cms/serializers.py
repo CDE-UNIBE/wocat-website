@@ -57,7 +57,11 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
         """
         image = ''
         if obj.header_images:
-            image = obj.header_images[0].value.get_rendition('max-500x500').url
+            try:
+                image = obj.header_images[0].value.get_rendition('max-500x500').url
+            except OSError:
+                # Simply show no image in case of problems with the files.
+                image = ''
         return render_to_string('api/partial/panel_text.html', {
             'identifier': self.get_identifier(obj),
             'title': obj.title,
@@ -84,8 +88,13 @@ class ProjectSerializer(GeoJsonSerializer):
                   'geojson', 'panel_text', )
 
     def get_geojson(self, obj: ProjectPage) -> list:
-        countries = ['ALB', 'DEU', 'CAN']
-        return [self.get_country_geojson(country) for country in countries]
+        if obj.countries.exists():
+            codes = [country.code for country in obj.countries.all()]
+        elif obj.included_countries.exists():
+            codes = obj.included_countries.values_list('code', flat=True)
+        else:
+            codes = []
+        return [self.get_country_geojson(code) for code in codes]
 
 
 class CountrySerializer(GeoJsonSerializer):
@@ -97,7 +106,7 @@ class CountrySerializer(GeoJsonSerializer):
         fields = ('identifier', 'url', 'title', 'code', 'contact_person',
                   'geojson', 'panel_text', )
 
-    def get_geojson(self, obj: CountryPage) -> list:
+    def get_geojson(self, obj: CountryPage):
         return self.get_country_geojson(obj.country.code)
 
 
@@ -111,5 +120,4 @@ class RegionSerializer(GeoJsonSerializer):
                   'contact_person', 'geojson', 'panel_text', )
 
     def get_geojson(self, obj: RegionPage) -> list:
-        countries = ['ARG', 'ARM']
-        return [self.get_country_geojson(country) for country in countries]
+        return [self.get_country_geojson(code) for code in obj.country_codes]
