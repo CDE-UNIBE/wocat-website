@@ -16,7 +16,6 @@ jQuery.fn.setMap = function( options ) {
         "fillOpacity": 0.5
     };
     var mapFilter = $('.map-filter');
-    var tabContent = $('div.tab-content');
 
     // initialize map.
     var map = L.map('map', {
@@ -33,24 +32,6 @@ jQuery.fn.setMap = function( options ) {
     selectMapContent(settings.defaultTab);
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
         selectMapContent(e.target)
-    });
-
-    // register clicks on menu and load more info element; excluding links to
-    // the detail-page.
-    tabContent.on('click', 'a.get-descendants', function () {
-        var clickedElement = $(this);
-        $.get(clickedElement.attr('href')).done(function(data) {
-            $(clickedElement).parent().html(data.descendants)
-        });
-        highlightItem($(this).attr('id'));
-        return false;
-    });
-    // Switch tab if descendant detail is clicked.
-    tabContent.on('click', 'a.get-descendant-detail', function () {
-        $('a[href$="#' + $(this).data('target-tab') + '"]').tab('show');
-        //call filter for given element.
-        //mapFilter.val($(this).data('target-id'));
-        return false;
     });
 
     // reload data from api on filter change.

@@ -364,3 +364,7 @@ MAINTENANCE_MODE = False
 
 # Google webmaster tools
 GOOGLE_WEBMASTER_TOOLS_KEY = env('GOOGLE_WEBMASTER_TOOLS_KEY', default='')
+
+# Filename of js-file with geojson for all countries; used for the map. Relative
+# to wocat/static/js
+MAP_GEOJSON_FILE = env('MAP_GEOJSON_FILE', default='countries.geo.json')

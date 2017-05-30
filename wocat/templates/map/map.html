@@ -5,7 +5,7 @@
 <div class="row">
   <!-- map legend -->
   <div class="map-legend col-md-3">
-    <div id="map-legend-collapse" class="collapse map-legend-content">
+    <div id="map-legend-collapse" class="map-legend-content">
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
           <a href="#regions" aria-controls="regions" role="tab" data-toggle="tab" data-url="{% url 'regionpage-list' %}">{% trans "Initiatives" %}</a>
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div data-toggle="slide-collapse" data-target="#map-legend-collapse" class="map-legend-collapse-button">
+    <div data-toggle="collapse" data-target="#map-legend-collapse" class="map-legend-collapse-button">
       <i class="fa fa-caret-right" aria-hidden="true"></i>
     </div>
   </div>
@@ -48,7 +48,9 @@
       var mapLegend = $('#map-legend-collapse');
       var collapseButton = $('.map-legend-collapse-button');
       var collapseIcon = collapseButton.children().first();
+      var tabContent = $('div.tab-content');
 
+      // todo: restrict to collapse of legend.
       mapLegend.on('show.bs.collapse', function () {
           collapseButton.css('left', '100%');
           collapseIcon.removeClass('fa-caret-right').addClass('fa-caret-left')
@@ -56,6 +58,12 @@
       mapLegend.on('hide.bs.collapse', function () {
           collapseButton.css('left', '0%');
           collapseIcon.removeClass('fa-caret-left').addClass('fa-caret-right')
+      });
+      tabContent.on('click', 'a.show-descendant', function() {
+          $('a[href$="#' + $(this).data('descendant-type') + '"]').tab('show');
+        //call filter for given element.
+        //mapFilter.val($(this).data('target-id'));
+        return false;
       });
   };
 </script>

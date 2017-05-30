@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
 from wocat.cms.serializers import ProjectSerializer, CountrySerializer, \
-    RegionSerializer, RegionDetailSerializer
+    RegionSerializer
 from wocat.institutions.models import Institution
 from wocat.institutions.serializers import InstitutionSerializer
 from wocat.users.models import User
@@ -75,11 +75,7 @@ router.register(r'countries', CountryViewSet, base_name='countrypage')
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
-
-    def get_serializer_class(self, *args, **kwargs):
-        if self.suffix == 'Instance':
-            return RegionDetailSerializer
-        return RegionSerializer
+    serializer_class = RegionSerializer
 
     def get_queryset(self):
         query_string = self.request.GET.get('q')

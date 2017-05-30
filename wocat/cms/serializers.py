@@ -1,22 +1,24 @@
-import json
+import collections
 from functools import lru_cache
+import json
 
 from django.conf import settings
 from django.core.cache import cache
 from django.template.loader import render_to_string
-from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
 
 
+Descendant = collections.namedtuple('Descendant', ['name', 'id', 'type'])
+
+
 class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
     """
     Shared methods for all things geojson.
     """
-    filename = 'countries.geo.json'  # todo: move to settings.
+    filename = settings.MAP_GEOJSON_FILE
     geojson = serializers.SerializerMethodField()
     panel_text = serializers.SerializerMethodField()
     identifier = serializers.SerializerMethodField()
@@ -51,7 +53,10 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
         return geojson, country_keys
 
     def get_geojson(self, obj) -> list:
-        raise NotImplementedError('The field "geojson" is required (frontend).')
+        raise NotImplementedError('The field "geojson" is required.')
+
+    def get_descendants(self, obj) -> list:
+        raise NotImplemented('The method "get_descendants" is required.')
 
     def get_panel_text(self, obj) -> str:
         """
@@ -65,15 +70,13 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
                 # Simply show no image in case of problems with the files.
                 image = ''
         return render_to_string('api/partial/panel_text.html', {
+            'model_class': self.Meta.model.__name__.lower(),
             'identifier': self.get_identifier(obj),
             'title': obj.title,
             'lead': obj.lead,
             'url': obj.url,
             'image': image,
-            'get_detail_url': reverse(
-                '{model}-detail'.format(model=self.Meta.model.__name__.lower()),
-                kwargs={'pk': obj.id}
-            )
+            'descendants': self.get_descendants(obj),
         })
 
     def get_identifier(self, obj) -> str:
@@ -85,13 +88,10 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ProjectSerializer(GeoJsonSerializer):
-    url = serializers.URLField(source='full_url')
-    countries = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = ProjectPage
-        fields = ('identifier', 'url', 'title', 'countries', 'contact_person',
-                  'geojson', 'panel_text', )
+        fields = ('identifier', 'geojson', 'panel_text', )
 
     def get_geojson(self, obj: ProjectPage) -> list:
         if obj.countries.exists():
@@ -102,18 +102,21 @@ class ProjectSerializer(GeoJsonSerializer):
             codes = []
         return [self.get_country_geojson(code) for code in codes]
 
+    def get_descendants(self, obj):
+        return []
+
 
 class CountrySerializer(GeoJsonSerializer):
-    url = serializers.URLField(source='full_url')
-    code = serializers.CharField(source='country.code')
 
     class Meta:
         model = CountryPage
-        fields = ('identifier', 'url', 'title', 'code', 'contact_person',
-                  'geojson', 'panel_text', )
+        fields = ('identifier', 'geojson', 'panel_text',)
 
     def get_geojson(self, obj: CountryPage):
         return self.get_country_geojson(obj.country.code)
+
+    def get_descendants(self, obj):
+        return []
 
 
 class RegionSerializer(GeoJsonSerializer):
@@ -125,19 +128,10 @@ class RegionSerializer(GeoJsonSerializer):
     def get_geojson(self, obj: RegionPage) -> list:
         return [self.get_country_geojson(code) for code in obj.country_codes]
 
-
-class RegionDetailSerializer(serializers.ModelSerializer):
-    descendants = serializers.SerializerMethodField()
-
-    class Meta:
-        model = RegionPage
-        fields = ('descendants', )
-
     def get_descendants(self, obj):
-        return render_to_string('api/partial/panel_descendants.html', context={
-            'title': _('Countries'),
-            'tab': 'countries',
-            'descendants': (
-                (country for country in obj.countries)
+        for country in obj.countries:
+            yield Descendant(
+                name=country.__str__(),
+                id='region_{}'.format(country.id),
+                type='countries'
             )
-        })
