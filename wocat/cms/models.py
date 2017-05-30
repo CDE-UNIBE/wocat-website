@@ -152,7 +152,7 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
 
 
 class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
-    template = 'pages/projects_and_countries.html'
+    template = 'pages/content.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
 

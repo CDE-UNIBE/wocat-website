@@ -3,36 +3,40 @@
 
 
 <div class="row">
-  <div class="col-md-8">
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active">
-        <a href="#regions" aria-controls="regions" role="tab" data-toggle="tab" data-url="{% url 'regionpage-list' %}">{% trans "Initiatives" %}</a>
-      </li>
-      <li role="presentation">
-        <a href="#countries" aria-controls="countries" role="tab" data-toggle="tab" data-url="{% url 'countrypage-list' %}">{% trans "Countries" %}</a>
-      </li>
-      <li role="presentation">
-        <a href="#projects" aria-controls="projects" role="tab" data-toggle="tab" data-url="{% url 'projectpage-list' %}">{% trans "Projects" %}</a>
-      </li>
-    </ul>
-  </div>
-  <div class="col-md-4">
-    <div class="left-inner-addon">
-      <i class="glyphicon glyphicon-filter"></i>
-      <input type="text" class="form-control map-filter" placeholder="{% trans "filter" %}"/>
+  <!-- map legend -->
+  <div class="map-legend col-md-3">
+    <div id="map-legend-collapse" class="collapse map-legend-content">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#regions" aria-controls="regions" role="tab" data-toggle="tab" data-url="{% url 'regionpage-list' %}">{% trans "Initiatives" %}</a>
+        </li>
+        <li role="presentation">
+          <a href="#countries" aria-controls="countries" role="tab" data-toggle="tab" data-url="{% url 'countrypage-list' %}">{% trans "Countries" %}</a>
+        </li>
+        <li role="presentation">
+          <a href="#projects" aria-controls="projects" role="tab" data-toggle="tab" data-url="{% url 'projectpage-list' %}">{% trans "Projects" %}</a>
+        </li>
+      </ul>
+      <div class="left-inner-addon">
+        <i class="glyphicon glyphicon-filter"></i>
+        <input type="text" class="form-control map-filter" placeholder="{% trans "filter" %}">
+      </div>
+      <div id="panel">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="regions"></div>
+          <div role="tabpanel" class="tab-pane" id="countries"></div>
+          <div role="tabpanel" class="tab-pane" id="projects"></div>
+        </div>
+      </div>
+    </div>
+    <div data-toggle="slide-collapse" data-target="#map-legend-collapse" class="map-legend-collapse-button">
+      <i class="fa fa-caret-right" aria-hidden="true"></i>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-8">
+
+  <!-- map content -->
+  <div class="col-md-12">
     <div id="map" style="width: 100%; height: 400px;"></div>
-  </div>
-  <div id="panel" class="col-md-4">
-    <div class="tab-content map-content">
-      <div role="tabpanel" class="tab-pane active" id="regions"></div>
-      <div role="tabpanel" class="tab-pane" id="countries"></div>
-      <div role="tabpanel" class="tab-pane" id="projects"></div>
-    </div>
   </div>
 </div>
 
@@ -40,6 +44,19 @@
 <script defer="defer">
   window.jsReady = function() {
       $('#map').setMap();
+
+      var mapLegend = $('#map-legend-collapse');
+      var collapseButton = $('.map-legend-collapse-button');
+      var collapseIcon = collapseButton.children().first();
+
+      mapLegend.on('show.bs.collapse', function () {
+          collapseButton.css('left', '100%');
+          collapseIcon.removeClass('fa-caret-right').addClass('fa-caret-left')
+      });
+      mapLegend.on('hide.bs.collapse', function () {
+          collapseButton.css('left', '0%');
+          collapseIcon.removeClass('fa-caret-left').addClass('fa-caret-right')
+      });
   };
 </script>
 

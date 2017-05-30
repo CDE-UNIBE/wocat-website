@@ -19,7 +19,12 @@ jQuery.fn.setMap = function( options ) {
     var tabContent = $('div.tab-content');
 
     // initialize map.
-    var map = L.map('map').setView([41, -20], 2);
+    var map = L.map('map', {
+        zoomControl: false
+    }).setView([41, -20], 2);
+    L.control.zoom({
+        position: 'bottomright'
+    }).addTo(map);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
