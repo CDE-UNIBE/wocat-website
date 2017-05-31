@@ -6,11 +6,13 @@ import itertools
 from django.conf import settings
 from django.core.cache import cache
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
-from wocat.cms.models import ProjectPage, CountryPage, RegionPage
+from wocat.cms.models import ProjectPage, CountryPage, RegionPage, \
+    ProjectCountryPage
 from wocat.countries.models import Country
 
 Descendant = collections.namedtuple('Descendant', ['name', 'url', 'type'])
@@ -60,12 +62,12 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
     def get_descendants(self, obj) -> list:
         raise NotImplemented('The method "get_descendants" is required.')
 
-    def _descendant(self, country):
+    def _descendant_country(self, country):
         yield Descendant(
             name=country.__str__(),
             type='countries',
             #url=reverse_lazy('country-detail', kwargs={'country_code': str(country.pk)})
-            url='/api/v1/country-detail/{}/'.format(country.pk)
+            url='/api/v1/country-detail/{}/'.format(country.code)
         )
 
     def get_panel_text(self, obj) -> str:
@@ -118,7 +120,7 @@ class ProjectPageSerializer(GeoJsonSerializer):
 
     def get_descendants(self, obj):
         for country in self.get_countries(obj):
-            yield from self._descendant(country)
+            yield from self._descendant_country(country)
 
 
 class CountryPageSerializer(GeoJsonSerializer):
@@ -135,7 +137,15 @@ class CountryPageSerializer(GeoJsonSerializer):
         return _('Included projects')
 
     def get_descendants(self, obj):
-        return []
+        project_country_page = ProjectCountryPage.objects.filter(country=obj.country)
+        projects = [page.get_parent().get_parent() for page in project_country_page]
+        included = ProjectPage.objects.filter(included_countries=obj.country)
+        for project in itertools.chain(projects, included):
+            yield Descendant(
+                name=project.title,
+                type='projects',
+                url=reverse('projectpage-detail', kwargs={'pk': project.pk})
+            )
 
 
 class CountrySerializer(GeoJsonSerializer):
@@ -175,4 +185,4 @@ class RegionPageSerializer(GeoJsonSerializer):
 
     def get_descendants(self, obj):
         for country in obj.countries:
-            yield from self._descendant(country.country)
+            yield from self._descendant_country(country.country)
