@@ -13,8 +13,9 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
-from wocat.cms.serializers import ProjectSerializer, CountrySerializer, \
-    RegionSerializer
+from wocat.cms.serializers import ProjectPageSerializer, CountryPageSerializer, \
+    RegionPageSerializer, CountrySerializer
+from wocat.countries.models import Country
 from wocat.institutions.models import Institution
 from wocat.institutions.serializers import InstitutionSerializer
 from wocat.users.models import User
@@ -47,7 +48,7 @@ router.register(r'users', UserViewSet, base_name='user')
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
-    serializer_class = ProjectSerializer
+    serializer_class = ProjectPageSerializer
 
     def get_queryset(self):
         query_string = self.request.GET.get('q')
@@ -61,7 +62,7 @@ router.register(r'projects', ProjectViewSet, base_name='projectpage')
 
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny, )
-    serializer_class = CountrySerializer
+    serializer_class = CountryPageSerializer
 
     def get_queryset(self):
         query_string = self.request.GET.get('q')
@@ -78,17 +79,26 @@ class CountryCodeDetailView(RetrieveAPIView):
     """
     Detail view for country code; this approach seems easier than adding to the
     router-urls.
+    If no CountryPage exists, the plain Country is returned.
     """
     permission_classes = (AllowAny, )
-    serializer_class = CountrySerializer
+
+    def get_serializer_class(self):
+        if isinstance(self.get_object(), Country):
+            return CountrySerializer
+        else:
+            return CountryPageSerializer
 
     def get_object(self):
-        return CountryPage.objects.get(country__code=self.kwargs['country_code'])
+        try:
+            return CountryPage.objects.get(country__code=self.kwargs['country_code'])
+        except CountryPage.DoesNotExist:
+            return Country.objects.get(code=self.kwargs['country_code'])
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
-    serializer_class = RegionSerializer
+    serializer_class = RegionPageSerializer
 
     def get_queryset(self):
         query_string = self.request.GET.get('q')

@@ -2,16 +2,16 @@ import collections
 from functools import lru_cache
 import json
 
+import itertools
 from django.conf import settings
 from django.core.cache import cache
 from django.template.loader import render_to_string
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
-
+from wocat.countries.models import Country
 
 Descendant = collections.namedtuple('Descendant', ['name', 'url', 'type'])
 
@@ -33,7 +33,7 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
     def get_country_geojson(self, country: str) -> dict:
         if country in self.country_keys:
             return self.geojson['features'][self.country_keys[country]]
-        # else what? log error and display in template? how is logging handled?
+        raise ValueError('%s not in geojson' % country)
 
     def load_geojson(self) -> tuple:
         """
@@ -59,6 +59,14 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_descendants(self, obj) -> list:
         raise NotImplemented('The method "get_descendants" is required.')
+
+    def _descendant(self, country):
+        yield Descendant(
+            name=country.__str__(),
+            type='countries',
+            #url=reverse_lazy('country-detail', kwargs={'country_code': str(country.pk)})
+            url='/api/v1/country-detail/{}/'.format(country.pk)
+        )
 
     def get_panel_text(self, obj) -> str:
         """
@@ -89,30 +97,31 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
         return '{label}-{id}'.format(label=self.Meta.model.__name__.lower(), id=obj.id)
 
 
-class ProjectSerializer(GeoJsonSerializer):
+class ProjectPageSerializer(GeoJsonSerializer):
 
     class Meta:
         model = ProjectPage
         fields = ('identifier', 'geojson', 'panel_text', )
 
+    def get_countries(self, obj):
+        return set(itertools.chain(
+            obj.countries, obj.included_countries.all())
+        )
+
     def get_geojson(self, obj: ProjectPage) -> list:
-        if obj.countries.exists():
-            codes = [country.code for country in obj.countries.all()]
-        elif obj.included_countries.exists():
-            codes = obj.included_countries.values_list('code', flat=True)
-        else:
-            codes = []
-        return [self.get_country_geojson(code) for code in codes]
+        countries = self.get_countries(obj) or []
+        return [self.get_country_geojson(country.code) for country in countries]
 
     @property
     def descendants_title(self):
         return _('Included countries')
 
     def get_descendants(self, obj):
-        return []
+        for country in self.get_countries(obj):
+            yield from self._descendant(country)
 
 
-class CountrySerializer(GeoJsonSerializer):
+class CountryPageSerializer(GeoJsonSerializer):
 
     class Meta:
         model = CountryPage
@@ -129,7 +138,29 @@ class CountrySerializer(GeoJsonSerializer):
         return []
 
 
-class RegionSerializer(GeoJsonSerializer):
+class CountrySerializer(GeoJsonSerializer):
+
+    def get_geojson(self, obj: Country):
+        return self.get_country_geojson(obj.code)
+
+    @property
+    def descendants_title(self):
+        return ''
+
+    def get_descendants(self, obj):
+        return []
+
+    def get_panel_text(self, obj) -> str:
+        return render_to_string('api/partial/panel_text.html', {
+            'title': obj.name
+        })
+
+    class Meta:
+        model = Country
+        fields = ('geojson', 'panel_text')
+
+
+class RegionPageSerializer(GeoJsonSerializer):
 
     class Meta:
         model = RegionPage
@@ -144,8 +175,4 @@ class RegionSerializer(GeoJsonSerializer):
 
     def get_descendants(self, obj):
         for country in obj.countries:
-            yield Descendant(
-                name=country.__str__(),
-                type='countries',
-                url=reverse('countrypage-detail', kwargs={'pk': country.pk})
-            )
+            yield from self._descendant(country.country)

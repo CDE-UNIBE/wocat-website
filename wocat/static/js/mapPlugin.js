@@ -122,13 +122,17 @@ jQuery.fn.setMap = function( options ) {
         if ($.isArray(data)) {
             $.each(data, function (index, page) {
                 panel.append(page.panel_text);
-                countriesJson.push(_getGeoJson(page))
+                var geoJson = _getGeoJson(page);
+                if (geoJson) {
+                    countriesJson.push(geoJson)
+                } else {
+                    console.log(page);
+                }
             });
         } else {
             panel.append(data.panel_text);
             countriesJson.push(_getGeoJson(data))
         }
-
         layerStore[panel.attr('id')] = L.layerGroup(countriesJson);
         setMapData(panel.attr('id'));
     }
