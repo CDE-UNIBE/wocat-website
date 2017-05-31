@@ -16,30 +16,33 @@
         </div>
       </div>
       <div class="col-sm-8 col-sm-pull-4">
-        <a class="h4 widget-teaser-title widget-teaser-title-withreadmorelink" href="{{ url }}" id="{{ identifier }}">
-          <span class="h4 widget-teaser-title widget-teaser-title-withreadmorelink">{{ title }}</span>
+        <a class="h4 widget-teaser-title widget-teaser-title-withreadmorelink" data-toggle="collapse" data-target="#{{ identifier }}-collapse" href="#">
+          > {{ title }}
         </a>
+
+        <div id="{{ identifier }}-collapse" class="collapse">
         <p class="widget-teaser-description">
           {{ lead|safe }}
         </p>
-        {% if descendants %}
+          {% if descendants %}
+            <p>
+              {{ descendants_title }}
+              <ul>
+                {% for descendant in descendants %}
+                  <li>
+                    <a href="#" class="show-descendant" data-descendant-type="{{ descendant.type }}"
+                    data-descendant-url="{{ descendant.url }}">
+                      {{ descendant.name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </p>
+          {% endif %}
           <p>
-            <a class="h5" data-toggle="collapse" data-target="#{{ identifier }}-collapse">{% trans "Display details" %}</a>
-            <ul id="{{ identifier }}-collapse" class="collapse">
-              {% for descendant in descendants %}
-                <li>
-                  <a href="#" class="show-descendant" data-descendant-type="{{ descendant.type }}"
-                  data-descendant-url="{{ descendant.url }}">
-                    {{ descendant.name }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
+            <a href="{{ url }}">{% trans "Go to detail page" %}</a>
           </p>
-        {% endif %}
-        <p>
-          <a href="{{ url }}">> {% trans "Go to detail page" %}</a>
-        </p>
+        </div>
         <div class="widget-teaser-textbottom-spacer"></div>
       </div>
     </div>

@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
@@ -76,6 +77,7 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
             'lead': obj.lead,
             'url': obj.url,
             'image': image,
+            'descendants_title': self.descendants_title,
             'descendants': self.get_descendants(obj),
         })
 
@@ -102,6 +104,10 @@ class ProjectSerializer(GeoJsonSerializer):
             codes = []
         return [self.get_country_geojson(code) for code in codes]
 
+    @property
+    def descendants_title(self):
+        return _('Included countries')
+
     def get_descendants(self, obj):
         return []
 
@@ -115,6 +121,10 @@ class CountrySerializer(GeoJsonSerializer):
     def get_geojson(self, obj: CountryPage):
         return self.get_country_geojson(obj.country.code)
 
+    @property
+    def descendants_title(self):
+        return _('Included projects')
+
     def get_descendants(self, obj):
         return []
 
@@ -127,6 +137,10 @@ class RegionSerializer(GeoJsonSerializer):
 
     def get_geojson(self, obj: RegionPage) -> list:
         return [self.get_country_geojson(code) for code in obj.country_codes]
+
+    @property
+    def descendants_title(self):
+        return _('Included countries')
 
     def get_descendants(self, obj):
         for country in obj.countries:

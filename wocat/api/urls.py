@@ -8,13 +8,14 @@ from . import views
 
 
 v1_urlpatterns = [
-    # URL pattern for the UserListView
     url(r'^', include(router.urls)),
+    url(r'^country-detail/(?P<country_code>[\w]+)/$',
+        views.CountryCodeDetailView.as_view()),
     url(r'^auth/login/$', views.LoginView().as_view()),
     url(r'docs/$', get_swagger_view(title='Wocat API'))
 ]
 
 urlpatterns = [
-    # URL pattern for the UserListView
+    # versioned URL patterns
     url(r'^v1/', include(v1_urlpatterns)),
 ]

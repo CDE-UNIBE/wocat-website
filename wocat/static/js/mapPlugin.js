@@ -46,9 +46,7 @@ jQuery.fn.setMap = function( options ) {
             collapseButton.css('left', '0%');
             collapseIcon.removeClass('fa-caret-left').addClass('fa-caret-right')
         } else {
-            collapseContainer.show();
-            collapseButton.css('left', '100%');
-            collapseIcon.removeClass('fa-caret-right').addClass('fa-caret-left')
+            _showCollapsedLegend()
         }
     });
 
@@ -62,13 +60,29 @@ jQuery.fn.setMap = function( options ) {
 
     // Load data for clicked descendant and switch tab.
     $('div.tab-content').on('click', 'a.show-descendant', function() {
-        $('a[href$="#' + $(this).data('descendant-type') + '"]').tab('show');
+        loadSingleElementToPanel(
+            $(this).data('descendant-type'),
+            $(this).data('descendant-url')
+        )
+    });
+
+    function loadInfoForMapElement(countryCode) {
+        loadSingleElementToPanel(
+            'countries',
+            '/api/v1/country-detail/' + countryCode + '/'
+        );
+        if (collapseContainer.not(':visible')) {
+            _showCollapsedLegend()
+        }
+    }
+
+    function loadSingleElementToPanel(panelId, url) {
+        $('a[href$="#' + panelId + '"]').tab('show');
         loadFilteredDataToPanel(
-            $(this).data('descendant-url'),
-            $('#' + $(this).data('descendant-type'))
+            url, $('#' + panelId)
         );
         return false;
-      });
+    }
 
     function loadFilteredDataToPanel(url, panel) {
         panel.empty();
@@ -100,11 +114,6 @@ jQuery.fn.setMap = function( options ) {
         });
     }
 
-    function highlightItem(identifier) {
-        console.log(identifier);
-        $('#' + identifier).addClass('selected');
-    }
-
     // Prepare geojson to use with leafleft; data is a list of elements or a
     // single element.
     function prepareMapData(data, panel) {
@@ -130,7 +139,8 @@ jQuery.fn.setMap = function( options ) {
                 style: defaultStyle,
                 onEachFeature: function onEachFeature(feature, layer) {
                     layer.on('click', function() {
-                        highlightItem(page.identifier);
+                        // feature.id is the country code.
+                        loadInfoForMapElement(layer.feature.id);
                     });
                     layer.bindPopup(page.title);
                 }
@@ -139,6 +149,12 @@ jQuery.fn.setMap = function( options ) {
             // @maybe: add error text as string?
             console.log(Error);
         }
+    }
+
+    function _showCollapsedLegend() {
+        collapseContainer.show();
+        collapseButton.css('left', '100%');
+        collapseIcon.removeClass('fa-caret-right').addClass('fa-caret-left')
     }
 
     // Make sure just one layer is active at a time.

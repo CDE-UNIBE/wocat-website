@@ -6,6 +6,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework import status
 from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
@@ -71,6 +72,18 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 router.register(r'countries', CountryViewSet, base_name='countrypage')
+
+
+class CountryCodeDetailView(RetrieveAPIView):
+    """
+    Detail view for country code; this approach seems easier than adding to the
+    router-urls.
+    """
+    permission_classes = (AllowAny, )
+    serializer_class = CountrySerializer
+
+    def get_object(self):
+        return CountryPage.objects.get(country__code=self.kwargs['country_code'])
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):
