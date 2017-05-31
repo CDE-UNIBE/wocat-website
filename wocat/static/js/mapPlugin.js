@@ -63,10 +63,11 @@ jQuery.fn.setMap = function( options ) {
         loadSingleElementToPanel(
             $(this).data('descendant-type'),
             $(this).data('descendant-url')
-        )
+        );
+        // map.fitBounds(layer.getBounds());
     });
 
-    function loadInfoForMapElement(countryCode) {
+    function loadInfoForMapElement(countryCode, layer) {
         loadSingleElementToPanel(
             'countries',
             '/api/v1/country-detail/' + countryCode + '/'
@@ -74,6 +75,7 @@ jQuery.fn.setMap = function( options ) {
         if (collapseContainer.not(':visible')) {
             _showCollapsedLegend()
         }
+        map.fitBounds(layer.getBounds());
     }
 
     function loadSingleElementToPanel(panelId, url) {
@@ -122,12 +124,7 @@ jQuery.fn.setMap = function( options ) {
         if ($.isArray(data)) {
             $.each(data, function (index, page) {
                 panel.append(page.panel_text);
-                var geoJson = _getGeoJson(page);
-                if (geoJson) {
-                    countriesJson.push(geoJson)
-                } else {
-                    console.log(page);
-                }
+                countriesJson.push(_getGeoJson(page))
             });
         } else {
             panel.append(data.panel_text);
@@ -144,13 +141,12 @@ jQuery.fn.setMap = function( options ) {
                 onEachFeature: function onEachFeature(feature, layer) {
                     layer.on('click', function() {
                         // feature.id is the country code.
-                        loadInfoForMapElement(layer.feature.id);
+                        loadInfoForMapElement(layer.feature.id, layer);
                     });
                     layer.bindPopup(page.title);
                 }
             });
         } catch (Error) {
-            // @maybe: add error text as string?
             console.log(Error);
         }
     }
