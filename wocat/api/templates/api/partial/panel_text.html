@@ -24,11 +24,12 @@
         </p>
         {% if descendants %}
           <p>
-            <a class="h5" data-toggle="collapse" data-target="#{{ model_class }}-collapse">{% trans "Display details" %}</a>
-            <ul id="{{ model_class }}-collapse" class="collapse">
+            <a class="h5" data-toggle="collapse" data-target="#{{ identifier }}-collapse">{% trans "Display details" %}</a>
+            <ul id="{{ identifier }}-collapse" class="collapse">
               {% for descendant in descendants %}
                 <li>
-                  <a href=#" class="show-descendant" data-descendant-type="{{ descendant.type }}">
+                  <a href="#" class="show-descendant" data-descendant-type="{{ descendant.type }}"
+                  data-descendant-url="{{ descendant.url }}">
                     {{ descendant.name }}
                   </a>
                 </li>

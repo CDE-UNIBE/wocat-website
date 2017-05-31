@@ -5,13 +5,14 @@ import json
 from django.conf import settings
 from django.core.cache import cache
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 from rest_framework import serializers
 
 from wocat.cms.models import ProjectPage, CountryPage, RegionPage
 
 
-Descendant = collections.namedtuple('Descendant', ['name', 'id', 'type'])
+Descendant = collections.namedtuple('Descendant', ['name', 'url', 'type'])
 
 
 class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
@@ -70,7 +71,6 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
                 # Simply show no image in case of problems with the files.
                 image = ''
         return render_to_string('api/partial/panel_text.html', {
-            'model_class': self.Meta.model.__name__.lower(),
             'identifier': self.get_identifier(obj),
             'title': obj.title,
             'lead': obj.lead,
@@ -84,7 +84,7 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
         Get a unique identifier for this element. Used to highlight the item in
         the frontend.
         """
-        return '{label}-{id}'.format(label=obj._meta.label.lower(), id=obj.id)
+        return '{label}-{id}'.format(label=self.Meta.model.__name__.lower(), id=obj.id)
 
 
 class ProjectSerializer(GeoJsonSerializer):
@@ -132,6 +132,6 @@ class RegionSerializer(GeoJsonSerializer):
         for country in obj.countries:
             yield Descendant(
                 name=country.__str__(),
-                id='region_{}'.format(country.id),
-                type='countries'
+                type='countries',
+                url=reverse('countrypage-detail', kwargs={'pk': country.pk})
             )
