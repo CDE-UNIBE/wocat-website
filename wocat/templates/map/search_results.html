@@ -1,0 +1,14 @@
+{% if pages %}
+<div class="widget-teaser widget-teaser-lines">
+  <a class="h4 widget-teaser-title widget-teaser-title-lines">
+    {{ title }}
+  </a>
+  <ul>
+    {% for page in pages %}
+      <li>
+        <a class="js-search-detail" data-element-id="{{ page.id }}">{{ page.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

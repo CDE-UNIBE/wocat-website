@@ -3,6 +3,9 @@ from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.debug import sensitive_post_parameters
+from django.views.generic import TemplateView
+from django.utils.translation import ugettext_lazy as _
+
 from rest_framework import status
 from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
@@ -117,6 +120,48 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 router.register(r'institutions', InstitutionViewSet)
+
+
+class MapSearchView(TemplateView):
+    http_method_names = ['get']
+    template_name = 'map/search_results.html'
+    filter_elements = ['countries', 'projects', 'regions']
+
+    def prepare_data(self, model_class):
+        qs = model_class.objects.live()
+        query_string = self.request.GET.get('q')
+        if query_string:
+            # cast to list, as a searchqueryset (or something...) is returned
+            return list(qs.search(query_string))
+        return qs
+
+    def get_countries(self):
+        return {
+            'title': _('Countries'),
+            'pages': self.prepare_data(CountryPage)
+        }
+
+    def get_projects(self):
+        return {
+            'title': _('Projects'),
+            'pages': self.prepare_data(ProjectPage)
+        }
+
+    def get_regions(self):
+        return {
+            'title': _('Initiatives'),
+            'pages': self.prepare_data(RegionPage)
+        }
+
+    def get_context_data(self, **kwargs):
+        """
+        Call the get_<filter> method and put it to the context.
+        """
+        context = super().get_context_data(**kwargs)
+        context.update(
+            **getattr(self, 'get_{}'.format(self.kwargs['filter']))()
+        )
+        return context
 
 
 class LoginView(APIView):

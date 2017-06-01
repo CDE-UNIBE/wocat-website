@@ -1768,58 +1768,25 @@ select.form-control::-ms-expand {
 }
 
 // ######## Interactive map #########
-
-.map-legend {
+#map-panel {
+	height: 600px;
 	position: absolute;
-	margin-left: 15px;
 	z-index: 10;
+	margin: 5px;
+}
+#map-detail {
 	background-color: #fff;
-	padding-right: 0;
-	a {
-		cursor: pointer;
-	}
-}
-.map-legend-content {
-	height: 400px; max-height: 400px;
+	padding: 5px;
 	overflow-y: scroll;
-}
-.map-legend-collapse-button {
-	position: absolute;
-	display: block;
-	font-size: 2em;
-	width: 1em;
-	text-align: center;
-	top: 0;
-	left: 0;
-	z-index: 10;
-	color: #fff;
-	background: @color-primary;
-}
-.tab-content {
-	padding-right: 15px;
-}
-// filter icon and input
-.left-inner-addon {
-    position: relative;
-	padding: 10px 0;
-
-	& input {
-    	padding-left: 30px;
-		width: 97%;
-	}
-	& i {
-		position: absolute;
-		padding: 10px 12px;
-		top: 10px;
-		pointer-events: none;
-	}
+	max-height: inherit;
 }
 #map {
+	height: 600px;
+	width: 100%;
 	margin-bottom: 20px;
 }
 
 // ############# Print ##############
-
 @media print {
 	.container {
 		width: auto;

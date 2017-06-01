@@ -11,6 +11,7 @@ v1_urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^country-detail/(?P<country_code>[A-Z]{3})/$',
         views.CountryCodeDetailView.as_view()),
+    url(r'^map/search/(?P<filter>[\w]+)/$', views.MapSearchView.as_view(), name='map_search'),
     url(r'^auth/login/$', views.LoginView().as_view()),
     url(r'docs/$', get_swagger_view(title='Wocat API'))
 ]

@@ -1,12 +1,9 @@
 jQuery.fn.setMap = function( options ) {
     var settings = $.extend({
-        defaultTab: $('li[role="presentation"].active a')[0],
-        selectedItem: null
+        defaultFilter: ''
     }, options);
 
-    var layerStore = {};  // store references to layergoups (tabs) .
-    var activeLayer = null;  // flag for the currently active layer.
-    var defaultStyle = {
+    var mapStyle = {
         // border styles
         "color": "#DA812C",
         "weight": 1,
@@ -15,11 +12,12 @@ jQuery.fn.setMap = function( options ) {
         "fillColor": "#F3D9C0",
         "fillOpacity": 0.5
     };
-    var mapFilter = $('.map-filter');
-    var collapseContainer = $('#map-legend-collapse');
-    var collapseButton = $('.map-legend-collapse-button');
-    var collapseIcon = collapseButton.children().first();
 
+    var filterSelect = $('.js-set-filter li a');
+    var filterSpan = $('#js-active-filter');
+    var filterUrl = '';
+    var searchForm = $('.js-search');
+    var detailContainer = $('#map-detail');
 
     // initialize map.
     var map = L.map('map', {
@@ -32,75 +30,54 @@ jQuery.fn.setMap = function( options ) {
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+    // L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}.png', {
+    //     attribution: '<a href="http://www.esri.com/legal/copyright-trademarks">Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors, and the GIS user community</a>'
+    // }).addTo(map);
 
-    // attach behavior for click on tabs and load initial content.
-    selectMapContent(settings.defaultTab);
-    $('.nav-tabs li a').on('click', function (e) {
-        selectMapContent(e.target)
+    // -----------------
+    // Search and Filter
+    // -----------------
+
+    searchForm.on('submit', function(e) {
+        e.preventDefault();
+        displaySearchResults()
     });
+    filterSelect.on('click', setFilter);
 
-    // show hide for legend-panel
-    collapseButton.on('click', function() {
-        if (collapseContainer.is(':visible')) {
-            collapseContainer.hide();
-            collapseButton.css('left', '0%');
-            collapseIcon.removeClass('fa-caret-left').addClass('fa-caret-right')
+    function displaySearchResults() {
+        detailContainer.empty();
+
+        if (filterUrl !== '') {
+            _loadSearchResults(filterUrl, $(searchForm).serialize())
         } else {
-            _showCollapsedLegend()
+            // load all
+            filterSelect.each(function() {
+                _loadSearchResults($(this).data('filter-url'), $(searchForm).serialize());
+            });
         }
-    });
-
-    // reload data from api on filter change.
-    mapFilter.on('change', function() {
-        var target = $('li[role="presentation"].active a')[0];
-        var panel = $(target.href.substr(target.href.indexOf('#')));
-        var url = target.dataset.url+'?q='+$(this).val();
-        loadFilteredDataToPanel(url, panel);
-    });
-
-    // Load data for clicked descendant and switch tab.
-    $('div.tab-content').on('click', 'a.show-descendant', function() {
-        loadSingleElementToPanel(
-            $(this).data('descendant-type'),
-            $(this).data('descendant-url')
-        );
-        // map.fitBounds(layer.getBounds());
-    });
-
-    function loadInfoForMapElement(countryCode, layer) {
-        loadSingleElementToPanel(
-            'countries',
-            '/api/v1/country-detail/' + countryCode + '/'
-        );
-        if (collapseContainer.not(':visible')) {
-            _showCollapsedLegend()
-        }
-        map.fitBounds(layer.getBounds());
-    }
-
-    function loadSingleElementToPanel(panelId, url) {
-        $('a[href$="#' + panelId + '"]').tab('show');
-        loadFilteredDataToPanel(
-            url, $('#' + panelId)
-        );
         return false;
     }
 
-    function loadFilteredDataToPanel(url, panel) {
-        panel.empty();
-        getDataFromAPI(
-           url,
-           prepareMapData,
-           panel
-       );
+    // append data; container is purged after submitting the form.
+    function _loadSearchResults(filterUrl, search_string) {
+        if (filterUrl) {
+            if (search_string) filterUrl += '?' + search_string;
+            $.get(filterUrl).done(function (data) {
+                detailContainer.append(data);
+            });
+        }
     }
 
-    // Load data just initially, and after that display the stored layer on
-    // the map.
-    function selectMapContent(target) {
-        var panel = $(target.href.substr(target.href.indexOf('#')));
-        getDataFromAPI(target.dataset.url, prepareMapData, panel);
+    function setFilter() {
+        filterSpan.text($(this).text());
+        filterUrl = $(this).data('filter-url');
+        displaySearchResults();
+        return false;
     }
+
+    // ----------------
+    // AJAX and GeoJSON
+    // ----------------
 
     // Load data from API.
     function getDataFromAPI(url, callback, panel) {
@@ -112,57 +89,37 @@ jQuery.fn.setMap = function( options ) {
                 'accepts': 'application/json'
             }
         }).done(function (data) {
-            callback(data, panel);
+            callback(data);
         });
     }
 
     // Prepare geojson to use with leafleft; data is a list of elements or a
     // single element.
-    function prepareMapData(data, panel) {
-        panel.empty();
+    function loadGeoJSON(data) {
         var countriesJson = [];
         if ($.isArray(data)) {
             $.each(data, function (index, page) {
-                panel.append(page.panel_text);
                 countriesJson.push(_getGeoJson(page))
             });
         } else {
-            panel.append(data.panel_text);
             countriesJson.push(_getGeoJson(data))
         }
-        layerStore[panel.attr('id')] = L.layerGroup(countriesJson);
-        setMapData(panel.attr('id'));
+        return countriesJson;
     }
 
     function _getGeoJson(page) {
         try {
             return L.geoJson(page.geojson, {
-                style: defaultStyle,
+                style: mapStyle,
                 onEachFeature: function onEachFeature(feature, layer) {
                     layer.on('click', function() {
                         // feature.id is the country code.
-                        loadInfoForMapElement(layer.feature.id, layer);
+                        // add some method call
                     });
-                    layer.bindPopup(page.title);
                 }
             });
         } catch (Error) {
             console.log(Error);
         }
-    }
-
-    function _showCollapsedLegend() {
-        collapseContainer.show();
-        collapseButton.css('left', '100%');
-        collapseIcon.removeClass('fa-caret-right').addClass('fa-caret-left')
-    }
-
-    // Make sure just one layer is active at a time.
-    function setMapData(panelId) {
-        if (activeLayer !== null) {
-            map.removeLayer(activeLayer);
-        }
-        map.addLayer(layerStore[panelId]);
-        activeLayer = layerStore[panelId];
     }
 };
