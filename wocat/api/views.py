@@ -93,10 +93,11 @@ class CountryCodeDetailView(RetrieveAPIView):
             return CountryPageSerializer
 
     def get_object(self):
+        country_code = self.request.GET['country_code']
         try:
-            return CountryPage.objects.get(country__code=self.kwargs['country_code'])
+            return CountryPage.objects.get(country__code=country_code)
         except CountryPage.DoesNotExist:
-            return Country.objects.get(code=self.kwargs['country_code'])
+            return Country.objects.get(code=country_code)
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):

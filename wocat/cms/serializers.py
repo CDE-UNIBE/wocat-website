@@ -25,7 +25,6 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
     filename = settings.MAP_GEOJSON_FILE
     geojson = serializers.SerializerMethodField()
     panel_text = serializers.SerializerMethodField()
-    identifier = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -82,7 +81,6 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
                 # Simply show no image in case of problems with the files.
                 image = ''
         return render_to_string('api/partial/panel_text.html', {
-            'identifier': self.get_identifier(obj),
             'title': obj.title,
             'lead': obj.lead,
             'url': obj.url,
@@ -91,19 +89,12 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
             'descendants': self.get_descendants(obj),
         })
 
-    def get_identifier(self, obj) -> str:
-        """
-        Get a unique identifier for this element. Used to highlight the item in
-        the frontend.
-        """
-        return '{label}-{id}'.format(label=self.Meta.model.__name__.lower(), id=obj.id)
-
 
 class ProjectPageSerializer(GeoJsonSerializer):
 
     class Meta:
         model = ProjectPage
-        fields = ('identifier', 'geojson', 'panel_text', )
+        fields = ('geojson', 'panel_text', )
 
     def get_countries(self, obj):
         return set(itertools.chain(
@@ -127,7 +118,7 @@ class CountryPageSerializer(GeoJsonSerializer):
 
     class Meta:
         model = CountryPage
-        fields = ('identifier', 'geojson', 'panel_text',)
+        fields = ('geojson', 'panel_text', )
 
     def get_geojson(self, obj: CountryPage):
         return self.get_country_geojson(obj.country.code)
@@ -167,14 +158,14 @@ class CountrySerializer(GeoJsonSerializer):
 
     class Meta:
         model = Country
-        fields = ('geojson', 'panel_text')
+        fields = ('panel_text', )
 
 
 class RegionPageSerializer(GeoJsonSerializer):
 
     class Meta:
         model = RegionPage
-        fields = ('identifier', 'geojson', 'panel_text', )
+        fields = ('geojson', 'panel_text', )
 
     def get_geojson(self, obj: RegionPage) -> list:
         return [self.get_country_geojson(code) for code in obj.country_codes]

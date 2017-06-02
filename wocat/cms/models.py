@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import ProgrammingError
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -240,6 +241,9 @@ class ProjectPage(HeaderPageMixin, Page):
         context['contact_person'] = self.contact_person
         return context
 
+    def get_api_detail_url(self):
+        return reverse_lazy('projectpage-detail', kwargs={'pk': self.pk})
+
 
 class ProjectCountriesPage(HeaderPageMixin, Page):
     template = 'countries/index.html'
@@ -373,6 +377,9 @@ class CountryPage(HeaderPageMixin, Page):
         context['contact_person'] = self.contact_person
         return context
 
+    def get_api_detail_url(self):
+        return reverse_lazy('countrypage-detail', kwargs={'pk': self.pk})
+
 
 class RegionsPage(UniquePageMixin, Page):
     template = 'pages/content.html'
@@ -435,6 +442,9 @@ class RegionPage(HeaderPageMixin, Page):
 
     parent_page_types = ['RegionsPage']
     subpage_types = []
+
+    def get_api_detail_url(self):
+        return reverse_lazy('regionpage-detail', kwargs={'pk': self.pk})
 
 
 class MembersPage(UniquePageMixin, Page):

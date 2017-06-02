@@ -6,7 +6,7 @@
   <ul>
     {% for page in pages %}
       <li>
-        <a class="js-search-detail" data-element-id="{{ page.id }}">{{ page.title }}</a>
+        <a class="js-search-detail" href="{{ page.get_api_detail_url }}">{{ page.title }}</a>
       </li>
     {% endfor %}
   </ul>

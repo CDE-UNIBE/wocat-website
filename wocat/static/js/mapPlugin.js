@@ -1,6 +1,6 @@
 jQuery.fn.setMap = function( options ) {
     var settings = $.extend({
-        defaultFilter: ''
+        countryDetailUrl: ''
     }, options);
 
     var mapStyle = {
@@ -34,6 +34,7 @@ jQuery.fn.setMap = function( options ) {
     //     attribution: '<a href="http://www.esri.com/legal/copyright-trademarks">Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors, and the GIS user community</a>'
     // }).addTo(map);
 
+
     // -----------------
     // Search and Filter
     // -----------------
@@ -44,10 +45,11 @@ jQuery.fn.setMap = function( options ) {
     });
     filterSelect.on('click', setFilter);
 
+    // call api for selected filter and querystring from form.
     function displaySearchResults() {
         detailContainer.empty();
-
         if (filterUrl !== '') {
+            // load single type (country, project or region).
             _loadSearchResults(filterUrl, $(searchForm).serialize())
         } else {
             // load all
@@ -58,7 +60,7 @@ jQuery.fn.setMap = function( options ) {
         return false;
     }
 
-    // append data; container is purged after submitting the form.
+    // append filtered data to menu; container is purged after submitting the form.
     function _loadSearchResults(filterUrl, search_string) {
         if (filterUrl) {
             if (search_string) filterUrl += '?' + search_string;
@@ -68,6 +70,7 @@ jQuery.fn.setMap = function( options ) {
         }
     }
 
+    // apply filter from dropdown.
     function setFilter() {
         filterSpan.text($(this).text());
         filterUrl = $(this).data('filter-url');
@@ -75,12 +78,22 @@ jQuery.fn.setMap = function( options ) {
         return false;
     }
 
+    // -----------
+    // Item detail
+    // -----------
+    detailContainer.on('click', '.js-search-detail', function(e) {
+        e.preventDefault();
+        getDataFromAPI($(this).attr('href'));
+        return false;
+    });
+
+
     // ----------------
     // AJAX and GeoJSON
     // ----------------
 
     // Load data from API.
-    function getDataFromAPI(url, callback, panel) {
+    function getDataFromAPI(url) {
         $.ajax({
             url: url,
             method: 'get',
@@ -89,7 +102,7 @@ jQuery.fn.setMap = function( options ) {
                 'accepts': 'application/json'
             }
         }).done(function (data) {
-            callback(data);
+            map.addLayer(_getGeoJson(data));
         });
     }
 
@@ -113,8 +126,9 @@ jQuery.fn.setMap = function( options ) {
                 style: mapStyle,
                 onEachFeature: function onEachFeature(feature, layer) {
                     layer.on('click', function() {
-                        // feature.id is the country code.
-                        // add some method call
+                        getDataFromAPI(
+                            settings.countryDetailUrl + '?country_code=' + feature.id
+                        );
                     });
                 }
             });

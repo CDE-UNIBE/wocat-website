@@ -42,7 +42,7 @@
 <script src="{% static 'js/mapPlugin.js' %}" defer="defer"></script>
 <script defer="defer">
   window.jsReady = function() {
-      $('#map').setMap();
+      $('#map').setMap({countryDetailUrl: '{% url 'country-detail' %}'});
   };
 </script>
 
