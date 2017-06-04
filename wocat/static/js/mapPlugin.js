@@ -1,6 +1,7 @@
 jQuery.fn.setMap = function( options ) {
     var settings = $.extend({
-        countryDetailUrl: ''
+        countryDetailUrl: '',
+        initialMapDataUrl: ''
     }, options);
 
     var mapStyle = {
@@ -34,6 +35,7 @@ jQuery.fn.setMap = function( options ) {
     //     attribution: '<a href="http://www.esri.com/legal/copyright-trademarks">Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors, and the GIS user community</a>'
     // }).addTo(map);
 
+    getDataFromAPI(settings.initialMapDataUrl);
 
     // -----------------
     // Search and Filter
@@ -102,22 +104,20 @@ jQuery.fn.setMap = function( options ) {
                 'accepts': 'application/json'
             }
         }).done(function (data) {
-            map.addLayer(_getGeoJson(data));
+            loadGeoJSON(data);
         });
     }
 
     // Prepare geojson to use with leafleft; data is a list of elements or a
     // single element.
     function loadGeoJSON(data) {
-        var countriesJson = [];
         if ($.isArray(data)) {
             $.each(data, function (index, page) {
-                countriesJson.push(_getGeoJson(page))
+                map.addLayer(_getGeoJson(page));
             });
         } else {
-            countriesJson.push(_getGeoJson(data))
+            map.addLayer(_getGeoJson(data));
         }
-        return countriesJson;
     }
 
     function _getGeoJson(page) {
