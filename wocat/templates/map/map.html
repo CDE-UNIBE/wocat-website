@@ -6,30 +6,32 @@
   <!-- map legend -->
   <div id="map-panel" class="col-md-3">
     <!-- search and filter box -->
-    <form target="#" method="GET" class="js-search">
-      <div class="input-group">
-        <div class="input-group-btn">
-          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span id="js-active-filter" data-filter-url="">{% trans "Filter" %}</span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu js-set-filter">
-            <li><a href="#" data-filter-url={% url 'map_search' 'projects' %}>{% trans "Projects" %}</a></li>
-            <li><a href="#" data-filter-url={% url 'map_search' 'countries' %}>{% trans "Countries" %}</a></li>
-            <li><a href="#" data-filter-url={% url 'map_search' 'regions' %}>{% trans "Initiatives" %}</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#" data-filter-url="">{% trans "All" %}</a></li>
-          </ul>
+    <div class="map-omnibox">
+      <form target="#" method="GET" class="js-search">
+        <div class="input-group">
+          <div class="input-group-btn">
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span id="js-active-filter" data-filter-url="">{% trans "Filter" %}</span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu js-set-filter">
+              <li><a href="#" data-filter-url={% url 'map_search' 'projects' %}>{% trans "Projects" %}</a></li>
+              <li><a href="#" data-filter-url={% url 'map_search' 'countries' %}>{% trans "Countries" %}</a></li>
+              <li><a href="#" data-filter-url={% url 'map_search' 'regions' %}>{% trans "Initiatives" %}</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#" data-filter-url="">{% trans "All" %}</a></li>
+            </ul>
+          </div>
+          <input type="text" class="form-control" placeholder="{% trans "Search" %}" name="q">
+          <div class="input-group-btn">
+            <button class="btn" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
         </div>
-        <input type="text" class="form-control" placeholder="{% trans "Search" %}" name="q">
-        <div class="input-group-btn">
-          <button class="btn" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-    <!-- detail panel -->
+      </form>
+    </div>
+    <!-- detail panels -->
     <div id="js-map-detail" class="map-detail"></div>
     <div id="js-map-detail-overlay" class="map-detail"></div>
   </div>

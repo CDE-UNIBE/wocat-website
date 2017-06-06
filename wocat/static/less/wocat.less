@@ -1769,9 +1769,6 @@ select.form-control::-ms-expand {
 
 // ######## Interactive map #########
 .map-outer-container {
-	display: -ms-flex;
-	display: -webkit-flex;
-	display: flex;
 	height: 600px;
 	margin-bottom: 20px;
 }
@@ -1779,9 +1776,7 @@ select.form-control::-ms-expand {
 	position: absolute;
 	z-index: 10;
 	margin: 5px;
-	align-items: stretch;
-	max-height: 600px;
-	overflow-y: scroll;
+	max-height: 600px; height: 600px;
 	padding-right: 0;
 }
 .js-overlay-close {
@@ -1791,10 +1786,11 @@ select.form-control::-ms-expand {
 }
 .map-detail {
 	position: relative;
+	overflow-y: scroll;
 	background-color: #fff;
 	padding: 5px;
-	min-height: 100%;
 	display: none;
+	max-height: 90%;
 }
 #map {
 	height: 600px;
