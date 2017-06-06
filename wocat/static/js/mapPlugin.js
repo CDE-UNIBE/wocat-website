@@ -28,12 +28,13 @@ jQuery.fn.setMap = function( options ) {
     // initialize map.
     var map = L.map('map', {
         zoomControl: false
-    }).setView([41, -20], 2);
+    }).setView([20, -30], 2);
     L.control.zoom({
         position: 'bottomright'
     }).addTo(map);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        minZoom: 2,
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     // L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}.png', {

@@ -7,7 +7,7 @@
 
 <div class="block-news_teaser">
   <div class="js-overlay-close">
-    <a href="#">{% trans "Close" %}</a>
+    <a href="#">{% trans "Back" %}</a>
     <i class="glyphicon glyphicon-remove pull-right"></i>
   </div>
   <div class="widget-teaser">
@@ -53,6 +53,13 @@
                   </li>
                 {% endfor %}
               </ul>
+            </p>
+          {% endif %}
+          {% if country_page %}
+            <p>
+              <a class="widget-teaser-readmoretext widget-teaser-readmoretext-lines" href="{{ country_page.url }}">
+                » {% trans "See details for" %} {{ country_page.country }}
+              </a>
             </p>
           {% endif %}
         </div>

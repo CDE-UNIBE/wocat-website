@@ -11,7 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
-from wocat.cms.models import ProjectPage, RegionPage, ProjectCountryPage
+from wocat.cms.models import ProjectPage, RegionPage, ProjectCountryPage, \
+    CountryPage
 from wocat.countries.models import Country
 
 
@@ -134,12 +135,12 @@ class CountrySerializer(GeoJsonSerializer):
         project_country_pages = ProjectCountryPage.objects.filter(country=obj)
         for project in project_country_pages:
             yield CountryDescendant(
-                name=project.title,
+                name=project.get_parent().get_parent().title,
                 url=reverse('projectpage-detail', kwargs={
                     'pk': project.get_parent().get_parent().pk
                 }),
                 countrypage_url=project.url,
-                project=project.get_parent().get_parent().title
+                project=project.title
             )
 
         included_projects = ProjectPage.objects.filter(included_countries=obj)
@@ -149,12 +150,19 @@ class CountrySerializer(GeoJsonSerializer):
                 url=reverse('projectpage-detail', kwargs={'pk': project.pk}),
             )
 
+    def get_country_page(self, obj):
+        try:
+            return CountryPage.objects.get(country=obj)
+        except CountryPage.DoesNotExist:
+            return ''
+
     def get_panel_text(self, obj) -> str:
         return render_to_string('api/partial/panel_text.html', {
             'title': obj.name,
             'descendants_title': self.descendants_title,
             'descendants': self.get_descendants(obj),
-            'image': obj.flag
+            'image': obj.flag,
+            'country_page': self.get_country_page(obj)
         })
 
     class Meta:
