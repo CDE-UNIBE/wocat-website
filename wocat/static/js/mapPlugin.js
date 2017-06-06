@@ -48,14 +48,14 @@ jQuery.fn.setMap = function( options ) {
 
     searchForm.on('submit', function(e) {
         e.preventDefault();
-        displaySearchResults()
+        displaySearchResults(true)
     });
     filterSelect.on('click', setFilter);
 
     // call api for selected filter and querystring from form.
-    function displaySearchResults() {
+    function displaySearchResults(showContainer) {
         detailOverlay.hide();
-        detailContainer.empty().show();
+        if (showContainer) detailContainer.empty().show();
         if (filterUrl !== '') {
             // load single type (country, project or region).
             _loadSearchResults(filterUrl, $(searchForm).serialize())
@@ -82,15 +82,14 @@ jQuery.fn.setMap = function( options ) {
     function setFilter() {
         filterSpan.text($(this).text());
         filterUrl = $(this).data('filter-url');
-        displaySearchResults();
+        displaySearchResults(true);
         return false;
     }
 
     // -----------
     // Item detail
     // -----------
-    detailContainer.on('click', '.js-search-detail', function(e) {
-        e.preventDefault();
+    detailContainer.on('click', '.js-search-detail', function() {
         getMapFeatureDetail($(this).attr('href'));
         return false;
     });
@@ -99,7 +98,10 @@ jQuery.fn.setMap = function( options ) {
        detailContainer.show();
        return false;
     });
-
+    detailOverlay.on('click', '.show-descendant', function() {
+        getMapFeatureDetail($(this).data('descendant-url'));
+        return false;
+    });
 
     // ----------------
     // AJAX and GeoJSON
@@ -111,6 +113,7 @@ jQuery.fn.setMap = function( options ) {
         ).done(function (data) {
             // display data on map
             loadGeoJSON(data);
+            displaySearchResults(false);
         });
     }
 
@@ -147,13 +150,17 @@ jQuery.fn.setMap = function( options ) {
 
         if ($.isArray(data)) {
             $.each(data, function (index, page) {
-                var countryLayer = _getGeoJson(page);
-                layers.push(countryLayer);
-                map.addLayer(countryLayer);
+                _addLayer(page);
             });
         } else {
-            map.addLayer(_getGeoJson(data));
+            _addLayer(data);
         }
+    }
+
+    function _addLayer(data) {
+        var countryLayer = _getGeoJson(data);
+        layers.push(countryLayer);
+        map.addLayer(countryLayer);
     }
 
     function _getGeoJson(page) {

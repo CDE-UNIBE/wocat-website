@@ -11,11 +11,14 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
-from wocat.cms.models import ProjectPage, CountryPage, RegionPage, \
-    ProjectCountryPage
+from wocat.cms.models import ProjectPage, RegionPage, ProjectCountryPage
 from wocat.countries.models import Country
 
-Descendant = collections.namedtuple('Descendant', ['name', 'url', 'type'])
+
+Descendant = collections.namedtuple('Descendant', ['name', 'url'])
+CountryDescendant = collections.namedtuple(
+    'CountryDescendant', ['name', 'url', 'countrypage_url', 'project']
+)
 
 
 class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
@@ -64,9 +67,7 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
     def _descendant_country(self, country):
         yield Descendant(
             name=country.__str__(),
-            type='countries',
-            #url=reverse_lazy('country-detail', kwargs={'country_code': str(country.pk)})
-            url='/api/v1/country-detail/{}/'.format(country.code)
+            url=country.get_api_detail_url()
         )
 
     def get_panel_text(self, obj) -> str:
@@ -98,7 +99,8 @@ class ProjectPageSerializer(GeoJsonSerializer):
 
     def get_countries(self, obj):
         return set(itertools.chain(
-            obj.countries, obj.included_countries.all())
+            [country_page.country for country_page in obj.countries],
+            obj.included_countries.all())
         )
 
     def get_geojson(self, obj: ProjectPage) -> list:
@@ -114,46 +116,45 @@ class ProjectPageSerializer(GeoJsonSerializer):
             yield from self._descendant_country(country)
 
 
-class CountryPageSerializer(GeoJsonSerializer):
-
-    class Meta:
-        model = CountryPage
-        fields = ('geojson', 'panel_text', )
-
-    def get_geojson(self, obj: CountryPage):
-        return self.get_country_geojson(obj.country.code)
-
-    @property
-    def descendants_title(self):
-        return _('Included projects')
-
-    def get_descendants(self, obj):
-        project_country_page = ProjectCountryPage.objects.filter(country=obj.country)
-        projects = [page.get_parent().get_parent() for page in project_country_page]
-        included = ProjectPage.objects.filter(included_countries=obj.country)
-        for project in itertools.chain(projects, included):
-            yield Descendant(
-                name=project.title,
-                type='projects',
-                url=reverse('projectpage-detail', kwargs={'pk': project.pk})
-            )
-
-
 class CountrySerializer(GeoJsonSerializer):
+    """
+    Not all countries have a countrypage, therefore references through
+    ProjectPage.included_countries and ProjectPage - ProjectCountriesPage - 
+    ProjectCountry are resolved.
+    """
 
     def get_geojson(self, obj: Country):
         return self.get_country_geojson(obj.code)
 
     @property
     def descendants_title(self):
-        return ''
+        return _('Projects')
 
     def get_descendants(self, obj):
-        return []
+        project_country_pages = ProjectCountryPage.objects.filter(country=obj)
+        for project in project_country_pages:
+            yield CountryDescendant(
+                name=project.title,
+                url=reverse('projectpage-detail', kwargs={
+                    'pk': project.get_parent().get_parent().pk
+                }),
+                countrypage_url=project.url,
+                project=project.get_parent().get_parent().title
+            )
+
+        included_projects = ProjectPage.objects.filter(included_countries=obj)
+        for project in included_projects:
+            yield Descendant(
+                name=project.title,
+                url=reverse('projectpage-detail', kwargs={'pk': project.pk}),
+            )
 
     def get_panel_text(self, obj) -> str:
         return render_to_string('api/partial/panel_text.html', {
-            'title': obj.name
+            'title': obj.name,
+            'descendants_title': self.descendants_title,
+            'descendants': self.get_descendants(obj),
+            'image': obj.flag
         })
 
     class Meta:

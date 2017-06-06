@@ -7,7 +7,7 @@
 
 <div class="block-news_teaser">
   <div class="js-overlay-close">
-    <a href="#">{% trans "Close and go back" %}</a>
+    <a href="#">{% trans "Close" %}</a>
     <i class="glyphicon glyphicon-remove pull-right"></i>
   </div>
   <div class="widget-teaser">
@@ -20,31 +20,41 @@
         </div>
       </div>
       <div class="col-sm-8 col-sm-pull-4">
-        <a class="h4 widget-teaser-title widget-teaser-title-withreadmorelink">
+        <span class="h4 widget-teaser-title widget-teaser-title-withreadmorelink">
           {{ title }}
-        </a>
+        </span>
         <div>
           <p class="widget-teaser-description">
             {{ lead|safe }}
           </p>
+          {% if url %}
+            <p>
+              <a class="widget-teaser-readmoretext widget-teaser-readmoretext-lines" href="{{ url }}">
+                » {% trans "Go to detail page" %}
+              </a>
+            </p>
+          {% endif %}
           {% if descendants %}
             <p>
               {{ descendants_title }}
               <ul>
-                {% for descendant in descendants %}
+                {% for descendant in descendants|dictsort:"name" %}
                   <li>
-                    <a class="show-descendant" data-descendant-type="{{ descendant.type }}"
-                    data-descendant-url="{{ descendant.url }}">
+                    <a class="show-descendant" data-descendant-url="{{ descendant.url }}" href="">
                       {{ descendant.name }}
                     </a>
+                    {% if descendant.countrypage_url %}
+                      <p>
+                        <a class="widget-teaser-readmoretext widget-teaser-readmoretext-lines" href="{{ descendant.countrypage_url }}">
+                          » {% trans "See details for" %} {{ descendant.project }}
+                        </a>
+                      </p>
+                    {% endif %}
                   </li>
                 {% endfor %}
               </ul>
             </p>
           {% endif %}
-          <p>
-            <a href="{{ url }}">{% trans "Go to detail page" %}</a>
-          </p>
         </div>
       </div>
     </div>

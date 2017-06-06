@@ -15,9 +15,9 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
-from wocat.cms.models import ProjectPage, CountryPage, RegionPage
-from wocat.cms.serializers import ProjectPageSerializer, CountryPageSerializer, \
-    RegionPageSerializer, CountrySerializer
+from wocat.cms.models import ProjectPage, RegionPage
+from wocat.cms.serializers import ProjectPageSerializer, RegionPageSerializer, \
+    CountrySerializer
 from wocat.countries.models import Country
 from wocat.institutions.models import Institution
 from wocat.institutions.serializers import InstitutionSerializer
@@ -63,21 +63,6 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
 router.register(r'projects', ProjectViewSet, base_name='projectpage')
 
 
-class CountryViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = (AllowAny, )
-    serializer_class = CountryPageSerializer
-
-    def get_queryset(self):
-        query_string = self.request.GET.get('q')
-        if query_string:
-            return CountryPage.objects.search(query_string)
-        else:
-            return CountryPage.objects.all()
-
-
-router.register(r'countries', CountryViewSet, base_name='countrypage')
-
-
 class CountryCodeDetailView(RetrieveAPIView):
     """
     Detail view for country code; this approach seems easier than adding to the
@@ -85,19 +70,10 @@ class CountryCodeDetailView(RetrieveAPIView):
     If no CountryPage exists, the plain Country is returned.
     """
     permission_classes = (AllowAny, )
-
-    def get_serializer_class(self):
-        if isinstance(self.get_object(), Country):
-            return CountrySerializer
-        else:
-            return CountryPageSerializer
+    serializer_class = CountrySerializer
 
     def get_object(self):
-        country_code = self.request.GET['country_code']
-        try:
-            return CountryPage.objects.get(country__code=country_code)
-        except CountryPage.DoesNotExist:
-            return Country.objects.get(code=country_code)
+        return Country.objects.get(code=self.request.GET['country_code'])
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -144,10 +120,11 @@ class MapSearchView(TemplateView):
         # template.
         qs = Country.objects.filter(
             Q(countrypage__isnull=False) |
+            Q(projectpage__isnull=False) |
             Q(projectcountrypage__isnull=False)
         ).annotate(
             title=F('name')
-        )
+        ).distinct()
         if self.query_string:
             qs = qs.filter(name__icontains=self.query_string)
         return qs
