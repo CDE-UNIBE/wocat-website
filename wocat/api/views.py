@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
-from django.db.models import Q
+from django.db.models import Q, F
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.debug import sensitive_post_parameters
@@ -128,18 +128,34 @@ class MapSearchView(TemplateView):
     template_name = 'map/search_results.html'
     filter_elements = ['countries', 'projects', 'regions']
 
+    @property
+    def query_string(self):
+        return self.request.GET.get('q')
+
     def prepare_data(self, model_class):
         qs = model_class.objects.live()
-        query_string = self.request.GET.get('q')
-        if query_string:
+        if self.query_string:
             # cast to list, as a searchqueryset (or something...) is returned
-            return list(qs.search(query_string))
+            return list(qs.search(self.query_string))
+        return qs
+
+    def prepare_country_data(self):
+        # Get all countries with projects; alias the 'name' as 'title' to match
+        # template.
+        qs = Country.objects.filter(
+            Q(countrypage__isnull=False) |
+            Q(projectcountrypage__isnull=False)
+        ).annotate(
+            title=F('name')
+        )
+        if self.query_string:
+            qs = qs.filter(name__icontains=self.query_string)
         return qs
 
     def get_countries(self):
         return {
             'title': _('Countries'),
-            'pages': self.prepare_data(CountryPage)
+            'pages': self.prepare_country_data()
         }
 
     def get_projects(self):

@@ -1,5 +1,5 @@
 from autoslug import AutoSlugField
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.templatetags.static import static
 from django.utils.translation import ugettext_lazy as _
@@ -41,6 +41,12 @@ class Country(models.Model):
             return static('countries/flags/flags/png/{code}.png'.format(code=self.code.lower()))
         else:
             return ''
+
+    def get_api_detail_url(self):
+        return '{url}?country_code={code}'.format(
+            url=reverse_lazy('country-detail'),
+            code=self.code
+        )
 
 
 @register_snippet
