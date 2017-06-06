@@ -158,7 +158,7 @@ class CountrySerializer(GeoJsonSerializer):
 
     class Meta:
         model = Country
-        fields = ('panel_text', )
+        fields = ('geojson', 'panel_text', )
 
 
 class RegionPageSerializer(GeoJsonSerializer):

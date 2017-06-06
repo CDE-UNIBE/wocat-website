@@ -1768,22 +1768,37 @@ select.form-control::-ms-expand {
 }
 
 // ######## Interactive map #########
-#map-panel {
+.map-outer-container {
+	display: -ms-flex;
+	display: -webkit-flex;
+	display: flex;
 	height: 600px;
+	margin-bottom: 20px;
+}
+#map-panel {
 	position: absolute;
 	z-index: 10;
 	margin: 5px;
+	align-items: stretch;
+	max-height: 600px;
+	overflow-y: scroll;
+	padding-right: 0;
 }
-#map-detail {
+.js-overlay-close {
+	margin-bottom: 10px;
+	background-color: @gray-lighter;
+	border-bottom: 1px solid @gray-light;
+}
+.map-detail {
+	position: relative;
 	background-color: #fff;
 	padding: 5px;
-	overflow-y: scroll;
-	max-height: inherit;
+	min-height: 100%;
+	display: none;
 }
 #map {
 	height: 600px;
 	width: 100%;
-	margin-bottom: 20px;
 }
 
 // ############# Print ##############

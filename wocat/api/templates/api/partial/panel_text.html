@@ -6,7 +6,11 @@
 {% endcomment %}
 
 <div class="block-news_teaser">
-  <div class="widget-teaser widget-teaser-bottomline">
+  <div class="js-overlay-close">
+    <a href="#">{% trans "Close and go back" %}</a>
+    <i class="glyphicon glyphicon-remove pull-right"></i>
+  </div>
+  <div class="widget-teaser">
     <div class="row">
       <div class="col-sm-4 col-sm-push-8">
         <div class="widget-teaser-image">
@@ -16,35 +20,32 @@
         </div>
       </div>
       <div class="col-sm-8 col-sm-pull-4">
-        <a class="h4 widget-teaser-title widget-teaser-title-withreadmorelink" data-toggle="collapse" data-target="#{{ identifier }}-collapse">
-          > {{ title }}
+        <a class="h4 widget-teaser-title widget-teaser-title-withreadmorelink">
+          {{ title }}
         </a>
-        {% if url %}
-          <div id="{{ identifier }}-collapse" class="collapse">
-            <p class="widget-teaser-description">
-              {{ lead|safe }}
-            </p>
-            {% if descendants %}
-              <p>
-                {{ descendants_title }}
-                <ul>
-                  {% for descendant in descendants %}
-                    <li>
-                      <a class="show-descendant" data-descendant-type="{{ descendant.type }}"
-                      data-descendant-url="{{ descendant.url }}">
-                        {{ descendant.name }}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </p>
-            {% endif %}
+        <div>
+          <p class="widget-teaser-description">
+            {{ lead|safe }}
+          </p>
+          {% if descendants %}
             <p>
-              <a href="{{ url }}">{% trans "Go to detail page" %}</a>
+              {{ descendants_title }}
+              <ul>
+                {% for descendant in descendants %}
+                  <li>
+                    <a class="show-descendant" data-descendant-type="{{ descendant.type }}"
+                    data-descendant-url="{{ descendant.url }}">
+                      {{ descendant.name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
             </p>
-          </div>
-        {% endif %}
-        <div class="widget-teaser-textbottom-spacer"></div>
+          {% endif %}
+          <p>
+            <a href="{{ url }}">{% trans "Go to detail page" %}</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>

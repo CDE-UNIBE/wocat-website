@@ -18,7 +18,11 @@ jQuery.fn.setMap = function( options ) {
     var filterSpan = $('#js-active-filter');
     var filterUrl = '';
     var searchForm = $('.js-search');
-    var detailContainer = $('#map-detail');
+    var detailContainer = $('#js-map-detail');
+    var detailOverlay = $('#js-map-detail-overlay');
+
+    // store references to active geojson-layers.
+    var layers = [];
 
     // initialize map.
     var map = L.map('map', {
@@ -35,7 +39,8 @@ jQuery.fn.setMap = function( options ) {
     //     attribution: '<a href="http://www.esri.com/legal/copyright-trademarks">Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors, and the GIS user community</a>'
     // }).addTo(map);
 
-    getDataFromAPI(settings.initialMapDataUrl);
+    // load initial data
+    showAllProjects(settings.initialMapDataUrl);
 
     // -----------------
     // Search and Filter
@@ -49,7 +54,8 @@ jQuery.fn.setMap = function( options ) {
 
     // call api for selected filter and querystring from form.
     function displaySearchResults() {
-        detailContainer.empty();
+        detailOverlay.hide();
+        detailContainer.empty().show();
         if (filterUrl !== '') {
             // load single type (country, project or region).
             _loadSearchResults(filterUrl, $(searchForm).serialize())
@@ -85,8 +91,13 @@ jQuery.fn.setMap = function( options ) {
     // -----------
     detailContainer.on('click', '.js-search-detail', function(e) {
         e.preventDefault();
-        getDataFromAPI($(this).attr('href'));
+        getMapFeatureDetail($(this).attr('href'));
         return false;
+    });
+    detailOverlay.on('click', '.js-overlay-close', function() {
+       detailOverlay.hide();
+       detailContainer.show();
+       return false;
     });
 
 
@@ -94,26 +105,51 @@ jQuery.fn.setMap = function( options ) {
     // AJAX and GeoJSON
     // ----------------
 
+    function showAllProjects() {
+        _getDataFromAPI(
+            settings.initialMapDataUrl
+        ).done(function (data) {
+            // display data on map
+            loadGeoJSON(data);
+        });
+    }
+
+    function getMapFeatureDetail(url) {
+        _getDataFromAPI(url).done(function (data) {
+            // display data on map
+            loadGeoJSON(data);
+            // show detail overlay
+            detailContainer.hide();
+            detailOverlay.html(data.panel_text).show();
+        });
+    }
+
     // Load data from API.
-    function getDataFromAPI(url) {
-        $.ajax({
+    function _getDataFromAPI(url) {
+        return $.ajax({
             url: url,
             method: 'get',
             dataType: 'json',
             headers: {
                 'accepts': 'application/json'
             }
-        }).done(function (data) {
-            loadGeoJSON(data);
         });
     }
 
     // Prepare geojson to use with leafleft; data is a list of elements or a
     // single element.
     function loadGeoJSON(data) {
+        if (layers.length > 0) {
+            $.each(layers, function(index, layer) {
+                map.removeLayer(layer)
+            });
+        }
+
         if ($.isArray(data)) {
             $.each(data, function (index, page) {
-                map.addLayer(_getGeoJson(page));
+                var countryLayer = _getGeoJson(page);
+                layers.push(countryLayer);
+                map.addLayer(countryLayer);
             });
         } else {
             map.addLayer(_getGeoJson(data));
@@ -126,9 +162,9 @@ jQuery.fn.setMap = function( options ) {
                 style: mapStyle,
                 onEachFeature: function onEachFeature(feature, layer) {
                     layer.on('click', function() {
-                        getDataFromAPI(
+                        getMapFeatureDetail(
                             settings.countryDetailUrl + '?country_code=' + feature.id
-                        );
+                        )
                     });
                 }
             });
