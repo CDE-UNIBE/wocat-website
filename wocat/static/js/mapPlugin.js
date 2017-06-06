@@ -14,9 +14,10 @@ jQuery.fn.setMap = function( options ) {
         "fillOpacity": 0.5
     };
 
+    var filterUrl = '';
+    var overlayUrlHistory = [];
     var filterSelect = $('.js-set-filter li a');
     var filterSpan = $('#js-active-filter');
-    var filterUrl = '';
     var searchForm = $('.js-search');
     var detailContainer = $('#js-map-detail');
     var detailOverlay = $('#js-map-detail-overlay');
@@ -94,9 +95,14 @@ jQuery.fn.setMap = function( options ) {
         return false;
     });
     detailOverlay.on('click', '.js-overlay-close', function() {
-       detailOverlay.hide();
-       detailContainer.show();
-       return false;
+        if (overlayUrlHistory.length > 1) {
+            overlayUrlHistory.pop(); // current element
+            getMapFeatureDetail(overlayUrlHistory.pop());
+        } else {
+            detailOverlay.hide();
+            detailContainer.show();
+        }
+        return false;
     });
     detailOverlay.on('click', '.show-descendant', function() {
         getMapFeatureDetail($(this).data('descendant-url'));
@@ -118,13 +124,14 @@ jQuery.fn.setMap = function( options ) {
     }
 
     function getMapFeatureDetail(url) {
-        _getDataFromAPI(url).done(function (data) {
+        _getDataFromAPI(url).done(function(data) {
             // display data on map
             loadGeoJSON(data);
             // show detail overlay
             detailContainer.hide();
             detailOverlay.html(data.panel_text).show();
         });
+        overlayUrlHistory.push(url);
     }
 
     // Load data from API.
