@@ -134,6 +134,7 @@ jQuery.fn.setMap = function( options ) {
     // ----------------
     // AJAX and GeoJSON
     // ----------------
+    // For initial display: show all countries.
     function showAllProjects() {
         _getDataFromAPI(
             settings.initialMapDataUrl
@@ -143,6 +144,7 @@ jQuery.fn.setMap = function( options ) {
         });
     }
 
+    // Load and show single element in detail overlay
     function getMapFeatureDetail(url) {
         _purgeLayers();
         _getDataFromAPI(url).done(function(data) {
