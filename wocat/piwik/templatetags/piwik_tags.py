@@ -13,5 +13,10 @@ class Piwik(InclusionTag):
         return {
             'domain': 'wocat.net',
             'site_id': 7,
-            'user_id': context.request.user.id if context.request.user.is_authenticated else ''
+            'user_id': self.get_user_id(context)
         }
+
+    def get_user_id(self, context):
+        if hasattr(context, 'request') and context.request.user.is_authenticated:
+            return context.request.user.id
+        return ''
