@@ -239,6 +239,7 @@ class ProjectPage(HeaderPageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context['contact_person'] = self.contact_person
+        context['map_initial_url'] = self.get_api_detail_url()
         return context
 
     def get_api_detail_url(self):
@@ -375,10 +376,14 @@ class CountryPage(HeaderPageMixin, Page):
         if header:
             header['iconsrc'] = self.flag
         context['contact_person'] = self.contact_person
+        context['map_initial_url'] = self.get_api_detail_url()
         return context
 
     def get_api_detail_url(self):
-        return reverse_lazy('countrypage-detail', kwargs={'pk': self.pk})
+        return '{url}?country_code={country_code}'.format(
+            url=reverse_lazy('country-detail'),
+            country_code=self.code
+        )
 
 
 class RegionsPage(UniquePageMixin, Page):
@@ -424,6 +429,7 @@ class RegionPage(HeaderPageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context['contact_person'] = self.contact_person
+        context['map_initial_url'] = self.get_api_detail_url()
         return context
 
     class Meta:

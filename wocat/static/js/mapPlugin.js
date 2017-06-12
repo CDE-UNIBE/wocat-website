@@ -2,6 +2,7 @@ jQuery.fn.setMap = function( options ) {
     var settings = $.extend({
         countryDetailUrl: '',
         initialMapDataUrl: '',
+        isInitialDetailPanel: 'false',
         showPanelFn: null
     }, options);
 
@@ -39,8 +40,14 @@ jQuery.fn.setMap = function( options ) {
         attribution: '<a href="http://www.esri.com/legal/copyright-trademarks">Sources: Esri, HERE, DeLorme, Intermap, increment P Corp., GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), swisstopo, MapmyIndia, © OpenStreetMap contributors, and the GIS User Community</a>'
     }).addTo(map);
 
-    // load initial data
-    showAllProjects(settings.initialMapDataUrl);
+    // Load initial data depending on context. 'Detail'Pages such as ProjectPage
+    // should initially display the panel, 'generic' pages should start with
+    // the panel closed.
+    if (settings.isInitialDetailPanel === 'true') {
+        getMapFeatureDetail(settings.initialMapDataUrl);
+    } else {
+        showAllProjects(settings.initialMapDataUrl);
+    }
 
     // -----------------
     // Search and Filter
@@ -135,7 +142,8 @@ jQuery.fn.setMap = function( options ) {
     // ----------------
     // AJAX and GeoJSON
     // ----------------
-    // For initial display: show all countries.
+    // For initial display: show elements as set by the url, defaults to all
+    // countries.
     function showAllProjects() {
         _getDataFromAPI(
             settings.initialMapDataUrl

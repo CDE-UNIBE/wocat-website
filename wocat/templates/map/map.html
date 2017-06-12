@@ -56,9 +56,11 @@
       var mapVisibilityToggle = $('.js-map-detail-toggle');
       var map = $('#map');
 
+      {% url 'projectpage-list' as default_map_initial_url %}
       map.setMap({
           countryDetailUrl: '{% url 'country-detail' %}',
-          initialMapDataUrl: '{% url 'projectpage-list' %}',
+          initialMapDataUrl: '{{ map_initial_url|default:default_map_initial_url }}',
+          isInitialDetailPanel: '{{ map_initial_url|yesno:"true,false" }}',
           showPanelFn: showPanel
       });
 
