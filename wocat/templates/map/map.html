@@ -52,30 +52,42 @@
 <script src="{% static 'js/mapPlugin.js' %}" defer="defer"></script>
 <script defer="defer">
   window.jsReady = function() {
-      $('#map').setMap({
-          countryDetailUrl: '{% url 'country-detail' %}',
-          initialMapDataUrl: '{% url 'projectpage-list' %}'
-      });
       var mapPanel = $('#map-panel');
       var mapVisibilityToggle = $('.js-map-detail-toggle');
-      mapVisibilityToggle.on('click', function() {
-         if (mapPanel.css('visibility') === 'visible') {
-             mapPanel.css('visibility', 'hidden');
-             mapVisibilityToggle.css({
-                 'visibility': 'visible',
-                 'right': 'initial',
-                 'left': '20px'
-             });
-             mapVisibilityToggle.children('i').addClass('glyphicon-chevron-right').removeClass('glyphicon-chevron-left')
-         } else {
-             mapPanel.css('visibility', 'visible');
-             mapVisibilityToggle.css({
-                 'right': '-20px',
-                 'left': 'initial'
-             });
-             mapVisibilityToggle.children('i').addClass('glyphicon-chevron-left').removeClass('glyphicon-chevron-right')
-         }
+      var map = $('#map');
+
+      map.setMap({
+          countryDetailUrl: '{% url 'country-detail' %}',
+          initialMapDataUrl: '{% url 'projectpage-list' %}',
+          showPanelFn: showPanel
       });
+
+      mapVisibilityToggle.on('click', function () {
+          if (mapPanel.css('visibility') === 'visible') {
+              hidePanel()
+          } else {
+              showPanel()
+          }
+      });
+
+      function hidePanel() {
+          mapPanel.css('visibility', 'hidden');
+          mapVisibilityToggle.css({
+              'visibility': 'visible',
+              'right': 'initial',
+              'left': '20px'
+          });
+          mapVisibilityToggle.children('i').addClass('glyphicon-chevron-right').removeClass('glyphicon-chevron-left')
+      }
+
+      function showPanel() {
+          mapPanel.css('visibility', 'visible');
+          mapVisibilityToggle.css({
+              'right': '-20px',
+              'left': 'initial'
+          });
+          mapVisibilityToggle.children('i').addClass('glyphicon-chevron-left').removeClass('glyphicon-chevron-right')
+      }
   };
 </script>
 

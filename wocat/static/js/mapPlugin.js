@@ -1,7 +1,8 @@
 jQuery.fn.setMap = function( options ) {
     var settings = $.extend({
         countryDetailUrl: '',
-        initialMapDataUrl: ''
+        initialMapDataUrl: '',
+        showPanelFn: null
     }, options);
 
     var mapStyle = {
@@ -146,6 +147,7 @@ jQuery.fn.setMap = function( options ) {
 
     // Load and show single element in detail overlay
     function getMapFeatureDetail(url) {
+        settings.showPanelFn();
         _purgeLayers();
         _getDataFromAPI(url).done(function(data) {
             // display data on map
