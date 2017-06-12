@@ -15,9 +15,9 @@
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu js-set-filter">
-              <li><a href="#" data-filter-url={% url 'map_search' 'projects' %}>{% trans "Projects" %}</a></li>
-              <li><a href="#" data-filter-url={% url 'map_search' 'countries' %}>{% trans "Countries" %}</a></li>
-              <li><a href="#" data-filter-url={% url 'map_search' 'regions' %}>{% trans "Initiatives" %}</a></li>
+              <li><a href="#" data-filter-url="{% url 'map_search' 'projects' %}">{% trans "Projects" %}</a></li>
+              <li><a href="#" data-filter-url="{% url 'map_search' 'countries' %}">{% trans "Countries" %}</a></li>
+              <li><a href="#" data-filter-url="{% url 'map_search' 'regions' %}">{% trans "Initiatives" %}</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="#" data-filter-url="">{% trans "All" %}</a></li>
             </ul>
@@ -35,7 +35,11 @@
       <i class="glyphicon glyphicon-chevron-left"></i>
     </div>
     <!-- detail panels -->
-    <div id="js-map-detail" class="map-detail"></div>
+    <div id="js-map-detail" class="map-detail">
+      <div class="projects"></div>
+      <div class="countries"></div>
+      <div class="regions"></div>
+    </div>
     <div id="js-map-detail-overlay" class="map-detail"></div>
   </div>
 

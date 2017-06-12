@@ -1,14 +1,21 @@
-{% if pages %}
+{% load i18n %}
+
+
 <div class="widget-teaser widget-teaser-lines">
   <a class="h4 widget-teaser-title widget-teaser-title-lines">
     {{ title }}
   </a>
-  <ul>
-    {% for page in pages %}
-      <li>
-        <a class="js-search-detail" href="{{ page.get_api_detail_url }}">{{ page.title }}</a>
-      </li>
-    {% endfor %}
-  </ul>
+  {% if pages %}
+    <ul>
+      {% for page in pages %}
+        <li>
+          <a class="js-search-detail"
+             href="{{ page.get_api_detail_url }}">{{ page.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div>{% trans "Nothing found for given search term. Submit the search empty for all" %} {{ title|lower }}.</div>
+  {% endif %}
 </div>
-{% endif %}
+

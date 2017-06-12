@@ -58,9 +58,12 @@ jQuery.fn.setMap = function( options ) {
     // call api for selected filter and querystring from form.
     function displaySearchResults(showContainer) {
         detailOverlay.hide();
-        if (showContainer) detailContainer.empty().show();
+        if (showContainer) detailContainer.show();
         if (filterUrl !== '') {
             // load single type (country, project or region).
+            detailContainer.children('div').each(function() {
+                $(this).empty();
+            });
             _loadSearchResults(filterUrl, $(searchForm).serialize())
         } else {
             // load all
@@ -71,12 +74,21 @@ jQuery.fn.setMap = function( options ) {
         return false;
     }
 
-    // append filtered data to menu; container is purged after submitting the form.
+    // replace filtered data for container (projects, countries, regions);
+    // container is purged after submitting the form.
+    // three distinct containers guarantee the same ordering despite async
+    // responses.
     function _loadSearchResults(filterUrl, search_string) {
         if (filterUrl) {
-            if (search_string) filterUrl += '?' + search_string;
+            var splitUrl = filterUrl.split('/');
+            var targetClass = splitUrl[splitUrl.length - 2];
+            var targetContainer = detailContainer.find('.' + targetClass).first();
+            targetContainer.html(
+                '<span class="glyphicon glyphicon-refresh spinning"></span>'
+            );
+            filterUrl += '?' + search_string;
             $.get(filterUrl).done(function (data) {
-                detailContainer.append(data);
+                targetContainer.html(data);
             });
         }
     }
@@ -86,7 +98,6 @@ jQuery.fn.setMap = function( options ) {
         filterSpan.text($(this).text());
         filterUrl = $(this).data('filter-url');
         displaySearchResults(true);
-        return false;
     }
 
     // -----------
@@ -98,11 +109,13 @@ jQuery.fn.setMap = function( options ) {
     });
     detailOverlay.on('click', '.js-overlay-close', function() {
         if (overlayUrlHistory.length > 1) {
-            overlayUrlHistory.pop(); // current element
+            // load data from 'history'
+            overlayUrlHistory.pop(); // pop current element
             getMapFeatureDetail(overlayUrlHistory.pop());
         } else {
-            detailOverlay.hide();
-            detailContainer.show();
+            // 'initial' state: load data as defined in the filter/search box.
+            displaySearchResults(true);
+
         }
         return false;
     });
@@ -114,7 +127,6 @@ jQuery.fn.setMap = function( options ) {
     // ----------------
     // AJAX and GeoJSON
     // ----------------
-
     function showAllProjects() {
         _getDataFromAPI(
             settings.initialMapDataUrl
@@ -155,6 +167,7 @@ jQuery.fn.setMap = function( options ) {
             $.each(layers, function(index, layer) {
                 map.removeLayer(layer)
             });
+            layers = [];
         }
 
         if ($.isArray(data)) {
@@ -185,7 +198,7 @@ jQuery.fn.setMap = function( options ) {
                 }
             });
         } catch (Error) {
-            console.log(Error);
+            // console.log(Error);
         }
     }
 };
