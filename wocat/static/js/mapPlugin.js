@@ -33,10 +33,6 @@ jQuery.fn.setMap = function( options ) {
         position: 'bottomright'
     }).addTo(map);
 
-    // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    //     minZoom: 2,
-    //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(map);
     L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png', {
         minZoom: 2,
         attribution: '<a href="http://www.esri.com/legal/copyright-trademarks">Sources: Esri, HERE, DeLorme, Intermap, increment P Corp., GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), swisstopo, MapmyIndia, © OpenStreetMap contributors, and the GIS User Community</a>'
@@ -51,14 +47,15 @@ jQuery.fn.setMap = function( options ) {
 
     searchForm.on('submit', function(e) {
         e.preventDefault();
-        displaySearchResults(true)
+        displaySearchResults()
     });
     filterSelect.on('click', setFilter);
 
     // call api for selected filter and querystring from form.
-    function displaySearchResults(showContainer) {
+    function displaySearchResults() {
         detailOverlay.hide();
-        if (showContainer) detailContainer.show();
+        detailContainer.show();
+        _purgeLayers();
         if (filterUrl !== '') {
             // load single type (country, project or region).
             detailContainer.children('div').each(function() {
@@ -89,6 +86,7 @@ jQuery.fn.setMap = function( options ) {
             filterUrl += '?' + search_string;
             $.get(filterUrl).done(function (data) {
                 targetContainer.html(data);
+                setMapContext(data)
             });
         }
     }
@@ -97,7 +95,16 @@ jQuery.fn.setMap = function( options ) {
     function setFilter() {
         filterSpan.text($(this).text());
         filterUrl = $(this).data('filter-url');
-        displaySearchResults(true);
+        displaySearchResults();
+    }
+
+    // display country shapes on the map for all elements in the detailContainer
+    function setMapContext(html) {
+        $(html).find('li a').each(function() {
+            _getDataFromAPI($(this).attr('href')).done(function(data) {
+                loadGeoJSON(data);
+            });
+        });
     }
 
     // -----------
@@ -114,7 +121,7 @@ jQuery.fn.setMap = function( options ) {
             getMapFeatureDetail(overlayUrlHistory.pop());
         } else {
             // 'initial' state: load data as defined in the filter/search box.
-            displaySearchResults(true);
+            displaySearchResults();
 
         }
         return false;
@@ -133,11 +140,11 @@ jQuery.fn.setMap = function( options ) {
         ).done(function (data) {
             // display data on map
             loadGeoJSON(data);
-            displaySearchResults(false);
         });
     }
 
     function getMapFeatureDetail(url) {
+        _purgeLayers();
         _getDataFromAPI(url).done(function(data) {
             // display data on map
             loadGeoJSON(data);
@@ -163,13 +170,6 @@ jQuery.fn.setMap = function( options ) {
     // Prepare geojson to use with leafleft; data is a list of elements or a
     // single element.
     function loadGeoJSON(data) {
-        if (layers.length > 0) {
-            $.each(layers, function(index, layer) {
-                map.removeLayer(layer)
-            });
-            layers = [];
-        }
-
         if ($.isArray(data)) {
             $.each(data, function (index, page) {
                 _addLayer(page);
@@ -179,10 +179,21 @@ jQuery.fn.setMap = function( options ) {
         }
     }
 
+    // add layer to map and store reference
     function _addLayer(data) {
         var countryLayer = _getGeoJson(data);
         layers.push(countryLayer);
         map.addLayer(countryLayer);
+    }
+
+    // remove all layers from map
+    function _purgeLayers() {
+        if (layers.length > 0) {
+            $.each(layers, function(index, layer) {
+                map.removeLayer(layer)
+            });
+            layers = [];
+        }
     }
 
     function _getGeoJson(page) {
