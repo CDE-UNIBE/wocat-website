@@ -214,7 +214,7 @@ jQuery.fn.setMap = function( options ) {
             return L.geoJson(page.geojson, {
                 style: mapStyle,
                 onEachFeature: function onEachFeature(feature, layer) {
-                    layer.on('click', function() {
+                    layer.on('click touch touchend', function() {
                         getMapFeatureDetail(
                             settings.countryDetailUrl + '?country_code=' + feature.id
                         )
