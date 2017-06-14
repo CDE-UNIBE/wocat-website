@@ -100,7 +100,8 @@ jQuery.fn.setMap = function( options ) {
     }
 
     // apply filter from dropdown.
-    function setFilter() {
+    function setFilter(event) {
+        event.preventDefault();
         filterSpan.text($(this).text());
         filterUrl = $(this).data('filter-url');
         displaySearchResults();
