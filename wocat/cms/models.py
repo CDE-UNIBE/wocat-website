@@ -312,6 +312,11 @@ class ProjectCountryPage(HeaderPageMixin, Page):
     parent_page_types = ['ProjectCountriesPage']
     subpage_types = ['ContentPage']
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['map_initial_url'] = self.country.get_api_detail_url()
+        return context
+
 
 class CountriesPage(UniquePageMixin, Page):
     template = 'countries/index.html'
