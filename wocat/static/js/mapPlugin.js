@@ -63,7 +63,11 @@ jQuery.fn.setMap = function( options ) {
     function displaySearchResults() {
         detailOverlay.hide();
         detailContainer.show();
+
+        // purge layers on map and in the overlay-history.
         _purgeLayers();
+        overlayUrlHistory.length = 0;
+
         if (filterUrl !== '') {
             // load single type (country, project or region).
             detailContainer.children('div').each(function() {
@@ -131,7 +135,6 @@ jQuery.fn.setMap = function( options ) {
         } else {
             // 'initial' state: load data as defined in the filter/search box.
             displaySearchResults();
-
         }
         return false;
     });
