@@ -6,7 +6,7 @@ from django.db import ProgrammingError
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from modelcluster.fields import ParentalKey
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.models import ClusterableModel
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import register_setting
@@ -208,7 +208,7 @@ class ProjectPage(HeaderPageMixin, Page):
         on_delete=models.SET_NULL,
         blank=True, null=True,
     )
-    included_countries = models.ManyToManyField(
+    included_countries = ParentalManyToManyField(
         verbose_name=_('Countries without country page'),
         to=Country,
         blank=True,
