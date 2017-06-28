@@ -534,6 +534,19 @@ TEASER_BLOCKS = [
 
 BASE_BLOCKS += TEASER_BLOCKS
 
+class MapBlock(StructBlock):
+    class Meta:
+        label = 'Map'
+        template = 'map/map.html'
+        icon = 'fa fa-map'
+
+
+MAP_BLOCKS = [
+    ('map', MapBlock())
+]
+
+BASE_BLOCKS += MAP_BLOCKS
+
 
 class ImageGalleryElementBlock(StructBlock):
     image = ImageChooserBlock()
@@ -675,17 +688,6 @@ class Columns1To1To1Block(ColumnsBlock):
         context['middle_column'] = value.get('middle_column')
         return context
 
-
-class MapBlock(StructBlock):
-    class Meta:
-        label = 'Map'
-        template = 'map/map.html'
-        icon = 'fa fa-map'
-
-
-MAP_BLOCKS = [
-    ('map', MapBlock())
-]
 
 COLUMNS_BLOCKS = [
     ('columns_1_to_1', Columns1To1Block()),
