@@ -272,6 +272,15 @@ class ProjectCountriesPage(HeaderPageMixin, Page):
     def countries(self):
         return self.get_children()
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['map_initial_url'] = self.get_api_detail_url()
+        return context
+
+    def get_api_detail_url(self):
+        return reverse_lazy(
+            'projectpage-detail', kwargs={'pk': self.get_parent().pk})
+
 
 class ProjectCountryPage(HeaderPageMixin, Page):
     template = 'pages/content.html'

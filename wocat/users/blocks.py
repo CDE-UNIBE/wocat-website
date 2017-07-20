@@ -112,7 +112,7 @@ class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
         page = context.get('page')
-        if page and page.contact_person:
+        if page and hasattr(page, 'contact_person'):
             user = page.contact_person
         else:
             return context
