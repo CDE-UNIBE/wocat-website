@@ -84,9 +84,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         verbosity = int(options.get('verbosity', 0))
-        self.import_institutions(filename=options['institutions'][0], init=True)
+        self.stdout.write('!! Import of institutions has been temporarily disabled !!')
+        # self.import_institutions(filename=options['institutions'][0], init=True)
         self.import_users(filename=options['users'][0])
-        self.import_institutions(filename=options['institutions'][0])
+        # self.import_institutions(filename=options['institutions'][0])
         self.reset_sql_sequences(verbosity)
         self.print_results(verbosity)
 
@@ -136,8 +137,8 @@ class Command(BaseCommand):
                 institution = Institution.objects.get(id=id)
                 if not institution.contact_person:
                     institution.contact_person = contact_person
-                    institution.save()
-                    updated += 1
+                institution.save()
+                updated += 1
         self.stdout.write('Warnings: {0}'.format(warnings))
         self.stdout.write('Created: {0}'.format(created))
         self.stdout.write('Updated: {0}'.format(updated))
@@ -295,6 +296,11 @@ class Command(BaseCommand):
 
     @classmethod
     def clean_gender(cls, value):
+        gender_mapping = {
+            "0": User.MALE,
+            "1": User.FEMALE,
+        }
+        value = gender_mapping.get(value, value)
         if value in [User.MALE, User.FEMALE]:
             return value
         cls.warnings.append('Gender "{0}" not found.'.format(value))
