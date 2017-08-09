@@ -189,6 +189,8 @@ class LoginView(APIView):
         form = AuthenticationForm(request, data=request.data)
         if form.is_valid():
             user = form.get_user()
-            return Response(data=UserSerializer(instance=user).data)
+            return Response(data=UserSerializer(
+                instance=user,
+                context={'request': self.request}).data)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
