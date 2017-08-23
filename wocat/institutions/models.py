@@ -16,7 +16,6 @@ class Institution(models.Model):
     name = models.CharField(
         verbose_name=_('Name'),
         max_length=255,
-        unique=True,
     )
     slug = AutoSlugField(
         populate_from='name'
@@ -24,7 +23,6 @@ class Institution(models.Model):
     abbreviation = models.CharField(
         verbose_name=_('Abbreviation'),
         max_length=255,
-        unique=True,
     )
     url = models.URLField(
         verbose_name=_('Url'),
@@ -85,6 +83,7 @@ class Institution(models.Model):
         verbose_name = _('Institution')
         verbose_name_plural = _('Institutions')
         ordering = ['name']
+        unique_together = ('name', 'abbreviation', 'country')
 
     def __str__(self):
         return self.name

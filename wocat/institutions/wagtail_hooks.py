@@ -9,6 +9,7 @@ from .models import Institution
 @modeladmin_register
 class InstitutionModelAdmin(ModelAdmin):
     model = Institution
+    delete_template_name = 'institutions/delete.html'
     menu_label = _('Institution')
     menu_icon = 'fa fa-institution'
     list_display = ('name', 'abbreviation', 'year', 'country', 'contact_person', 'logo_html', 'memorandum')

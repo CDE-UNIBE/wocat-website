@@ -92,6 +92,8 @@ router.register(r'regions', RegionViewSet, base_name='regionpage')
 
 
 class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
 

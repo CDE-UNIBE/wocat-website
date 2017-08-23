@@ -22,5 +22,5 @@ class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Institution
         fields = [
-            'url', 'external_url', 'name', 'abbreviation', 'year', 'country', 'contact_person', 'memorandum'
+            'id', 'url', 'external_url', 'name', 'abbreviation', 'year', 'country', 'contact_person', 'memorandum'
         ]
