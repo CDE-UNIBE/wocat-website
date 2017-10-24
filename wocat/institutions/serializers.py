@@ -20,7 +20,10 @@ class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
     def get_logo(self, obj):
-        return obj.logo.get_rendition('max-500x500').url if obj.logo else ''
+        if obj.logo and 'request' in self.context:
+            img_path = obj.logo.get_rendition('max-500x500').url
+            return self.context['request'].build_absolute_uri(img_path)
+        return ''
 
     def get_country_name(self, obj):
         return obj.country.name if obj.country else ''
