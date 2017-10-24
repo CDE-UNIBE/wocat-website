@@ -563,68 +563,16 @@ class InstitutionsPage(UniquePageMixin, Page):
         index.SearchField('content'),
     ]
 
-    parent_page_types = ['MembersPage']
-
-    # subpage_types = []
-
     class Meta:
         verbose_name = _('Institutional Members')
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-
-        institutions = Institution.objects.filter(memorandum=True)
-        #institutions = Institution.objects.all()
-        context['institutions'] = institutions
-
-        members = []
-        countries = []
-        # contacts = []
-        # years = list(institutions.values_list('year', flat=True))
-        for counter, institution in enumerate(institutions):
-            if institution.country:
-                country_element = {'name': institution.country.name}
-                if country_element not in countries:
-                    countries.append(country_element)
-            members.append({
-                'avatarsrc': institution.logo.get_rendition('max-1200x1200').url if institution.logo else '',
-                'contactperson': institution.contact_person if institution.contact_person else '',
-                'contactpersonhref': institution.contact_person.detail_url if institution.contact_person else '',
-                'country': institution.country.name if institution.country else '',
-                # 'href': institution.get_absolute_url(),  # not needed for now
-                'name': institution.name or '',
-                'year': institution.year or '',
-                'url': institution.get_absolute_url(),
-                'visible': True if counter < self.paginate_by else False,
-            })
-            # if institution.year:
-            #     years.append({'value': institution.year})
-
-        countries.sort(key=lambda o: o['name'])
-        context.update({
-            'allcountries': 'All Countries',
-            'allyears': 'All Years',
-            'allcontacts': 'All Contacts',
-            'institutions': members,
-            'countries': countries,
-            # 'contacts': contacts,
-            # 'years': years,
-        })
-
-        # Pagination
-        member_count = institutions.count()
-        if member_count:
-            per_page = self.paginate_by
-            context.update({
-                # Calculate pages
-                'maxpagesize': per_page,
-                'pages': [number + 1 for number in range(ceil(member_count / per_page))],
-            })
-
-        members_page = MembersPage.objects.first()
-        if members_page:
-            context['members_page_text'] = _('Back to WOCAT members')
-            context['members_page_url'] = members_page.url
+        context['countries_list'] = Country.objects.filter(
+            institution__isnull=False
+        ).distinct().values_list(
+            'name', flat=True
+        )
         return context
 
 

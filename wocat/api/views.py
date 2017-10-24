@@ -15,6 +15,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
+from wocat.api.authenticators import SameHostAjaxAuthentication
 from wocat.cms.models import ProjectPage, RegionPage
 from wocat.cms.serializers import ProjectPageSerializer, RegionPageSerializer, \
     CountrySerializer
@@ -92,7 +93,7 @@ router.register(r'regions', RegionViewSet, base_name='regionpage')
 
 
 class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication, SameHostAjaxAuthentication, )
 
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer

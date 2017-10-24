@@ -1,92 +1,74 @@
-<div class="widget-institutions-table">
-	<div class="widget-institutions-table-selector">
-		<select class="widget-institutions-table-countryselector form-control" autocomplete="off">
-			<option selected="selected" value="all">{{ allcountries }}</option>
-			{% for country in countries %}
-				<option>{{ country.name }}</option>
-			{% endfor %}
-		</select>
-	</div>
-
-	<div class="widget-institutions-table-headline">
-		<div class="widget-institutions-table-logo">
-		</div>
-		<div class="widget-institutions-table-name h4">
-			Name
-			<span class="widget-institutions-table-name-sortarrow">
-				<i class="fa fa-caret-down" aria-hidden="true"></i>
-				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
-			</span>
-		</div>
-		<div class="widget-institutions-table-country h4">
-			Country
-			<span class="widget-institutions-table-country-sortarrow">
-				<i class="fa fa-caret-down" aria-hidden="true" style="display:none;"></i>
-				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
-			</span>
-		</div>
-		<div class="widget-institutions-table-avatar">
-		</div>
-		<div class="widget-institutions-table-contactperson h4">
-			Contact Person
-		</div>
-	</div>
-
-	<div class="widget-institutions-table-institutions" data-maxpagesize="{{ maxpagesize }}">
-		{% for institution in institutions %}
-			<div class="widget-institutions-table-institution"{% if not institution.visible %} style="display: none;"{% endif %}>
-				<div class="widget-institutions-table-logo">
-					<img src="{% if institution.logosrc %}{{ institution.logosrc }}{% else %}/static/images/institution.png{% endif %}" alt="Logo">
-				</div>
-				<div class="widget-institutions-table-name">
-					{% if institution.href %}
-						<a href="{{ institution.href }}">
-					{% endif %}
-					{{ institution.name }}
-					{% if institution.href %}
-						</a>
-					{% endif %}
-					{% if institution.year %}
-						<div class="institution-year">
-							({{ institution.year }})
-						</div>
-					{% endif %}
-				</div>
-				<div class="widget-institutions-table-country">
-					{{ institution.country }}
-				</div>
-				<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
-				<div class="widget-institutions-table-avatar">
-					<img src="{% if institution.avatarsrc %}{{ institution.avatarsrc }}{% else %}/static/images/user.png{% endif %}" alt="Avatar">
-				</div>
-				<div class="widget-institutions-table-contactperson">
-					{% if institution.contactpersonhref %}
-						<a href="{{ institution.contactpersonhref }}">
-					{% endif %}
-					{{ institution.contactperson }}
-					{% if institution.contactpersonhref %}
-						</a>
-					{% endif %}
-				</div>
-				<div class="clearfix"></div>
-			</div>
-		{% endfor %}
-	</div>
-
-	{% if pages %}
-	<nav class="pages">
-		<ul class="pagination">
-		{% for pagenumber in pages %}
-			<li{% if forloop.first %} class="active"{% endif %}>
-				<a href="#" data-page="{{ pagenumber }}">{{ pagenumber }}</a>
-			</li>
-		{% endfor %}
-		</ul>
-	</nav>
-	{% endif %}
+{% load i18n %}
+{% load static %}
 
 
-	<div class="widget-institutions-table-nothingfound" style="display: none;">
-		No institutions found with this filter.
-	</div>
-</div><!-- widget-institutions-table -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" />
+
+<table id="table"></table>
+
+<script defer="defer">
+  window.jsReady = function() {
+      $("#table").bootstrapTable({
+          url: "{% url 'institution-list' %}",
+          pagination: true,
+          search: true,
+          columns: [
+              {
+                  field: "logo",
+                  title: "{% trans "Logo" %}",
+                  formatter: "imgFormatter",
+                  align: "center"
+              },
+              {
+                  field: "name",
+                  title: "{% trans "Name" %}",
+                  sortable: true,
+                  formatter: "nameFormatter"
+              },
+              {
+                  field: "contact_person_name",
+                  title: "{% trans "Contact person" %}",
+                  sortable: true
+              },
+              {
+                  field: "country_name",
+                  title: "{% trans "Country" %}",
+                  sortable: true,
+                  filter: {
+                      type: "select",
+                      data: [{% for country in countries_list %}"{{ country }}", {% endfor %}]
+                  }
+              },
+              {
+                  field: "memorandum",
+                  sortable: true,
+                  title: "{% trans "Memorandum" %}",
+                  formatter: "boolFormatter",
+                  align: "center"
+              }
+          ],
+          filter: true
+      });
+  };
+
+  function imgFormatter(value, row) {
+    return '<img src="' + value + '" height="80px">';
+  }
+
+  function boolFormatter(value, row) {
+      return (value) ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' : '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+  }
+
+  function nameFormatter(value, row) {
+      if (row.external_url === "") {
+          return value
+      } else {
+          return '<a href="' + row.external_url +'" target="_blank">' + value + '</a>'
+      }
+  }
+</script>
+
+<script defer="defer" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+<script defer="defer" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
