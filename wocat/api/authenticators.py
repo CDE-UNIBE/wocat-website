@@ -15,4 +15,4 @@ class SameHostAjaxAuthentication(authentication.BaseAuthentication):
         if request._request.is_ajax() and is_same_domain:
             return (AnonymousUser, None)
         else:
-            raise exceptions.AuthenticationFailed(_('Invalid host.'))
+            raise exceptions.AuthenticationFailed(_('Invalid domain'))
