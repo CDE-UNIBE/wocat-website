@@ -20,7 +20,6 @@ from wagtail.wagtailsnippets.models import register_snippet
 
 
 from wocat.countries.models import Country
-from wocat.institutions.models import Institution
 
 
 @register_snippet
@@ -271,7 +270,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
     institution = models.ForeignKey(
-        Institution,
+        'institutions.Institution',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
@@ -326,8 +325,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering = ('first_name', 'last_name')
         verbose_name = _('user')
         verbose_name_plural = _('users')
-
-
 
 
 # Step 1: Signed up
