@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -101,12 +101,13 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
     pagination_class = LimitOffsetPagination
-    filter_backends = (filters.DjangoFilterBackend, SearchFilter, )
+    filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter, )
     filter_fields = ('memorandum', 'country', )
     search_fields = (
         'country__name', 'name', 'abbreviation', 'contact_person__first_name',
         'contact_person__last_name',
     )
+    ordering_fields = '__all__'
 
 router.register(r'institutions', InstitutionViewSet)
 
