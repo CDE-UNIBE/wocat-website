@@ -45,7 +45,20 @@
                   sortable: true,
                   title: "{% trans "Memorandum" %}",
                   formatter: "boolFormatter",
-                  align: "center"
+                  align: "center",
+                  filter: {
+                      type: "select",
+                      data: [
+                          {
+                            id: '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>',
+                            text: '{% trans "Signed" %}'
+                          },
+                          {
+                            id: '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>',
+                            text: '{% trans "Not signed" %}'
+                          }
+                      ]
+                  }
               }
           ],
           filter: true
