@@ -1,91 +1,117 @@
 {% load i18n %}
 {% load static %}
+{% load compress %}
 
 
-<link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
-<link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
+{% compress css %}
+  <link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
+  <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
+{% endcompress %}
+
 
 <table id="table"></table>
 
-<script defer="defer">
-  window.jsReady = function() {
-      var $table = $("#table").bootstrapTable({
-          url: "{% url 'institution-list' %}",
-          pagination: true,
-          sidePagination: 'server',
-          dataField: 'results',
-          totalField: 'count',
-          search: true,
-          columns: [
-              {
-                  field: "logo",
-                  title: "{% trans "Logo" %}",
-                  formatter: "imgFormatter",
-                  align: "center"
-              },
-              {
-                  field: "name",
-                  title: "{% trans "Name" %}",
-                  sortable: true,
-                  formatter: "nameFormatter"
-              },
-              {
-                  field: "contact_person_name",
-                  title: "{% trans "Contact person" %}",
-                  sortable: true
-              },
-              {
-                  field: "country_name",
-                  title: "{% trans "Country" %}",
-                  sortable: true,
-                  filter: {
-                      type: "select",
-                      data: [{% for country in countries_list %}"{{ country }}", {% endfor %}]
-                  }
-              },
-              {
-                  field: "memorandum",
-                  sortable: true,
-                  title: "{% trans "Memorandum" %}",
-                  formatter: "boolFormatter",
-                  align: "center",
-                  filter: {
-                      type: "select",
-                      data: [
-                          {
-                            id: '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>',
-                            text: '{% trans "Signed" %}'
-                          },
-                          {
-                            id: '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>',
-                            text: '{% trans "Not signed" %}'
-                          }
-                      ]
-                  }
-              }
-          ],
-          filter: true
-      });
-  };
+{% compress js %}
+  <script defer="defer">
+    window.jsReady = function() {
+        var $table = $("#table").bootstrapTable({
+            url: "{% url 'institution-list' %}",
+            // map params to defaults from drf with LimitOffsetPagination
+            pagination: true,
+            sidePagination: 'server',
+            dataField: 'results',
+            totalField: 'count',
+            queryParams: 'drfQueryParams',
+            search: true,
+            columns: [
+                {
+                    field: "logo",
+                    title: "{% trans "Logo" %}",
+                    formatter: "imgFormatter",
+                    align: "center"
+                },
+                {
+                    field: "name",
+                    title: "{% trans "Name" %}",
+                    sortable: true,
+                    formatter: "nameFormatter"
+                },
+                {
+                    field: "contact_person_name",
+                    title: "{% trans "Contact person" %}",
+                    sortable: true
+                },
+                {
+                    field: "country_name",
+                    title: "{% trans "Country" %}",
+                    sortable: true,
+                    filter: {
+                        type: "select",
+                        data: [
+                            {% for country in countries_list %}
+                                {id: "{{ country.0 }}", text: "{{ country.1 }}"},
+                            {% endfor %}
+                        ]
+                    }
+                },
+                {
+                    field: 'memorandum',
+                    sortable: true,
+                    title: "{% trans "Memorandum" %}",
+                    formatter: "boolFormatter",
+                    align: "center",
+                    filter: {
+                        type: "select",
+                        data: [
+                            {
+                              id: true,
+                              text: '{% trans "Signed" %}'
+                            },
+                            {
+                              id: false,
+                              text: '{% trans "Not signed" %}'
+                            }
+                        ]
+                    }
+                }
+            ],
+            filter: true
+        });
+    };
 
-  function imgFormatter(value, row) {
-    return '<img src="' + value + '" height="80px">';
-  }
+    function imgFormatter(value, row) {
+      return '<img src="' + value + '" height="80px">';
+    }
 
-  function boolFormatter(value, row) {
-      return (value) ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' : '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
-  }
+    function boolFormatter(value, row) {
+        return (value) ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' : '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+    }
 
-  function nameFormatter(value, row) {
-      if (row.external_url === "") {
-          return value
-      } else {
-          return '<a href="' + row.external_url +'" target="_blank">' + value + '</a>'
-      }
-  }
+    function nameFormatter(value, row) {
+        if (row.external_url === "") {
+            return value
+        } else {
+            return '<a href="' + row.external_url +'" target="_blank">' + value + '</a>'
+        }
+    }
 
-</script>
-
-<script defer="defer" src="{% static "js/select2.min.js" %}"></script>
-<script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
-<script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
+    function drfQueryParams(params) {
+        /*
+        django rest framework filters expect the keys and values directly as
+        query-params, not within the keyword 'filter' - so put the 'filter'
+        params to the query.
+         */
+        if ('filter' in params) {
+            $.each(JSON.parse(params.filter), function(key, value) {
+                if (key === 'country_name') key = 'country';
+                params[key] = value;
+            });
+            delete params['filter'];
+        }
+        return params
+    }
+  </script>
+  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
+{% endcompress %}

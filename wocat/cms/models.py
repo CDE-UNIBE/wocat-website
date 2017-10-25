@@ -571,7 +571,7 @@ class InstitutionsPage(UniquePageMixin, Page):
         context['countries_list'] = Country.objects.filter(
             institution__isnull=False
         ).distinct().values_list(
-            'name', flat=True
+            'code', 'name'
         )
         return context
 

@@ -9,12 +9,14 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
+from django_filters import rest_framework as filters
 
 from wocat.api.authenticators import SameHostAjaxAuthentication
 from wocat.cms.models import ProjectPage, RegionPage
@@ -99,7 +101,12 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
     pagination_class = LimitOffsetPagination
-
+    filter_backends = (filters.DjangoFilterBackend, SearchFilter, )
+    filter_fields = ('memorandum', 'country', )
+    search_fields = (
+        'country__name', 'name', 'abbreviation', 'contact_person__first_name',
+        'contact_person__last_name',
+    )
 
 router.register(r'institutions', InstitutionViewSet)
 

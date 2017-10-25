@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = (
     'rest_framework',  # api
     'rest_framework.authtoken',  # token auth
     'rest_framework_swagger',  # api docs
+    'django_filters',
     'maintenancemode',
 )
 
