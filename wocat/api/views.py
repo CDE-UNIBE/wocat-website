@@ -10,6 +10,7 @@ from rest_framework import status
 from rest_framework import viewsets, routers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
@@ -97,6 +98,7 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
+    pagination_class = LimitOffsetPagination
 
 
 router.register(r'institutions', InstitutionViewSet)
