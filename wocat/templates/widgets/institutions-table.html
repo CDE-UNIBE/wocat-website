@@ -2,8 +2,8 @@
 {% load static %}
 
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" />
+<link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
+<link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
 
 <table id="table"></table>
 
@@ -82,6 +82,6 @@
   }
 </script>
 
-<script defer="defer" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
-<script defer="defer" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script defer="defer" src="{% static "js/select2.min.js" %}"></script>
+<script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
 <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
