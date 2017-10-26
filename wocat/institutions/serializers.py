@@ -21,7 +21,7 @@ class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_logo(self, obj):
         if obj.logo and 'request' in self.context:
-            img_path = obj.logo.get_rendition('max-500x500').url
+            img_path = obj.logo.get_rendition('max-320x320').url
             return self.context['request'].build_absolute_uri(img_path)
         return ''
 

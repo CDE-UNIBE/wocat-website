@@ -23,30 +23,35 @@
               totalField: 'count',
               queryParams: 'drfQueryParams',
               search: true,
+              classes: "table table-no-bordered",
               columns: [
                   {
                       field: "logo",
                       title: "{% trans "Logo" %}",
                       formatter: "imgFormatter",
-                      align: "center"
+                      align: "center",
+                      width: "10%"
                   },
                   {
                       field: "name",
                       title: "{% trans "Name" %}",
                       sortable: true,
-                      formatter: "nameFormatter"
+                      formatter: "nameFormatter",
+                      width: "30%"
                   },
                   {
                       field: "contact_person_name",
-                      title: "{% trans "Contact person" %}"
+                      title: "{% trans "Contact person" %}",
+                      width: "20%"
                   },
                   {
                       field: "country_name",
                       title: "{% trans "Country" %}",
+                      width: "20%",
                       filter: {
                           type: "select",
                           data: [
-                              {% for country in countries_list %}
+                              {% for country in countries %}
                                   {id: "{{ country.0 }}", text: "{{ country.1 }}"},
                               {% endfor %}
                           ]
@@ -56,6 +61,7 @@
                       field: 'memorandum',
                       sortable: true,
                       title: "{% trans "Memorandum" %}",
+                      width: "10%",
                       formatter: "boolFormatter",
                       align: "center",
                       filter: {
@@ -78,7 +84,7 @@
       };
 
       function imgFormatter(value, row) {
-        return '<img src="' + value + '" height="80px">';
+          return (value) ? '<img src="' + value + '" class="table-logo">' : '';
       }
 
       function boolFormatter(value, row) {
@@ -105,6 +111,10 @@
               $.each(JSON.parse(params.filter), function(key, value) {
                   if (key === 'country_name') key = 'country';
                   params[key] = value;
+                  // The filters (select2) also set the search option (if no
+                  // other search input is available). This is probably not
+                  // desirable, so filters are removed from the search.
+                  if (params.search === value) params.search = $('.search > input').val();
               });
               delete params['filter'];
           }
@@ -116,7 +126,6 @@
               params['ordering'] += params.sort;
               delete params['sort'];
           }
-          // ordering
           return params
       }
   </script>

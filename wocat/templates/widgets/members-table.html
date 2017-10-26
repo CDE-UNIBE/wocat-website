@@ -1,106 +1,127 @@
-<div class="widget-members-table">
-	<div class="widget-members-table-selector">
-		<select class="widget-members-table-countryselector form-control" autocomplete="off">
-			<option selected="selected" value="all">{{ allcountries }}</option>
-			{% for country in countries %}
-				<option{% if country.iso_3166_1_alpha_3 %} value="{{ country.iso_3166_1_alpha_3|upper }}"{% endif %}>{{ country.name }}</option>
-			{% endfor %}
-		</select>
-		<select class="widget-members-table-institutionselector form-control" autocomplete="off">
-			<option selected="selected" value="all">{{ allinstitutions }}</option>
-			{% for institution in institutions %}
-				<option>{{ institution.name }}</option>
-			{% endfor %}
-		</select>
-		<select class="widget-members-table-expertiseselector form-control" autocomplete="off">
-			<option selected="selected" value="all">{{ allexpertises }}</option>
-			{% for expertise in expertises %}
-				<option>{{ expertise.name }}</option>
-			{% endfor %}
-		</select>
-	</div>
-
-	<div class="widget-members-table-headline">
-		<div class="widget-members-table-avatar">
-		</div>
-		<div class="widget-members-table-name h4">
-			Name
-			<span class="widget-members-table-name-sortarrow">
-				<i class="fa fa-caret-down" aria-hidden="true"></i>
-				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
-			</span>
-		</div>
-		<div class="widget-members-table-country h4">
-			Country
-			<span class="widget-members-table-country-sortarrow">
-				<i class="fa fa-caret-down" aria-hidden="true" style="display:none;"></i>
-				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
-			</span>
-		</div>
-		<div class="widget-members-table-institution h4">
-			Institution
-			<span class="widget-members-table-institution-sortarrow">
-				<i class="fa fa-caret-down" aria-hidden="true" style="display:none;"></i>
-				<i class="fa fa-caret-up" aria-hidden="true" style="display:none;"></i>
-			</span>
-		</div>
-		<div class="widget-members-table-expertises h4">
-			Expertise
-		</div>
-	</div>
-
-	<div class="widget-members-table-members" data-maxpagesize="{{ maxpagesize }}">
-		{% for member in members %}
-			<div class="widget-members-table-member"{% if not member.visible %} style="display: none;"{% endif %}>
-				<div class="widget-members-table-avatar">
-					<img src="{% if member.avatarsrc %}{{ member.avatarsrc }}{% else %}/static/images/user.png{% endif %}" alt="Avatar">
-				</div>
-				<div class="widget-members-table-name">
-					{% if member.href %}
-						<a href="{{ member.href}}">
-					{% endif %}
-					{{ member.name }}
-					{% if member.href %}
-						</a>
-					{% endif %}
-
-				</div>
-				<div class="widget-members-table-country">
-					{{ member.country }}
-				</div>
-				<div class="widget-members-table-institution">
-					<div class="member-institution">
-						{{ member.institution }}
-					</div>
-					<div class="member-position">
-						{{ member.position }}
-					</div>
-				</div>
-				<div class="widget-members-table-expertises">
-					{% for expertise in member.expertises %}
-						<span class="expertise">{{ expertise.name }}</span>
-					{% endfor %}
-
-				</div>
-				<div class="clearfix"></div>
-			</div>
-		{% endfor %}
-	</div>
-
-	{% if pages %}
-	<nav class="pages">
-		<ul class="pagination">
-		{% for pagenumber in pages %}
-			<li{% if forloop.first %} class="active"{% endif %}>
-				<a href="#" data-page="{{ pagenumber }}">{{ pagenumber }}</a>
-			</li>
-		{% endfor %}
-		</ul>
-	</nav>
-	{% endif %}
+{% load i18n %}
+{% load static %}
+{% load compress %}
 
 
-	<div class="widget-members-table-nothingfound" style="display: none;">
-		No member found with this filter.
-	</div>
-</div><!-- widget-members-table -->
+{% compress css %}
+  <link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
+  <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
+{% endcompress %}
+
+
+<table id="table"></table>
+
+{% compress js %}
+  <script defer="defer">
+      window.jsReady = function() {
+          var $table = $("#table").bootstrapTable({
+              url: "{% url 'user-list' %}?is_active=true",
+              // map params to defaults from drf with LimitOffsetPagination
+              pagination: true,
+              sidePagination: 'server',
+              dataField: 'results',
+              totalField: 'count',
+              queryParams: 'drfQueryParams',
+              search: true,
+              classes: "table table-no-bordered",
+              columns: [
+                  {
+                      field: "avatar",
+                      title: "{% trans "Photo" %}",
+                      formatter: "imgFormatter",
+                      width: "10%"
+                  },
+                  {
+                      field: "full_name",
+                      title: "{% trans "Name" %}",
+                      sortable: true,
+                      width: "20%"
+                  },
+                  {
+                      field: "country_name",
+                      title: "{% trans "Country" %}",
+                      width: "20%",
+                      filter: {
+                          type: "select",
+                          data: [
+                              {% for country in countries %}{id: "{{ country.0 }}", text: "{{ country.1 }}"},{% endfor %}
+                          ]
+                      }
+                  },
+                  {
+                      field: "institution",
+                      title: "{% trans "Institution" %}",
+                      formatter: "functionFormatter",
+                      width: "20%",
+                      filter: {
+                          type: "select",
+                          data: [
+                              {% for inst in institutions %}{id: "{{ inst.0 }}", text: "{{ inst.1 }}"},{% endfor %}
+                          ]
+                      }
+                  },
+                  {
+                      field: "experiences",
+                      width: "20%",
+                      title: "{% trans "Expertise" %}",
+                      filter: {
+                          type: "select",
+                          data: [
+                              {% for exp in experiences %}{id: "{{ exp.pk }}", text: "{{ exp.name }}"},{% endfor %}
+                          ]
+                      }
+                  }
+              ],
+              filter: true
+          });
+      };
+
+      function imgFormatter(value, row) {
+        return '<img src="' + value + '" height="80px">';
+      }
+
+      function functionFormatter(value, row) {
+          if (row.institution_url !== "") {
+               var institution = '<a href="' + row.institution_url +'" target="_blank">' + row.institution_name + '</a>'
+          } else {
+              var institution = row.institution_name
+          }
+          if (row.position === "") {
+              return institution
+          } else {
+              return institution + ((institution === "") ? "" : "<br>")  + "<i>" + row.position + '</i>'
+          }
+      }
+
+      function drfQueryParams(params) {
+          /*
+           Map query params to the default params of the django rest framework.
+          */
+          console.log(params);
+          if ('filter' in params) {
+              /*
+              Filters are expected as query-params, not within the keyword
+              'filter' - so put the 'filter' params to the querystring.
+               */
+              $.each(JSON.parse(params.filter), function(key, value) {
+                  if (key === 'country_name') key = 'country';
+                  params[key] = value;
+              });
+              delete params['filter'];
+          }
+          if (params.sort !== undefined) {
+              /*
+              Change keyword and use '-' for descending sort.
+               */
+              params['ordering'] = (params.order === 'desc') ? '-' : '';
+              params['ordering'] += (params.sort === 'full_name') ? 'last_name' : params.sort;
+              delete params['sort'];
+          }
+          // ordering
+          return params
+      }
+  </script>
+  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
+{% endcompress %}

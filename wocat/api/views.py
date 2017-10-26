@@ -33,8 +33,15 @@ router = routers.DefaultRouter()
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
-    authentication_classes = (TokenAuthentication, )
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (AllowAny, )
+    authentication_classes = (TokenAuthentication, SameHostAjaxAuthentication, )
+    pagination_class = LimitOffsetPagination
+    filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter,)
+    filter_fields = ('country', 'institution', 'experiences', 'is_active', )
+    search_fields = (
+        'country__name', 'first_name', 'last_name',
+    )
+    ordering_fields = '__all__'
 
     def get_queryset(self):
         """
@@ -97,7 +104,6 @@ router.register(r'regions', RegionViewSet, base_name='regionpage')
 
 class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
     authentication_classes = (TokenAuthentication, SameHostAjaxAuthentication, )
-
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
     pagination_class = LimitOffsetPagination

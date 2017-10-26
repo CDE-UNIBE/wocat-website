@@ -21,6 +21,7 @@ from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock, PROJECT_BLOCKS
 from wocat.core.blocks import CORE_BLOCKS
 from wocat.countries.models import Country
 from wocat.institutions.models import Institution
+from wocat.users.models import UserExperience
 
 __author__ = 'Eraldo Energy'
 
@@ -481,71 +482,22 @@ class MembersPage(UniquePageMixin, Page):
         index.SearchField('content'),
     ]
 
-    # parent_page_types = []
-    # subpage_types = []
-
     class Meta:
         verbose_name = _('Members')
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        members = []
-        countries = []
-        experiences = []
-        institutions = []
-        users = get_user_model().objects.filter(is_active=True)
-        for user in users:
-            if user.country and user.country.name:
-                country = {'iso_3166_1_alpha_3': user.country.code, 'name': user.country.name}
-                if country not in countries:
-                    countries.append(country)
-            member_experiences = [{'name': experience} for experience in user.experiences.all()]
-            for experience in member_experiences:
-                if experience not in experiences:
-                    experiences.append(experience)
-            if user.institution:
-                institution = {'name': user.institution}
-                if institution not in institutions:
-                    institutions.append(institution)
-            members.append({
-                'avatarsrc': user.avatar['avatarsquare'].url if user.avatar else '',
-                'country': user.country.name if user.country else '',
-                'expertises': member_experiences,
-                'name': user.name or '',
-                'institution': user.institution or '',
-                'position': user.position or '',
-                'href': user.get_absolute_url(),
-                'url': user.get_absolute_url(),
-                'visible': True,
-            })
-        countries.sort(key=lambda o: o['name'])
-        experiences.sort(key=lambda o: o['name'].name)
-        institutions.sort(key=lambda o: o['name'].name)
-        context.update({
-            'allcountries': _('All Countries'),
-            'allexpertises': _('All Expertises'),
-            'allinstitutions': _('All Institutions'),
-            'countries': countries,
-            'expertises': experiences,
-            'institutions': institutions,
-            'members': members,
-        })
-
-        # Pagination
-        user_count = users.count()
-        if user_count:
-            per_page = self.paginate_by
-            context.update({
-                # Calculate pages
-                'maxpagesize': per_page,
-                'pages': [number + 1 for number in range(ceil(user_count / per_page))],
-            })
-
-        institutional_members_page = InstitutionsPage.objects.first()
-        if institutional_members_page:
-            context['institutional_members_page_text'] = _('Institutional members')
-            context['institutional_members_page_url'] = institutional_members_page.url
-
+        context['countries'] = Country.objects.filter(
+            user__isnull=False
+        ).distinct().values_list(
+            'code', 'name'
+        )
+        context['institutions'] = Institution.objects.filter(
+            user__isnull=False
+        ).distinct().values_list(
+            'pk', 'name'
+        )
+        context['experiences'] = UserExperience.objects.all()
         return context
 
 
@@ -568,7 +520,7 @@ class InstitutionsPage(UniquePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['countries_list'] = Country.objects.filter(
+        context['countries'] = Country.objects.filter(
             institution__isnull=False
         ).distinct().values_list(
             'code', 'name'
