@@ -12,8 +12,8 @@
 <table id="table"></table>
 
 {% compress js %}
-  <script defer="defer">
-      window.jsReady = function() {
+  <script>
+      window.jsReady = function () {
           var $table = $("#table").bootstrapTable({
               url: "{% url 'institution-list' %}",
               // map params to defaults from drf with LimitOffsetPagination
@@ -52,7 +52,10 @@
                           type: "select",
                           data: [
                               {% for country in countries %}
-                                  {id: "{{ country.0 }}", text: "{{ country.1 }}"},
+                                  {
+                                      id: "{{ country.0 }}",
+                                      text: "{{ country.1 }}"
+                                  },
                               {% endfor %}
                           ]
                       }
@@ -68,12 +71,12 @@
                           type: "select",
                           data: [
                               {
-                                id: true,
-                                text: '{% trans "Signed" %}'
+                                  id: true,
+                                  text: '{% trans "Signed" %}'
                               },
                               {
-                                id: false,
-                                text: '{% trans "Not signed" %}'
+                                  id: false,
+                                  text: '{% trans "Not signed" %}'
                               }
                           ]
                       }
@@ -82,53 +85,10 @@
               filter: true
           });
       };
-
-      function imgFormatter(value, row) {
-          return (value) ? '<img src="' + value + '" class="table-logo">' : '';
-      }
-
-      function boolFormatter(value, row) {
-          return (value) ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' : '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
-      }
-
-      function nameFormatter(value, row) {
-          if (row.external_url === "") {
-              return value
-          } else {
-              return '<a href="' + row.external_url +'" target="_blank">' + value + '</a>'
-          }
-      }
-
-      function drfQueryParams(params) {
-          /*
-           Map query params to the default params of the django rest framework.
-          */
-          if ('filter' in params) {
-              /*
-              Filters are expected as query-params, not within the keyword
-              'filter' - so put the 'filter' params to the querystring.
-               */
-              $.each(JSON.parse(params.filter), function(key, value) {
-                  if (key === 'country_name') key = 'country';
-                  params[key] = value;
-                  // The filters (select2) also set the search option (if no
-                  // other search input is available). This is probably not
-                  // desirable, so filters are removed from the search.
-                  if (params.search === value) params.search = $('.search > input').val();
-              });
-              delete params['filter'];
-          }
-          if (params.sort !== undefined) {
-              /*
-              Change keyword and use '-' for descending sort.
-               */
-              params['ordering'] = (params.order === 'desc') ? '-' : '';
-              params['ordering'] += params.sort;
-              delete params['sort'];
-          }
-          return params
-      }
   </script>
+{% endcompress %}
+{% compress js %}
+  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
   <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
   <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
   <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>

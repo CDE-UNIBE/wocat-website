@@ -76,51 +76,10 @@
           });
       };
 
-      function imgFormatter(value, row) {
-        return '<img src="' + value + '" height="80px">';
-      }
-
-      function functionFormatter(value, row) {
-          if (row.institution_url !== "") {
-               var institution = '<a href="' + row.institution_url +'" target="_blank">' + row.institution_name + '</a>'
-          } else {
-              var institution = row.institution_name
-          }
-          if (row.position === "") {
-              return institution
-          } else {
-              return institution + ((institution === "") ? "" : "<br>")  + "<i>" + row.position + '</i>'
-          }
-      }
-
-      function drfQueryParams(params) {
-          /*
-           Map query params to the default params of the django rest framework.
-          */
-          console.log(params);
-          if ('filter' in params) {
-              /*
-              Filters are expected as query-params, not within the keyword
-              'filter' - so put the 'filter' params to the querystring.
-               */
-              $.each(JSON.parse(params.filter), function(key, value) {
-                  if (key === 'country_name') key = 'country';
-                  params[key] = value;
-              });
-              delete params['filter'];
-          }
-          if (params.sort !== undefined) {
-              /*
-              Change keyword and use '-' for descending sort.
-               */
-              params['ordering'] = (params.order === 'desc') ? '-' : '';
-              params['ordering'] += (params.sort === 'full_name') ? 'last_name' : params.sort;
-              delete params['sort'];
-          }
-          // ordering
-          return params
-      }
   </script>
+{% endcompress %}
+{% compress js %}
+  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
   <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
   <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
   <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
