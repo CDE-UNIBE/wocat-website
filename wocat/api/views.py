@@ -33,7 +33,6 @@ router = routers.DefaultRouter()
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
-    permission_classes = (AllowAny, )
     authentication_classes = (TokenAuthentication, SameHostAjaxAuthentication, )
     pagination_class = LimitOffsetPagination
     filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter,)
