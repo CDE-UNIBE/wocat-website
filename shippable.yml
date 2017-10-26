@@ -12,6 +12,7 @@ env:
 
 build:
   ci:
+    - pip install --upgrade pip
     - pip install Fabric3
 
   on_success:
