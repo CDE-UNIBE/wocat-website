@@ -9,12 +9,20 @@
 {% endcompress %}
 
 
-<table id="table"></table>
+<table id="members-table"></table>
+
+
+{% compress js %}
+  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
+  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
+{% endcompress %}
 
 {% compress js %}
   <script defer="defer">
       window.jsReady = function() {
-          var $table = $("#table").bootstrapTable({
+          var $table = $('#members-table').bootstrapTable({
               url: "{% url 'user-list' %}?is_active=true",
               // map params to defaults from drf with LimitOffsetPagination
               pagination: true,
@@ -77,10 +85,4 @@
       };
 
   </script>
-{% endcompress %}
-{% compress js %}
-  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
-  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
 {% endcompress %}

@@ -9,12 +9,19 @@
 {% endcompress %}
 
 
-<table id="table"></table>
+<table id="institutions-table"></table>
+
+{% compress js %}
+  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
+  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
+  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
+{% endcompress %}
 
 {% compress js %}
   <script>
       window.jsReady = function () {
-          var $table = $("#table").bootstrapTable({
+          var $table = $('#institutions-table').bootstrapTable({
               url: "{% url 'institution-list' %}",
               // map params to defaults from drf with LimitOffsetPagination
               pagination: true,
@@ -86,10 +93,4 @@
           });
       };
   </script>
-{% endcompress %}
-{% compress js %}
-  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
-  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
 {% endcompress %}
