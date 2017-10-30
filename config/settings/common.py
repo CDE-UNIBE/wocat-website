@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = (
     'rest_framework_swagger',  # api docs
     'django_filters',
     'maintenancemode',
+    'sekizai',
 )
 
 # Apps specific for this project go here.
@@ -220,6 +221,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'sekizai.context_processors.sekizai',
                 'wocat.core.context_processors.webmaster_tools_key',
             ],
         },

@@ -1,96 +1,100 @@
 {% load i18n %}
 {% load static %}
 {% load compress %}
+{% load sekizai_tags %}
 
 
-{% compress css %}
-  <link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
-  <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
-{% endcompress %}
+{% addtoblock "css" %}
+  {% compress css %}
+    <link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
+  {% endcompress %}
+{% endaddtoblock %}
 
 
 <table id="institutions-table"></table>
 
-{% compress js %}
-  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
-  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
-{% endcompress %}
-
-{% compress js %}
-  <script>
-      window.jsReady = function () {
-          var $table = $('#institutions-table').bootstrapTable({
-              url: "{% url 'institution-list' %}",
-              // map params to defaults from drf with LimitOffsetPagination
-              pagination: true,
-              sidePagination: 'server',
-              dataField: 'results',
-              totalField: 'count',
-              queryParams: 'drfQueryParams',
-              search: true,
-              classes: "table table-no-bordered",
-              columns: [
-                  {
-                      field: "logo",
-                      title: "{% trans "Logo" %}",
-                      formatter: "imgFormatter",
-                      align: "center",
-                      width: "10%"
-                  },
-                  {
-                      field: "name",
-                      title: "{% trans "Name" %}",
-                      sortable: true,
-                      formatter: "nameFormatter",
-                      width: "30%"
-                  },
-                  {
-                      field: "contact_person_name",
-                      title: "{% trans "Contact person" %}",
-                      width: "20%"
-                  },
-                  {
-                      field: "country_name",
-                      title: "{% trans "Country" %}",
-                      width: "20%",
-                      filter: {
-                          type: "select",
-                          data: [
-                              {% for country in countries %}
+{% addtoblock "js" %}
+  {% compress js %}
+    <script src="{% static "js/bootstrap-table-wocat.js" %}"></script>
+    <script src="{% static "js/select2.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-table.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
+  {% endcompress %}
+  {% compress js %}
+      <script>
+          $(function() {
+              var $table = $('#institutions-table').bootstrapTable({
+                  url: "{% url 'institution-list' %}",
+                  // map params to defaults from drf with LimitOffsetPagination
+                  pagination: true,
+                  sidePagination: 'server',
+                  dataField: 'results',
+                  totalField: 'count',
+                  queryParams: 'drfQueryParams',
+                  search: true,
+                  classes: "table table-no-bordered",
+                  columns: [
+                      {
+                          field: "logo",
+                          title: "{% trans "Logo" %}",
+                          formatter: "imgFormatter",
+                          align: "center",
+                          width: "10%"
+                      },
+                      {
+                          field: "name",
+                          title: "{% trans "Name" %}",
+                          sortable: true,
+                          formatter: "nameFormatter",
+                          width: "30%"
+                      },
+                      {
+                          field: "contact_person_name",
+                          title: "{% trans "Contact person" %}",
+                          width: "20%"
+                      },
+                      {
+                          field: "country_name",
+                          title: "{% trans "Country" %}",
+                          width: "20%",
+                          filter: {
+                              type: "select",
+                              data: [
+                                  {% for country in countries %}
+                                      {
+                                          id: "{{ country.0 }}",
+                                          text: "{{ country.1 }}"
+                                      },
+                                  {% endfor %}
+                              ]
+                          }
+                      },
+                      {
+                          field: 'memorandum',
+                          sortable: true,
+                          title: "{% trans "Memorandum" %}",
+                          width: "10%",
+                          formatter: "boolFormatter",
+                          align: "center",
+                          filter: {
+                              type: "select",
+                              data: [
                                   {
-                                      id: "{{ country.0 }}",
-                                      text: "{{ country.1 }}"
+                                      id: true,
+                                      text: '{% trans "Signed" %}'
                                   },
-                              {% endfor %}
-                          ]
+                                  {
+                                      id: false,
+                                      text: '{% trans "Not signed" %}'
+                                  }
+                              ]
+                          }
                       }
-                  },
-                  {
-                      field: 'memorandum',
-                      sortable: true,
-                      title: "{% trans "Memorandum" %}",
-                      width: "10%",
-                      formatter: "boolFormatter",
-                      align: "center",
-                      filter: {
-                          type: "select",
-                          data: [
-                              {
-                                  id: true,
-                                  text: '{% trans "Signed" %}'
-                              },
-                              {
-                                  id: false,
-                                  text: '{% trans "Not signed" %}'
-                              }
-                          ]
-                      }
-                  }
-              ],
-              filter: true
+                  ],
+                  filter: true
+              });
           });
-      };
-  </script>
-{% endcompress %}
+      </script>
+  {% endcompress %}
+{% endaddtoblock %}

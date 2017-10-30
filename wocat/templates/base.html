@@ -1,4 +1,4 @@
-{% load staticfiles i18n core_tags cms_tags wagtailuserbar piwik_tags compress %}<!DOCTYPE html>
+{% load staticfiles i18n core_tags cms_tags wagtailuserbar piwik_tags compress sekizai_tags %}<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -51,6 +51,7 @@
       <link rel="stylesheet" type="text/css" href="{% static 'cms/css/index.css' %}">
     {% endblock %}
   {% endcompress %}
+  {% render_block "css" %}
 
   {% if debug %}
     <link rel="stylesheet/less" type="text/css" href="{% static 'less/wocat.less' %}"/>
@@ -91,7 +92,6 @@
 {% block modal %}
 {% endblock modal %}
 
-<!-- Le javascript -->
 {% compress js %}
   {% block javascript %}
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
@@ -101,9 +101,9 @@
     <script src="{% static 'js/interact.min.js' %}"></script>
     <script src="{% static 'js/wocat.js' %}"></script>
     {% piwik %}
-    <script>if (window.hasOwnProperty('jsReady')) $(function() {window.jsReady();});</script>
   {% endblock javascript %}
 {% endcompress %}
+{% render_block "js" %}
 <div class="widget-cms-userbar">
 	{% wagtailuserbar %}
 </div>

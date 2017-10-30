@@ -1,27 +1,30 @@
 {% load i18n %}
 {% load static %}
 {% load compress %}
+{% load sekizai_tags %}
 
 
-{% compress css %}
-  <link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
-  <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
-{% endcompress %}
+{% addtoblock "css" %}
+  {% compress css %}
+    <link rel="stylesheet" href="{% static "css/bootstrap-table.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
+  {% endcompress %}
+{% endaddtoblock %}
 
 
 <table id="members-table"></table>
 
 
-{% compress js %}
-  <script defer="defer" src="{% static "js/bootstrap-table-wocat.js" %}"></script>
-  <script defer="defer" src="{% static "js/select2.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table.min.js" %}"></script>
-  <script defer="defer" src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
-{% endcompress %}
-
-{% compress js %}
-  <script defer="defer">
-      window.jsReady = function() {
+{% addtoblock "js" %}
+  {% compress js %}
+    <script src="{% static "js/bootstrap-table-wocat.js" %}"></script>
+    <script src="{% static "js/select2.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-table.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-table-select2-filter.js" %}"></script>
+  {% endcompress %}
+  {% compress js %}
+      <script>
+          $(function() {
           var $table = $('#members-table').bootstrapTable({
               url: "{% url 'user-list' %}?is_active=true",
               // map params to defaults from drf with LimitOffsetPagination
@@ -82,7 +85,7 @@
               ],
               filter: true
           });
-      };
-
-  </script>
-{% endcompress %}
+      });
+      </script>
+  {% endcompress %}
+{% endaddtoblock %}

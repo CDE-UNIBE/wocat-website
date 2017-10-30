@@ -37,7 +37,9 @@ django-autoslug==1.9.3
 # Time zones support
 pytz==2017.2
 
+# static assets
 django-compressor==2.2
+django-sekizai==0.10.0
 
 # Your custom requirements go here
 # CMS
