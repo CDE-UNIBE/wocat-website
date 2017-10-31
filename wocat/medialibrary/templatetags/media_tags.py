@@ -49,3 +49,17 @@ class MediaWidget(InclusionTag):
             }
         else:
             return {}
+
+
+@register.tag
+class MediaGalleryWidget(MediaWidget):
+    """
+    Basically the MediaWidget but with "image_placeholder" passed to the
+    context. Used to display placeholders for media without preview images.
+    """
+    name = 'mediagallery'
+
+    def get_context(self, context, **kwargs):
+        context = super().get_context(context, **kwargs)
+        context['image_placeholder'] = True
+        return context
