@@ -49,3 +49,13 @@ class MediaWidget(InclusionTag):
             }
         else:
             return {}
+
+
+@register.tag
+class MediaGalleryWidget(MediaWidget):
+    """
+    Basically the MediaWidget but with "image_placeholder" passed to the
+    context. Used to display placeholders for media without preview images.
+    """
+    name = 'mediagallery'
+    template = 'widgets/media-gallery-item.html'

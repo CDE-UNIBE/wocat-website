@@ -1,0 +1,23 @@
+{% load i18n media_tags %}
+
+<div class="row cols-sm-3">
+  {% for media in items %}
+    <div class="col">
+      {% mediagallery %}
+    </div>
+  {% empty %}
+    <div class="col"><p>{% trans "No media found." %}</p></div>
+  {% endfor %}
+</div>
+
+{% if is_paginated %}
+  <div class="text-center">
+    <ul class="pagination">
+      {% for page in paginator.page_range %}
+        <li{% ifequal page page_obj.number %} class="active"{% endifequal %}>
+          <a href="#" class="js-search-media-pagination" data-page="{{ page }}">{{ page }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

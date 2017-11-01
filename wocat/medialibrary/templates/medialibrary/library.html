@@ -1,98 +1,160 @@
 {% extends 'base.html' %}
-{% load i18n media_tags %}
+{% load compress i18n media_tags sekizai_tags static %}
 
 {% block content %}
-    <p>
-        <a href="?type=0">
-            <strong>{% trans "all" %}</strong>
-        </a>
-        |
-        {% for type in types %}
-            <a href="?type={{ type.id }}">
-                <i class="fa fa-{{ type.icon }} " aria-hidden="true"></i> {{ type }}
-            </a>
-            {% if not forloop.last %} |{% endif %}
-        {% endfor %}
-    </p>
-    <br>
-    <form>
-        <div class="row">
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <input class="form-control" name="search" placeholder="Search" type="text" value="{{ search }}">
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <select class="form-control" name="language">
-                        <option value="">{% trans 'All languages' %}</option>
-                        {% with current=language %}
-                            {% for language in languages %}
-                                {{ current }} =?= {{ language }}
-                                <option value="{{ language.code }}"
-                                        {% if language.code == current %}selected{% endif %}>{{ language }}</option>
-                            {% endfor %}
-                        {% endwith %}
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <select class="form-control" name="year">
-                        <option value="">{% trans 'All years' %}</option>
-                        {% with current=year %}
-                            {% for year in years %}
-                                <option value="{{ year }}"
-                                        {% if year == current %}selected{% endif %}>{{ year }}</option>
-                            {% endfor %}
-                        {% endwith %}
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <select class="form-control" name="continent">
-                        <option value="">{% trans 'All continents' %}</option>
-                        {% with current=continent %}
-                            {% for continent in continents %}
-                                <option value="{{ continent.id }}"
-                                        {% if continent.pk|stringformat:"i" == current %}selected{% endif %}>{{ continent }}</option>
-                            {% endfor %}
-                        {% endwith %}
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <select class="form-control" name="country">
-                        <option value="">{% trans 'All countries' %}</option>
-                        {% with current=country %}
-                            {% for country in countries %}
-                                <option value="{{ country.code }}"
-                                        {% if country.code == current %}selected{% endif %}>{{ country }}</option>
-                            {% endfor %}
-                        {% endwith %}
-                    </select>
-                </div>
-            </div>
-            {% if type %}
-                <input type="hidden" name="type" value="{{ type }}">
-            {% endif %}
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <button class="btn btn-default btn-block">
-                        apply
-                    </button>
-                </div>
-            </div>
+  <form id="search-media-form">
+    {% csrf_token %}
+    <input type="hidden" name="page" id="media-search-pagination-input">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <input class="form-control" name="search"
+                 placeholder="{% trans 'Search' %}" type="text"
+                 value="{{ request.GET.search }}">
         </div>
-    </form>
-    <br>
-    <div class="row cols-sm-3">
-        {% for media in  items %}
-            <div class="col">
-                {% mediateaser %}
-            </div>
-        {% endfor %}
-    </div><!-- row -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-md-2">
+        <div class="form-group">
+          <select class="form-control" name="type">
+            <option value="">{% trans 'All types' %}</option>
+            {% with current=request.GET.type|add:"0" %}
+              {% for type in types %}
+                <option value="{{ type.id }}"
+                        {% if type.id == current %}selected{% endif %}>{{ type }}</option>
+              {% endfor %}
+            {% endwith %}
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-2">
+        <div class="form-group">
+          <select class="form-control" name="language">
+            <option value="">{% trans 'All languages' %}</option>
+            {% with current=request.GET.language %}
+              {% for language in languages %}
+                <option value="{{ language.code }}"
+                        {% if language.code == current %}selected{% endif %}>{{ language }}</option>
+              {% endfor %}
+            {% endwith %}
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-2">
+        <div class="form-group">
+          <select class="form-control" name="since">
+            <option value="">{% trans 'Since (all years)' %}</option>
+            {% with current=request.GET.since|add:"0" %}
+              {% for year in years %}
+                <option value="{{ year }}"
+                        {% if year == current %}selected{% endif %}>{{ year }}</option>
+              {% endfor %}
+            {% endwith %}
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-2">
+        <div class="form-group">
+          <select class="form-control" name="until">
+            <option value="">{% trans 'Until (all years)' %}</option>
+            {% with current=request.GET.until|add:"0" %}
+              {% for year in years %}
+                <option value="{{ year }}"
+                        {% if year == current %}selected{% endif %}>{{ year }}</option>
+              {% endfor %}
+            {% endwith %}
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-2">
+        <div class="form-group">
+          <select class="form-control" name="continent">
+            <option value="">{% trans 'All continents' %}</option>
+            {% with current=request.GET.continent|add:"0" %}
+              {% for continent in continents %}
+                <option value="{{ continent.id }}"
+                        {% if continent.pk == current %}selected{% endif %}>{{ continent }}</option>
+              {% endfor %}
+            {% endwith %}
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-2">
+        <div class="form-group">
+          <select class="form-control" name="country">
+            <option value="">{% trans 'All countries' %}</option>
+            {% with current=country %}
+              {% for country in countries %}
+                <option value="{{ country.code }}"
+                        {% if country.code == current %}selected{% endif %}>{{ country }}</option>
+              {% endfor %}
+            {% endwith %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  <div id="search-media-results">
+    {% include 'medialibrary/library_items.html' %}
+  </div>
+
+  {% addtoblock "css" %}
+    {% compress css %}
+      <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
+    {% endcompress %}
+  {% endaddtoblock %}
+
+  {% addtoblock "js" %}
+    {% compress js %}
+      <script src="{% static "js/select2.min.js" %}"></script>
+      <script>
+          $(function () {
+              var form = $('#search-media-form');
+              var searchResults = $('#search-media-results');
+              form.find('select').select2().change(submitForm);
+
+              // Delay form submission when typing
+              var timeoutId = 0;
+              form.find('input[type=text]').keyup(function () {
+                  clearTimeout(timeoutId);
+                  timeoutId = setTimeout(submitForm, 500);
+              });
+
+              // Helper to actually submit the form
+              function submitForm() {
+                  searchResults.addClass('loading-mask');
+                  form.submit();
+              }
+
+              // Submit form through AJAX
+              form.submit(function (e) {
+                  $.ajax({
+                      type: "POST",
+                      data: form.serialize(),
+                      success: function (data) {
+                          searchResults.html(data);
+                          // Exclude csrftoken from form data
+                          var formParams = form.find(':input[name!=csrfmiddlewaretoken]').serialize();
+                          // Add params to URL
+                          window.history.pushState('', '', '?' + formParams);
+                          searchResults.removeClass('loading-mask');
+                      }
+                  });
+                  e.preventDefault();
+              });
+
+              // Intercept clicks on pagination links. Store selected page in
+              // form and submit
+              $('body').on('click', '.js-search-media-pagination', function(e) {
+                  e.preventDefault();
+                  $('#media-search-pagination-input').val($(this).data('page'));
+                  submitForm();
+              });
+          });
+      </script>
+    {% endcompress %}
+  {% endaddtoblock %}
+
 {% endblock content %}

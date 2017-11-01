@@ -195,7 +195,8 @@ BASE_BLOCKS += LINK_BLOCKS
 
 
 class TeaserImageBlock(StructBlock):
-    image = ImageChooserBlock(required=False)
+    image = ImageChooserBlock(
+        required=False, help_text='Recommended minimal width: 737px')
     position = ChoiceBlock(
         choices=[
             ('top', _('Top')),
@@ -249,7 +250,8 @@ class TeaserBlock(StructBlock):
 class OverlayTeaserBlock(StructBlock):
     title = blocks.CharBlock()
     content = RichTextBlock(required=False)
-    image = ImageChooserBlock(required=True)
+    image = ImageChooserBlock(
+        required=True, help_text='Recommended minimal width: 737px')
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(required=False)
@@ -549,7 +551,7 @@ BASE_BLOCKS += MAP_BLOCKS
 
 
 class ImageGalleryElementBlock(StructBlock):
-    image = ImageChooserBlock()
+    image = ImageChooserBlock(help_text='Recommended minimal width: 737px')
     page = PageChooserBlock(required=False)
     link = blocks.URLBlock(required=False)
     description = blocks.CharBlock(required=False)
@@ -699,7 +701,8 @@ COLUMNS_BLOCKS = [
 CMS_BLOCKS = BASE_BLOCKS + MAP_BLOCKS + TEASER_BLOCKS + COLUMNS_BLOCKS
 
 IMAGE_BLOCKS = [
-    ('image', ImageBlock()),
+    ('image', ImageBlock(
+        help_text='Recommended minimal resolution: 1800px x 600px')),
 ]
 
 # CAROUSEL_BLOCKS = (

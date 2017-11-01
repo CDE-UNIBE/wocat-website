@@ -1,7 +1,10 @@
+from django.core.handlers.wsgi import WSGIRequest
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import QueryDict
 from django.urls import reverse
 from django.core.validators import MaxValueValidator
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
@@ -21,6 +24,10 @@ from wocat.languages.models import Language
 
 class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
     template = 'medialibrary/library.html'
+    ajax_template = 'medialibrary/library_items.html'
+    ordering = ('title',)
+    paginate_by = 12  # 3 rows with 4 items
+    page_kwarg = 'page'
 
     content = StreamField(
         CORE_BLOCKS,
@@ -42,50 +49,101 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
 
     # subpage_types = ['medialibrary.MediaPage']
 
+    def get_queryset(self):
+        return Media.objects.all().order_by(*self.ordering)
+
+    def paginate_queryset(
+            self, query_dict: QueryDict, queryset: QuerySet, page_size: int)\
+            -> tuple:
+        """
+        Paginate a queryset and return useful objects for pagination in template
+        """
+        paginator = Paginator(queryset, page_size)
+        page = query_dict.get(self.page_kwarg)
+        try:
+            page = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            page = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            page = paginator.page(paginator.num_pages)
+        return paginator, page, page.object_list, page.has_other_pages()
+
+    @staticmethod
+    def filter_queryset(queryset: QuerySet, query_dict: QueryDict) -> QuerySet:
+        """
+        Apply filters based on query parameters to the queryset.
+        """
+        filters = (
+            # query_kwarg, filter_kwarg, cast_to
+            ('type', 'media_type', int),
+            ('language', 'languages__code', str),
+            ('continent', 'continent', int),
+            ('since', 'year__gte', int),
+            ('until', 'year__lte', int),
+            ('country', 'countries__code', str),
+        )
+        for query_kwarg, filter_kwarg, cast_to in filters:
+            filter_param = query_dict.get(query_kwarg)
+            if not filter_param:
+                continue
+            try:
+                filter_param = cast_to(filter_param)
+            except (TypeError, ValueError) as _:
+                filter_param = None
+            if filter_param:
+                filter_query = {filter_kwarg: filter_param}
+                queryset = queryset.filter(**filter_query)
+
+        search = query_dict.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) | Q(abstract__icontains=search) |
+                Q(author__icontains=search) | Q(content__icontains=search))
+
+        return queryset
+
+    @staticmethod
+    def get_available_filters() -> dict:
+        """
+        Get all available filter values.
+        """
+        present_languages = Media.objects.values_list(
+            'languages', flat=True).distinct()
+        present_countries = Media.objects.values_list(
+            'countries', flat=True).distinct()
+        return {
+            'types': MediaType.objects.all(),
+            'languages': Language.objects.filter(pk__in=present_languages),
+            'years': Media.objects.values_list('year', flat=True).distinct(
+                'year').order_by('year'),
+            'continents': Continent.objects.all(),
+            'countries': Country.objects.filter(pk__in=present_countries),
+        }
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
-        context['types'] = MediaType.objects.all()
-        items = Media.objects.all()
-        media_type = request.GET.get('type', request.POST.get('type'))
-        if media_type and media_type != '0':
-            items = items.filter(media_type=media_type)
-            context['type'] = media_type
+        queryset = self.get_queryset()
 
-        search = request.GET.get('search')
-        if search:
-            items = items.filter(
-                Q(title__icontains=search) | Q(abstract__icontains=search) | Q(author__icontains=search) | Q(
-                    content__icontains=search)
-            )
-            context['search'] = search
+        if request.is_ajax():
+            query_dict = request.POST
+        else:
+            query_dict = request.GET
+            context.update(**self.get_available_filters())
 
-        context['years'] = set(Media.objects.values_list('year', flat=True))
-        year = request.GET.get('year')
-        if year:
-            items = items.filter(year=year)
-            context['year'] = int(year)
+        queryset = self.filter_queryset(queryset, query_dict)
+        paginator, page, queryset, is_paginated = self.paginate_queryset(
+            query_dict, queryset, self.paginate_by)
 
-        context['languages'] = Language.objects.all()
-        language = request.GET.get('language')
-        if language:
-            items = items.filter(languages__code=language)
-            context['language'] = language
+        context.update({
+            'paginator': paginator,
+            'page_obj': page,
+            'is_paginated': is_paginated,
+            'items': queryset,
+        })
 
-        context['continents'] = Continent.objects.all()
-        continent = request.GET.get('continent')
-        if continent:
-            items = items.filter(continent=continent)
-            context['continent'] = continent
-
-        countries = Country.objects.all()
-        context['countries'] = countries
-        country = request.GET.get('country')
-        if country:
-            items = items.filter(countries__code=country)
-            context['country'] = country
-
-        context['items'] = items
         return context
 
 
