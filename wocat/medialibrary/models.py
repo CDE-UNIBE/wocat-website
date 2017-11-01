@@ -109,13 +109,17 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
         """
         Get all available filter values.
         """
+        present_languages = Media.objects.values_list(
+            'languages', flat=True).distinct()
+        present_countries = Media.objects.values_list(
+            'countries', flat=True).distinct()
         return {
             'types': MediaType.objects.all(),
-            'languages': Language.objects.all(),
+            'languages': Language.objects.filter(pk__in=present_languages),
             'years': Media.objects.values_list('year', flat=True).distinct(
                 'year').order_by('year'),
             'continents': Continent.objects.all(),
-            'countries': Country.objects.all(),
+            'countries': Country.objects.filter(pk__in=present_countries),
         }
 
     def get_context(self, request, *args, **kwargs):
