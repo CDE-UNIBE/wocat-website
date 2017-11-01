@@ -105,6 +105,7 @@
       <script>
           $(function () {
               var form = $('#search-media-form');
+              var searchResults = $('#search-media-results');
               form.find('select').change(submitForm);
 
               // Delay form submission when typing
@@ -116,6 +117,7 @@
 
               // Helper to actually submit the form
               function submitForm() {
+                  searchResults.addClass('loading-mask');
                   form.submit();
               }
 
@@ -125,11 +127,12 @@
                       type: "POST",
                       data: form.serialize(),
                       success: function (data) {
-                          $('#search-media-results').html(data);
+                          searchResults.html(data);
                           // Exclude csrftoken from form data
                           var formParams = form.find(':input[name!=csrfmiddlewaretoken]').serialize();
                           // Add params to URL
                           window.history.pushState('', '', '?' + formParams);
+                          searchResults.removeClass('loading-mask');
                       }
                   });
                   e.preventDefault();
