@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load compress i18n media_tags sekizai_tags %}
+{% load compress i18n media_tags sekizai_tags static %}
 
 {% block content %}
   <form id="search-media-form">
@@ -100,13 +100,20 @@
     {% include 'medialibrary/library_items.html' %}
   </div>
 
+  {% addtoblock "css" %}
+    {% compress css %}
+      <link rel="stylesheet" href="{% static "css/select2.min.css" %}" />
+    {% endcompress %}
+  {% endaddtoblock %}
+
   {% addtoblock "js" %}
     {% compress js %}
+      <script src="{% static "js/select2.min.js" %}"></script>
       <script>
           $(function () {
               var form = $('#search-media-form');
               var searchResults = $('#search-media-results');
-              form.find('select').change(submitForm);
+              form.find('select').select2().change(submitForm);
 
               // Delay form submission when typing
               var timeoutId = 0;
