@@ -53,13 +53,13 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
         return Media.objects.all().order_by(*self.ordering)
 
     def paginate_queryset(
-            self, request: WSGIRequest, queryset: QuerySet, page_size: int)\
+            self, query_dict: QueryDict, queryset: QuerySet, page_size: int)\
             -> tuple:
         """
         Paginate a queryset and return useful objects for pagination in template
         """
         paginator = Paginator(queryset, page_size)
-        page = request.GET.get(self.page_kwarg)
+        page = query_dict.get(self.page_kwarg)
         try:
             page = paginator.page(page)
         except PageNotAnInteger:
@@ -124,13 +124,14 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
         queryset = self.get_queryset()
 
         if request.is_ajax():
-            queryset = self.filter_queryset(queryset, request.POST)
+            query_dict = request.POST
         else:
-            queryset = self.filter_queryset(queryset, request.GET)
+            query_dict = request.GET
             context.update(**self.get_available_filters())
 
+        queryset = self.filter_queryset(queryset, query_dict)
         paginator, page, queryset, is_paginated = self.paginate_queryset(
-            request, queryset, self.paginate_by)
+            query_dict, queryset, self.paginate_by)
 
         context.update({
             'paginator': paginator,

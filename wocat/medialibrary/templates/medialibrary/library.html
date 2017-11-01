@@ -4,6 +4,7 @@
 {% block content %}
   <form id="search-media-form">
     {% csrf_token %}
+    <input type="hidden" name="page" id="media-search-pagination-input">
     <div class="row">
       <div class="col-sm-12">
         <div class="form-group">
@@ -95,9 +96,9 @@
     </div>
   </form>
   <br>
-  <div class="row cols-sm-3" id="search-media-results">
+  <div id="search-media-results">
     {% include 'medialibrary/library_items.html' %}
-  </div><!-- row -->
+  </div>
 
   {% addtoblock "js" %}
     {% compress js %}
@@ -132,6 +133,14 @@
                       }
                   });
                   e.preventDefault();
+              });
+
+              // Intercept clicks on pagination links. Store selected page in
+              // form and submit
+              $('body').on('click', '.js-search-media-pagination', function(e) {
+                  e.preventDefault();
+                  $('#media-search-pagination-input').val($(this).data('page'));
+                  submitForm();
               });
           });
       </script>
