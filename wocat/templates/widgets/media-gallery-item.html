@@ -1,0 +1,24 @@
+<a href="{{ href }}" class="widget-media-gallery-link">
+  <div class="widget-teaser">
+    <div class="widget-teaser-image-graybox">
+      <div class="widget-teaser-image">
+        {% if imgsrc %}
+          <img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop">
+        {% endif %}
+      </div>
+    </div>
+    <span class="h4 widget-teaser-title widget-media-gallery-title">
+      {{ title }}
+    </span>
+    {% if description %}
+      <p class="widget-teaser-description">
+        {{ description|safe }}
+      </p>
+    {% endif %}
+    {% if author %}
+      <p class="widget-teaser-author">
+        {{ author|safe }}
+      </p>
+    {% endif %}
+  </div>
+</a>

@@ -2,22 +2,14 @@
 {% if map %}
 	{% include "widgets/map.html" with countries=map.countries size=map.size %}
 {% endif %}
-
-{% if imgpos == 'top' and not lines %}
-  {% if imgsrc %}
-    {% if mediastyle %}<div class="widget-teaser-image-graybox">{% endif %}
-    <div class="widget-teaser-image">
-      <a href="{{ href }}"{% if external %} target="_blank"{% endif %}>
-        <img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop{% if imgcircle %} img-circle{% endif %}">
-      </a>
-    </div>
-    {% if mediastyle %}</div>{% endif %}
-  {% elif image_placeholder %}
-    {# No image but placeholder should be displayed #}
-    {% if mediastyle %}<div class="widget-teaser-image-graybox">{% endif %}
-    <div class="widget-teaser-image"></div>
-    {% if mediastyle %}</div>{% endif %}
-  {% endif %}
+{% if imgsrc and imgpos == 'top' and not lines %}
+	{% if mediastyle %}<div class="widget-teaser-image-graybox">{% endif %}
+	<div class="widget-teaser-image">
+    <a href="{{ href }}"{% if external %} target="_blank"{% endif %}>
+      <img src="{{ imgsrc }}" alt="" class="widget-teaser-imgtop{% if imgcircle %} img-circle{% endif %}">
+    </a>
+  </div>
+	{% if mediastyle %}</div>{% endif %}
 {% endif %}
 {% if lines %}
 	{% if title %}

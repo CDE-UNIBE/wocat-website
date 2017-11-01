@@ -58,8 +58,4 @@ class MediaGalleryWidget(MediaWidget):
     context. Used to display placeholders for media without preview images.
     """
     name = 'mediagallery'
-
-    def get_context(self, context, **kwargs):
-        context = super().get_context(context, **kwargs)
-        context['image_placeholder'] = True
-        return context
+    template = 'widgets/media-gallery-item.html'
