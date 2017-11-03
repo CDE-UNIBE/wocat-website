@@ -1,5 +1,6 @@
 from classytags.helpers import InclusionTag
 from django import template
+from django.template.defaultfilters import truncatewords
 from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
@@ -59,3 +60,11 @@ class MediaGalleryWidget(MediaWidget):
     """
     name = 'mediagallery'
     template = 'widgets/media-gallery-item.html'
+
+    def get_context(self, context, **kwargs):
+        context = super().get_context(context, **kwargs)
+
+        if context.get('description'):
+            context['description'] = truncatewords(context['description'], 20)
+
+        return context
