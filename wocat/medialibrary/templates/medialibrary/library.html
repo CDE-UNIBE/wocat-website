@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load compress i18n media_tags sekizai_tags static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <form id="search-media-form">
@@ -8,89 +9,39 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="form-group">
-          <input class="form-control" name="search"
-                 placeholder="{% trans 'Search' %}" type="text"
-                 value="{{ request.GET.search }}">
+          {{ media_filter.form.search|as_crispy_field }}
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4 col-md-2">
         <div class="form-group">
-          <select class="form-control" name="type">
-            <option value="">{% trans 'All types' %}</option>
-            {% with current=request.GET.type|add:"0" %}
-              {% for type in types %}
-                <option value="{{ type.id }}"
-                        {% if type.id == current %}selected{% endif %}>{{ type }}</option>
-              {% endfor %}
-            {% endwith %}
-          </select>
+          {{ media_filter.form.media_type|as_crispy_field }}
         </div>
       </div>
       <div class="col-sm-4 col-md-2">
         <div class="form-group">
-          <select class="form-control" name="language">
-            <option value="">{% trans 'All languages' %}</option>
-            {% with current=request.GET.language %}
-              {% for language in languages %}
-                <option value="{{ language.code }}"
-                        {% if language.code == current %}selected{% endif %}>{{ language }}</option>
-              {% endfor %}
-            {% endwith %}
-          </select>
+          {{ media_filter.form.languages|as_crispy_field }}
         </div>
       </div>
       <div class="col-sm-4 col-md-2">
         <div class="form-group">
-          <select class="form-control" name="since">
-            <option value="">{% trans 'Since (all years)' %}</option>
-            {% with current=request.GET.since|add:"0" %}
-              {% for year in years %}
-                <option value="{{ year }}"
-                        {% if year == current %}selected{% endif %}>{{ year }}</option>
-              {% endfor %}
-            {% endwith %}
-          </select>
+          {{ media_filter.form.year__gte|as_crispy_field }}
         </div>
       </div>
       <div class="col-sm-4 col-md-2">
         <div class="form-group">
-          <select class="form-control" name="until">
-            <option value="">{% trans 'Until (all years)' %}</option>
-            {% with current=request.GET.until|add:"0" %}
-              {% for year in years %}
-                <option value="{{ year }}"
-                        {% if year == current %}selected{% endif %}>{{ year }}</option>
-              {% endfor %}
-            {% endwith %}
-          </select>
+          {{ media_filter.form.year__lte|as_crispy_field }}
         </div>
       </div>
       <div class="col-sm-4 col-md-2">
         <div class="form-group">
-          <select class="form-control" name="continent">
-            <option value="">{% trans 'All continents' %}</option>
-            {% with current=request.GET.continent|add:"0" %}
-              {% for continent in continents %}
-                <option value="{{ continent.id }}"
-                        {% if continent.pk == current %}selected{% endif %}>{{ continent }}</option>
-              {% endfor %}
-            {% endwith %}
-          </select>
+          {{ media_filter.form.continent|as_crispy_field }}
         </div>
       </div>
       <div class="col-sm-4 col-md-2">
         <div class="form-group">
-          <select class="form-control" name="country">
-            <option value="">{% trans 'All countries' %}</option>
-            {% with current=country %}
-              {% for country in countries %}
-                <option value="{{ country.code }}"
-                        {% if country.code == current %}selected{% endif %}>{{ country }}</option>
-              {% endfor %}
-            {% endwith %}
-          </select>
+          {{ media_filter.form.countries|as_crispy_field }}
         </div>
       </div>
     </div>

@@ -50,7 +50,7 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
     # subpage_types = ['medialibrary.MediaPage']
 
     def get_queryset(self):
-        return Media.objects.all().order_by(*self.ordering)
+        return Media.objects.all()
 
     def paginate_queryset(
             self, query_dict: QueryDict, queryset: QuerySet, page_size: int)\
@@ -70,74 +70,24 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
             page = paginator.page(paginator.num_pages)
         return paginator, page, page.object_list, page.has_other_pages()
 
-    @staticmethod
-    def filter_queryset(queryset: QuerySet, query_dict: QueryDict) -> QuerySet:
-        """
-        Apply filters based on query parameters to the queryset.
-        """
-        filters = (
-            # query_kwarg, filter_kwarg, cast_to
-            ('type', 'media_type', int),
-            ('language', 'languages__code', str),
-            ('continent', 'continent', int),
-            ('since', 'year__gte', int),
-            ('until', 'year__lte', int),
-            ('country', 'countries__code', str),
-        )
-        for query_kwarg, filter_kwarg, cast_to in filters:
-            filter_param = query_dict.get(query_kwarg)
-            if not filter_param:
-                continue
-            try:
-                filter_param = cast_to(filter_param)
-            except (TypeError, ValueError) as _:
-                filter_param = None
-            if filter_param:
-                filter_query = {filter_kwarg: filter_param}
-                queryset = queryset.filter(**filter_query)
-
-        search = query_dict.get('search')
-        if search:
-            queryset = queryset.filter(
-                Q(title__icontains=search) | Q(abstract__icontains=search) |
-                Q(author__icontains=search) | Q(content__icontains=search))
-
-        return queryset
-
-    @staticmethod
-    def get_available_filters() -> dict:
-        """
-        Get all available filter values.
-        """
-        present_languages = Media.objects.values_list(
-            'languages', flat=True).distinct()
-        present_countries = Media.objects.values_list(
-            'countries', flat=True).distinct()
-        return {
-            'types': MediaType.objects.all(),
-            'languages': Language.objects.filter(pk__in=present_languages),
-            'years': Media.objects.values_list('year', flat=True).distinct(
-                'year').order_by('year'),
-            'continents': Continent.objects.all(),
-            'countries': Country.objects.filter(pk__in=present_countries),
-        }
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-
-        queryset = self.get_queryset()
 
         if request.is_ajax():
             query_dict = request.POST
         else:
             query_dict = request.GET
-            context.update(**self.get_available_filters())
 
-        queryset = self.filter_queryset(queryset, query_dict)
+        from wocat.medialibrary.filters import MediaLibraryFilter
+        media_filter = MediaLibraryFilter(
+            query_dict, queryset=self.get_queryset())
+
         paginator, page, queryset, is_paginated = self.paginate_queryset(
-            query_dict, queryset, self.paginate_by)
+            query_dict, media_filter.qs.order_by(*self.ordering),
+            self.paginate_by)
 
         context.update({
+            'media_filter': media_filter,
             'paginator': paginator,
             'page_obj': page,
             'is_paginated': is_paginated,
