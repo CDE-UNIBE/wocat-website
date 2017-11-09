@@ -56,3 +56,12 @@ function drfQueryParams(params) {
     }
     return params
 }
+
+/*
+ Change 'button' to remove selected option from 'x' to a trash icon.
+ */
+$('.ajax-table').on('change', '.select2-hidden-accessible', function (e) {
+    var clearElement = $('.select2-selection__clear');
+    clearElement.addClass('glyphicon glyphicon-trash glyphicon-small');
+    clearElement.text('');
+});

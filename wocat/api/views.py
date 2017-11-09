@@ -38,7 +38,8 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter,)
     filter_fields = ('country', 'institution', 'experiences', 'is_active', )
     search_fields = (
-        'country__name', 'first_name', 'last_name',
+        'first_name', 'last_name', 'country__name', 'experiences__name',
+        'institution__name',
     )
     ordering_fields = '__all__'
 
@@ -109,8 +110,7 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter, )
     filter_fields = ('memorandum', 'country', )
     search_fields = (
-        'country__name', 'name', 'abbreviation', 'contact_person__first_name',
-        'contact_person__last_name',
+        'country__name', 'name', 'abbreviation',
     )
     ordering_fields = '__all__'
 
