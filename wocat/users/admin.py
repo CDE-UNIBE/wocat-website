@@ -8,6 +8,7 @@ from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.translation import ugettext_lazy as _
 
+from wocat.newsletter.client import newsletter_client
 from .models import User
 
 
@@ -86,8 +87,15 @@ class UserChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
+def update_newsletter(modeladmin, request, queryset):
+    for user in User.objects.all():
+        newsletter_client.update_member(user=user)
+update_newsletter.short_description = _('Update all data on MailChimp (this will take a while)')
+
+
 @admin.register(User)
 class UserAdmin(AuthUserAdmin):
+    actions = [update_newsletter]
     form = UserChangeForm
     add_form = UserCreationForm
 
