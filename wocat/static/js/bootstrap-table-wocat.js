@@ -14,6 +14,10 @@ function nameFormatter(value, row) {
     }
 }
 
+function memberNameFormatter(value, row) {
+    return '<a href="' + row.url + '">' + value + '</a>'
+}
+
 function functionFormatter(value, row) {
     if (row.institution_url !== "") {
         var institution = '<a href="' + row.institution_url + '" target="_blank">' + row.institution_name + '</a>'

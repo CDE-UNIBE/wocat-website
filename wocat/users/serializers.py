@@ -13,6 +13,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     institution_name = serializers.SerializerMethodField()
     institution_url = serializers.SerializerMethodField()
     key_work_topics = serializers.StringRelatedField(many=True)
+    url = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -22,7 +23,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'fax', 'fax_2', 'first_name', 'full_name', 'function', 'gender',
             'institution', 'institution_name', 'institution_url', 'is_active',
             'key_work_topics', 'language', 'last_name', 'newsletter', 'phone',
-            'phone_2', 'pk', 'position', 'postal_code', 'second_email', 'title'
+            'phone_2', 'pk', 'position', 'postal_code', 'second_email', 'title',
+            'url'
         ]
 
     def get_full_name(self, obj):
@@ -39,3 +41,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_institution_url(self, obj):
         return obj.institution.url if obj.institution else ''
+
+    def get_url(self, obj):
+        return obj.get_absolute_url()

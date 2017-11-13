@@ -15,7 +15,7 @@
 {% if request.user.is_authenticated %}
   <table id="members-table" class="ajax-table"></table>
 {% else %}
-  <p>{% trans "Member list is only visible for registered users." %}</p>
+  <p>{% trans "This information is available for registered users only." %}</p>
 {% endif %}
 
 
@@ -50,6 +50,7 @@
                       field: "full_name",
                       title: "{% trans "Name" %}",
                       sortable: true,
+                      formatter: "memberNameFormatter",
                       width: "20%"
                   },
                   {

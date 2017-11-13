@@ -44,10 +44,11 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['users_teaser'] = users_teaser
 
         qcat_teaser_data = {
-            'href': 'https://qcat.wocat.net/en/accounts/user/{0}/'.format(user.id),
+            'href': 'https://qcat.wocat.net/en/accounts/user/{0}/'.format(self.object.id),
             'external': False,
-            'title': _('My SLM Data'),
-            'description': _('Go to the Global SLM Database and see your own SLM Practices.'),
+            'title': _('SLM Data'),
+            'description': _('Go to the Global SLM Database and see SLM '
+                             'Practices from {}.'.format(self.object.name)),
             'readmorelink': {'text': _('Go to the SLM Database')},
             'imgsrc': '',
             'imgpos': '',
