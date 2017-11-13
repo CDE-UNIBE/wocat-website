@@ -12,7 +12,11 @@
 {% endaddtoblock %}
 
 
-<table id="members-table" class="ajax-table"></table>
+{% if request.user.is_authenticated %}
+  <table id="members-table" class="ajax-table"></table>
+{% else %}
+  <p>{% trans "Member list is only visible for registered users." %}</p>
+{% endif %}
 
 
 {% addtoblock "js" %}

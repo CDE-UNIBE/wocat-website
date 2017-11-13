@@ -50,6 +50,12 @@ function drfQueryParams(params) {
         /*
          Change keyword and use '-' for descending sort.
          */
+        var sortFieldMapping = {
+            'full_name': 'last_name'
+        };
+        Object.keys(sortFieldMapping).forEach(function (key) {
+            params.sort = params.sort.replace(key, sortFieldMapping[key]);
+        });
         params['ordering'] = (params.order === 'desc') ? '-' : '';
         params['ordering'] += params.sort;
         delete params['sort'];
@@ -57,11 +63,3 @@ function drfQueryParams(params) {
     return params
 }
 
-/*
- Change 'button' to remove selected option from 'x' to a trash icon.
- */
-$('.ajax-table').on('change', '.select2-hidden-accessible', function (e) {
-    var clearElement = $('.select2-selection__clear');
-    clearElement.addClass('glyphicon glyphicon-trash glyphicon-small');
-    clearElement.text('');
-});
