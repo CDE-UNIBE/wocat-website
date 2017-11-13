@@ -1,3 +1,4 @@
+import logging
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -7,6 +8,8 @@ from mailchimp3.helpers import get_subscriber_hash
 import requests
 
 from wocat.users.models import User
+
+logger = logging.getLogger('mailchimp_client')
 
 
 class NewsletterClient:
@@ -51,7 +54,7 @@ class NewsletterClient:
         """
         Update a single users data. 
         """
-        self.client.lists.members.create_or_update(
+        response = self.client.lists.members.create_or_update(
             list_id=self.list_id,
             subscriber_hash=get_subscriber_hash(member_email=user.email),
             data={
@@ -64,5 +67,6 @@ class NewsletterClient:
                 }
             }
         )
+        logger.info(response)
 
 newsletter_client = NewsletterClient()
