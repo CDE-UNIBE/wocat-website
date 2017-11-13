@@ -358,6 +358,7 @@ REST_FRAMEWORK = {
 
 # NEWSLETTER
 # ------------------------------------------------------------------------------
+NEWSLETTER_USERNAME = env('NEWSLETTER_USERNAME', default='')
 NEWSLETTER_API_KEY=env('NEWSLETTER_API_KEY', default='')
 NEWSLETTER_LIST_ID=env('NEWSLETTER_LIST_ID', default='')
 FILTERS_DISABLE_HELP_TEXT = True
