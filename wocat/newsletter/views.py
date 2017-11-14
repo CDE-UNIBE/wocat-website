@@ -12,7 +12,14 @@ User = get_user_model()
 
 
 class NewsletterUnsubscribeView(View):
-    http_method_names = ['post']
+    http_method_names = ['get', 'post']
+
+    def get(self, request, *args, **kwargs):
+        """
+        Empty response, so GET returns '200 success', which is required for the 
+        'add webhook' form.
+        """
+        return HttpResponse()
 
     def post(self, request, *args, **kwargs):
         action_type = request.POST.get('type')
