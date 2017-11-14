@@ -27,12 +27,12 @@ class NewsletterUnsubscribeView(View):
         """
         Very crude, but allow only MailChimp here. 
         """
-        request_host = request.META.get('HTTP_HOST', '').lower()
-        if request_host == 'mailchimp.com':
+        user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+        if user_agent == 'mailchimp.com':
             return super().dispatch(request, *args, **kwargs)
         else:
-            logger.error('Invalid host tried to access the Newsletter '
-                           'unsubscribe hook: {}'.format(request_host))
+            logger.warning('Invalid user to access the Newsletter '
+                        'unsubscribe hook: {}'.format(user_agent))
             raise Http404()
 
     def get(self, request, *args, **kwargs):
