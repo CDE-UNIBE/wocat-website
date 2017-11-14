@@ -17,9 +17,6 @@ class NewsletterClient:
     Wrapper around the mailchimp client.
     """
     list_id = settings.NEWSLETTER_LIST_ID
-    # http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#edit-put_lists_list_id_members_subscriber_hash
-    # subscribed, unsubscribed, cleaned, pending, transactional
-    default_new_status = 'subscribed'
 
     @property
     def client(self):
@@ -54,13 +51,14 @@ class NewsletterClient:
         """
         Update a single users data. 
         """
+        subscription_status = self.get_status(user=user)
         response = self.client.lists.members.create_or_update(
             list_id=self.list_id,
             subscriber_hash=get_subscriber_hash(member_email=user.email),
             data={
                 'email_address': user.email,
-                'status': self.get_status(user=user),
-                'status_if_new': self.default_new_status,
+                'status': subscription_status,
+                'status_if_new': subscription_status,
                 'merge_fields': {
                     'FNAME': user.first_name,
                     'LNAME': user.last_name,
@@ -68,5 +66,13 @@ class NewsletterClient:
             }
         )
         logger.info(response)
+
+    def update_all(self):
+        """
+        Iterate over all users and update them. 
+        """
+        users = User.objects.all()
+        for user in users.iterator():
+            self.update_member(user=user)
 
 newsletter_client = NewsletterClient()
