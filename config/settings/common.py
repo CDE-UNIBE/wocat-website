@@ -358,6 +358,7 @@ REST_FRAMEWORK = {
 
 # NEWSLETTER
 # ------------------------------------------------------------------------------
+NEWSLETTER_USERNAME = env('NEWSLETTER_USERNAME', default='')
 NEWSLETTER_API_KEY=env('NEWSLETTER_API_KEY', default='')
 NEWSLETTER_LIST_ID=env('NEWSLETTER_LIST_ID', default='')
 FILTERS_DISABLE_HELP_TEXT = True
@@ -371,3 +372,39 @@ GOOGLE_WEBMASTER_TOOLS_KEY = env('GOOGLE_WEBMASTER_TOOLS_KEY', default='')
 # Filename of js-file with geojson for all countries; used for the map. Relative
 # to wocat/static/js
 MAP_GEOJSON_FILE = env('MAP_GEOJSON_FILE', default='countries-20170619.geo.json')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django.log',
+            'formatter': 'verbose'
+        },
+        'mailchimp': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/mailchimp.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'propagate': True,
+            'level': 'WARNING',
+        },
+        'mailchimp_client': {
+            'handlers': ['mailchimp'],
+            'propagate': True,
+            'level': 'INFO'
+        }
+    },
+}

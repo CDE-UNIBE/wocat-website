@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.contrib.auth.decorators import permission_required
+from django.http import Http404, HttpResponse
 from django.urls import reverse
 from django.template.loader import render_to_string
+from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
 from allauth.account.views import PasswordResetView
 
+from wocat.newsletter.client import newsletter_client
 from wocat.users.forms import UserForm
 from .models import User
 
@@ -91,3 +96,21 @@ class ReactivateAccountView(PasswordResetView):
 
     """
     template_name = 'account/reactivate_account.html'
+
+
+class MailChimpUpdateView(View):
+    """
+    Ajax-View for the user-admin, updating all data on MailChimp.
+    """
+
+    @method_decorator(permission_required('users.can_update_mailchimp'))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            raise Http404()
+
+        newsletter_client.update_all()
+
+        return HttpResponse()

@@ -2,4 +2,7 @@ from django.apps import AppConfig
 
 
 class NewsletterConfig(AppConfig):
-    name = 'newsletter'
+    name = 'wocat.newsletter'
+
+    def ready(self):
+        from . import signals  # noqa

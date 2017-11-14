@@ -33,4 +33,10 @@ urlpatterns = [
         view=views.UserDetailView.as_view(),
         name='detail'
     ),
+
+    url(
+        regex=r'^mailchimp-update/$',
+        view=views.MailChimpUpdateView.as_view(),
+        name='mailchimp-update'
+    ),
 ]
