@@ -32,7 +32,7 @@ class NewsletterUnsubscribeView(View):
             return super().dispatch(request, *args, **kwargs)
         else:
             logger.warning('Invalid user to access the Newsletter '
-                        'unsubscribe hook: {}'.format(user_agent))
+                           'unsubscribe hook: {}'.format(user_agent))
             raise Http404()
 
     def get(self, request, *args, **kwargs):
