@@ -1,4 +1,5 @@
 import logging
+from unittest.mock import Mock
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -23,11 +24,14 @@ class NewsletterClient:
         """
         Get the MailChimp client 
         """
-        return MailChimp(
-            mc_user=settings.NEWSLETTER_USERNAME,
-            mc_secret=settings.NEWSLETTER_API_KEY,
-            request_headers=self.headers
-        )
+        if settings.NEWSLETTER_IS_ACTIVE_SYNC:
+            return MailChimp(
+                mc_user=settings.NEWSLETTER_USERNAME,
+                mc_secret=settings.NEWSLETTER_API_KEY,
+                request_headers=self.headers
+            )
+        else:
+            return Mock()
 
     @property
     def headers(self):
