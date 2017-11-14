@@ -1,18 +1,39 @@
+import logging
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.models import Group
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.http import HttpResponseNotFound
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.views.generic import TemplateView
 
 from .filters import UserFilter
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
 
 
 class NewsletterUnsubscribeView(View):
+    """
+    Unsubscribe webhook for MailChimp.
+    """
     http_method_names = ['get', 'post']
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Very crude, but allow only MailChimp here. 
+        """
+        request_host = request.META.get('HTTP_HOST', '').lower()
+        if request_host == 'mailchimp.com':
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            logger.error('Invalid host tried to access the Newsletter '
+                           'unsubscribe hook: {}'.format(request_host))
+            raise Http404()
 
     def get(self, request, *args, **kwargs):
         """
