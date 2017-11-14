@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load sekizai_tags %}
+
 
 {% block css %}
 {{ block.super }}
@@ -57,10 +60,9 @@
     {% endif %}
 {% endblock %}
 
-{% block javascript %}
-    {{ block.super }}
+{% addtoblock 'js' %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
     <script>
         new Clipboard('.copy-btn');
     </script>
-{% endblock %}
+{% endaddtoblock %}
