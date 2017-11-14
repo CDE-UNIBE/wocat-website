@@ -1,5 +1,5 @@
 import logging
-from unittest.mock import Mock
+import functools
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -13,6 +13,17 @@ from wocat.users.models import User
 logger = logging.getLogger('mailchimp_client')
 
 
+def active_sync_only(func):
+    """
+    Wrapper to only execute calls to the API only if syncing is allowed.
+    """
+    @functools.wraps(func)
+    def wrapper(self, *args, **kwargs):
+        if settings.NEWSLETTER_IS_ACTIVE_SYNC:
+            func(self, *args, **kwargs)
+    return wrapper
+
+
 class NewsletterClient:
     """
     Wrapper around the mailchimp client.
@@ -20,21 +31,18 @@ class NewsletterClient:
     list_id = settings.NEWSLETTER_LIST_ID
 
     @property
-    def client(self):
+    def client(self) -> MailChimp:
         """
         Get the MailChimp client 
         """
-        if settings.NEWSLETTER_IS_ACTIVE_SYNC:
-            return MailChimp(
-                mc_user=settings.NEWSLETTER_USERNAME,
-                mc_secret=settings.NEWSLETTER_API_KEY,
-                request_headers=self.headers
-            )
-        else:
-            return Mock()
+        return MailChimp(
+            mc_user=settings.NEWSLETTER_USERNAME,
+            mc_secret=settings.NEWSLETTER_API_KEY,
+            request_headers=self.headers
+        )
 
     @property
-    def headers(self):
+    def headers(self) -> requests.structures.CaseInsensitiveDict:
         """
         MailChimp recommends to add a User-Agent. 
         """
@@ -51,32 +59,52 @@ class NewsletterClient:
             has_valid_email = False
         return 'subscribed' if is_subscribed and has_valid_email else 'unsubscribed'
 
+    @active_sync_only
     def update_member(self, user: User) -> None:
         """
         Update a single users data. 
         """
         subscription_status = self.get_status(user=user)
-        response = self.client.lists.members.create_or_update(
-            list_id=self.list_id,
-            subscriber_hash=get_subscriber_hash(member_email=user.email),
-            data={
-                'email_address': user.email,
-                'status': subscription_status,
-                'status_if_new': subscription_status,
-                'merge_fields': {
-                    'FNAME': user.first_name,
-                    'LNAME': user.last_name,
+        try:
+            response = self.client.lists.members.create_or_update(
+                list_id=self.list_id,
+                subscriber_hash=get_subscriber_hash(member_email=user.email),
+                data={
+                    'email_address': user.email,
+                    'status': subscription_status,
+                    'status_if_new': subscription_status,
+                    'merge_fields': {
+                        'FNAME': user.first_name,
+                        'LNAME': user.last_name,
+                    }
                 }
-            }
-        )
-        logger.info(response)
+            )
+            logger.info(response)
 
-    def update_all(self):
+        except requests.HTTPError:
+            # This usually means that the person has unsubscribed via MailChimp.
+            # If this is the case, unsubscribe the user.
+            if not self.is_active_member(user=user):
+                user.unsubscribe()
+            else:
+                raise
+
+    @active_sync_only
+    def is_active_member(self, user: User) -> bool:
+        response = self.client.lists.members.get(
+            list_id=self.list_id,
+            subscriber_hash=get_subscriber_hash(member_email=user.email)
+        )
+        return response.get('status', '') == 'subscribed'
+
+    @active_sync_only
+    def update_all(self) -> None:
         """
         Iterate over all users and update them. 
         """
         users = User.objects.all()
         for user in users.iterator():
             self.update_member(user=user)
+
 
 newsletter_client = NewsletterClient()
