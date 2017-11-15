@@ -1,5 +1,5 @@
 WOCAT
-==============================
+=====
 
 World Overview of Conservation Approaches and Technologies
 
@@ -32,7 +32,6 @@ Requirements
 
 * Python >= 3.0
 * Elasticsearch/Tika
-* CAS
 
 Installation
 ------------
@@ -117,7 +116,7 @@ Import users to list
 
 There is a newsletter management interface to create a filtered list of users, that can be pasted into the mailchimp list.
 
-1. Go to https://example.com/newsletter/management/
+1. Go to https://www.wocat.net/newsletter/management/
 2. Select filters and copy output to clipboard
 3. Go to mailchimp list, under „Add contacts“ select „Import contacts“
 4. Select „Copy/paste from file“ and paste from clipboard
@@ -132,7 +131,7 @@ http://kb.mailchimp.com/integrations/api-integrations/how-to-set-up-webhooks
 
 1. Go to mailchimp list
 2. Under „Settings“ select „Webhooks“
-3. Select „Create new webhook“ and paste URL: https://example.com/newsletter/unsubscribe/
+3. Select „Create new webhook“ and paste URL: https://www.wocat.net/newsletter/unsubscribe/
 4. Select only the checkbox for „Unsubscribes“ and save
 
 Elasticsearch
