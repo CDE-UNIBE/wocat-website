@@ -20,7 +20,8 @@ build:
     - cp env.example .env
     - pip install --upgrade pip
     - pip install -r requirements/local.txt
-    - py.test
+    - mkdir -p shippable/testresults
+    - py.test --junitxml=shippable/testresults/nosetests.xml
 
   on_success:
     - pip install Fabric3
