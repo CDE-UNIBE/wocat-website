@@ -1,16 +1,12 @@
-<div class="widget-toc">
-    {% if title and headings %}
-        {% if title %}
-            <h4>{{ title }}</h4>
-        {% endif %}
-        {% for heading in headings %}
-            {% if section %}
-                {% include 'widgets/heading4.html' with text=heading.text href=heading.href %}
-            {% else %}
-                {% include 'widgets/heading2.html' with text=heading.text href=heading.href %}
-            {% endif %}
-        {% endfor %}
-        {#        {% include 'widgets/sidebar.html' with links=headings %}#}
-        <br>
+{% if title and headings %}
+  <div class="widget-toc">
+    {% if title %}
+      <h4>{{ title }}</h4>
     {% endif %}
-</div>
+    <ul>
+      {% for heading in headings %}
+        <li><a href="{{ heading.href }}">{{ heading.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

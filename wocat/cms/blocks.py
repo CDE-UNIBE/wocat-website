@@ -328,12 +328,16 @@ class OverlayTeaserMapBlock(StructBlock):
 
 
 class TocBlock(StructBlock):
-    title = blocks.CharBlock(default=_('Table of contents'), required=False)
+    title = blocks.CharBlock(
+        default=_('Table of contents'), required=False,
+        help_text=_('A label is required'))
 
     class Meta:
         icon = 'fa fa-list'
         label = _('Table of contents')
         template = 'cms/toc.html'
+        help_text = _('All "Heading" elements (of all columns) will be used '
+                      'to generate the Table of contents.')
 
     #def render_form(self, value, prefix='', errors=None):
     #    form = super().render_form(value, prefix, errors)
