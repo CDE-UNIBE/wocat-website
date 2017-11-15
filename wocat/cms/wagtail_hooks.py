@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.urls import reverse
 from django.utils.html import format_html_join
 from wagtail.wagtailcore import hooks
 
@@ -57,8 +58,8 @@ class DjangoAdminMenuItem:
     @staticmethod
     def render_html(request):
         output = '''<li class="menu-item">
-                        <a href="/{0}" class="fa fa-database" target="_blank">Admin</a>
-                    </li>'''.format(settings.ADMIN_URL)
+                        <a href="{0}" class="fa fa-database" target="_blank">Admin</a>
+                    </li>'''.format(reverse('admin:index'))
         return output
 
 
