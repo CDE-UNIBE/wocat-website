@@ -43,9 +43,9 @@
   <div class="results">
     <h1>{% trans "Newsletter / MailChimp" %}</h1>
     <div>
-      <button class="btn" href="?is_active__exact=1&newsletter__exact=1">
-        {% trans "Show only users with an active subscription" %}
-      </button>
+      <a href="?is_active__exact=1&newsletter__exact=1">
+        <button class="btn" >{% trans "Show only users with an active subscription" %}</button>
+      </a>
 
       {% if perms.users.can_update_mailchimp %}
         <button class="btn btn-warning js-update-mailchimp" data-href="{% url 'users:mailchimp-update' %}">
