@@ -126,7 +126,7 @@ class Header(InclusionTag):
         project_page = self.get_project_page(page)
         nodes = self.get_nodes(context, root_page=project_page) + self.get_language_and_search_context()
         request = context.get('request')
-        if request:
+        if request and hasattr(request, 'user'):
             user = request.user
         else:
             user = None
