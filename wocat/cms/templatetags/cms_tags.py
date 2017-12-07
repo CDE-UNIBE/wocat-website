@@ -33,7 +33,7 @@ def get_social_links(context, onlyxs=False):
     links = []
     settings = None
     request = context.get('request')
-    if request:
+    if request and hasattr(request, 'site'):
         settings = TopNavigationSettings.for_site(request.site)
     if settings:
         for link in settings.social_media_links.all():
@@ -49,7 +49,7 @@ def get_extra_links(context, onlyxs=False):
     links = []
     settings = None
     request = context.get('request')
-    if request:
+    if request and hasattr(request, 'site'):
         settings = TopNavigationSettings.for_site(request.site)
     if settings:
         for link in settings.top_navigation_links.all():
@@ -189,7 +189,7 @@ class Footer(InclusionTag):
 
     def get_context(self, context, **kwargs):
         request = context.get('request')
-        if request:
+        if request and hasattr(request, 'user'):
             user = request.user
         else:
             user = None
@@ -207,7 +207,7 @@ class Footer(InclusionTag):
     def get_settings(self, context):
         if context:
             request = context.get('request')
-            if request:
+            if request and hasattr(request, 'site'):
                 settings = FooterSettings.for_site(request.site)
                 if settings:
                     return settings
