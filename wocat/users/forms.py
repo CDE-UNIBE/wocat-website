@@ -53,7 +53,7 @@ class UserForm(forms.ModelForm):
                 if key in fields_required:
                     self.fields[key].required = True
                 if key == 'institution':
-                    email_link = '(email link)'
+                    email_link = '(<a href="mailto:wocat@cde.unibe.ch">wocat@cde.unibe.ch</a>)'
                     self.fields[
                         key].help_text = '*If your Institution is missing, please contact the WOCAT Secretariat {link}'.format(
                         link=email_link)

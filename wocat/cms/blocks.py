@@ -650,7 +650,7 @@ BASE_BLOCKS += SUBPAGEBLOCKS
 
 class ColumnsBlock(StructBlock):
     left_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
-    right_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS)
+    right_column = StreamBlock(BASE_BLOCKS + CONTACT_PERSON_TEASER_BLOCKS, required=False)
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)

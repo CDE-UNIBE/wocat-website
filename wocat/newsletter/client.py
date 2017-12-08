@@ -4,6 +4,7 @@ import functools
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.db.models.signals import post_save
 from mailchimp3 import MailChimp
 from mailchimp3.helpers import get_subscriber_hash
 import requests
@@ -83,18 +84,26 @@ class NewsletterClient:
 
         except requests.HTTPError:
             # This usually means that the person has unsubscribed via MailChimp.
-            # If this is the case, unsubscribe the user.
+            # If this is the case, unsubscribe the user - and don't submit this
+            # to the API via signal!
             if not self.is_active_member(user=user):
+                from .signals import update_newsletter_subscription
+                post_save.disconnect(update_newsletter_subscription, sender=User)
                 user.unsubscribe()
-            else:
-                raise
+                post_save.connect(update_newsletter_subscription, sender=User)
+
 
     @active_sync_only
     def is_active_member(self, user: User) -> bool:
-        response = self.client.lists.members.get(
-            list_id=self.list_id,
-            subscriber_hash=get_subscriber_hash(member_email=user.email)
-        )
+        try:
+            response = self.client.lists.members.get(
+                list_id=self.list_id,
+                subscriber_hash=get_subscriber_hash(member_email=user.email)
+            )
+        except requests.HTTPError:
+            # Invalid request -> the user doesn't exist on MailChimp and
+            # therefore is not subscribed.
+            return False
         return response.get('status', '') == 'subscribed'
 
     @active_sync_only
