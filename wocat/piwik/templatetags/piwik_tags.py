@@ -17,6 +17,6 @@ class Piwik(InclusionTag):
         }
 
     def get_user_id(self, context):
-        if hasattr(context, 'request') and context.request.user.is_authenticated:
+        if hasattr(context, 'request') and hasattr(context.request, 'user') and context.request.user.is_authenticated:
             return context.request.user.id
         return ''
