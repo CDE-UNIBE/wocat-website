@@ -1,0 +1,10 @@
+{% load i18n %}
+
+{% if translation_links %}
+  <div class="widget-content-language-switcher">
+    {% trans "This page is also available in: " %}
+    {% for language, translation_url in translation_links %}
+      <a href="{{ translation_url }}">{{ language }}</a>{% if not forloop.last %} | {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}

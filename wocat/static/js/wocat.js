@@ -4,6 +4,16 @@ $(function() {
 });
 
 $(function() {
+	$('.js-language-switcher').on('click', function(e) {
+		e.preventDefault();
+		var lang = $(this).data('language');
+		var form = $(this).closest('ul.dropdown-menu').find('form');
+		form.find('input[name="language"]').val(lang);
+		form.submit();
+	});
+});
+
+$(function() {
 	// Members Table
 	$('.widget-members-table').each(function() {
 		var membersTable = $(this);

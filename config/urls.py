@@ -44,7 +44,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),
 
-    url(r'^language/(?P<language>[^/]+)/$', SwitchLanguageView.as_view(), name='switch-language'),
+    url(r'^i18n/$', SwitchLanguageView.as_view(), name='set_language'),
 ]
 # Static files
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

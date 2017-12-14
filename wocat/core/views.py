@@ -1,27 +1,109 @@
-from django.conf import settings
-from django.contrib import messages
-from django.shortcuts import redirect
+from urllib.parse import urlparse
 
-# Create your views here.
-from django.utils.translation import LANGUAGE_SESSION_KEY
+from django.conf import settings
+from django.core.handlers.wsgi import WSGIRequest
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.utils.translation import LANGUAGE_SESSION_KEY, check_for_language, \
+    get_language
 from django.views.generic import RedirectView
+from wagtail.wagtailcore.models import Page
 
 
 class SwitchLanguageView(RedirectView):
+    """
+    POST to this view to switch the language. Tries to find page content in the
+    new language and shows it or falls back to content in default language if no
+    translation available.
+    """
     permanent = False
+    original_lang_code = 'en'
 
-    def get(self, request, *args, **kwargs):
-        language = kwargs.pop('language', None)
+    @staticmethod
+    def rreplace(s: str, old: str, new: str, occurrence: int) -> str:
+        """Helper function to replace a string from the end."""
+        li = s.rsplit(old, occurrence)
+        return new.join(li)
 
-        if not language or language not in dict(settings.LANGUAGES).keys():
-            messages.error(request, _('The language "%s" is not supported' % language))
+    @staticmethod
+    def set_language(
+            request: WSGIRequest, response: HttpResponse, lang_code: str):
+        """Set the language as session or cookie."""
+        if hasattr(request, 'session'):
+            request.session[LANGUAGE_SESSION_KEY] = lang_code
         else:
-            request.session[LANGUAGE_SESSION_KEY] = language
-            request.session['django_language'] = language
-            request.LANGUAGE_CODE = language
-        # messages.success(request, _('Language was switched successfully.'))
+            response.set_cookie(
+                settings.LANGUAGE_COOKIE_NAME, lang_code,
+                max_age=settings.LANGUAGE_COOKIE_AGE,
+                path=settings.LANGUAGE_COOKIE_PATH,
+                domain=settings.LANGUAGE_COOKIE_DOMAIN,
+            )
 
-        return super().get(request, *args, **kwargs)
+    @staticmethod
+    def get_translation_or_page(page: Page, lang_code: str) -> Page:
+        """Return the translation of a Page if available or the Page itself"""
+        return page.get_translation(page, lang_code) or page
 
-    def get_redirect_url(self, **kwargs):
-        return self.request.GET.get('next', self.request.META.get('HTTP_REFERER', '/'))
+    def get_url_path(self, request: WSGIRequest, url: str):
+        """Extract the url_path (as in the DB) of the url."""
+        prefix = request.site.root_page.url_path
+        next_url_parsed = urlparse(url)
+        if prefix.endswith('/'):
+            prefix = self.rreplace(prefix, '/', '', 1)
+        url_path = '{}{}'.format(prefix, next_url_parsed.path)
+        if not url_path.endswith('/'):
+            url_path = '{}/'.format(url_path)
+        return url_path
+
+    def post(self, request, *args, **kwargs):
+        next_url = request.POST.get('next')
+        if not next_url:
+            next_url = request.META.get('HTTP_REFERER')
+
+        curr_lang_code = get_language()
+        new_lang_code = request.POST.get('language')
+        if not check_for_language(new_lang_code):
+            # Language is not valid, simply redirect
+            return redirect(next_url)
+
+        if curr_lang_code == new_lang_code:
+            # No need to look up Pages if language did not change
+            return redirect(next_url)
+
+        url_path = self.get_url_path(request, next_url)
+
+        # Get the Page object to redirect to in the current language
+        try:
+            page = Page.objects.in_site(request.site).live().get(
+                url_path=url_path).specific
+        except Page.DoesNotExist:
+            # If no CMS page exists (e.g. login page), switch the language and
+            # redirect.
+            response = redirect(next_url)
+            self.set_language(request, response, new_lang_code)
+            return response
+
+        if curr_lang_code == self.original_lang_code:
+            # If the current language is the original (en), then check if there
+            # is a translation in the new language. If not, the original is
+            # served.
+            new_page = self.get_translation_or_page(page, new_lang_code)
+            response = redirect(new_page.url)
+        else:
+            # If the current language is a translation ...
+            original_page = page.original_page()
+            if new_lang_code == self.original_lang_code:
+                # ... and the new language is the original (en), then return the
+                # original
+                response = redirect(original_page.url)
+            else:
+                # ... and the new language is also a translation, get the
+                # original (en) and try to return a translation in the new
+                # language. If not available, return the original
+                new_page = self.get_translation_or_page(
+                    original_page, new_lang_code)
+                response = redirect(new_page.url)
+
+        # Actually set the new language and return the response
+        self.set_language(request, response, new_lang_code)
+        return response

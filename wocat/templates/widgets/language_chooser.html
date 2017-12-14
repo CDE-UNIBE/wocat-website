@@ -1,15 +1,25 @@
+{% comment %}
+  context variables:
+    - onlyxs (bool)
+    - csrf_token (str)
+{% endcomment %}
+
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
-    <li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ LANGUAGE_CODE }} <span class="caret"></span></a>
-		<ul class="dropdown-menu">
-			{% for language in languages %}
-				<li{% if language.code == LANGUAGE_CODE %} class="active"{% endif %}>
-					<a href="{% url "switch-language" language=language.code %}">{{ language.code|upper }}</a>
-				</li>
-			{% endfor %}
-		</ul>
-    </li>
-
+<li class="dropdown{% if onlyxs %} hidden-md hidden-lg{% endif %}">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ LANGUAGE_CODE }} <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    {% for language in languages %}
+      <li{% if language.code == LANGUAGE_CODE %} class="active"{% endif %}>
+        <a href="#" data-language="{{ language.code }}" class="js-language-switcher">{{ language.name_local|upper }}</a>
+      </li>
+    {% endfor %}
+    <form action="{% url 'set_language' %}" method="post">
+      <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
+      <input name="next" type="hidden" value="{{ redirect_to }}" />
+      <input name="language" type="hidden">
+    </form>
+  </ul>
+</li>

@@ -1,13 +1,12 @@
 from classytags.helpers import InclusionTag
 from django import template
-from django.conf import settings
+from django.middleware.csrf import get_token
 from django.urls import reverse
 from django.utils.html import format_html
-from django.utils.translation import ugettext_lazy as _, get_language
-from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl, richtext
-from wagtail.wagtailcore.blocks.base import Block
+from django.utils.translation import ugettext_lazy as _
+from wagtail.wagtailcore.templatetags.wagtailcore_tags import richtext
 
-from wocat.cms.models import HomePage, ProjectPage, TopNavigationSettings, FooterSettings
+from wocat.cms.models import ProjectPage, TopNavigationSettings, FooterSettings
 
 register = template.Library()
 
@@ -66,25 +65,16 @@ class Header(InclusionTag):
     name = 'header'
     template = 'widgets/header.html'
 
-    def get_lanaguage_links(self):
-        current_language = get_language()
-        links = []
-        for code, name in settings.LANGUAGES:
-            active = True if code == current_language else False
-            links.append(
-                {'href': reverse('switch-language', kwargs={'language': code}), 'text': name, 'active': active})
-        return links
-
     def get_language_and_search_context(self, only_xs=True):
         return [
-            # {
-            #     'dropdown': True,
-            #     'text': get_language(),
-            #     'links': self.get_lanaguage_links(),
-            #     'onlyxs': only_xs,
-            # },
-            {'href': reverse('search:index'), 'text': '<i class="fa fa-search" aria-hidden="true"></i>',
-             'onlyxs': only_xs},
+            {
+                'languageswitcher': True,
+                'onlyxs': only_xs,
+            },
+            {
+                'href': reverse('search:index'),
+                'text': '<i class="fa fa-search" aria-hidden="true"></i>',
+                'onlyxs': only_xs},
         ]
 
     def get_node(self, page, current_page, ancestors):
@@ -100,8 +90,12 @@ class Header(InclusionTag):
 
     def get_nodes(self, context, root_page=None):
         current_page = context.get('page')
-        if not root_page:
-            root_page = HomePage.objects.live().in_menu().first()
+        if not root_page and current_page:
+            root_page = current_page.get_language_homepage()
+
+        # Try to get the specific type (e.g. Homepage) of the root_page
+        root_page = getattr(root_page, 'specific', root_page)
+
         if not root_page:
             return []
         main_pages = root_page.get_children().live().in_menu().specific()
@@ -110,7 +104,10 @@ class Header(InclusionTag):
             ancestors = current_page.get_ancestors().live().in_menu().specific()
         else:
             ancestors = []
-        return [self.get_node(page, current_page=current_page, ancestors=ancestors) for page in main_pages]
+
+        return [
+            self.get_node(page, current_page=current_page, ancestors=ancestors)
+            for page in main_pages]
 
     def get_project_page(self, page):
         if not page:
@@ -153,6 +150,7 @@ class Header(InclusionTag):
                 'links1': nodes,
                 'links2': nodes,
             },
+            'csrf_token': get_token(context.get('request')),
         }
 
 
@@ -180,6 +178,22 @@ class Breadcrumb(InclusionTag):
     def get_context(self, context, **kwargs):
         nodes = self.get_nodes(context)
         return {'links': nodes}
+
+
+@register.tag
+class ContentLanguageSwitcher(InclusionTag):
+    """A language switcher just for the content (CMS page), not entire site!"""
+    name = 'content-language-switcher'
+    template = 'widgets/content-language-switcher.html'
+
+    def get_context(self, context, **kwargs):
+        try:
+            translation_links = list(context.get('page').translation_links())
+        except AttributeError:
+            translation_links = []
+        return {
+            'translation_links': translation_links,
+        }
 
 
 @register.tag
