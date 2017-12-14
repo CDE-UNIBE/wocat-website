@@ -70,6 +70,13 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    # Users should not be deleted! Manually catching requests to delete users
+    # in the CMS and showing them a message.
+    url(
+        regex=r'^cms/users/(?P<pk>\d+)/delete/$',
+        view=TemplateView.as_view(template_name='users/confirm_delete.html'),
+        name='cms_user_delete'
+    ),
     # CMS
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^search/', include(wagtailsearch_urls)),
