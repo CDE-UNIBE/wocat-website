@@ -1,0 +1,21 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% block titletag %}{{ view.page_title }}{% endblock %}
+
+{% block content %}
+  {% include "wagtailadmin/shared/header.html" with title='Delete User' subtitle='' %}
+
+  <div class="nice-padding">
+    <p>{{ view.confirmation_message }}</p>
+
+    <div class="messages">
+      <ul>
+        <li class="warning">Users should not never be deleted because they are synchronized with QCAT. Instead use the "Active" flag when editing users to set them inactive.</li>
+      </ul>
+    </div>
+
+    <br>
+
+    <a href="javascript:history.back()">Go Back</a>
+  </div>
+{% endblock %}
