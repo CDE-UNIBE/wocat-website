@@ -45,7 +45,7 @@ def notify_user(user):
         'user': user,
         'project': 'WOCAT',
         'domain': domain,
-        'login_url': 'http://www.{domain}{path}'.format(
+        'login_url': 'https://{domain}{path}'.format(
             domain=domain,
             path=reverse('account_login')
         )
