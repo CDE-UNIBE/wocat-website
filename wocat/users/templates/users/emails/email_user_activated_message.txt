@@ -1,15 +1,12 @@
 Dear {{ user.salutation }} {{ user }},
 
-Your application for membership with 'the {{ project }} network' has been accepted.
-
-We are pleased to inform you that your membership {{ user.email }} has been accepted and that your e-mail address {{ user.email }} has been added to our list.
+We are pleased to inform you that your membership in the {{ project }} network has been accepted and that your e-mail address {{ user.email }} has been added to our list.
 
 You may now login at {{ login_url }}
 
 Welcome from us all at
 
 {{ project }} Secretariat
-
-<https://www.{{ domain }}/>
-
 wocat@cde.unibe.ch
+
+<https://{{ domain }}>
