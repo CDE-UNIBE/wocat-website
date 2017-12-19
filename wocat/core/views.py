@@ -9,6 +9,8 @@ from django.utils.translation import LANGUAGE_SESSION_KEY, check_for_language, \
 from django.views.generic import RedirectView
 from wagtail.wagtailcore.models import Page
 
+from wocat.cms.models import TranslatablePageMixin
+
 
 class SwitchLanguageView(RedirectView):
     """
@@ -38,11 +40,6 @@ class SwitchLanguageView(RedirectView):
                 path=settings.LANGUAGE_COOKIE_PATH,
                 domain=settings.LANGUAGE_COOKIE_DOMAIN,
             )
-
-    @staticmethod
-    def get_translation_or_page(page: Page, lang_code: str) -> Page:
-        """Return the translation of a Page if available or the Page itself"""
-        return page.get_translation(page, lang_code) or page
 
     def get_url_path(self, request: WSGIRequest, url: str):
         """Extract the url_path (as in the DB) of the url."""
@@ -87,7 +84,8 @@ class SwitchLanguageView(RedirectView):
             # If the current language is the original (en), then check if there
             # is a translation in the new language. If not, the original is
             # served.
-            new_page = self.get_translation_or_page(page, new_lang_code)
+            new_page = TranslatablePageMixin.get_translated_page(
+                page, new_lang_code)
             response = redirect(new_page.url)
         else:
             # If the current language is a translation ...
@@ -100,8 +98,8 @@ class SwitchLanguageView(RedirectView):
                 # ... and the new language is also a translation, get the
                 # original (en) and try to return a translation in the new
                 # language. If not available, return the original
-                new_page = self.get_translation_or_page(
-                    original_page, new_lang_code)
+                new_page = TranslatablePageMixin.get_translated_page(
+                    page, new_lang_code)
                 response = redirect(new_page.url)
 
         # Actually set the new language and return the response

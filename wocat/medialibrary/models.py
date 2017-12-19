@@ -15,14 +15,16 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 
-from wocat.cms.models import UniquePageMixin, HeaderPageMixin
+from wocat.cms.models import UniquePageMixin, HeaderPageMixin, \
+    TranslatablePageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
 from wocat.countries.models import Continent, Country
 from wocat.languages.models import Language
 
 
-class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
+class MediaLibraryPage(
+        UniquePageMixin, HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'medialibrary/library.html'
     ajax_template = 'medialibrary/library_items.html'
     ordering = ('title',)
@@ -36,7 +38,7 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),

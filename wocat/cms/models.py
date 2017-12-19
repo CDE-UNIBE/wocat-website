@@ -6,7 +6,7 @@ from django.templatetags.i18n import language_name_local
 from django.urls import reverse_lazy
 from django.utils import translation
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, get_language
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.models import ClusterableModel
 from wagtail.contrib.settings.models import BaseSetting
@@ -106,6 +106,19 @@ class TranslatablePageMixin(models.Model):
         ),
     ]
 
+    @staticmethod
+    def get_translated_page(page, lang_code=None):
+        if lang_code is None:
+            lang_code = get_language()
+        if lang_code != TranslatablePageMixin.original_lang_code:
+            # Try to find translation
+            try:
+                page = page.get_translation(lang_code) or page
+            except AttributeError:
+                pass
+        return page
+
+
     def get_language_homepage(self):
         # Look through ancestors of this page for its language homepage
         # The language homepage is located at depth 3
@@ -118,9 +131,9 @@ class TranslatablePageMixin(models.Model):
         # code
         return language_homepage.slug
 
-    def get_translation(self, page, lang_code):
+    def get_translation(self, lang_code):
         link_attr = self.get_link_attr(lang_code)
-        return getattr(page, link_attr)
+        return getattr(self, link_attr)
 
     @staticmethod
     def get_link_attr(lang_code):
@@ -141,7 +154,7 @@ class TranslatablePageMixin(models.Model):
             if lang_code == self.original_lang_code:
                 yield lang_name, original_page.url
                 continue
-            trans_link = self.get_translation(original_page, lang_code)
+            trans_link = original_page.get_translation(lang_code)
             if trans_link is not None:
                 yield lang_name, trans_link.url
                 continue
@@ -698,15 +711,15 @@ class TopNavigationSettings(ClusterableModel, BaseSetting):
 
 class TopNavigationLink(Orderable, models.Model):
     navigation = ParentalKey(TopNavigationSettings, related_name='top_navigation_links')
-    name = models.CharField(max_length=255)
-    target = models.ForeignKey('wagtailcore.Page')
+    target = models.ForeignKey(
+        'wagtailcore.Page',
+        help_text='Always link the original page (in English)!')
 
     @property
     def url(self):
         return self.target.url
 
     panels = [
-        FieldPanel('name'),
         PageChooserPanel('target'),
     ]
 

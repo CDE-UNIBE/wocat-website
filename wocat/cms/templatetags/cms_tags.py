@@ -6,7 +6,8 @@ from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import richtext
 
-from wocat.cms.models import ProjectPage, TopNavigationSettings, FooterSettings
+from wocat.cms.models import ProjectPage, TopNavigationSettings, \
+    FooterSettings, TranslatablePageMixin
 
 register = template.Library()
 
@@ -52,9 +53,11 @@ def get_extra_links(context, onlyxs=False):
         settings = TopNavigationSettings.for_site(request.site)
     if settings:
         for link in settings.top_navigation_links.all():
+            page = TranslatablePageMixin.get_translated_page(
+                link.target.specific)
             links.append({
-                'text': link.name,
-                'href': link.url,
+                'text': page.title,
+                'href': page.url,
                 'onlyxs': onlyxs
             })
     return links
@@ -78,6 +81,7 @@ class Header(InclusionTag):
         ]
 
     def get_node(self, page, current_page, ancestors):
+        page = TranslatablePageMixin.get_translated_page(page)
         text = page.title
         if hasattr(page, 'flag'):
             text = format_html('<strong>flag</strong>{}', text)
@@ -98,6 +102,12 @@ class Header(InclusionTag):
 
         if not root_page:
             return []
+
+        if root_page.get_language() != TranslatablePageMixin.original_lang_code:
+            # If current page is a translation, get the original to build the
+            # menu
+            root_page = root_page.original_page()
+
         main_pages = root_page.get_children().live().in_menu().specific()
         if current_page:
             current_page = current_page.specific
