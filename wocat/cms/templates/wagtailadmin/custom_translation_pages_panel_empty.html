@@ -1,0 +1,14 @@
+{% comment %}
+  Modification of wagtailadmin/edit_handlers/multi_field_panel.html: Do not show
+  any page choosers (self.children) at all. Instead, show a message and a link
+  to the original page.
+{% endcomment %}
+
+<fieldset>
+  <legend>{{ self.heading }}</legend>
+
+  <p class="help">
+    This page is a translation and cannot have other translations itself.
+    Link other translations in the <a href="{% url 'wagtailadmin_pages:edit' self.instance.original_page.id %}">original page</a>.
+  </p>
+</fieldset>

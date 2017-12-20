@@ -11,8 +11,9 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.models import ClusterableModel
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import register_setting
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel, \
-    PageChooserPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, \
+    MultiFieldPanel, FieldPanel, InlinePanel, \
+    PageChooserPanel, BasePageChooserPanel, BaseMultiFieldPanel
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
@@ -82,6 +83,72 @@ class HeaderPageMixin(models.Model):
         return context
 
 
+class CustomBasePageChooserPanel(BasePageChooserPanel):
+    """
+    A custom base for the PageChooserPanel. Used to display a nicer label.
+    """
+    def render_as_field(self):
+        self.bound_field.label = 'Translation page ({})'.format(
+            self.field_name.replace('_link', '').upper())
+        return super().render_as_field()
+
+
+class CustomBasePageTranslationMultiFieldPanel(BaseMultiFieldPanel):
+    """
+    A custom base for the MultiFieldPanel. Returns a custom template to either
+    show a hint about adding translations. If the current page is a translation,
+    only a link to the original page will be shown to prevent chaining of
+    translations.
+    """
+    template = 'wagtailadmin/custom_translation_pages_panel.html'
+
+    def render(self):
+        if self.instance.get_language () != 'en':
+            # Current page already is a translation, do not let the user choose
+            # additional translations
+            self.template = 'wagtailadmin/custom_translation_pages_panel_' \
+                            'empty.html'
+        return super().render()
+
+
+class TranslationFieldPanel(PageChooserPanel):
+    """
+    A custom PageChooserPanel, used just to inherit from the custom base model.
+    """
+    def bind_to_model(self, model):
+        # Inherit from the custom base model.
+        return type(str('_PageChooserPanel'), (CustomBasePageChooserPanel,), {
+            'model': model,
+            'field_name': self.field_name,
+            'page_type': self.page_type,
+            'can_choose_root': self.can_choose_root,
+        })
+
+
+class PageTranslationPanel(MultiFieldPanel):
+    """
+    A custom MultiFieldPanel showing a page chooser to add a translation page
+    for each language.
+    """
+    def __init__(self):
+        children = [
+            TranslationFieldPanel('{}_link'.format(lang[0]))
+            for lang in settings.LANGUAGES[1:]
+        ]
+        heading = 'Translations'
+        super().__init__(children, heading, classname='')
+
+    def bind_to_model(self, model):
+        # Inherit from the custom base panel
+        return type(str('_MultiFieldPanel'), (
+                CustomBasePageTranslationMultiFieldPanel,), {
+            'model': model,
+            'children': [child.bind_to_model(model) for child in self.children],
+            'heading': self.heading,
+            'classname': self.classname,
+        })
+
+
 class TranslatablePageMixin(models.Model):
     """This mixin adds links to translations."""
 
@@ -97,13 +164,7 @@ class TranslatablePageMixin(models.Model):
     original_lang_code = 'en'
 
     content_panels = [
-        MultiFieldPanel(
-            [
-                PageChooserPanel('{}_link'.format(lang[0]))
-                for lang in settings.LANGUAGES[1:]
-            ],
-            heading='Language links'
-        ),
+        PageTranslationPanel(),
     ]
 
     @staticmethod
