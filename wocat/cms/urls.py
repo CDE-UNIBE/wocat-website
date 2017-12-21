@@ -7,18 +7,13 @@ from .views import DocumentUploadView, DocumentUploadDeleteView
 
 urlpatterns = [
     url(
-        regex=r'^upload/(?P<page_pk>[0-9]+)/(?P<module_id>[0-9]+)/(?P<upload_slug>[-\w]+)/$',
+        regex=r'^upload/(?P<page_pk>[\d]+)/(?P<module_id>[\d]+)/(?P<upload_slug>[-\w]+)/$',
         view=DocumentUploadView.as_view(),
         name='upload'
     ),
     url(
-        regex=r'^upload-delete/(?P<document_id>[0-9]+)/$',
+        regex=r'^upload-delete/(?P<document_id>[\d]+)/$',
         view=DocumentUploadDeleteView.as_view(),
         name='upload-delete'
     ),
-    # url(
-    #     regex=r'^(?P<slug>[\w.@+-]+)/$',
-    #     view=CountryDetailView.as_view(),
-    #     name='detail'
-    # ),
 ]

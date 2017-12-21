@@ -179,7 +179,6 @@ class TranslatablePageMixin(models.Model):
                 pass
         return page
 
-
     def get_language_homepage(self):
         # Look through ancestors of this page for its language homepage
         # The language homepage is located at depth 3
