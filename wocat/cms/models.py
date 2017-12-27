@@ -193,7 +193,9 @@ class TranslatablePageMixin(models.Model):
 
     def get_translation(self, lang_code):
         link_attr = self.get_link_attr(lang_code)
-        return getattr(self, link_attr)
+        translation = getattr(self, link_attr)
+        if translation and translation.live is True:
+            return translation
 
     @staticmethod
     def get_link_attr(lang_code):

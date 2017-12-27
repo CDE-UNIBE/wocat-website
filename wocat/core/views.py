@@ -89,7 +89,12 @@ class SwitchLanguageView(RedirectView):
             response = redirect(new_page.url)
         else:
             # If the current language is a translation ...
-            original_page = page.original_page()
+            try:
+                original_page = page.original_page()
+            except AttributeError:
+                response = redirect(next_url)
+                self.set_language(request, response, new_lang_code)
+                return response
             if new_lang_code == self.original_lang_code:
                 # ... and the new language is the original (en), then return the
                 # original

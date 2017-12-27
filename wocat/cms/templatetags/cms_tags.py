@@ -94,7 +94,8 @@ class Header(InclusionTag):
 
     def get_nodes(self, context, root_page=None):
         current_page = context.get('page')
-        if not root_page and current_page:
+        if not root_page and current_page and hasattr(
+                current_page, 'get_language_homepage'):
             root_page = current_page.get_language_homepage()
 
         # Try to get the specific type (e.g. Homepage) of the root_page
@@ -180,8 +181,14 @@ class Breadcrumb(InclusionTag):
         if current_page:
             current_page = current_page.specific
             ancestors = current_page.get_ancestors().live().in_menu().specific()
-            return [self.get_node(page, current_page=current_page, ancestors=ancestors) for page in ancestors] + [
+            crumbs = [self.get_node(page, current_page=current_page, ancestors=ancestors) for page in ancestors] + [
                 self.get_node(current_page, current_page=current_page, ancestors=ancestors)]
+            # Manually adjust the crumbs to remove the language link and
+            # correctly display translated "Home" link.
+            if len(crumbs) > 2:
+                del crumbs[0]
+                crumbs[0]['text'] = _('Home')
+            return crumbs
         else:
             return []
 
