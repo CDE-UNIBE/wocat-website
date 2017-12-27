@@ -4,10 +4,14 @@ $(function() {
 });
 
 $(function() {
-	$('.js-language-switcher').on('click', function(e) {
+	$('.js-language-switcher-link').on('click', function(e) {
 		e.preventDefault();
 		var lang = $(this).data('language');
-		var form = $(this).closest('ul.dropdown-menu').find('form');
+		var form = $(this).closest('.js-language-switcher-container').find('form');
+		var href = $(this).attr('href');
+		if (href !== '' && href !== '#') {
+			form.find('input[name="next"]').val(href);
+		}
 		form.find('input[name="language"]').val(lang);
 		form.submit();
 	});

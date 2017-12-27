@@ -203,6 +203,7 @@ class ContentLanguageSwitcher(InclusionTag):
             translation_links = []
         return {
             'translation_links': translation_links,
+            'csrf_token': get_token(context.get('request')),
         }
 
 

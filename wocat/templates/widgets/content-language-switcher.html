@@ -1,10 +1,15 @@
 {% load i18n %}
 
 {% if translation_links %}
-  <div class="widget-content-language-switcher">
+  <div class="widget-content-language-switcher js-language-switcher-container">
     {% trans "This page is also available in: " %}
-    {% for language, translation_url in translation_links %}
-      <a href="{{ translation_url }}">{{ language }}</a>{% if not forloop.last %} | {% endif %}
+    {% for lang_code, lang_name, translation_url in translation_links %}
+      <a href="{{ translation_url }}" class="js-language-switcher-link" data-language="{{ lang_code }}">{{ lang_name }}</a>{% if not forloop.last %} | {% endif %}
     {% endfor %}
+    <form action="{% url 'set_language' %}" method="POST">
+      <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
+      <input name="next" type="hidden">
+      <input name="language" type="hidden">
+    </form>
   </div>
 {% endif %}

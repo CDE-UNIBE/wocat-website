@@ -201,9 +201,9 @@ class TranslatablePageMixin(models.Model):
 
     def translation_links(self) -> list:
         """
-        Get a list of tuples with [0] the language name and [1] the url for each
-        translation of the current page. The current translation is not
-        returned.
+        Get a list of tuples with [0] the language code, [1] the language name
+        and [2] the url for each translation of the current page. The current
+        translation is not returned.
         """
         original_page = self.original_page()
         for lang_code, _ in settings.LANGUAGES:
@@ -212,11 +212,11 @@ class TranslatablePageMixin(models.Model):
                 # Exclude the current language
                 continue
             if lang_code == self.original_lang_code:
-                yield lang_name, original_page.url
+                yield lang_code, lang_name, original_page.url
                 continue
             trans_link = original_page.get_translation(lang_code)
             if trans_link is not None:
-                yield lang_name, trans_link.url
+                yield lang_code, lang_name, trans_link.url
                 continue
 
     def original_page(self):

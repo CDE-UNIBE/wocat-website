@@ -99,7 +99,7 @@ class SwitchLanguageView(RedirectView):
                 # original (en) and try to return a translation in the new
                 # language. If not available, return the original
                 new_page = TranslatablePageMixin.get_translated_page(
-                    page, new_lang_code)
+                    original_page, new_lang_code)
                 response = redirect(new_page.url)
 
         # Actually set the new language and return the response
