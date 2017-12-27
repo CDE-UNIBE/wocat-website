@@ -33,31 +33,27 @@ class MediaTeaserBlock(StructBlock):
     )
 
     def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context)
         media = value.get('media')
-        title = media.title
-        abstract = media.abstract
-        media_type = media.media_type
-        video = media.video
-        file = media.file
+        if not media:
+            # Media can be deleted, there is no cascading to the teaser-object in case this happens.
+            return {}
+
         teaser_image = media.teaser_image.get_rendition('max-1200x1200').url if media.teaser_image else ''
         author = media.author
         year = media.year
         languages = [language.name for language in media.languages.all()]
-        country = media.countries
         image_position = value.get('image_position')
-        content = media.content
-        url = media.get_absolute_url()
-        if not content and file:
-            href = file.url
+
+        if not media.content and media.file:
+            href = media.file.url
             readmorelink = _('Download')
         else:
-            href = url
+            href = media.get_absolute_url()
             readmorelink = _('Show media')
         return {
             'href': href,
-            'title': title,
-            'description': abstract,
+            'title': media.title,
+            'description': media.abstract,
             'author': '{author}{year}{languages}'.format(
                 author='Author: {0}'.format(author) if author else '',
                 year='{0}Year: {1}'.format(', ' if author else '', year) if year else '',
