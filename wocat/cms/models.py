@@ -103,7 +103,7 @@ class CustomBasePageTranslationMultiFieldPanel(BaseMultiFieldPanel):
     template = 'wagtailadmin/custom_translation_pages_panel.html'
 
     def render(self):
-        if self.instance.get_language () != 'en':
+        if self.instance.get_language() != 'en':
             # Current page already is a translation, do not let the user choose
             # additional translations
             self.template = 'wagtailadmin/custom_translation_pages_panel_' \
@@ -191,6 +191,10 @@ class TranslatablePageMixin(models.Model):
         # code
         return language_homepage.slug
 
+    @property
+    def is_original(self):
+        return self.get_language() == self.original_lang_code
+
     def get_translation(self, lang_code):
         link_attr = self.get_link_attr(lang_code)
         translation = getattr(self, link_attr)
@@ -229,7 +233,9 @@ class TranslatablePageMixin(models.Model):
                 if lang_code == self.original_lang_code:
                     return self
                 link_filter = {'{}_link'.format(curr_lang_code): self}
-                return type(self).objects.filter(**link_filter).first().specific
+                original_page = type(self).objects.filter(**link_filter).first()
+                if original_page:
+                    return original_page.specific
 
     class Meta:
         abstract = True
@@ -331,8 +337,7 @@ class HomePage(HeaderPageMixin, TranslatablePageMixin, Page):
         return context
 
 
-class ProjectsAndCountiesPage(
-        UniquePageMixin, HeaderPageMixin, TranslatablePageMixin, Page):
+class ProjectsAndCountiesPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
@@ -364,7 +369,7 @@ class ProjectsAndCountiesPage(
         return self.get_descendants().type(RegionPage).specific()
 
 
-class ProjectsPage(UniquePageMixin, TranslatablePageMixin, Page):
+class ProjectsPage(TranslatablePageMixin, Page):
     template = 'projects/index.html'
 
     class Meta:
@@ -507,7 +512,7 @@ class ProjectCountryPage(HeaderPageMixin, TranslatablePageMixin, Page):
         return context
 
 
-class CountriesPage(UniquePageMixin, TranslatablePageMixin, Page):
+class CountriesPage(TranslatablePageMixin, Page):
     template = 'countries/index.html'
 
     class Meta:
@@ -524,7 +529,7 @@ class CountriesPage(UniquePageMixin, TranslatablePageMixin, Page):
 class CountryPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/country.html'
 
-    country = models.OneToOneField(
+    country = models.ForeignKey(
         Country,
         on_delete=models.PROTECT,
     )
@@ -580,7 +585,7 @@ class CountryPage(HeaderPageMixin, TranslatablePageMixin, Page):
         )
 
 
-class RegionsPage(UniquePageMixin, TranslatablePageMixin, Page):
+class RegionsPage(TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     class Meta:

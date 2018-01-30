@@ -4,7 +4,7 @@
   <div class="widget-content-language-switcher js-language-switcher-container">
     {% trans "This page is also available in: " %}
     {% for lang_code, lang_name, translation_url in translation_links %}
-      <a href="{{ translation_url }}" class="js-language-switcher-link" data-language="{{ lang_code }}">{{ lang_name }}</a>{% if not forloop.last %} | {% endif %}
+      <a href="{{ translation_url }}" class="js-language-switcher-link" data-language="{{ lang_code }}">{{ lang_name }}</a>{% if not forloop.last %} / {% endif %}
     {% endfor %}
     <form action="{% url 'set_language' %}" method="POST">
       <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">

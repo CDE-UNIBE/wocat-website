@@ -1,4 +1,6 @@
 import collections
+from django.db.models import Q
+from django.utils import translation
 from functools import lru_cache
 import json
 
@@ -12,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 
 from wocat.cms.models import ProjectPage, RegionPage, ProjectCountryPage, \
-    CountryPage
+    CountryPage, TranslatablePageMixin
 from wocat.countries.models import Country
 
 
@@ -120,7 +122,7 @@ class ProjectPageSerializer(GeoJsonSerializer):
 class CountrySerializer(GeoJsonSerializer):
     """
     Not all countries have a countrypage, therefore references through
-    ProjectPage.included_countries and ProjectPage - ProjectCountriesPage - 
+    ProjectPage.included_countries and ProjectPage - ProjectCountriesPage -
     ProjectCountry are resolved.
     """
 
@@ -130,6 +132,10 @@ class CountrySerializer(GeoJsonSerializer):
     @property
     def descendants_title(self):
         return _('Projects')
+
+    def get_current_language(self):
+        return translation.get_language_from_request(
+            self.context['request'])
 
     def get_descendants(self, obj):
         project_country_pages = ProjectCountryPage.objects.filter(country=obj)
@@ -144,6 +150,24 @@ class CountrySerializer(GeoJsonSerializer):
             )
 
         included_projects = ProjectPage.objects.filter(included_countries=obj)
+
+        current_language = self.get_current_language()
+        if current_language == TranslatablePageMixin.original_lang_code:
+            # If the current language is the original, limit results to only
+            # these (identified by url_path)
+            included_projects = included_projects.filter(
+                url_path__startswith='/home/{}/'.format(current_language))
+        else:
+            # If a translation language is currently active, query all original
+            # pages and the translations in the current language. Then exclude
+            # all original pages with translations in the current language
+            # (having a link to the translation)
+            included_projects = included_projects.filter(
+                Q(url_path__startswith='/home/{}/'.format(current_language)) |
+                Q(url_path__startswith='/home/{}/'.format(
+                    TranslatablePageMixin.original_lang_code))).exclude(
+                **{'{}_link__isnull'.format(current_language): False})
+
         for project in included_projects:
             yield Descendant(
                 name=project.title,
@@ -151,18 +175,26 @@ class CountrySerializer(GeoJsonSerializer):
             )
 
     def get_country_page(self, obj):
-        try:
-            return CountryPage.objects.get(country=obj)
-        except CountryPage.DoesNotExist:
-            return ''
+        language = self.get_current_language()
+        original_country_page = ''
+        translated_country_page = ''
+        country_pages = CountryPage.objects.filter(country=obj)
+        for page in country_pages:
+            if page.is_original:
+                original_country_page = page
+            if language == page.get_language():
+                translated_country_page = page
+        return translated_country_page or original_country_page
 
     def get_panel_text(self, obj) -> str:
+        country_page = self.get_country_page(obj)
+        title = country_page.title if country_page is not None else obj.name
         return render_to_string('api/partial/panel_text.html', {
-            'title': obj.name,
+            'title': title,
             'descendants_title': self.descendants_title,
             'descendants': self.get_descendants(obj),
             'image': obj.flag,
-            'country_page': self.get_country_page(obj)
+            'country_page': country_page,
         })
 
     class Meta:

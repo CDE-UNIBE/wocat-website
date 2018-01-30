@@ -71,6 +71,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             return ProjectPage.objects.all()
 
+
 router.register(r'projects', ProjectViewSet, base_name='projectpage')
 
 
@@ -113,6 +114,7 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
         'country__name', 'name', 'abbreviation',
     )
     ordering_fields = '__all__'
+
 
 router.register(r'institutions', InstitutionViewSet)
 
