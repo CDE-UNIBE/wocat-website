@@ -138,7 +138,31 @@ class CountrySerializer(GeoJsonSerializer):
             self.context['request'])
 
     def get_descendants(self, obj):
-        project_country_pages = ProjectCountryPage.objects.filter(country=obj)
+
+        def apply_translation_filter(queryset):
+            # Apply a filter to get original or translated pages. Used for
+            # ProjectCountryPage or ProjectPage.
+            current_language = self.get_current_language()
+            original_language = TranslatablePageMixin.original_lang_code
+
+            if current_language == original_language:
+                # If the current language is the original, limit results to only
+                # these (identified by url_path)
+                return queryset.filter(
+                    url_path__startswith='/home/{}/'.format(current_language))
+            else:
+                # If a translation language is currently active, query all
+                # original pages and the translations in the current language.
+                # Then exclude all original pages with translations in the
+                # current language (having a link to the translation)
+                return queryset.filter(
+                    Q(url_path__startswith='/home/{}/'.format(current_language))
+                    | Q(url_path__startswith='/home/{}/'.format(
+                        TranslatablePageMixin.original_lang_code))).exclude(
+                    **{'{}_link__isnull'.format(current_language): False})
+
+        project_country_pages = apply_translation_filter(
+            ProjectCountryPage.objects.filter(country=obj))
         for project in project_country_pages:
             yield CountryDescendant(
                 name=project.get_parent().get_parent().title,
@@ -149,25 +173,8 @@ class CountrySerializer(GeoJsonSerializer):
                 project=project.title
             )
 
-        included_projects = ProjectPage.objects.filter(included_countries=obj)
-
-        current_language = self.get_current_language()
-        if current_language == TranslatablePageMixin.original_lang_code:
-            # If the current language is the original, limit results to only
-            # these (identified by url_path)
-            included_projects = included_projects.filter(
-                url_path__startswith='/home/{}/'.format(current_language))
-        else:
-            # If a translation language is currently active, query all original
-            # pages and the translations in the current language. Then exclude
-            # all original pages with translations in the current language
-            # (having a link to the translation)
-            included_projects = included_projects.filter(
-                Q(url_path__startswith='/home/{}/'.format(current_language)) |
-                Q(url_path__startswith='/home/{}/'.format(
-                    TranslatablePageMixin.original_lang_code))).exclude(
-                **{'{}_link__isnull'.format(current_language): False})
-
+        included_projects = apply_translation_filter(
+            ProjectPage.objects.filter(included_countries=obj))
         for project in included_projects:
             yield Descendant(
                 name=project.title,
@@ -188,7 +195,7 @@ class CountrySerializer(GeoJsonSerializer):
 
     def get_panel_text(self, obj) -> str:
         country_page = self.get_country_page(obj)
-        title = country_page.title if country_page is not None else obj.name
+        title = country_page.title if country_page else obj.name
         return render_to_string('api/partial/panel_text.html', {
             'title': title,
             'descendants_title': self.descendants_title,
