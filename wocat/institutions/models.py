@@ -2,13 +2,13 @@ from autoslug import AutoSlugField
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from django.core.validators import MaxValueValidator
 
+from wocat.cms.models import get_default_year_now
 from wocat.countries.models import Country
 
 
@@ -30,7 +30,7 @@ class Institution(models.Model):
     )
     year = models.PositiveIntegerField(
         _('Year'),
-        default=timezone.now().year,
+        default=get_default_year_now,
         validators=[MaxValueValidator(4000)]
     )
     country = models.ForeignKey(

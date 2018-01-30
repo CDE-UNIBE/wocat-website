@@ -4,7 +4,7 @@ from django.db import models
 from django.http import HttpResponseRedirect
 from django.templatetags.i18n import language_name_local
 from django.urls import reverse_lazy
-from django.utils import translation
+from django.utils import translation, timezone
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _, get_language
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -22,10 +22,13 @@ from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock, PROJECT_BLOCKS
     REGION_BLOCKS, COUNTRY_BLOCKS, EVENTS_BLOCKS
 from wocat.core.blocks import CORE_BLOCKS
 from wocat.countries.models import Country
-from wocat.institutions.models import Institution
 from wocat.users.models import UserExperience
 
 __author__ = 'Eraldo Energy'
+
+
+def get_default_year_now():
+    return timezone.now().year
 
 
 class UniquePageMixin:
@@ -676,6 +679,7 @@ class MembersPage(UniquePageMixin, TranslatablePageMixin, Page):
         ).distinct().values_list(
             'code', 'name'
         )
+        from wocat.institutions.models import Institution
         context['institutions'] = Institution.objects.filter(
             user__isnull=False
         ).distinct().values_list(

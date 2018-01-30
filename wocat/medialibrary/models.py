@@ -1,11 +1,9 @@
-from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import QueryDict
 from django.urls import reverse
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.db.models import Q, QuerySet
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
@@ -16,7 +14,7 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 
 from wocat.cms.models import UniquePageMixin, HeaderPageMixin, \
-    TranslatablePageMixin
+    TranslatablePageMixin, get_default_year_now
 from wocat.core.blocks import CORE_BLOCKS
 
 from wocat.countries.models import Continent, Country
@@ -170,7 +168,7 @@ class Media(models.Model):
 
     year = models.PositiveIntegerField(
         _('Year'),
-        default=timezone.now().year,
+        default=get_default_year_now,
         validators=[MaxValueValidator(4000)],
         blank=True, null=True
     )
