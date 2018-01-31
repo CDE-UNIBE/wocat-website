@@ -69,7 +69,7 @@ class GeoJsonSerializer(serializers.HyperlinkedModelSerializer):
 
     def _descendant_country(self, country):
         yield Descendant(
-            name=country.__str__(),
+            name=str(country),
             url=country.get_api_detail_url()
         )
 
@@ -195,9 +195,8 @@ class CountrySerializer(GeoJsonSerializer):
 
     def get_panel_text(self, obj) -> str:
         country_page = self.get_country_page(obj)
-        title = country_page.title if country_page else obj.name
         return render_to_string('api/partial/panel_text.html', {
-            'title': title,
+            'title': str(obj),
             'descendants_title': self.descendants_title,
             'descendants': self.get_descendants(obj),
             'image': obj.flag,

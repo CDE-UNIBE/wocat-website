@@ -3,6 +3,7 @@ from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.templatetags.static import static
 from django.utils.translation import ugettext_lazy as _
+from django_countries import countries
 from wagtail.wagtailsnippets.models import register_snippet
 
 
@@ -29,7 +30,9 @@ class Country(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.name
+        # Use translations of django-countries
+        country_alpha2 = countries.alpha2(self.code)
+        return dict(countries)[country_alpha2]
 
     def get_absolute_url(self):
         return reverse('countries:detail', args=[self.slug])

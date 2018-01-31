@@ -57,7 +57,6 @@ CMS_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
-    #'wagtail_modeltranslation',
 )
 
 THIRD_PARTY_APPS = (
