@@ -186,7 +186,7 @@ class Breadcrumb(InclusionTag):
             # Manually adjust the crumbs to remove the language link and
             # correctly display translated "Home" link.
             if len(crumbs) > 2:
-                del crumbs[0]
+                del crumbs[1]
                 crumbs[0]['text'] = _('Home')
             return crumbs
         else:
