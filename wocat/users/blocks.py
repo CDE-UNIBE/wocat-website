@@ -76,8 +76,7 @@ class UserTeaserBlock(StructBlock):
             'href': user.get_absolute_url(),
             'readmorelink': {'text': _('view profile')},
             'imgpos': 'left',
-            'imgsrc': '',
-            # 'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
+            'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
             'imgcircle': True,
         })
         return context
