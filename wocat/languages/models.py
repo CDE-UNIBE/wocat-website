@@ -5,13 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 
 class Language(models.Model):
     code = models.CharField(
-        verbose_name=_('language code'),
+        verbose_name='language code',
         max_length=3,
         unique=True,
     )
 
     name = models.CharField(
-        verbose_name=_('name'),
+        verbose_name='name',
         max_length=255,
         unique=True,
     )

@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
-{% load i18n %}
 
 {% block content %}
-    <h1>{% trans 'Glossary Entry' %}</h1>
+    <h1>'Glossary Entry'</h1>
     <dl>
         {% include 'widgets/definition.html' with tag=entry.title acronym=entry.acronym definition=entry.description %}
-{#        {% include 'glossary/widgets/entry.html' %}#}
     </dl>
 {% endblock content %}

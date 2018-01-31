@@ -54,7 +54,7 @@ class HeaderPageMixin(models.Model):
         blank=True
     )
     lead = RichTextField(
-        _('Lead text'),
+        'Lead text',
         blank=True
     )
 
@@ -303,7 +303,7 @@ class ContentPage(HeaderPageMixin, TranslatablePageMixin, Page):
     ]
 
     class Meta:
-        verbose_name = _('Content')
+        verbose_name = 'Content'
 
 
 class HomePage(HeaderPageMixin, TranslatablePageMixin, Page):
@@ -317,7 +317,7 @@ class HomePage(HeaderPageMixin, TranslatablePageMixin, Page):
         related_name='+',
     )
     about_link_text = models.CharField(
-        _('About link text'),
+        'About link text',
         blank=True,
         max_length=255,
     )
@@ -803,12 +803,12 @@ class EventsPage(HeaderPageMixin, TranslatablePageMixin, Page):
 @register_setting
 class TopNavigationSettings(ClusterableModel, BaseSetting):
     panels = [
-        InlinePanel('social_media_links', label=_("Social Links")),
-        InlinePanel('top_navigation_links', label=_("Top Links")),
+        InlinePanel('social_media_links', label="Social Links"),
+        InlinePanel('top_navigation_links', label="Top Links"),
     ]
 
     class Meta:
-        verbose_name = _('Top navigation settings')
+        verbose_name = 'Top navigation settings'
 
 
 class TopNavigationLink(Orderable, models.Model):
@@ -830,10 +830,10 @@ class SocialMediaLink(Orderable, models.Model):
     navigation = ParentalKey(TopNavigationSettings, related_name='social_media_links')
     icon = models.CharField(
         max_length=255,
-        help_text=_('Fontawesome icon name')
+        help_text='Fontawesome icon name'
     )
     url = models.URLField(
-        help_text=_('Your social media page URL')
+        help_text='Your social media page URL'
     )
 
     panels = [
@@ -855,7 +855,7 @@ class FooterSettings(ClusterableModel, BaseSetting):
     ]
 
     class Meta:
-        verbose_name = _('Footer settings')
+        verbose_name = 'Footer settings'
 
 
 class FooterLink(Orderable, models.Model):
@@ -879,7 +879,7 @@ class TermsSettings(BaseSetting):
         verbose_name=_('Name'),
         max_length=255,
         blank=True,
-        help_text=_('The name of the selected page will be used if this field is left empty.')
+        help_text='The name of the selected page will be used if this field is left empty.'
     )
     target = models.ForeignKey(
         'wagtailcore.Page',
@@ -897,4 +897,4 @@ class TermsSettings(BaseSetting):
     ]
 
     class Meta:
-        verbose_name = _('Terms settings')
+        verbose_name = 'Terms settings'

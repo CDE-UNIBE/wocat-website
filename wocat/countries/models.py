@@ -10,13 +10,13 @@ from wagtail.wagtailsnippets.models import register_snippet
 # @register_snippet
 class Country(models.Model):
     code = models.CharField(
-        verbose_name=_('code (alpha3)'),
+        verbose_name='code (alpha3)',
         max_length=3,
         primary_key=True,
     )
 
     name = models.CharField(
-        verbose_name=_('name'),
+        verbose_name='name',
         max_length=255,
         unique=True,
     )
@@ -32,7 +32,7 @@ class Country(models.Model):
     def __str__(self):
         # Use translations of django-countries
         country_alpha2 = countries.alpha2(self.code)
-        return dict(countries)[country_alpha2]
+        return dict(countries).get(country_alpha2, self.name)
 
     def get_absolute_url(self):
         return reverse('countries:detail', args=[self.slug])
@@ -55,7 +55,7 @@ class Country(models.Model):
 @register_snippet
 class Continent(models.Model):
     name = models.CharField(
-        verbose_name=_('name'),
+        verbose_name='name',
         max_length=255,
         unique=True,
     )

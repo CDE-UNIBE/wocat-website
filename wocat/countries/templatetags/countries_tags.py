@@ -19,7 +19,7 @@ class Country(InclusionTag):
                 'flag_iso_3166_1_alpha_3': country.code,
                 'href': country.url,
                 'map': {'countries': [{'iso_3166_1_alpha_3': country.code}], 'size': 'small'},
-                'readmorelink': {'text': _('to the country')},
+                'readmorelink': {'text': _('To the country')},
                 'title': country,
             }
         else:

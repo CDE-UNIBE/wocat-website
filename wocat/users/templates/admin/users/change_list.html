@@ -1,6 +1,5 @@
 {% extends "admin/change_list.html" %}
 
-{% load i18n %}
 {% load static %}
 
 {% comment %}
@@ -24,7 +23,7 @@
         fail(function () {
           progressContainer.find('button:first').
           addClass('btn-danger').
-          text('{% trans "Failed!" %}');
+          text('Failed!');
         }).
         done(function() {
           progressContainer.addClass('hidden');
@@ -41,15 +40,15 @@
 
 {% block object-tools %}
   <div class="results">
-    <h1>{% trans "Newsletter / MailChimp" %}</h1>
+    <h1>Newsletter / MailChimp</h1>
     <div>
       <a href="?is_active__exact=1&newsletter__exact=1">
-        <button class="btn" >{% trans "Show only users with an active subscription" %}</button>
+        <button class="btn" >Show only users with an active subscription</button>
       </a>
 
       {% if perms.users.can_update_mailchimp %}
         <button class="btn btn-warning js-update-mailchimp" data-href="{% url 'users:mailchimp-update' %}">
-          {% trans "Update all users on MailChimp" %}
+          Update all users on MailChimp
         </button>
       {% endif %}
 
@@ -58,7 +57,7 @@
       <br>
       <button class="btn btn-success">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-        {% trans "Submitting..." %}
+        Submitting...
       </button>
     </div>
     <br class="clear" />

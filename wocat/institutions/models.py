@@ -14,18 +14,18 @@ from wocat.countries.models import Country
 
 class Institution(models.Model):
     name = models.CharField(
-        verbose_name=_('Name'),
+        verbose_name='Name',
         max_length=255,
     )
     slug = AutoSlugField(
         populate_from='name'
     )
     abbreviation = models.CharField(
-        verbose_name=_('Abbreviation'),
+        verbose_name='Abbreviation',
         max_length=255,
     )
     url = models.URLField(
-        verbose_name=_('Url'),
+        verbose_name='Url',
         blank=True,
     )
     year = models.PositiveIntegerField(
@@ -41,17 +41,17 @@ class Institution(models.Model):
     contact_person = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='institution_contact',
-        verbose_name=_('Contact person'),
+        verbose_name='Contact person',
         on_delete=models.SET_NULL,
         blank=True, null=True,
     )
     memorandum = models.BooleanField(
-        verbose_name=_('Memorandum signed'),
+        verbose_name='Memorandum signed',
         default=False
     )
     logo = models.ForeignKey(
         'wagtailimages.Image',
-        verbose_name=_('Logo'),
+        verbose_name='Logo',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

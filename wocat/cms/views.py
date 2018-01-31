@@ -87,7 +87,7 @@ class DocumentUploadDeleteView(View):
             # check if the user has permission
             if document.uploaded_by_user == request.user:
                 # delete the document
-                message = _('File "{document}" has been deleted.'.format(document=document))
+                message = 'File "{document}" has been deleted.'.format(document=document)
                 document.delete()
                 messages.success(request, message)
             return redirect(self.request.GET.get('next', self.request.META.get('HTTP_REFERER', '/')))

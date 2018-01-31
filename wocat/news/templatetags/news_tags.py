@@ -21,7 +21,7 @@ class News(InclusionTag):
             'author': news.author,
             'date': news.date,
             'href': news.url,
-            'readmorelink': {'text': _('read more')},
+            'readmorelink': {'text': _('Read more')},
             # 'bottomline': True,
         }
 

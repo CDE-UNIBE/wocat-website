@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.sites.models import Site
-from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import authentication, exceptions
 
@@ -15,4 +14,4 @@ class SameHostAjaxAuthentication(authentication.BaseAuthentication):
         if request._request.is_ajax() and is_same_domain:
             return (AnonymousUser, None)
         else:
-            raise exceptions.AuthenticationFailed(_('Invalid domain'))
+            raise exceptions.AuthenticationFailed('Invalid domain')
