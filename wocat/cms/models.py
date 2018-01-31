@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import ProgrammingError
 from django.db import models
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.templatetags.i18n import language_name_local
 from django.urls import reverse_lazy
@@ -157,6 +158,7 @@ class TranslatablePageMixin(models.Model):
 
     # One link for each alternative language. Must correspond to the languages
     # set in settings.py. The default language (en) does not require a link.
+    # When adding new languages: Also add id fields as search_fields below.
     fr_link = models.ForeignKey(
         Page, null=True, on_delete=models.SET_NULL, blank=True,
         related_name='+')
@@ -168,6 +170,12 @@ class TranslatablePageMixin(models.Model):
 
     content_panels = [
         PageTranslationPanel(),
+    ]
+
+    search_fields = [
+        index.FilterField('url_path'),
+        index.FilterField('fr_link_id'),
+        index.FilterField('es_link_id'),
     ]
 
     @staticmethod
@@ -239,6 +247,29 @@ class TranslatablePageMixin(models.Model):
                 original_page = type(self).objects.filter(**link_filter).first()
                 if original_page:
                     return original_page.specific
+
+    @staticmethod
+    def apply_translation_filter(qs, request):
+        # Apply a filter to get either original or translated pages, but not
+        # both. Used for ProjectCountryPage, ProjectPage or RegionPage.
+        current_language = translation.get_language_from_request(request)
+        original_language = TranslatablePageMixin.original_lang_code
+
+        if current_language == original_language:
+            # If the current language is the original, limit results to only
+            # these (identified by url_path)
+            return qs.filter(
+                url_path__startswith='/home/{}/'.format(current_language))
+        else:
+            # If a translation language is currently active, query all
+            # original pages and the translations in the current language.
+            # Then exclude all original pages with translations in the
+            # current language (having a link to the translation)
+            return qs.filter(
+                Q(url_path__startswith='/home/{}/'.format(current_language))
+                | Q(url_path__startswith='/home/{}/'.format(
+                    TranslatablePageMixin.original_lang_code))).exclude(
+                **{'{}_link__isnull'.format(current_language): False})
 
     class Meta:
         abstract = True
@@ -415,7 +446,7 @@ class ProjectPage(HeaderPageMixin, TranslatablePageMixin, Page):
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    ]
+    ] + TranslatablePageMixin.search_fields
 
     parent_page_types = ['ProjectsPage']
     subpage_types = ['ContentPage', 'ProjectCountriesPage', 'NewsAndEventsPage']
@@ -646,7 +677,7 @@ class RegionPage(HeaderPageMixin, TranslatablePageMixin, Page):
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         # index.FilterField('countries'), TODO: This can't be indexed
         index.SearchField('content'),
-    ]
+    ] + TranslatablePageMixin.search_fields
 
     parent_page_types = ['RegionsPage']
     subpage_types = []

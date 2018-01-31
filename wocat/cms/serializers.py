@@ -1,5 +1,4 @@
 import collections
-from django.db.models import Q
 from django.utils import translation
 from functools import lru_cache
 import json
@@ -138,31 +137,9 @@ class CountrySerializer(GeoJsonSerializer):
             self.context['request'])
 
     def get_descendants(self, obj):
-
-        def apply_translation_filter(queryset):
-            # Apply a filter to get original or translated pages. Used for
-            # ProjectCountryPage or ProjectPage.
-            current_language = self.get_current_language()
-            original_language = TranslatablePageMixin.original_lang_code
-
-            if current_language == original_language:
-                # If the current language is the original, limit results to only
-                # these (identified by url_path)
-                return queryset.filter(
-                    url_path__startswith='/home/{}/'.format(current_language))
-            else:
-                # If a translation language is currently active, query all
-                # original pages and the translations in the current language.
-                # Then exclude all original pages with translations in the
-                # current language (having a link to the translation)
-                return queryset.filter(
-                    Q(url_path__startswith='/home/{}/'.format(current_language))
-                    | Q(url_path__startswith='/home/{}/'.format(
-                        TranslatablePageMixin.original_lang_code))).exclude(
-                    **{'{}_link__isnull'.format(current_language): False})
-
-        project_country_pages = apply_translation_filter(
-            ProjectCountryPage.objects.filter(country=obj))
+        request = self.context['request']
+        project_country_pages = TranslatablePageMixin.apply_translation_filter(
+            ProjectCountryPage.objects.filter(country=obj), request)
         for project in project_country_pages:
             yield CountryDescendant(
                 name=project.get_parent().get_parent().title,
@@ -173,8 +150,8 @@ class CountrySerializer(GeoJsonSerializer):
                 project=project.title
             )
 
-        included_projects = apply_translation_filter(
-            ProjectPage.objects.filter(included_countries=obj))
+        included_projects = TranslatablePageMixin.apply_translation_filter(
+            ProjectPage.objects.filter(included_countries=obj), request)
         for project in included_projects:
             yield Descendant(
                 name=project.title,
