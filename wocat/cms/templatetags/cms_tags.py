@@ -89,7 +89,7 @@ class Header(InclusionTag):
             'text': text,
             'href': page.url,
             # Checking if this page is in the tree of active pages
-            'active': page == current_page or page in ancestors,
+            'active': page.specific == current_page or page in ancestors,
         }
 
     def get_nodes(self, context, root_page=None):
