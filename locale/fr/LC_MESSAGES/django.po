@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 10:54+0100\n"
+"POT-Creation-Date: 2018-02-01 11:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Lukas Vonlanthen <lukas.vonlanthen@cde.unibe.ch>, 2018\n"
 "Language-Team: French (https://www.transifex.com/university-of-bern-cde/"
@@ -268,7 +268,7 @@ msgstr ""
 
 #: wocat/medialibrary/filters.py:51
 msgid "All continents"
-msgstr ""
+msgstr "Tous les continents"
 
 #: wocat/medialibrary/templates/medialibrary/library_items.html:9
 msgid "No media found."
