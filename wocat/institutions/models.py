@@ -2,35 +2,35 @@ from autoslug import AutoSlugField
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from django.core.validators import MaxValueValidator
 
+from wocat.cms.models import get_default_year_now
 from wocat.countries.models import Country
 
 
 class Institution(models.Model):
     name = models.CharField(
-        verbose_name=_('Name'),
+        verbose_name='Name',
         max_length=255,
     )
     slug = AutoSlugField(
         populate_from='name'
     )
     abbreviation = models.CharField(
-        verbose_name=_('Abbreviation'),
+        verbose_name='Abbreviation',
         max_length=255,
     )
     url = models.URLField(
-        verbose_name=_('Url'),
+        verbose_name='Url',
         blank=True,
     )
     year = models.PositiveIntegerField(
         _('Year'),
-        default=timezone.now().year,
+        default=get_default_year_now,
         validators=[MaxValueValidator(4000)]
     )
     country = models.ForeignKey(
@@ -41,17 +41,17 @@ class Institution(models.Model):
     contact_person = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='institution_contact',
-        verbose_name=_('Contact person'),
+        verbose_name='Contact person',
         on_delete=models.SET_NULL,
         blank=True, null=True,
     )
     memorandum = models.BooleanField(
-        verbose_name=_('Memorandum signed'),
+        verbose_name='Memorandum signed',
         default=False
     )
     logo = models.ForeignKey(
         'wagtailimages.Image',
-        verbose_name=_('Logo'),
+        verbose_name='Logo',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

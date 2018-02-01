@@ -1,11 +1,23 @@
+from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.template.defaultfilters import slugify
-from django.views.generic import View
+from django.views.generic import View, RedirectView
 from wagtail.wagtailcore.models import Page, Collection
 from wagtail.wagtaildocs.models import get_document_model
 from django.utils.translation import ugettext_lazy as _
+
+
+class AddLanguagePrefixRedirectView(RedirectView):
+    """
+    Redirect any unresolved URL not starting with a language prefix to /en/...
+    """
+    def get_redirect_url(self, *args, **kwargs):
+        redirect_url = '/' + settings.LANGUAGES[0][0] + self.request.get_full_path()
+        get_object_or_404(Page, url_path='/home' + redirect_url)
+        return redirect_url
+
 
 class DocumentUploadView(View):
     def post(self, request, *args, **kwargs):
@@ -75,7 +87,7 @@ class DocumentUploadDeleteView(View):
             # check if the user has permission
             if document.uploaded_by_user == request.user:
                 # delete the document
-                message = _('File "{document}" has been deleted.'.format(document=document))
+                message = 'File "{document}" has been deleted.'.format(document=document)
                 document.delete()
                 messages.success(request, message)
             return redirect(self.request.GET.get('next', self.request.META.get('HTTP_REFERER', '/')))

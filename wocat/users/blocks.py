@@ -74,7 +74,7 @@ class UserTeaserBlock(StructBlock):
                 country=format_html('<br>{0}', flag) if flag else '',
             ),
             'href': user.get_absolute_url(),
-            'readmorelink': {'text': _('view profile')},
+            'readmorelink': {'text': _('View profile')},
             'imgpos': 'left',
             'imgsrc': user.avatar['avatarsquare'].url if user.avatar else '',
             'imgcircle': True,
@@ -83,7 +83,7 @@ class UserTeaserBlock(StructBlock):
 
     class Meta:
         icon = 'fa fa-user'
-        label = _('Member Teaser')
+        label = 'Member Teaser'
         template = 'widgets/teaser.html'
 
 
@@ -100,7 +100,7 @@ class SubpagesBlock(StructBlock):
 
     def render_form(self, value, prefix='', errors=None):
         form = super().render_form(value, prefix, errors)
-        return format_html('<strong>{title}</b> {form}', title=_('Subpages'), form=form)
+        return format_html('<strong>{title}</b> {form}', title='Subpages', form=form)
 
 
 SUBPAGEBLOCKS = [
@@ -144,7 +144,7 @@ class ContactPersonTeaserBlock(BlockWithContextMixin, StructBlock):
 
     class Meta:
         icon = 'fa fa-user'
-        label = _('Contact Person Teaser')
+        label = 'Contact Person Teaser'
         template = 'widgets/teaser.html'
 
 

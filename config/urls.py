@@ -5,8 +5,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from django.views.generic import RedirectView
 from wagtail.contrib.wagtailsitemaps.views import sitemap
 
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -14,6 +14,7 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailsearch import urls as wagtailsearch_urls
 
+from wocat.cms.views import AddLanguagePrefixRedirectView
 from wocat.core.views import SwitchLanguageView
 from wocat.users.views import ReactivateAccountView
 
@@ -22,8 +23,6 @@ admin.site.site_header = BACKEND_NAME
 admin.site.site_title = BACKEND_NAME
 
 urlpatterns = [
-    url(r'^home/$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url('^sitemap\.xml$', sitemap),
 
     # Django Admin, use {% url 'admin:index' %}
@@ -34,6 +33,8 @@ urlpatterns = [
     url(r"^accounts/reactivate/$", ReactivateAccountView.as_view(), name="reactivate_account"),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^library/media/', include('wocat.medialibrary.urls', namespace='media')),
+    # Redirect requests to fileadmin/* (old document folder) to new media library
+    url(r'^fileadmin/', RedirectView.as_view(url='/en/wocat-media-library')),
     url(r'^glossary/', include('wocat.glossary.urls', namespace='glossary')),
     url(r'^institutions/', include('wocat.institutions.urls', namespace='institutions')),
     url(r'^countries/', include('wocat.countries.urls', namespace='countries')),
@@ -42,9 +43,8 @@ urlpatterns = [
     url(r'^newsletter/', include('wocat.newsletter.urls', namespace='newsletter')),
 
     # Your stuff: custom urls includes go here
-    url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),
 
-    url(r'^language/(?P<language>[^/]+)/$', SwitchLanguageView.as_view(), name='switch-language'),
+    url(r'^i18n/$', SwitchLanguageView.as_view(), name='set_language'),
 ]
 # Static files
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -57,6 +57,7 @@ if settings.DEBUG:
         url(r'^403/$', default_views.permission_denied, kwargs={'exception': Exception('Permission Denied')}),
         url(r'^404/$', default_views.page_not_found, kwargs={'exception': Exception('Page not Found')}),
         url(r'^500/$', default_views.server_error),
+        url(r'^styleguide/', include("wocat.styleguide.urls", namespace="styleguide")),
     ]
 
     # debug-toolbar
@@ -81,5 +82,6 @@ urlpatterns += [
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^search/', include(wagtailsearch_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^(?!({})|static|media)(.+)'.format('|'.join([l[0] for l in settings.LANGUAGES])), AddLanguagePrefixRedirectView.as_view()),
     url(r'^', include(wagtail_urls)),
 ]

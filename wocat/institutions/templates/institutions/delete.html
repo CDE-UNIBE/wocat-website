@@ -1,5 +1,4 @@
 {% extends "wagtailadmin/base.html" %}
-{% load i18n %}
 {% block titletag %}{{ view.page_title }}{% endblock %}
 
 {% block content %}
@@ -17,7 +16,7 @@
 
         <form action="{{ view.get_delete_url }}" method="POST">
             {% csrf_token %}
-            <input type="submit" value="{% trans 'Yes, delete' %}" class="button serious" />
+            <input type="submit" value="Yes, delete" class="button serious" />
         </form>
     </div>
 {% endblock %}

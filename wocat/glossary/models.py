@@ -8,13 +8,14 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 
-from wocat.cms.models import HeaderPageMixin, UniquePageMixin
+from wocat.cms.models import HeaderPageMixin, UniquePageMixin, \
+    TranslatablePageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
 
 class Entry(index.Indexed, models.Model):
     title = models.CharField(
-        _('Title'),
+        'Title',
         max_length=255,
         unique=True
     )
@@ -22,16 +23,16 @@ class Entry(index.Indexed, models.Model):
         populate_from='title'
     )
     description = models.TextField(
-        _('Description'),
+        'Description',
     )
     acronym = models.BooleanField(
-        _('Is an acronym'),
+        'Is an acronym',
         default=False,
     )
 
     class Meta:
-        verbose_name = _('Entry')
-        verbose_name_plural = _('Entries')
+        verbose_name = 'Entry'
+        verbose_name_plural = 'Entries'
         ordering = ['title']
 
     def __str__(self):
@@ -54,7 +55,8 @@ class Entry(index.Indexed, models.Model):
     ]
 
 
-class GlossaryPage(UniquePageMixin, HeaderPageMixin, Page):
+class GlossaryPage(
+        UniquePageMixin, HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/glossary.html'
 
     content = StreamField(
@@ -64,7 +66,7 @@ class GlossaryPage(UniquePageMixin, HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),

@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
 from modelcluster.fields import ParentalKey
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel
 from wagtail.wagtailcore.fields import StreamField
@@ -17,7 +16,7 @@ class NewsIndexPage(HeaderPageMixin, Page):
     content = StreamField(CORE_BLOCKS, blank=True)
 
     class Meta:
-        verbose_name = _('News index')
+        verbose_name = 'News index'
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
@@ -56,13 +55,13 @@ class NewsPage(HeaderPageMixin, Page):
     )
 
     author = models.CharField(
-        _('Author'),
+        'Author',
         max_length=255,
         blank=True,
     )
 
     date = models.DateField(
-        _('Date'),
+        'Date',
         default=timezone.now,
     )
 
@@ -101,8 +100,8 @@ class NewsPage(HeaderPageMixin, Page):
     subpage_types = []
 
     class Meta:
-        verbose_name = _('News')
-        verbose_name_plural = _('News')
+        verbose_name = 'News'
+        verbose_name_plural = 'News'
 
     def __str__(self):
         return self.title

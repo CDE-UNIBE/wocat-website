@@ -25,9 +25,9 @@ class MediaTeaserBlock(StructBlock):
     media = MediaChooserBlock(required=True)
     image_position = ChoiceBlock(
         choices=[
-            ('top', _('Top')),
-            ('left', _('Left')),
-            ('right', _('Right')),
+            ('top', 'Top'),
+            ('left', 'Left'),
+            ('right', 'Right'),
         ],
         required=False,
     )
@@ -68,5 +68,5 @@ class MediaTeaserBlock(StructBlock):
 
     class Meta:
         icon = 'fa fa-file'
-        label = _('Media Teaser')
+        label = 'Media Teaser'
         template = 'widgets/teaser.html'

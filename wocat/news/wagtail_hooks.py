@@ -7,7 +7,7 @@ from .models import NewsPage, NewsCountry
 
 
 class CountryFilter(SimpleListFilter):
-    title = _('country')
+    title = _('Country')
     parameter_name = 'country'
 
     def lookups(self, request, model_admin):

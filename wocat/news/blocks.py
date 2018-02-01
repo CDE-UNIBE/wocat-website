@@ -30,7 +30,7 @@ class NewsTeaserBlock(StructBlock):
             'author': news.author,
             'date': news.date,
             'href': news.url,
-            'readmorelink': {'text': _('read more')},
+            'readmorelink': {'text': _('Read more')},
             'bottomline': True,
         })
 
@@ -44,7 +44,7 @@ class NewsTeaserBlock(StructBlock):
 
     class Meta:
         icon = 'fa fa-newspaper-o'
-        label = _('News Teaser')
+        label = 'News Teaser'
         template = 'widgets/teaser.html'
 
 

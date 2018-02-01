@@ -1,12 +1,9 @@
-from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import QueryDict
 from django.urls import reverse
 from django.core.validators import MaxValueValidator
 from django.db import models
-from django.db.models import Q, QuerySet
-from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.db.models import QuerySet
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
@@ -15,14 +12,16 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 
-from wocat.cms.models import UniquePageMixin, HeaderPageMixin
+from wocat.cms.models import UniquePageMixin, HeaderPageMixin, \
+    TranslatablePageMixin, get_default_year_now
 from wocat.core.blocks import CORE_BLOCKS
 
 from wocat.countries.models import Continent, Country
 from wocat.languages.models import Language
 
 
-class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
+class MediaLibraryPage(
+        UniquePageMixin, HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'medialibrary/library.html'
     ajax_template = 'medialibrary/library_items.html'
     ordering = ('title',)
@@ -36,14 +35,14 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
     ]
 
     class Meta:
-        verbose_name = _('Media Library')
+        verbose_name = 'Media Library'
 
     parent_page_types = ['cms.HomePage']
 
@@ -100,19 +99,19 @@ class MediaLibraryPage(UniquePageMixin, HeaderPageMixin, Page):
 @register_snippet
 class MediaType(models.Model):
     name = models.CharField(
-        _('Name'),
+        'Name',
         max_length=255,
         unique=True,
     )
     icon = models.CharField(
-        _('Icon name'),
+        'Icon name',
         max_length=255,
-        help_text=_('Fontawesome icon name.'),
+        help_text='Fontawesome icon name.',
         blank=True,
     )
     default_image = models.ForeignKey(
         'wagtailimages.Image',
-        verbose_name=_('Default image'),
+        verbose_name='Default image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -140,17 +139,17 @@ class MediaType(models.Model):
 
 class Media(models.Model):
     title = models.CharField(
-        _('Title'),
+        'Title',
         max_length=255,
         unique=True
     )
     abstract = models.TextField(
-        _('Abstract'),
+        'Abstract',
         blank=True
     )
     teaser_image = models.ForeignKey(
         'wagtailimages.Image',
-        verbose_name=_('Teaser image'),
+        verbose_name='Teaser image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -162,19 +161,19 @@ class Media(models.Model):
         return self.teaser_image or self.media_type.image
 
     video = models.URLField(
-        verbose_name=_('Video'),
+        verbose_name='Video',
         blank=True,
     )
 
     year = models.PositiveIntegerField(
-        _('Year'),
-        default=timezone.now().year,
+        'Year',
+        default=get_default_year_now,
         validators=[MaxValueValidator(4000)],
         blank=True, null=True
     )
 
     languages = models.ManyToManyField(
-        verbose_name=_('Languages'),
+        verbose_name='Languages',
         to=Language,
         blank=True
     )
@@ -188,15 +187,15 @@ class Media(models.Model):
         null=True, blank=True,
         on_delete=models.PROTECT,
         related_name='+',
-        help_text=_('This field is only used if the content is empty.'),
+        help_text='This field is only used if the content is empty.',
     )
     author = models.CharField(
-        _('Author'),
+        'Author',
         max_length=255,
         blank=True,
     )
     countries = models.ManyToManyField(
-        verbose_name=_('Countries'),
+        verbose_name='Countries',
         to=Country,
         blank=True,
     )
@@ -206,13 +205,13 @@ class Media(models.Model):
     )
     media_type = models.ForeignKey(
         'MediaType',
-        verbose_name=_('Type'),
+        verbose_name='Type',
         on_delete=models.PROTECT,
     )
 
     class Meta:
-        verbose_name = _('Media')
-        verbose_name_plural = _('Media')
+        verbose_name = 'Media'
+        verbose_name_plural = 'Media'
 
     def __str__(self):
         return self.title

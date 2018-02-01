@@ -57,7 +57,6 @@ CMS_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
-    #'wagtail_modeltranslation',
 )
 
 THIRD_PARTY_APPS = (
@@ -170,10 +169,14 @@ TIME_ZONE = 'Europe/Berlin'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en'
 
+# For every additional language (other than the default one), a link must be
+# defined in cms/models.py:TranslatablePageMixin. Also create a new CMS page in
+# "Home" with the slug of the new language.
 LANGUAGES = [
     ('en', _('English')),
-#    ('fr', _('Français')),
-#    ('es', _('Español')),
+    ('fr', _('French')),
+    ('es', _('Spanish')),
+    # See comment above when adding new languages ...
 ]
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1

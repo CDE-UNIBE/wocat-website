@@ -7,11 +7,6 @@ from django.views.generic import ListView
 from .models import Media
 
 
-class MediaListView(ListView):
-    model = Media
-    template_name = 'medialibrary/list.html'
-
-
 class MediaDetailView(DetailView):
     model = Media
     template_name = 'medialibrary/media.html'
