@@ -9,14 +9,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-01 10:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Lukas Vonlanthen <lukas.vonlanthen@cde.unibe.ch>, 2018\n"
-"Language-Team: French (https://www.transifex.com/university-of-bern-cde/"
-"teams/82991/fr/)\n"
-"Language: fr\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: config/settings/common.py:176 wocat/users/models.py:250
 msgid "English"
@@ -244,11 +242,11 @@ msgstr ""
 #: wocat/medialibrary/filters.py:27 wocat/search/templates/search/index.html:4
 #: wocat/search/templates/search/index.html:7 wocat/templates/map/map.html:27
 msgid "Search"
-msgstr "Recherche"
+msgstr ""
 
 #: wocat/medialibrary/filters.py:31
 msgid "All languages"
-msgstr "Toutes les langues"
+msgstr ""
 
 #: wocat/medialibrary/filters.py:34
 msgid "Since (all years)"
@@ -260,7 +258,7 @@ msgstr ""
 
 #: wocat/medialibrary/filters.py:41
 msgid "All countries"
-msgstr "Tous les pays"
+msgstr ""
 
 #: wocat/medialibrary/filters.py:49
 msgid "All types"
@@ -774,7 +772,7 @@ msgstr ""
 #: wocat/users/forms.py:108 wocat/users/models.py:40
 #: wocat/users/templates/users/user_detail.html:57
 msgid "Key work topics"
-msgstr "Thèmes de travail clés"
+msgstr ""
 
 #: wocat/users/forms.py:115
 msgid "Function and WOCAT experiences"
