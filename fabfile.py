@@ -54,6 +54,7 @@ def deploy():
         _compile_less()
         _collectstatic()
         _migrate()
+        _compilemessages()
         _set_maintenance('off')
 
 
@@ -78,6 +79,11 @@ def _collectstatic():
 def _migrate():
     with virtualenv():
         run("python manage.py migrate")
+
+
+def _compilemessages():
+    with virtualenv():
+        run('python manage.py compilemessages')
 
 
 def _set_maintenance(switch: str):

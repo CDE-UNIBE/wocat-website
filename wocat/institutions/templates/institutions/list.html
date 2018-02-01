@@ -4,7 +4,7 @@
 {% block title %}{{ block.super }} {% trans 'Institutions' %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans 'Instutitions' %}</h1>
+    <h1>{% trans 'Institutions' %}</h1>
     {% for institution in institutions %}
         {% include 'widgets/read-more-link.html' with href=institution.get_absolute_url text=institution %}
     {% endfor %}
