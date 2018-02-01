@@ -94,15 +94,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         'staff status',
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text='Designates whether the user can log into this admin site.',
     )
     is_active = models.BooleanField(
         'active',
         default=True,
-        help_text=_(
-            'Designates whether this user should be treated as active. '
-            'Unselect this instead of deleting accounts.'
-        ),
+        help_text='Designates whether this user should be treated as active. '
+                  'Unselect this instead of deleting accounts.',
     )
     date_joined = models.DateTimeField('date joined', default=timezone.now)
 
@@ -264,7 +262,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
     avatar = ThumbnailerImageField(
-        verbose_name=_('avatar'),
+        verbose_name='avatar',
         upload_to='users/avatars',
         # resize_source=dict(size=(1200, 1200)),
         blank=True,
