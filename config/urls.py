@@ -6,7 +6,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 from wagtail.contrib.wagtailsitemaps.views import sitemap
 
 from wagtail.wagtailcore import urls as wagtail_urls
