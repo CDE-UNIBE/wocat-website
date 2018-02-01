@@ -1,12 +1,14 @@
-# WOCAT Translations
-# Copyright (C) 2018 WOCAT
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 07:55+0100\n"
+"POT-Creation-Date: 2018-02-01 07:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: config/settings/common.py:176 wocat/users/models.py:252
 msgid "English"
@@ -245,11 +247,11 @@ msgstr ""
 #: wocat/medialibrary/filters.py:27 wocat/search/templates/search/index.html:4
 #: wocat/search/templates/search/index.html:7 wocat/templates/map/map.html:27
 msgid "Search"
-msgstr "Recherche"
+msgstr ""
 
 #: wocat/medialibrary/filters.py:31
 msgid "All languages"
-msgstr "Toutes les langues"
+msgstr ""
 
 #: wocat/medialibrary/filters.py:34
 msgid "Since (all years)"
@@ -261,7 +263,7 @@ msgstr ""
 
 #: wocat/medialibrary/filters.py:41
 msgid "All countries"
-msgstr "Tous les pays"
+msgstr ""
 
 #: wocat/medialibrary/filters.py:49
 msgid "All types"
@@ -785,7 +787,7 @@ msgstr ""
 
 #: wocat/users/forms.py:108 wocat/users/models.py:40
 msgid "Key work topics"
-msgstr "Thèmes de travail clés"
+msgstr ""
 
 #: wocat/users/forms.py:115
 msgid "Function and WOCAT experiences"
