@@ -6,9 +6,11 @@
     {% carousel %}
     {% overlay %}
     <div class="container">
+        <br>
         {% breadcrumb %}
+        {% content-language-switcher %}
+        <br>
         {% block content %}
-            {% content-language-switcher %}
             {% include_block page.content %}
         {% endblock content %}
     </div>
