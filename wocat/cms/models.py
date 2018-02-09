@@ -739,11 +739,9 @@ class InstitutionsPage(UniquePageMixin, TranslatablePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['countries'] = Country.objects.filter(
-            institution__isnull=False
-        ).distinct().values_list(
-            'code', 'name'
-        )
+        context['countries'] = [
+            (c.code, str(c)) for c in Country.objects.filter(
+                institution__isnull=False).distinct()]
         return context
 
 
