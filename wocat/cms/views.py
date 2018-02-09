@@ -6,7 +6,6 @@ from django.template.defaultfilters import slugify
 from django.views.generic import View, RedirectView
 from wagtail.wagtailcore.models import Page, Collection
 from wagtail.wagtaildocs.models import get_document_model
-from django.utils.translation import ugettext_lazy as _
 
 
 class AddLanguagePrefixRedirectView(RedirectView):
@@ -15,6 +14,8 @@ class AddLanguagePrefixRedirectView(RedirectView):
     """
     def get_redirect_url(self, *args, **kwargs):
         redirect_url = '/' + settings.LANGUAGES[0][0] + self.request.get_full_path()
+        if not redirect_url.endswith('/'):
+            redirect_url += '/'
         get_object_or_404(Page, url_path='/home' + redirect_url)
         return redirect_url
 
