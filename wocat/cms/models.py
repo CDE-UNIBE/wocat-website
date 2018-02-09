@@ -860,15 +860,15 @@ class FooterSettings(ClusterableModel, BaseSetting):
 
 class FooterLink(Orderable, models.Model):
     footer = ParentalKey(FooterSettings, related_name='footer_links')
-    name = models.CharField(max_length=255)
-    target = models.ForeignKey('wagtailcore.Page')
+    target = models.ForeignKey(
+        'wagtailcore.Page',
+        help_text='Always link the original page (in English)!')
 
     @property
     def url(self):
         return self.target.url
 
     panels = [
-        FieldPanel('name'),
         PageChooserPanel('target'),
     ]
 

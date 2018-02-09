@@ -249,9 +249,11 @@ class Footer(InclusionTag):
         settings = self.get_settings(context)
         if settings:
             for link in settings.footer_links.all():
+                page = TranslatablePageMixin.get_translated_page(
+                    link.target.specific)
                 links.append({
-                    'text': link.name,
-                    'href': link.url,
+                    'text': page.title,
+                    'href': page.url,
                     'onlyxs': onlyxs
                 })
         return links
