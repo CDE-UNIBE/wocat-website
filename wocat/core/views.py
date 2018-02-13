@@ -9,7 +9,7 @@ from django.utils.translation import LANGUAGE_SESSION_KEY, check_for_language, \
 from django.views.generic import RedirectView
 from wagtail.wagtailcore.models import Page
 
-from wocat.cms.models import TranslatablePageMixin
+from wocat.cms.translation import TranslatablePageMixin
 
 
 class SwitchLanguageView(RedirectView):

@@ -13,7 +13,8 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 
 from wocat.cms.models import UniquePageMixin, HeaderPageMixin, \
-    TranslatablePageMixin, get_default_year_now
+    get_default_year_now
+from wocat.cms.translation import TranslatablePageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
 from wocat.countries.models import Continent, Country

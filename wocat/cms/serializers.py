@@ -13,7 +13,8 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 
 from wocat.cms.models import ProjectPage, RegionPage, ProjectCountryPage, \
-    CountryPage, TranslatablePageMixin
+    CountryPage
+from wocat.cms.translation import TranslatablePageMixin
 from wocat.countries.models import Country
 
 

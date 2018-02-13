@@ -8,8 +8,8 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 
-from wocat.cms.models import HeaderPageMixin, UniquePageMixin, \
-    TranslatablePageMixin
+from wocat.cms.models import HeaderPageMixin, UniquePageMixin
+from wocat.cms.translation import TranslatablePageMixin
 from wocat.core.blocks import CORE_BLOCKS
 
 

@@ -7,7 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import richtext
 
 from wocat.cms.models import ProjectPage, TopNavigationSettings, \
-    FooterSettings, TranslatablePageMixin
+    FooterSettings
+from wocat.cms.translation import TranslatablePageMixin
 
 register = template.Library()
 
@@ -249,9 +250,11 @@ class Footer(InclusionTag):
         settings = self.get_settings(context)
         if settings:
             for link in settings.footer_links.all():
+                page = TranslatablePageMixin.get_translated_page(
+                    link.target.specific)
                 links.append({
-                    'text': link.name,
-                    'href': link.url,
+                    'text': page.title,
+                    'href': page.url,
                     'onlyxs': onlyxs
                 })
         return links

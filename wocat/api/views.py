@@ -19,9 +19,10 @@ from rest_framework.views import APIView
 from django_filters import rest_framework as filters
 
 from wocat.api.authenticators import SameHostAjaxAuthentication
-from wocat.cms.models import ProjectPage, RegionPage, TranslatablePageMixin
+from wocat.cms.models import ProjectPage, RegionPage
 from wocat.cms.serializers import ProjectPageSerializer, RegionPageSerializer, \
     CountrySerializer
+from wocat.cms.translation import TranslatablePageMixin
 from wocat.countries.models import Country
 from wocat.institutions.models import Institution
 from wocat.institutions.serializers import InstitutionSerializer
