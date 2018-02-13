@@ -109,7 +109,7 @@ class ReadMoreBlock(StructBlock):
     name = blocks.CharBlock(required=False)
     page = PageChooserBlock(
         required=False,
-        help_text='Links to the original page (in "{}"), will automatically '
+        help_text='Links to the original page (in "{}") will automatically '
                   'point to translated pages (if they exist) in other '
                   'languages. Links to a translation will always point to that '
                   'translated page, in all languages.'.format(
@@ -189,9 +189,10 @@ class TeaserBlock(StructBlock):
     title = blocks.CharBlock(required=False)
     content = RichTextBlock(required=False)
     image = TeaserImageBlock(required=False)
+
     page = PageChooserBlock(
         required=False,
-        help_text='Links to the original page (in "{}"), will automatically '
+        help_text='Links to the original page (in "{}") will automatically '
                   'point to translated pages (if they exist) in other '
                   'languages. Links to a translation will always point to that '
                   'translated page, in all languages.'.format(
@@ -239,7 +240,7 @@ class OverlayTeaserBlock(StructBlock):
         required=True, help_text='Recommended minimal width: 737px')
     page = PageChooserBlock(
         required=False,
-        help_text='Links to the original page (in "{}"), will automatically '
+        help_text='Links to the original page (in "{}") will automatically '
                   'point to translated pages (if they exist) in other '
                   'languages. Links to a translation will always point to that '
                   'translated page, in all languages.'.format(
@@ -286,7 +287,7 @@ class OverlayTeaserMapBlock(StructBlock):
     content = RichTextBlock(required=False)
     page = PageChooserBlock(
         required=False,
-        help_text='Links to the original page (in "{}"), will automatically '
+        help_text='Links to the original page (in "{}") will automatically '
                   'point to translated pages (if they exist) in other '
                   'languages. Links to a translation will always point to that '
                   'translated page, in all languages.'.format(
@@ -386,7 +387,7 @@ class DsfTocBlock(TocBlock):
 class DSFTeaserBlock(StructBlock):
     page = PageChooserBlock(
         required=False,
-        help_text='Links to the original page (in "{}"), will automatically '
+        help_text='Links to the original page (in "{}") will automatically '
                   'point to translated pages (if they exist) in other '
                   'languages. Links to a translation will always point to that '
                   'translated page, in all languages.'.format(
