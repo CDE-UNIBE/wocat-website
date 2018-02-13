@@ -107,7 +107,13 @@ class DocumentBlock(DocumentChooserBlock):
 
 class ReadMoreBlock(StructBlock):
     name = blocks.CharBlock(required=False)
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}"), will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+                    TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     button = blocks.BooleanBlock(required=False)
     alignment = ChoiceBlock(
@@ -183,7 +189,13 @@ class TeaserBlock(StructBlock):
     title = blocks.CharBlock(required=False)
     content = RichTextBlock(required=False)
     image = TeaserImageBlock(required=False)
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}"), will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     read_more_text = blocks.CharBlock(required=False)
     boarderless = blocks.BooleanBlock(required=False)
@@ -225,7 +237,13 @@ class OverlayTeaserBlock(StructBlock):
     content = RichTextBlock(required=False)
     image = ImageChooserBlock(
         required=True, help_text='Recommended minimal width: 737px')
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}"), will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(required=False)
     top_box = blocks.BooleanBlock(required=False, default=False)
@@ -266,7 +284,13 @@ class OverlayTeaserBlock(StructBlock):
 class OverlayTeaserMapBlock(StructBlock):
     title = blocks.CharBlock()
     content = RichTextBlock(required=False)
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}"), will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(required=False)
 
@@ -360,7 +384,13 @@ class DsfTocBlock(TocBlock):
 
 
 class DSFTeaserBlock(StructBlock):
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}"), will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     module_1 = blocks.BooleanBlock(required=False, default=True)
     module_2 = blocks.BooleanBlock(required=False, default=True)
     module_3 = blocks.BooleanBlock(required=False, default=True)
