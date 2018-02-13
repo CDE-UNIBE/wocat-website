@@ -211,37 +211,67 @@ LESS to CSS compilation
 
 The style sheets are written in LESS. They will be compiled to a single CSS file by *$ lessc* while running Fabric. See *compile_less()* in *fabfile.py*.
 
-Translations (PO to MO compilation)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Translations
+------------
 
 There are two kinds of translations:
 
-* CMS translations: Can be added directly through the CMS admin interface (if multiple languages are enabled)
-* Other translations: All other translations (like forms or captions) are handled by Django translation.
+* CMS translations: Can be added directly through the CMS admin interface by editing the translation page.
+* Source code translation: All other translations (like forms or captions) are handled by Django translation, translation happens on Transifex (https://www.transifex.com/university-of-bern-cde/wocat-website/).
 
-Steps required to collect, translate and compile translations with the Django translations:
+Add a new language
+^^^^^^^^^^^^^^^^^^
 
-1. Add new translations to PO file (e.g. DE for german)
+Preparation:
 
-.. code-block:: bash
+* Add new language to ``LANGUAGES`` in ``config/settings/common.py``
+* Define a link (e.g. ``de_link``) for the new language in ``wocat/cms/translation.py``, also add field FilterField in ``search_fields``.
+
+Source code translation - Create po file:
+
+* Add new translations to PO file (e.g. DE for german)
+
+  .. code-block:: bash
 
     $ python manage.py makemessages -l <LANGUAGE>
 
-2. Translate strings manually (msgid to msgstr) in locale/<LANGUAGE>/django.po (e.g. by using POEdit translation editor)
-3. Compile translations
+CMS translation - Copy page tree:
 
-.. code-block:: bash
+* To copy the entire page tree into a new language, use the following management command:
 
-    $ python manage.py compilemessages
+  .. code-block:: bash
 
-4. Restart webserver
+    python manage.py create_translation_tree
 
+  This command can also be used to copy a single page within the tree (just modify the defaults).
+
+Update translations
+^^^^^^^^^^^^^^^^^^^
+
+Source code translation:
+
+* To update translations (happening on Transifex), use:
+
+  .. code-block:: bash
+
+    python manage.py makemessages
+
+* To use translations, use the following management command:
+
+  .. code-block:: bash
+
+    python manage.py compilemessages
+
+  This step is executed by fabric during deploy.
 
 
 Sentry
-^^^^^^
+------
 
 Sentry is an error logging aggregator service. You can sign up for a free account at http://getsentry.com or download and host it yourself.
 The system is setup with reasonable defaults, including 404 logging and integration with the WSGI application.
 
 You must set the DSN url in production.
+
+
