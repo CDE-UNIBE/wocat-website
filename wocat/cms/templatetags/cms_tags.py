@@ -7,7 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import richtext
 
 from wocat.cms.models import ProjectPage, TopNavigationSettings, \
-    FooterSettings, TranslatablePageMixin
+    FooterSettings
+from wocat.cms.translation import TranslatablePageMixin
 
 register = template.Library()
 

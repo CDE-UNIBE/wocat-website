@@ -170,8 +170,8 @@ TIME_ZONE = 'Europe/Berlin'
 LANGUAGE_CODE = 'en'
 
 # For every additional language (other than the default one), a link must be
-# defined in cms/models.py:TranslatablePageMixin. Also create a new CMS page in
-# "Home" with the slug of the new language.
+# defined in cms/translation.py:TranslatablePageMixin. Also create a new CMS
+# page in "Home" with the slug of the new language.
 LANGUAGES = [
     ('en', _('English')),
     ('fr', _('French')),
