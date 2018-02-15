@@ -20,6 +20,13 @@ class MediaChooserBlock(blocks.ChooserBlock):
         else:
             return value
 
+    def value_from_form(self, value):
+        # If no user was selected, value is an empty string which raises errors
+        # when validating the form. In this case, return empty early.
+        if value == '':
+            return None
+        return super().value_from_form(value)
+
 
 class MediaTeaserBlock(StructBlock):
     media = MediaChooserBlock(required=True)
