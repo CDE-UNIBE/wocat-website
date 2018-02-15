@@ -243,19 +243,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('Second email'),
         blank=True,
     )
-    ENGLISH = 'en'
-    FRENCH = 'fr'
-    SPANISH = 'es'
-    LANGUAGE_CHOICES = (
-        (ENGLISH, _('English')),
-        (FRENCH, _('French')),
-        (SPANISH, _('Spanish')),
-    )
     language = models.CharField(
         verbose_name=_('Language'),
         max_length=2,
-        choices=LANGUAGE_CHOICES,
-        default=ENGLISH,
+        choices=settings.LANGUAGES,
+        default=settings.LANGUAGES[0][0],
     )
     comments = models.TextField(
         verbose_name=_('Comments'),
