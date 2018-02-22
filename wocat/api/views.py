@@ -135,7 +135,7 @@ class MapSearchView(TemplateView):
         if self.query_string:
             # cast to list, as a searchqueryset (or something...) is returned
             return list(qs.search(self.query_string))
-        return qs
+        return qs.order_by('title')
 
     def prepare_country_data(self):
         # Get all countries with projects; alias the 'name' as 'title' to match
@@ -146,6 +146,8 @@ class MapSearchView(TemplateView):
             Q(projectcountrypage__isnull=False)
         ).annotate(
             title=F('name')
+        ).order_by(
+            'name'
         ).distinct()
         if self.query_string:
             qs = qs.filter(name__icontains=self.query_string)
