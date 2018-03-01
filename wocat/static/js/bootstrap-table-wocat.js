@@ -3,7 +3,7 @@ function imgFormatter(value, row) {
 }
 
 function boolFormatter(value, row) {
-    return (value) ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' : '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+    return (value) ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' : '<span aria-hidden="true"></span>';
 }
 
 function nameFormatter(value, row) {
