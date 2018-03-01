@@ -1,29 +1,33 @@
-from math import ceil
-
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.db import ProgrammingError
 from django.db import models
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.utils import translation, timezone
 from django.utils.translation import ugettext_lazy as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.models import ClusterableModel
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import register_setting
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel, InlinePanel, \
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, \
+    MultiFieldPanel, FieldPanel, InlinePanel, \
     PageChooserPanel
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailsearch import index
 
-from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock, PROJECT_BLOCKS, \
-    REGION_BLOCKS, COUNTRY_BLOCKS, EVENTS_BLOCKS
+from wocat.cms.blocks import IMAGE_BLOCKS, OverlayTeaserMapBlock, \
+    PROJECT_BLOCKS, REGION_BLOCKS, COUNTRY_BLOCKS, EVENTS_BLOCKS
+from wocat.cms.translation import TranslatablePageMixin
 from wocat.core.blocks import CORE_BLOCKS
 from wocat.countries.models import Country
-from wocat.institutions.models import Institution
 from wocat.users.models import UserExperience
 
 __author__ = 'Eraldo Energy'
+
+
+def get_default_year_now():
+    return timezone.now().year
 
 
 class UniquePageMixin:
@@ -48,7 +52,7 @@ class HeaderPageMixin(models.Model):
         blank=True
     )
     lead = RichTextField(
-        _('Lead text'),
+        'Lead text',
         blank=True
     )
 
@@ -81,7 +85,7 @@ class HeaderPageMixin(models.Model):
         return context
 
 
-class ContentPage(HeaderPageMixin, Page):
+class ContentPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     content = StreamField(
@@ -91,17 +95,17 @@ class ContentPage(HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
     ]
 
     class Meta:
-        verbose_name = _('Content')
+        verbose_name = 'Content'
 
 
-class HomePage(UniquePageMixin, HeaderPageMixin, Page):
+class HomePage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/home.html'
 
     about_page = models.ForeignKey(
@@ -112,7 +116,7 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
         related_name='+',
     )
     about_link_text = models.CharField(
-        _('About link text'),
+        'About link text',
         blank=True,
         max_length=255,
     )
@@ -132,7 +136,7 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
             classname="collapsible collapsed"
         ),
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
@@ -144,6 +148,19 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
         # parent_page_types = ['Root']
         # subpage_types = ['ProjectPage']
 
+    def serve(self, request, **kwargs):
+        language = translation.get_language_from_request(request)
+
+        # There can be multiple "HomePage"s (basically one for each existing
+        # language), therefore we need to check if the current one is already
+        # prefixed with the language. In this case, no additional redirect is
+        # necessary.
+        for lang_prefix in [l[0] for l in settings.LANGUAGES]:
+            if self.url.startswith('/' + lang_prefix):
+                return super().serve(request, **kwargs)
+
+        return HttpResponseRedirect(self.url + language + '/')
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         if self.about_page:
@@ -153,7 +170,7 @@ class HomePage(UniquePageMixin, HeaderPageMixin, Page):
         return context
 
 
-class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
+class ProjectsAndCountiesPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
@@ -163,7 +180,7 @@ class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
@@ -185,7 +202,7 @@ class ProjectsAndCountiesPage(UniquePageMixin, HeaderPageMixin, Page):
         return self.get_descendants().type(RegionPage).specific()
 
 
-class ProjectsPage(UniquePageMixin, Page):
+class ProjectsPage(TranslatablePageMixin, Page):
     template = 'projects/index.html'
 
     class Meta:
@@ -199,7 +216,7 @@ class ProjectsPage(UniquePageMixin, Page):
         return self.get_children()
 
 
-class ProjectPage(HeaderPageMixin, Page):
+class ProjectPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     contact_person = models.ForeignKey(
@@ -224,11 +241,11 @@ class ProjectPage(HeaderPageMixin, Page):
         FieldPanel('contact_person'),
         StreamFieldPanel('content'),
         FieldPanel('included_countries'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
-    ]
+    ] + TranslatablePageMixin.search_fields
 
     parent_page_types = ['ProjectsPage']
     subpage_types = ['ContentPage', 'ProjectCountriesPage', 'NewsAndEventsPage']
@@ -247,7 +264,7 @@ class ProjectPage(HeaderPageMixin, Page):
         return reverse_lazy('projectpage-detail', kwargs={'pk': self.pk})
 
 
-class ProjectCountriesPage(HeaderPageMixin, Page):
+class ProjectCountriesPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'countries/index.html'
 
     content = StreamField(
@@ -260,7 +277,7 @@ class ProjectCountriesPage(HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
@@ -283,7 +300,7 @@ class ProjectCountriesPage(HeaderPageMixin, Page):
             'projectpage-detail', kwargs={'pk': self.get_parent().pk})
 
 
-class ProjectCountryPage(HeaderPageMixin, Page):
+class ProjectCountryPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     country = models.ForeignKey(
@@ -312,7 +329,7 @@ class ProjectCountryPage(HeaderPageMixin, Page):
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         FieldPanel('country'),
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.FilterField('country'),
@@ -328,7 +345,7 @@ class ProjectCountryPage(HeaderPageMixin, Page):
         return context
 
 
-class CountriesPage(UniquePageMixin, Page):
+class CountriesPage(TranslatablePageMixin, Page):
     template = 'countries/index.html'
 
     class Meta:
@@ -342,10 +359,10 @@ class CountriesPage(UniquePageMixin, Page):
         return self.get_children()
 
 
-class CountryPage(HeaderPageMixin, Page):
+class CountryPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/country.html'
 
-    country = models.OneToOneField(
+    country = models.ForeignKey(
         Country,
         on_delete=models.PROTECT,
     )
@@ -376,7 +393,7 @@ class CountryPage(HeaderPageMixin, Page):
         FieldPanel('country'),
         FieldPanel('contact_person'),
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
@@ -401,7 +418,7 @@ class CountryPage(HeaderPageMixin, Page):
         )
 
 
-class RegionsPage(UniquePageMixin, Page):
+class RegionsPage(TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     class Meta:
@@ -419,7 +436,7 @@ class RegionCountry(Orderable):
     ]
 
 
-class RegionPage(HeaderPageMixin, Page):
+class RegionPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/region.html'
 
     contact_person = models.ForeignKey(
@@ -454,12 +471,12 @@ class RegionPage(HeaderPageMixin, Page):
         InlinePanel('region_countries', label="Countries"),
         FieldPanel('contact_person'),
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         # index.FilterField('countries'), TODO: This can't be indexed
         index.SearchField('content'),
-    ]
+    ] + TranslatablePageMixin.search_fields
 
     parent_page_types = ['RegionsPage']
     subpage_types = []
@@ -468,7 +485,7 @@ class RegionPage(HeaderPageMixin, Page):
         return reverse_lazy('regionpage-detail', kwargs={'pk': self.pk})
 
 
-class MembersPage(UniquePageMixin, Page):
+class MembersPage(UniquePageMixin, TranslatablePageMixin, Page):
     template = 'pages/members.html'
     paginate_by = 100
 
@@ -476,7 +493,7 @@ class MembersPage(UniquePageMixin, Page):
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + [
         index.SearchField('content'),
@@ -492,6 +509,7 @@ class MembersPage(UniquePageMixin, Page):
         ).distinct().values_list(
             'code', 'name'
         )
+        from wocat.institutions.models import Institution
         context['institutions'] = Institution.objects.filter(
             user__isnull=False
         ).distinct().values_list(
@@ -501,7 +519,7 @@ class MembersPage(UniquePageMixin, Page):
         return context
 
 
-class InstitutionsPage(UniquePageMixin, Page):
+class InstitutionsPage(UniquePageMixin, TranslatablePageMixin, Page):
     template = 'pages/institutions.html'
     paginate_by = 100
 
@@ -509,7 +527,7 @@ class InstitutionsPage(UniquePageMixin, Page):
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + [
         index.SearchField('content'),
@@ -520,15 +538,13 @@ class InstitutionsPage(UniquePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['countries'] = Country.objects.filter(
-            institution__isnull=False
-        ).distinct().values_list(
-            'code', 'name'
-        )
+        context['countries'] = [
+            (c.code, str(c)) for c in Country.objects.filter(
+                institution__isnull=False).distinct()]
         return context
 
 
-class NewsAndEventsPage(HeaderPageMixin, Page):
+class NewsAndEventsPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/content.html'
 
     content = StreamField(CORE_BLOCKS, blank=True)
@@ -538,7 +554,7 @@ class NewsAndEventsPage(HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
@@ -561,7 +577,7 @@ class NewsAndEventsPage(HeaderPageMixin, Page):
         #     return []  # TODO: Waiting for Events pages to be implemented.
 
 
-class EventsPage(HeaderPageMixin, Page):
+class EventsPage(HeaderPageMixin, TranslatablePageMixin, Page):
     template = 'pages/events.html'
 
     content = StreamField(EVENTS_BLOCKS, blank=True)
@@ -571,7 +587,7 @@ class EventsPage(HeaderPageMixin, Page):
 
     content_panels = Page.content_panels + HeaderPageMixin.content_panels + [
         StreamFieldPanel('content'),
-    ]
+    ] + TranslatablePageMixin.content_panels
 
     search_fields = Page.search_fields + HeaderPageMixin.search_fields + [
         index.SearchField('content'),
@@ -584,25 +600,25 @@ class EventsPage(HeaderPageMixin, Page):
 @register_setting
 class TopNavigationSettings(ClusterableModel, BaseSetting):
     panels = [
-        InlinePanel('social_media_links', label=_("Social Links")),
-        InlinePanel('top_navigation_links', label=_("Top Links")),
+        InlinePanel('social_media_links', label="Social Links"),
+        InlinePanel('top_navigation_links', label="Top Links"),
     ]
 
     class Meta:
-        verbose_name = _('Top navigation settings')
+        verbose_name = 'Top navigation settings'
 
 
 class TopNavigationLink(Orderable, models.Model):
     navigation = ParentalKey(TopNavigationSettings, related_name='top_navigation_links')
-    name = models.CharField(max_length=255)
-    target = models.ForeignKey('wagtailcore.Page')
+    target = models.ForeignKey(
+        'wagtailcore.Page',
+        help_text='Always link the original page (in English)!')
 
     @property
     def url(self):
         return self.target.url
 
     panels = [
-        FieldPanel('name'),
         PageChooserPanel('target'),
     ]
 
@@ -611,10 +627,10 @@ class SocialMediaLink(Orderable, models.Model):
     navigation = ParentalKey(TopNavigationSettings, related_name='social_media_links')
     icon = models.CharField(
         max_length=255,
-        help_text=_('Fontawesome icon name')
+        help_text='Fontawesome icon name'
     )
     url = models.URLField(
-        help_text=_('Your social media page URL')
+        help_text='Your social media page URL'
     )
 
     panels = [
@@ -636,20 +652,20 @@ class FooterSettings(ClusterableModel, BaseSetting):
     ]
 
     class Meta:
-        verbose_name = _('Footer settings')
+        verbose_name = 'Footer settings'
 
 
 class FooterLink(Orderable, models.Model):
     footer = ParentalKey(FooterSettings, related_name='footer_links')
-    name = models.CharField(max_length=255)
-    target = models.ForeignKey('wagtailcore.Page')
+    target = models.ForeignKey(
+        'wagtailcore.Page',
+        help_text='Always link the original page (in English)!')
 
     @property
     def url(self):
         return self.target.url
 
     panels = [
-        FieldPanel('name'),
         PageChooserPanel('target'),
     ]
 
@@ -660,7 +676,7 @@ class TermsSettings(BaseSetting):
         verbose_name=_('Name'),
         max_length=255,
         blank=True,
-        help_text=_('The name of the selected page will be used if this field is left empty.')
+        help_text='The name of the selected page will be used if this field is left empty.'
     )
     target = models.ForeignKey(
         'wagtailcore.Page',
@@ -678,4 +694,4 @@ class TermsSettings(BaseSetting):
     ]
 
     class Meta:
-        verbose_name = _('Terms settings')
+        verbose_name = 'Terms settings'

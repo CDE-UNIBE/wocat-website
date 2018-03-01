@@ -1,654 +1,418 @@
 # WOCAT Translations
-# Copyright (C) 2017 WOCAT
+# Copyright (C) 2018 WOCAT
 # This file is distributed under the same license as the PACKAGE package.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-21 14:38+0200\n"
+"POT-Creation-Date: 2018-02-01 11:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Lukas Vonlanthen <lukas.vonlanthen@cde.unibe.ch>, 2018\n"
+"Language-Team: French (https://www.transifex.com/university-of-bern-cde/"
+"teams/82991/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: api/templates/rest_framework/base.html:4
-#: api/templates/rest_framework/base.html:8
-msgid "WOCAT REST API"
+#: config/settings/common.py:176 wocat/users/models.py:250
+msgid "English"
 msgstr ""
 
-#: cms/blocks.py:92 cms/blocks.py:162 cms/blocks.py:219 news/blocks.py:32
-#: news/templatetags/news_tags.py:24
-msgid "read more"
+#: config/settings/common.py:177 wocat/users/models.py:251
+msgid "French"
 msgstr ""
 
-#: cms/blocks.py:98 cms/blocks.py:170
-msgid "At lest one of {} is required"
+#: config/settings/common.py:178 wocat/users/models.py:252
+msgid "Spanish"
 msgstr ""
 
-#: cms/blocks.py:141 cms/blocks.py:195 medialibrary/blocks.py:29
-msgid "Left"
+#: wocat/api/templates/api/partial/panel_text.html:10
+msgid "Back"
 msgstr ""
 
-#: cms/blocks.py:142
-msgid "Center"
+#: wocat/api/templates/api/partial/panel_text.html:33
+msgid "Go to detail page"
 msgstr ""
 
-#: cms/blocks.py:143 cms/blocks.py:196 medialibrary/blocks.py:30
-msgid "Right"
+#: wocat/api/templates/api/partial/panel_text.html:49
+#: wocat/api/templates/api/partial/panel_text.html:61
+msgid "See details for"
 msgstr ""
 
-#: cms/blocks.py:177
-msgid "Read more"
-msgstr ""
-
-#: cms/blocks.py:179 cms/blocks.py:237 cms/blocks.py:275 cms/blocks.py:312
-msgid "Choose either a page or an external link"
-msgstr ""
-
-#: cms/blocks.py:194 medialibrary/blocks.py:28
-msgid "Top"
-msgstr ""
-
-#: cms/blocks.py:235
-msgid "Teaser"
-msgstr ""
-
-#: cms/blocks.py:253 cms/blocks.py:288
-msgid "link"
-msgstr ""
-
-#: cms/blocks.py:273
-msgid "Large Image Teaser"
-msgstr ""
-
-#: cms/blocks.py:310
-msgid "Map Teaser"
-msgstr ""
-
-#: cms/blocks.py:316 cms/blocks.py:320
-msgid "Table of contents"
-msgstr ""
-
-#: cms/blocks.py:406
-msgid "DSF Teaser"
-msgstr ""
-
-#: cms/blocks.py:442
-msgid "Upload"
-msgstr ""
-
-#: cms/blocks.py:468
-msgid "Operational Strategy and Action plan"
-msgstr ""
-
-#: cms/blocks.py:469
-msgid "National and Subnational Level"
-msgstr ""
-
-#: cms/blocks.py:470
-msgid "Landscape Level"
-msgstr ""
-
-#: cms/blocks.py:471
-msgid "Sea Level"
-msgstr ""
-
-#: cms/blocks.py:472
-msgid "SLM Territorial Planning"
-msgstr ""
-
-#: cms/blocks.py:473
-msgid "Implementation and scaling out"
-msgstr ""
-
-#: cms/blocks.py:475
-msgid "Knowledge management platform for informed decision making"
-msgstr ""
-
-#: cms/blocks.py:505
-msgid "DSF Modules"
-msgstr ""
-
-#: cms/blocks.py:529
-msgid "S"
-msgstr ""
-
-#: cms/blocks.py:530
-msgid "XS"
-msgstr ""
-
-#: cms/blocks.py:531
-msgid "XXS"
-msgstr ""
-
-#: cms/blocks.py:579
-msgid "Image Gallery"
-msgstr ""
-
-#: cms/blocks.py:599 cms/blocks.py:605 users/blocks.py:101
-msgid "Subpages"
-msgstr ""
-
-#: cms/forms.py:18 cms/forms.py:55 institutions/models.py:85
-#: institutions/templates/institutions/detail.html:5
-#: institutions/wagtail_hooks.py:12 users/templates/users/user_detail.html:47
-msgid "Institution"
-msgstr ""
-
-#: cms/models.py:50
-msgid "Lead text"
-msgstr ""
-
-#: cms/models.py:100
-msgid "Content"
-msgstr ""
-
-#: cms/models.py:114
-msgid "About link text"
-msgstr ""
-
-#: cms/models.py:141
-msgid "Home"
-msgstr ""
-
-#: cms/models.py:161
-msgid "Projects & Countries"
-msgstr ""
-
-#: cms/models.py:191 cms/templates/pages/projects_and_countries.html:7
-msgid "Projects"
-msgstr ""
-
-#: cms/models.py:207 cms/models.py:342 cms/models.py:396
-#: institutions/models.py:46
-msgid "Contact person"
-msgstr ""
-
-#: cms/models.py:212
-msgid "Countries without country page"
-msgstr ""
-
-#: cms/models.py:220
-msgid "Project"
-msgstr ""
-
-#: cms/models.py:249
-msgid "Project Countries"
-msgstr ""
-
-#: cms/models.py:291
-msgid "Project Country"
-msgstr ""
-
-#: cms/models.py:311 cms/templates/pages/projects_and_countries.html:15
-#: cms/templates/pages/region.html:14 countries/models.py:28
-#: countries/templates/countries/list.html:4
-#: countries/templates/countries/list.html:7 medialibrary/models.py:186
+#: wocat/api/views.py:156 wocat/cms/models.py:553
+#: wocat/cms/templates/pages/region.html:15 wocat/countries/models.py:29
+#: wocat/countries/templates/countries/list.html:4
+#: wocat/countries/templates/countries/list.html:7
+#: wocat/templates/map/map.html:21
 msgid "Countries"
 msgstr ""
 
-#: cms/models.py:349 countries/models.py:27
-#: countries/templates/countries/detail.html:5
-#: institutions/templates/institutions/table.html:36
+#: wocat/api/views.py:162 wocat/cms/models.py:410 wocat/cms/serializers.py:133
+#: wocat/templates/map/map.html:20
+msgid "Projects"
+msgstr ""
+
+#: wocat/api/views.py:168 wocat/templates/map/map.html:22
+msgid "Initiatives"
+msgstr ""
+
+#: wocat/cms/blocks.py:91 wocat/cms/blocks.py:165 wocat/cms/blocks.py:181
+#: wocat/cms/blocks.py:225 wocat/news/blocks.py:33
+#: wocat/news/templatetags/news_tags.py:24
+msgid "Read more"
+msgstr ""
+
+#: wocat/cms/blocks.py:262 wocat/cms/blocks.py:299
+msgid "Link"
+msgstr ""
+
+#: wocat/cms/blocks.py:329 wocat/cms/blocks.py:334
+msgid "Table of contents"
+msgstr ""
+
+#: wocat/cms/forms.py:18 wocat/cms/forms.py:38 wocat/institutions/models.py:83
+#: wocat/institutions/templates/institutions/detail.html:5
+#: wocat/institutions/wagtail_hooks.py:13
+#: wocat/templates/widgets/members-table.html:69
+#: wocat/users/templates/users/user_detail.html:47
+msgid "Institution"
+msgstr ""
+
+#: wocat/cms/models.py:347 wocat/cms/templatetags/cms_tags.py:190
+msgid "Home"
+msgstr ""
+
+#: wocat/cms/models.py:380
+msgid "Projects & Countries"
+msgstr ""
+
+#: wocat/cms/models.py:426 wocat/cms/models.py:584 wocat/cms/models.py:646
+msgid "Contact person"
+msgstr ""
+
+#: wocat/cms/models.py:431
+msgid "Countries without country page"
+msgstr ""
+
+#: wocat/cms/models.py:439
+msgid "Project"
+msgstr ""
+
+#: wocat/cms/models.py:477
+msgid "Project Countries"
+msgstr ""
+
+#: wocat/cms/models.py:528
+msgid "Project Country"
+msgstr ""
+
+#: wocat/cms/models.py:591 wocat/countries/models.py:28
+#: wocat/countries/templates/countries/detail.html:5
+#: wocat/institutions/templates/institutions/table.html:36
+#: wocat/news/wagtail_hooks.py:10
+#: wocat/templates/widgets/institutions-table.html:54
+#: wocat/templates/widgets/members-table.html:58
 msgid "Country"
 msgstr ""
 
-#: cms/models.py:376 cms/templates/pages/projects_and_countries.html:23
+#: wocat/cms/models.py:626
 msgid "Regions"
 msgstr ""
 
-#: cms/models.py:413
+#: wocat/cms/models.py:669
 msgid "Region"
 msgstr ""
 
-#: cms/models.py:448 users/templates/users/user_list.html:3
-#: users/templates/users/user_list.html:9
+#: wocat/cms/models.py:704 wocat/users/templates/users/user_list.html:3
+#: wocat/users/templates/users/user_list.html:9
 msgid "Members"
 msgstr ""
 
-#: cms/models.py:485
-msgid "All Countries"
-msgstr ""
-
-#: cms/models.py:486
-msgid "All Expertises"
-msgstr ""
-
-#: cms/models.py:487
-msgid "All Institutions"
-msgstr ""
-
-#: cms/models.py:506
-msgid "Institutional members"
-msgstr ""
-
-#: cms/models.py:531
+#: wocat/cms/models.py:738
 msgid "Institutional Members"
 msgstr ""
 
-#: cms/models.py:586
-msgid "Back to WOCAT members"
-msgstr ""
-
-#: cms/models.py:597
+#: wocat/cms/models.py:756
 msgid "News & Events"
 msgstr ""
 
-#: cms/models.py:630
+#: wocat/cms/models.py:789
 msgid "Events"
 msgstr ""
 
-#: cms/models.py:647
-msgid "Social Links"
-msgstr ""
-
-#: cms/models.py:648
-msgid "Top Links"
-msgstr ""
-
-#: cms/models.py:652
-msgid "Top navigation settings"
-msgstr ""
-
-#: cms/models.py:674
-msgid "Fontawesome icon name"
-msgstr ""
-
-#: cms/models.py:677
-msgid "Your social media page URL"
-msgstr ""
-
-#: cms/models.py:694
+#: wocat/cms/models.py:853
 msgid "Links"
 msgstr ""
 
-#: cms/models.py:699
-msgid "Footer settings"
-msgstr ""
-
-#: cms/models.py:720 institutions/models.py:17
-#: institutions/templates/institutions/table.html:33 medialibrary/models.py:95
+#: wocat/cms/models.py:879
+#: wocat/institutions/templates/institutions/table.html:33
+#: wocat/templates/widgets/institutions-table.html:47
+#: wocat/templates/widgets/members-table.html:51
 msgid "Name"
 msgstr ""
 
-#: cms/models.py:723
-msgid "The name of the selected page will be used if this field is left empty."
+#: wocat/cms/serializers.py:114 wocat/cms/serializers.py:199
+msgid "Included countries"
 msgstr ""
 
-#: cms/models.py:741
-msgid "Terms settings"
-msgstr ""
-
-#: cms/templates/wagtailadmin/login.html:6
-msgid "WOCAT CMS login"
-msgstr ""
-
-#: cms/templatetags/cms_tags.py:20
+#: wocat/cms/templatetags/cms_tags.py:21
 msgid "Profile"
 msgstr ""
 
-#: cms/templatetags/cms_tags.py:21
+#: wocat/cms/templatetags/cms_tags.py:22
 msgid "Logout"
 msgstr ""
 
-#: cms/templatetags/projects_tags.py:28
-msgid "to the project"
+#: wocat/cms/templatetags/projects_tags.py:28
+msgid "To the project"
 msgstr ""
 
-#: cms/templatetags/regions_tags.py:22
-msgid "to the region"
+#: wocat/cms/templatetags/regions_tags.py:22
+msgid "To the region"
 msgstr ""
 
-#: cms/views.py:78
-#, python-brace-format
-msgid "File \"{document}\" has been deleted."
-msgstr ""
-
-#: core/views.py:17
-#, python-format
-msgid "The language \"%s\" is not supported"
-msgstr ""
-
-#: countries/models.py:12
-msgid "code (alpha3)"
-msgstr ""
-
-#: countries/models.py:18 countries/models.py:49 languages/models.py:14
-msgid "name"
-msgstr ""
-
-#: countries/models.py:59
+#: wocat/countries/models.py:68
 msgid "Continent"
 msgstr ""
 
-#: countries/models.py:60
+#: wocat/countries/models.py:69
 msgid "Continents"
 msgstr ""
 
-#: countries/templatetags/countries_tags.py:22
-msgid "to the country"
+#: wocat/countries/templatetags/countries_tags.py:22
+msgid "To the country"
 msgstr ""
 
-#: glossary/models.py:17 medialibrary/models.py:130 users/models.py:140
-msgid "Title"
-msgstr ""
-
-#: glossary/models.py:25
-msgid "Description"
-msgstr ""
-
-#: glossary/models.py:28
-msgid "Is an acronym"
-msgstr ""
-
-#: glossary/models.py:33
-msgid "Entry"
-msgstr ""
-
-#: glossary/models.py:34
-msgid "Entries"
-msgstr ""
-
-#: glossary/models.py:74 glossary/templates/glossary/list.html:4
-#: glossary/templates/glossary/list.html:7 glossary/wagtail_hooks.py:10
+#: wocat/glossary/models.py:76 wocat/glossary/templates/glossary/list.html:4
+#: wocat/glossary/templates/glossary/list.html:7
+#: wocat/glossary/wagtail_hooks.py:10
 msgid "Glossary"
 msgstr ""
 
-#: glossary/templates/glossary/entry.html:5
-msgid "Glossary Entry"
-msgstr ""
-
-#: institutions/models.py:25
-msgid "Abbreviation"
-msgstr ""
-
-#: institutions/models.py:30
-msgid "Url"
-msgstr ""
-
-#: institutions/models.py:34 medialibrary/models.py:157
+#: wocat/institutions/models.py:32
 msgid "Year"
 msgstr ""
 
-#: institutions/models.py:51
-msgid "Memorandum signed"
-msgstr ""
-
-#: institutions/models.py:56 institutions/wagtail_hooks.py:25
-msgid "Logo"
-msgstr ""
-
-#: institutions/models.py:86 institutions/templates/institutions/list.html:4
+#: wocat/institutions/models.py:84
+#: wocat/institutions/templates/institutions/list.html:4
+#: wocat/institutions/templates/institutions/list.html:7
 msgid "Institutions"
 msgstr ""
 
-#: institutions/templates/institutions/list.html:7
-msgid "Instutitions"
-msgstr ""
-
-#: institutions/templates/institutions/table.html:39
+#: wocat/institutions/templates/institutions/table.html:39
 msgid "Organisation"
 msgstr ""
 
-#: institutions/templates/institutions/table.html:42
+#: wocat/institutions/templates/institutions/table.html:42
+#: wocat/templates/widgets/members-table.html:82
 msgid "Expertise"
 msgstr ""
 
-#: institutions/templates/institutions/table.html:98
+#: wocat/institutions/templates/institutions/table.html:98
 msgid "No member found with this filter."
 msgstr ""
 
-#: languages/models.py:8
-msgid "language code"
+#: wocat/institutions/wagtail_hooks.py:26
+#: wocat/templates/widgets/institutions-table.html:40
+msgid "Logo"
 msgstr ""
 
-#: languages/models.py:24 users/models.py:258
+#: wocat/languages/models.py:24 wocat/users/models.py:255
 msgid "Language"
 msgstr ""
 
-#: languages/models.py:25 medialibrary/models.py:164
+#: wocat/languages/models.py:25
 msgid "Languages"
 msgstr ""
 
-#: medialibrary/blocks.py:53 medialibrary/templatetags/media_tags.py:31
-#: templates/widgets/file-link.html:22 templates/widgets/file-link.html:26
+#: wocat/medialibrary/blocks.py:49
+#: wocat/medialibrary/templatetags/media_tags.py:32
+#: wocat/templates/widgets/file-link.html:22
+#: wocat/templates/widgets/file-link.html:26
 msgid "Download"
 msgstr ""
 
-#: medialibrary/blocks.py:56 medialibrary/templatetags/media_tags.py:34
+#: wocat/medialibrary/blocks.py:52
+#: wocat/medialibrary/templatetags/media_tags.py:35
 msgid "Show media"
 msgstr ""
 
-#: medialibrary/blocks.py:75
-msgid "Media Teaser"
+#: wocat/medialibrary/filters.py:27 wocat/search/templates/search/index.html:4
+#: wocat/search/templates/search/index.html:7 wocat/templates/map/map.html:27
+msgid "Search"
+msgstr "Recherche"
+
+#: wocat/medialibrary/filters.py:31
+msgid "All languages"
+msgstr "Toutes les langues"
+
+#: wocat/medialibrary/filters.py:34
+msgid "Since (all years)"
 msgstr ""
 
-#: medialibrary/models.py:39 medialibrary/wagtail_hooks.py:12
+#: wocat/medialibrary/filters.py:37
+msgid "Until (all years)"
+msgstr ""
+
+#: wocat/medialibrary/filters.py:41
+msgid "All countries"
+msgstr "Tous les pays"
+
+#: wocat/medialibrary/filters.py:49
+msgid "All types"
+msgstr ""
+
+#: wocat/medialibrary/filters.py:51
+msgid "All continents"
+msgstr "Tous les continents"
+
+#: wocat/medialibrary/templates/medialibrary/library_items.html:9
+msgid "No media found."
+msgstr ""
+
+#: wocat/medialibrary/wagtail_hooks.py:12
 msgid "Media Library"
 msgstr ""
 
-#: medialibrary/models.py:100
-msgid "Icon name"
-msgstr ""
-
-#: medialibrary/models.py:102
-msgid "Fontawesome icon name."
-msgstr ""
-
-#: medialibrary/models.py:107
-msgid "Default image"
-msgstr ""
-
-#: medialibrary/models.py:135
-msgid "Abstract"
-msgstr ""
-
-#: medialibrary/models.py:140
-msgid "Teaser image"
-msgstr ""
-
-#: medialibrary/models.py:152
-msgid "Video"
-msgstr ""
-
-#: medialibrary/models.py:178
-msgid "This field is only used if the content is empty."
-msgstr ""
-
-#: medialibrary/models.py:181 news/models.py:59
-msgid "Author"
-msgstr ""
-
-#: medialibrary/models.py:196
-msgid "Type"
-msgstr ""
-
-#: medialibrary/models.py:201 medialibrary/models.py:202
-msgid "Media"
-msgstr ""
-
-#: medialibrary/templates/medialibrary/library.html:7
-msgid "all"
-msgstr ""
-
-#: medialibrary/templates/medialibrary/library.html:28
-msgid "All languages"
-msgstr ""
-
-#: medialibrary/templates/medialibrary/library.html:42
-msgid "All years"
-msgstr ""
-
-#: medialibrary/templates/medialibrary/library.html:55
-msgid "All continents"
-msgstr ""
-
-#: medialibrary/templates/medialibrary/library.html:68
-msgid "All countries"
-msgstr ""
-
-#: news/blocks.py:46
-msgid "News Teaser"
-msgstr ""
-
-#: news/models.py:20
-msgid "News index"
-msgstr ""
-
-#: news/models.py:65
-msgid "Date"
-msgstr ""
-
-#: news/models.py:104 news/models.py:105 news/wagtail_hooks.py:28
+#: wocat/news/wagtail_hooks.py:28
 msgid "News"
 msgstr ""
 
-#: news/wagtail_hooks.py:10
-msgid "country"
-msgstr ""
-
-#: newsletter/filters.py:27 users/models.py:134
+#: wocat/newsletter/filters.py:26 wocat/users/models.py:131
 msgid "Salutation"
 msgstr ""
 
-#: newsletter/templates/newsletter/index.html:15
-msgid "Newsletter Management"
-msgstr ""
-
-#: newsletter/wagtail_hooks.py:14
+#: wocat/newsletter/wagtail_hooks.py:14
 msgid "Newsletter"
 msgstr ""
 
-#: search/templates/search/index.html:4 search/templates/search/index.html:7
-msgid "Search"
-msgstr ""
-
-#: search/templates/search/index.html:9
+#: wocat/search/templates/search/index.html:9
 msgid "Search text"
 msgstr ""
 
-#: search/templates/search/index.html:15
+#: wocat/search/templates/search/index.html:15
 msgid "No results found"
 msgstr ""
 
-#: search/templates/search/index.html:17
+#: wocat/search/templates/search/index.html:17
 msgid "Please type something into the search box"
 msgstr ""
 
-#: search/templates/search/index.html:21
+#: wocat/search/templates/search/index.html:21
 msgid "Matching Pages"
 msgstr ""
 
-#: search/templates/search/index.html:34
+#: wocat/search/templates/search/index.html:34
 msgid "Matching Glossary"
 msgstr ""
 
-#: search/templates/search/index.html:47
+#: wocat/search/templates/search/index.html:47
 msgid "Matching Documents"
 msgstr ""
 
-#: styleguide/urls.py:7
-msgid "^$"
+#: wocat/templates/404.html:4 wocat/templates/404.html:7
+msgid "Page not found"
 msgstr ""
 
-#: styleguide/urls.py:8
-msgid "^demos/(?P<template>.*)/$"
-msgstr ""
-
-#: templates/404.html:4
-msgid "Page Not found"
-msgstr ""
-
-#: templates/404.html:7
-msgid "Not found"
-msgstr ""
-
-#: templates/404.html:9
+#: wocat/templates/404.html:9
 msgid "This is not the page you were looking for."
 msgstr ""
 
-#: templates/500.html:4
+#: wocat/templates/500.html:4 wocat/templates/500.html:7
+#: wocat/templates/503.html:4
 msgid "Server Error"
 msgstr ""
 
-#: templates/500.html:7
-msgid "Ooops! 500"
-msgstr ""
-
-#: templates/500.html:9
+#: wocat/templates/500.html:9
 msgid "Looks like something went wrong!"
 msgstr ""
 
-#: templates/500.html:11
+#: wocat/templates/500.html:11
 msgid ""
 "We track these errors automatically, but if the problem persists feel free "
 "to contact us. In the meantime, try refreshing."
 msgstr ""
 
-#: templates/account/email.html:6
+#: wocat/templates/503.html:7
+msgid "Maintenance"
+msgstr ""
+
+#: wocat/templates/503.html:9
+msgid ""
+"We are updating the wocat website, please try refreshing in a couple of "
+"minutes."
+msgstr ""
+
+#: wocat/templates/account/account_inactive.html:5
+#: wocat/templates/account/account_inactive.html:11
+msgid "Account Inactive"
+msgstr ""
+
+#: wocat/templates/account/account_inactive.html:13
+msgid ""
+"Your registration is currently being reviewed by the WOCAT administrators. "
+"We will send you an email notification once it has been approved."
+msgstr ""
+
+#: wocat/templates/account/email.html:6
 msgid "Account"
 msgstr ""
 
-#: templates/account/email.html:13
+#: wocat/templates/account/email.html:13
 msgid "E-mail Addresses"
 msgstr ""
 
-#: templates/account/email.html:15
+#: wocat/templates/account/email.html:15
 msgid "The following e-mail addresses are associated with your account:"
 msgstr ""
 
-#: templates/account/email.html:32
+#: wocat/templates/account/email.html:32
 msgid "Verified"
 msgstr ""
 
-#: templates/account/email.html:34
+#: wocat/templates/account/email.html:34
 msgid "Unverified"
 msgstr ""
 
-#: templates/account/email.html:37
+#: wocat/templates/account/email.html:37
 msgid "Primary"
 msgstr ""
 
-#: templates/account/email.html:44
+#: wocat/templates/account/email.html:44
 msgid "Make Primary"
 msgstr ""
 
-#: templates/account/email.html:46
+#: wocat/templates/account/email.html:46
 msgid "Re-send Verification"
 msgstr ""
 
-#: templates/account/email.html:48
+#: wocat/templates/account/email.html:48
 msgid "Remove"
 msgstr ""
 
-#: templates/account/email.html:56
+#: wocat/templates/account/email.html:56
 msgid "Warning:"
 msgstr ""
 
-#: templates/account/email.html:56
+#: wocat/templates/account/email.html:56
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
 msgstr ""
 
-#: templates/account/email.html:62
+#: wocat/templates/account/email.html:62 wocat/templates/account/email.html:67
 msgid "Add E-mail Address"
 msgstr ""
 
-#: templates/account/email.html:67
-msgid "Add E-mail"
-msgstr ""
-
-#: templates/account/email.html:78
+#: wocat/templates/account/email.html:78
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr ""
 
-#: templates/account/email/email_confirmation_message.txt:1
+#: wocat/templates/account/email/email_confirmation_message.txt:1
 #, python-format
 msgid ""
 "Dear %(salutation)s %(user)s,\n"
@@ -688,119 +452,117 @@ msgid ""
 "account.\n"
 msgstr ""
 
-#: templates/account/email/email_confirmation_subject.txt:3
+#: wocat/templates/account/email/email_confirmation_subject.txt:3
 msgid "Please confirm your registration on WOCAT online"
 msgstr ""
 
-#: templates/account/email_confirm.html:6
-#: templates/account/email_confirm.html:13
-#: templates/account/email_confirmed.html:6
-#: templates/account/email_confirmed.html:13
+#: wocat/templates/account/email_confirm.html:6
+#: wocat/templates/account/email_confirm.html:13
+#: wocat/templates/account/email_confirmed.html:6
+#: wocat/templates/account/email_confirmed.html:13
 msgid "Confirm E-mail Address"
 msgstr ""
 
-#: templates/account/email_confirm.html:19
+#: wocat/templates/account/email_confirm.html:19
 #, python-format
 msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
 "address for user %(user_display)s."
 msgstr ""
 
-#: templates/account/email_confirm.html:23
+#: wocat/templates/account/email_confirm.html:23
 msgid "Confirm"
 msgstr ""
 
-#: templates/account/email_confirm.html:30
+#: wocat/templates/account/email_confirm.html:30
 #, python-format
 msgid ""
 "This e-mail confirmation link expired or is invalid. Please <a href="
 "\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 msgstr ""
 
-#: templates/account/email_confirmed.html:17
+#: wocat/templates/account/email_confirmed.html:17
 #, python-format
 msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-"
 "mail address for user %(user_display)s."
 msgstr ""
 
-#: templates/account/login.html:8 templates/account/login.html:14
-#: templates/account/login.html:41
+#: wocat/templates/account/login.html:7 wocat/templates/account/login.html:13
+#: wocat/templates/account/login.html:28
 msgid "Sign In"
 msgstr ""
 
-#: templates/account/login.html:17
+#: wocat/templates/account/login.html:16
+msgid "Is your account active?"
+msgstr ""
+
+#: wocat/templates/account/login.html:18
 #, python-format
 msgid ""
-"Please sign in with one\n"
-"                        of your existing third party accounts. Or, <a href="
-"\"%(signup_url)s\">sign up</a>\n"
-"                        for a %(site_name)s account and sign in below:"
+"When releasing this (new) website, all accounts were deactivated.\n"
+"                          In order to reactivate it, <strong><a href="
+"\"%(reactivate_url)s\">a new password must be set</a></strong>."
 msgstr ""
 
-#: templates/account/login.html:27
-msgid "or"
-msgstr ""
-
-#: templates/account/login.html:43
-msgid "Forgot Password?"
-msgstr ""
-
-#: templates/account/login.html:49
+#: wocat/templates/account/login.html:34
 msgid "Signup for a new account."
 msgstr ""
 
-#: templates/account/logout.html:5 templates/account/logout.html:12
-#: templates/account/logout.html:21
+#: wocat/templates/account/login.html:36
+msgid "Forgot Password?"
+msgstr ""
+
+#: wocat/templates/account/logout.html:5 wocat/templates/account/logout.html:12
+#: wocat/templates/account/logout.html:21
 msgid "Sign Out"
 msgstr ""
 
-#: templates/account/logout.html:14
+#: wocat/templates/account/logout.html:14
 msgid "Are you sure you want to sign out?"
 msgstr ""
 
-#: templates/account/password_change.html:5
-#: templates/account/password_change.html:11
-#: templates/account/password_change.html:16
-#: templates/account/password_reset_from_key.html:6
-#: templates/account/password_reset_from_key.html:12
-#: templates/account/password_reset_from_key_done.html:4
-#: templates/account/password_reset_from_key_done.html:10
+#: wocat/templates/account/password_change.html:5
+#: wocat/templates/account/password_change.html:11
+#: wocat/templates/account/password_change.html:16
+#: wocat/templates/account/password_reset_from_key.html:6
+#: wocat/templates/account/password_reset_from_key.html:12
+#: wocat/templates/account/password_reset_from_key.html:22
+#: wocat/templates/account/password_reset_from_key_done.html:4
+#: wocat/templates/account/password_reset_from_key_done.html:10
 msgid "Change Password"
 msgstr ""
 
-#: templates/account/password_reset.html:7
-#: templates/account/password_reset.html:14
-#: templates/account/password_reset_done.html:6
-#: templates/account/password_reset_done.html:12
+#: wocat/templates/account/password_reset.html:7
+#: wocat/templates/account/password_reset.html:14
+#: wocat/templates/account/password_reset_done.html:6
+#: wocat/templates/account/password_reset_done.html:12
+#: wocat/templates/account/reactivate_account.html:7
 msgid "Password Reset"
 msgstr ""
 
-#: templates/account/password_reset.html:19
+#: wocat/templates/account/password_reset.html:19
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll send you "
 "an e-mail allowing you to reset it."
 msgstr ""
 
-#: templates/account/password_reset.html:24
+#: wocat/templates/account/password_reset.html:24
 msgid "Reset My Password"
 msgstr ""
 
-#: templates/account/password_reset.html:27
+#: wocat/templates/account/password_reset.html:27
+#: wocat/templates/account/reactivate_account.html:28
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
 
-#: templates/account/password_reset_done.html:18
+#: wocat/templates/account/password_reset_done.html:18
 msgid ""
 "We have sent you an e-mail. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
 
-#: templates/account/password_reset_from_key.html:12
-msgid "Bad Token"
-msgstr ""
-
-#: templates/account/password_reset_from_key.html:16
+#: wocat/templates/account/password_reset_from_key.html:16
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
@@ -808,331 +570,329 @@ msgid ""
 "a>."
 msgstr ""
 
-#: templates/account/password_reset_from_key.html:22
-msgid "change password"
-msgstr ""
-
-#: templates/account/password_reset_from_key.html:25
-#: templates/account/password_reset_from_key_done.html:11
+#: wocat/templates/account/password_reset_from_key.html:25
+#: wocat/templates/account/password_reset_from_key_done.html:11
 msgid "Your password is now changed."
 msgstr ""
 
-#: templates/account/password_set.html:6
-#: templates/account/password_set.html:12
-#: templates/account/password_set.html:17
+#: wocat/templates/account/password_set.html:6
+#: wocat/templates/account/password_set.html:12
+#: wocat/templates/account/password_set.html:17
 msgid "Set Password"
 msgstr ""
 
-#: templates/account/signup.html:6
-msgid "Signup"
+#: wocat/templates/account/reactivate_account.html:14
+msgid "Reactivate my WOCAT account"
 msgstr ""
 
-#: templates/account/signup.html:11
+#: wocat/templates/account/reactivate_account.html:19
+msgid ""
+"With the launch of the new wocat website, all existing users were "
+"deactivated."
+msgstr ""
+
+#: wocat/templates/account/reactivate_account.html:20
+msgid ""
+"Please enter your e-mail address below, and we'll send you an e-mail "
+"allowing you to reactivate it."
+msgstr ""
+
+#: wocat/templates/account/reactivate_account.html:25
+msgid "Reactivate my account and set new password"
+msgstr ""
+
+#: wocat/templates/account/signup.html:6 wocat/templates/account/signup.html:11
 msgid "Sign Up"
 msgstr ""
 
-#: templates/account/signup.html:13
+#: wocat/templates/account/signup.html:13
 #, python-format
 msgid ""
 "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
-#: templates/account/signup_closed.html:5
-#: templates/account/signup_closed.html:11
+#: wocat/templates/account/signup_closed.html:5
+#: wocat/templates/account/signup_closed.html:11
 msgid "Sign Up Closed"
 msgstr ""
 
-#: templates/account/signup_closed.html:13
+#: wocat/templates/account/signup_closed.html:13
 msgid "We are sorry, but the sign up is currently closed."
 msgstr ""
 
-#: templates/account/verification_sent.html:5
-#: templates/account/verification_sent.html:11
-#: templates/account/verified_email_required.html:5
-#: templates/account/verified_email_required.html:11
+#: wocat/templates/account/verification_sent.html:5
+#: wocat/templates/account/verification_sent.html:11
+#: wocat/templates/account/verified_email_required.html:5
+#: wocat/templates/account/verified_email_required.html:11
 msgid "Verify Your E-mail Address"
 msgstr ""
 
-#: templates/account/verification_sent.html:13
-#, python-format
+#: wocat/templates/account/verification_sent.html:13
 msgid ""
-"We have sent an e-mail to <a href=\"mailto:%(email)s\">%(email)s</a> for "
-"verification. Follow the link provided to finalize the signup process. "
-"Please contact us if you do not receive it within a few minutes."
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
 msgstr ""
 
-#: templates/account/verified_email_required.html:15
+#: wocat/templates/account/verified_email_required.html:15
 msgid ""
 "This part of the site requires us to verify that\n"
 "        you are who you claim to be. For this purpose, we require that you\n"
 "        verify ownership of your e-mail address. "
 msgstr ""
 
-#: templates/account/verified_email_required.html:19
+#: wocat/templates/account/verified_email_required.html:19
 msgid ""
 "We have sent an e-mail to you for\n"
 "        verification. Please click on the link inside this e-mail. Please\n"
 "        contact us if you do not receive it within a few minutes."
 msgstr ""
 
-#: templates/account/verified_email_required.html:23
+#: wocat/templates/account/verified_email_required.html:23
 #, python-format
 msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
 "mail address</a>."
 msgstr ""
 
-#: templates/base.html:6
+#: wocat/templates/base.html:6
 msgid "WOCAT"
 msgstr ""
 
-#: templates/widgets/file-link.html:24
+#: wocat/templates/map/map.html:16
+msgid "Filter"
+msgstr ""
+
+#: wocat/templates/map/map.html:24
+msgid "All"
+msgstr ""
+
+#: wocat/templates/map/search_results.html:18
+msgid "Nothing found for given search term. Submit the search empty for all"
+msgstr ""
+
+#: wocat/templates/widgets/content-language-switcher.html:5
+msgid "This page is also available in: "
+msgstr ""
+
+#: wocat/templates/widgets/file-link.html:24
 msgid "Play Video"
 msgstr ""
 
-#: templates/widgets/file-link.html:33
+#: wocat/templates/widgets/file-link.html:33
 msgid "Delete File"
 msgstr ""
 
-#: templates/widgets/upload.html:8
+#: wocat/templates/widgets/institutions-table.html:71
+msgid "Memorandum"
+msgstr ""
+
+#: wocat/templates/widgets/institutions-table.html:80
+msgid "Signed"
+msgstr ""
+
+#: wocat/templates/widgets/institutions-table.html:84
+msgid "Not signed"
+msgstr ""
+
+#: wocat/templates/widgets/members-table.html:18
+msgid "This information is available for registered users only."
+msgstr ""
+
+#: wocat/templates/widgets/members-table.html:45
+msgid "Photo"
+msgstr ""
+
+#: wocat/templates/widgets/upload.html:8
 msgid "File upload"
 msgstr ""
 
-#: users/admin.py:16
+#: wocat/users/admin.py:16
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: users/admin.py:20 users/admin.py:66
+#: wocat/users/admin.py:20 wocat/users/admin.py:66
 msgid "Password"
 msgstr ""
 
-#: users/admin.py:25
+#: wocat/users/admin.py:25
 msgid "Password confirmation"
 msgstr ""
 
-#: users/admin.py:28
+#: wocat/users/admin.py:28
 msgid "Enter the same password as before, for verification."
 msgstr ""
 
-#: users/admin.py:67
+#: wocat/users/admin.py:67
 msgid ""
 "Raw passwords are not stored, so there is no way to see this user's "
 "password, but you can change the password using <a href=\"../password/"
 "\">this form</a>."
 msgstr ""
 
-#: users/admin.py:96
+#: wocat/users/admin.py:96
 msgid "Personal info"
 msgstr ""
 
-#: users/admin.py:97
+#: wocat/users/admin.py:97
 msgid "Permissions"
 msgstr ""
 
-#: users/admin.py:99
+#: wocat/users/admin.py:99
 msgid "Important dates"
 msgstr ""
 
-#: users/admin.py:100
+#: wocat/users/admin.py:100
 msgid "Data"
 msgstr ""
 
-#: users/blocks.py:76 users/blocks.py:129
-msgid "view profile"
+#: wocat/users/blocks.py:77 wocat/users/blocks.py:134
+msgid "View profile"
 msgstr ""
 
-#: users/blocks.py:84
-msgid "Member Teaser"
-msgstr ""
-
-#: users/blocks.py:141
-msgid "Contact Person Teaser"
-msgstr ""
-
-#: users/forms.py:26
+#: wocat/users/forms.py:19
 msgid "I’m responsible for the reporting of UNCCD Best Practices in SLM"
 msgstr ""
 
-#: users/forms.py:36
+#: wocat/users/forms.py:29
 msgid "Other key work topics"
 msgstr ""
 
-#: users/forms.py:39
+#: wocat/users/forms.py:32
 msgid "I accept the terms and conditions."
 msgstr ""
 
-#: users/forms.py:73
+#: wocat/users/forms.py:66
 #, python-brace-format
 msgid "I accept the <a href=\"{url}\" target=\"_blank\">{text}</a>."
 msgstr ""
 
-#: users/forms.py:94
-msgid "Address information"
-msgstr ""
-
-#: users/forms.py:115 users/models.py:35
-msgid "Key work topics"
-msgstr "Thèmes de travail clés"
-
-#: users/forms.py:122
-msgid "Function and WOCAT experiences"
-msgstr ""
-
-#: users/forms.py:133
-msgid "Send"
-msgstr ""
-
-#: users/models.py:23
-msgid "Experience"
-msgstr ""
-
-#: users/models.py:47
-msgid "Users must have an email address"
-msgstr ""
-
-#: users/models.py:77
-msgid "email address"
-msgstr ""
-
-#: users/models.py:84
-msgid "first name"
-msgstr ""
-
-#: users/models.py:88
-msgid "last name"
-msgstr ""
-
-#: users/models.py:92
-msgid "staff status"
-msgstr ""
-
-#: users/models.py:94
-msgid "Designates whether the user can log into this admin site."
-msgstr ""
-
-#: users/models.py:97
-msgid "active"
-msgstr ""
-
-#: users/models.py:100
-msgid ""
-"Designates whether this user should be treated as active. Unselect this "
-"instead of deleting accounts."
-msgstr ""
-
-#: users/models.py:104
-msgid "date joined"
-msgstr ""
-
-#: users/models.py:112
-msgid "user"
-msgstr ""
-
-#: users/models.py:113
-msgid "users"
-msgstr ""
-
-#: users/models.py:116
-msgid "Mr"
-msgstr ""
-
-#: users/models.py:118
-msgid "Mrs"
-msgstr ""
-
-#: users/models.py:145 users/templates/users/user_detail.html:50
-msgid "Position"
-msgstr ""
-
-#: users/models.py:150
-msgid "Department"
-msgstr ""
-
-#: users/models.py:158
-msgid "SLM specialists field level"
-msgstr ""
-
-#: users/models.py:159
-msgid "SLM specialists (sub-)national level"
-msgstr ""
-
-#: users/models.py:160
-msgid "SLM specialists regional and global levels"
-msgstr ""
-
-#: users/models.py:163
-msgid "Your function"
-msgstr ""
-
-#: users/models.py:191
+#: wocat/users/forms.py:87 wocat/users/models.py:188
 msgid "Address Information"
 msgstr ""
 
-#: users/models.py:196
+#: wocat/users/forms.py:108 wocat/users/models.py:40
+#: wocat/users/templates/users/user_detail.html:57
+msgid "Key work topics"
+msgstr "Thèmes de travail clés"
+
+#: wocat/users/forms.py:115
+msgid "Function and WOCAT experiences"
+msgstr ""
+
+#: wocat/users/forms.py:126
+msgid "Send"
+msgstr ""
+
+#: wocat/users/models.py:28
+msgid "Experience"
+msgstr ""
+
+#: wocat/users/models.py:52
+msgid "Users must have an email address"
+msgstr ""
+
+#: wocat/users/models.py:82
+msgid "Email address"
+msgstr ""
+
+#: wocat/users/models.py:87
+msgid "First name"
+msgstr ""
+
+#: wocat/users/models.py:91
+msgid "Last name"
+msgstr ""
+
+#: wocat/users/models.py:113
+msgid "Mr"
+msgstr ""
+
+#: wocat/users/models.py:115
+msgid "Mrs"
+msgstr ""
+
+#: wocat/users/models.py:137
+msgid "Title"
+msgstr ""
+
+#: wocat/users/models.py:142 wocat/users/templates/users/user_detail.html:50
+msgid "Position"
+msgstr ""
+
+#: wocat/users/models.py:147
+msgid "Department"
+msgstr ""
+
+#: wocat/users/models.py:155
+msgid "SLM specialists field level"
+msgstr ""
+
+#: wocat/users/models.py:156
+msgid "SLM specialists (sub-)national level"
+msgstr ""
+
+#: wocat/users/models.py:157
+msgid "SLM specialists regional and global levels"
+msgstr ""
+
+#: wocat/users/models.py:160
+msgid "Your function"
+msgstr ""
+
+#: wocat/users/models.py:193
 msgid "Address 2"
 msgstr ""
 
-#: users/models.py:201
+#: wocat/users/models.py:198
 msgid "Postal code"
 msgstr ""
 
-#: users/models.py:206
+#: wocat/users/models.py:203
 msgid "City"
 msgstr ""
 
-#: users/models.py:226
+#: wocat/users/models.py:223
 msgid "Phone"
 msgstr ""
 
-#: users/models.py:231
+#: wocat/users/models.py:228
 msgid "Phone 2"
 msgstr ""
 
-#: users/models.py:236
+#: wocat/users/models.py:233
 msgid "Fax"
 msgstr ""
 
-#: users/models.py:241
+#: wocat/users/models.py:238
 msgid "Fax 2"
 msgstr ""
 
-#: users/models.py:246
+#: wocat/users/models.py:243
 msgid "Second email"
 msgstr ""
 
-#: users/models.py:253
-msgid "English"
-msgstr ""
-
-#: users/models.py:254
-msgid "French"
-msgstr ""
-
-#: users/models.py:255
-msgid "Spanish"
-msgstr ""
-
-#: users/models.py:264
+#: wocat/users/models.py:261
 msgid "Comments"
 msgstr ""
 
-#: users/models.py:268
-msgid "avatar"
-msgstr ""
-
-#: users/models.py:280
+#: wocat/users/models.py:277
 msgid "Newsletter subscription"
 msgstr ""
 
-#: users/models.py:284
+#: wocat/users/models.py:281
 msgid "Accepted terms and conditions"
 msgstr ""
 
-#: users/models.py:288
-msgid "Deprecated data"
+#: wocat/users/models.py:324 wocat/users/templates/users/user_detail.html:4
+msgid "User"
 msgstr ""
 
-#: users/templates/users/emails/password_reset_key_message.txt:1
+#: wocat/users/models.py:325
+msgid "Users"
+msgstr ""
+
+#: wocat/users/templates/users/emails/password_reset_key_message.txt:1
 #, python-format
 msgid ""
 "Hello from %(site_name)s!\n"
@@ -1143,58 +903,52 @@ msgid ""
 "password."
 msgstr ""
 
-#: users/templates/users/emails/password_reset_key_message.txt:8
+#: wocat/users/templates/users/emails/password_reset_key_message.txt:8
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
 msgstr ""
 
-#: users/templates/users/emails/password_reset_key_message.txt:10
+#: wocat/users/templates/users/emails/password_reset_key_message.txt:10
 #, python-format
 msgid ""
 "Thank you for using %(site_name)s!\n"
 "%(site_domain)s"
 msgstr ""
 
-#: users/templates/users/emails/password_reset_key_subject.txt:3
+#: wocat/users/templates/users/emails/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
 msgstr ""
 
-#: users/templates/users/user_detail.html:4
-msgid "User"
+#: wocat/users/templates/users/user_detail.html:22
+msgid "Edit profile"
 msgstr ""
 
-#: users/templates/users/user_detail.html:22
-msgid "edit profile"
-msgstr ""
-
-#: users/templates/users/user_detail.html:57
-msgid "Key Work Topics"
-msgstr ""
-
-#: users/templates/users/user_detail.html:66
+#: wocat/users/templates/users/user_detail.html:66
 msgid "WOCAT Experiences"
 msgstr ""
 
-#: users/views.py:35
-msgid "Find more users from my country"
+#: wocat/users/views.py:40
+msgid "WOCAT members from your country"
 msgstr ""
 
-#: users/views.py:36
-msgid "Die Mitglieder-Datenbank enthält alle Involvierten bei Wocat."
+#: wocat/users/views.py:41
+msgid ""
+"Find other WOCAT members from your country or search for WOCAT members "
+"worldwide."
 msgstr ""
 
-#: users/views.py:37
-msgid "search users"
+#: wocat/users/views.py:42
+msgid "Discover members of the WOCAT Network"
 msgstr ""
 
-#: users/views.py:49
-msgid "Show user data in Qcat"
+#: wocat/users/views.py:54
+msgid "SLM Data"
 msgstr ""
 
-#: users/views.py:50
-msgid "Dieser User hat Daten bei Qcat, der Übersicht der Wocat-Datenbanken."
+#: wocat/users/views.py:55
+msgid "Go to the Global SLM Database and see SLM Practices from {}."
 msgstr ""
 
-#: users/views.py:51
-msgid "Qcat database"
+#: wocat/users/views.py:57
+msgid "Go to the SLM Database"
 msgstr ""

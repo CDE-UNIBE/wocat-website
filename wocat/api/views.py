@@ -22,6 +22,7 @@ from wocat.api.authenticators import SameHostAjaxAuthentication
 from wocat.cms.models import ProjectPage, RegionPage
 from wocat.cms.serializers import ProjectPageSerializer, RegionPageSerializer, \
     CountrySerializer
+from wocat.cms.translation import TranslatablePageMixin
 from wocat.countries.models import Country
 from wocat.institutions.models import Institution
 from wocat.institutions.serializers import InstitutionSerializer
@@ -71,6 +72,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             return ProjectPage.objects.all()
 
+
 router.register(r'projects', ProjectViewSet, base_name='projectpage')
 
 
@@ -114,6 +116,7 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
     )
     ordering_fields = '__all__'
 
+
 router.register(r'institutions', InstitutionViewSet)
 
 
@@ -128,10 +131,11 @@ class MapSearchView(TemplateView):
 
     def prepare_data(self, model_class):
         qs = model_class.objects.live()
+        qs = TranslatablePageMixin.apply_translation_filter(qs, self.request)
         if self.query_string:
             # cast to list, as a searchqueryset (or something...) is returned
             return list(qs.search(self.query_string))
-        return qs
+        return qs.order_by('title')
 
     def prepare_country_data(self):
         # Get all countries with projects; alias the 'name' as 'title' to match
@@ -142,10 +146,13 @@ class MapSearchView(TemplateView):
             Q(projectcountrypage__isnull=False)
         ).annotate(
             title=F('name')
+        ).order_by(
+            'name'
         ).distinct()
         if self.query_string:
             qs = qs.filter(name__icontains=self.query_string)
-        return qs
+        # Return translated country names
+        return [str(c) for c in qs]
 
     def get_countries(self):
         return {

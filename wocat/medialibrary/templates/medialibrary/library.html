@@ -1,54 +1,60 @@
 {% extends 'base.html' %}
-{% load compress i18n media_tags sekizai_tags static %}
+{% load compress i18n media_tags sekizai_tags static cms_tags %}
 {% load crispy_forms_tags %}
 
-{% block content %}
-  <form id="search-media-form">
-    {% csrf_token %}
-    <input type="hidden" name="page" id="media-search-pagination-input">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="form-group">
-          {{ media_filter.form.search|as_crispy_field }}
+{% block content_container %}
+  <div class="container">
+    <br>
+    {% breadcrumb %}
+    {% content-language-switcher %}
+    <br>
+    <form id="search-media-form">
+      {% csrf_token %}
+      <input type="hidden" name="page" id="media-search-pagination-input">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            {{ media_filter.form.search|as_crispy_field }}
+          </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-4 col-md-2">
+          <div class="form-group">
+            {{ media_filter.form.media_type|as_crispy_field }}
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-2">
+          <div class="form-group">
+            {{ media_filter.form.languages|as_crispy_field }}
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-2">
+          <div class="form-group">
+            {{ media_filter.form.year__gte|as_crispy_field }}
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-2">
+          <div class="form-group">
+            {{ media_filter.form.year__lte|as_crispy_field }}
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-2">
+          <div class="form-group">
+            {{ media_filter.form.continent|as_crispy_field }}
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-2">
+          <div class="form-group">
+            {{ media_filter.form.countries|as_crispy_field }}
+          </div>
+        </div>
+      </div>
+    </form>
+    <br>
+    <div id="search-media-results">
+      {% include 'medialibrary/library_items.html' %}
     </div>
-    <div class="row">
-      <div class="col-sm-4 col-md-2">
-        <div class="form-group">
-          {{ media_filter.form.media_type|as_crispy_field }}
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-2">
-        <div class="form-group">
-          {{ media_filter.form.languages|as_crispy_field }}
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-2">
-        <div class="form-group">
-          {{ media_filter.form.year__gte|as_crispy_field }}
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-2">
-        <div class="form-group">
-          {{ media_filter.form.year__lte|as_crispy_field }}
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-2">
-        <div class="form-group">
-          {{ media_filter.form.continent|as_crispy_field }}
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-2">
-        <div class="form-group">
-          {{ media_filter.form.countries|as_crispy_field }}
-        </div>
-      </div>
-    </div>
-  </form>
-  <br>
-  <div id="search-media-results">
-    {% include 'medialibrary/library_items.html' %}
   </div>
 
   {% addtoblock "css" %}
@@ -107,5 +113,4 @@
       </script>
     {% endcompress %}
   {% endaddtoblock %}
-
-{% endblock content %}
+{% endblock content_container %}

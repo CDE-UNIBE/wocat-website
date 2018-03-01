@@ -1,13 +1,10 @@
-from uuid import uuid4
-
 from django.core.exceptions import ValidationError
-from django.forms import CharField, TextInput
 from django.forms.utils import ErrorList
 from django.template.defaultfilters import filesizeformat, slugify
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.utils.html import format_html, mark_safe
+from django.utils.html import format_html
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks import RawHTMLBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
     StreamBlock, ListBlock, StructBlock, CharBlock
@@ -15,6 +12,7 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
+from wocat.cms.translation import TranslatablePageMixin
 from wocat.medialibrary.blocks import MediaTeaserBlock
 from wocat.news.blocks import NewsTeaserBlock
 from wocat.users.blocks import UserTeaserBlock, CONTACT_PERSON_TEASER_BLOCKS
@@ -75,35 +73,6 @@ BASE_BLOCKS = [
 ]
 
 
-class LinkBlock(StructBlock):
-    name = blocks.CharBlock(required=False)
-    page = PageChooserBlock(required=False)
-    link = blocks.URLBlock(required=False)
-
-    def __init__(self, required=True, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.required = required
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context)
-        page = value.get('page')
-        link = value.get('link')
-        context.update({
-            'href': page.url if page else link,
-            'external': not bool(page),
-            'text': value.get('name') or _('read more'),
-        })
-        return context
-
-    def clean(self, value):
-        at_lest_one_field_required_fields = ['page', 'url']
-        if self.required and not any([bool(value.get(field)) for field in at_lest_one_field_required_fields]):
-            error_message = _('At lest one of {} is required').format(at_lest_one_field_required_fields)
-            errors = {field: ErrorList([error_message]) for field in at_lest_one_field_required_fields}
-            raise ValidationError(error_message, params=errors)
-        return super().clean(value)
-
-
 class DocumentBlock(DocumentChooserBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
@@ -138,14 +107,20 @@ class DocumentBlock(DocumentChooserBlock):
 
 class ReadMoreBlock(StructBlock):
     name = blocks.CharBlock(required=False)
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}") will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+                    TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     button = blocks.BooleanBlock(required=False)
     alignment = ChoiceBlock(
         choices=[
-            ('left', _('Left')),
-            ('center', _('Center')),
-            ('right', _('Right')),
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
         ],
         required=False,
     )
@@ -161,11 +136,13 @@ class ReadMoreBlock(StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
         page = value.get('page')
+        if page is not None:
+            page = TranslatablePageMixin.get_translated_page(page.specific)
         link = value.get('link')
         context.update({
             'href': page.url if page else link,
             'external': not bool(page),
-            'text': value.get('name') or _('read more'),
+            'text': value.get('name') or _('Read more'),
             'align': value.get('alignment'),
             'button': value.get('button'),
         })
@@ -174,7 +151,7 @@ class ReadMoreBlock(StructBlock):
     def clean(self, value):
         at_lest_one_field_required_fields = ['page', 'link']
         if self.required and not any([bool(value.get(field)) for field in at_lest_one_field_required_fields]):
-            error_message = _('At lest one of {} is required').format(at_lest_one_field_required_fields)
+            error_message = 'At least one of {} is required'.format(at_lest_one_field_required_fields)
             errors = {field: ErrorList([error_message]) for field in at_lest_one_field_required_fields}
             raise ValidationError(error_message, params=errors)
         return super().clean(value)
@@ -183,7 +160,7 @@ class ReadMoreBlock(StructBlock):
         icon = 'link'
         label = _('Read more')
         template = 'widgets/read-more-link.html'
-        help_text = _('Choose either a page or an external link')
+        help_text = 'Choose either a page or an external link'
 
 
 LINK_BLOCKS = [
@@ -199,9 +176,9 @@ class TeaserImageBlock(StructBlock):
         required=False, help_text='Recommended minimal width: 737px')
     position = ChoiceBlock(
         choices=[
-            ('top', _('Top')),
-            ('left', _('Left')),
-            ('right', _('Right')),
+            ('top', 'Top'),
+            ('left', 'Left'),
+            ('right', 'Right'),
         ],
         required=False,
     )
@@ -212,7 +189,14 @@ class TeaserBlock(StructBlock):
     title = blocks.CharBlock(required=False)
     content = RichTextBlock(required=False)
     image = TeaserImageBlock(required=False)
-    page = PageChooserBlock(required=False)
+
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}") will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     read_more_text = blocks.CharBlock(required=False)
     boarderless = blocks.BooleanBlock(required=False)
@@ -220,12 +204,14 @@ class TeaserBlock(StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
         page = value.get('page')
+        if page is not None:
+            page = TranslatablePageMixin.get_translated_page(page.specific)
         link = value.get('link')
         image_block = value.get('image')
         image = image_block.get('image')
         imagepos = image_block.get('position')
         largeimg = image_block.get('large')
-        read_more_text = value.get('read_more_text') or _('read more')
+        read_more_text = value.get('read_more_text') or _('Read more')
         lines = not value.get('boarderless')
         context.update({
             'href': page.url if page else link,
@@ -242,9 +228,9 @@ class TeaserBlock(StructBlock):
 
     class Meta:
         icon = 'link'
-        label = _('Teaser')
+        label = 'Teaser'
         template = 'widgets/teaser.html'
-        help_text = _('Choose either a page or an external link')
+        help_text = 'Choose either a page or an external link'
 
 
 class OverlayTeaserBlock(StructBlock):
@@ -252,7 +238,13 @@ class OverlayTeaserBlock(StructBlock):
     content = RichTextBlock(required=False)
     image = ImageChooserBlock(
         required=True, help_text='Recommended minimal width: 737px')
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}") will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(required=False)
     top_box = blocks.BooleanBlock(required=False, default=False)
@@ -260,9 +252,11 @@ class OverlayTeaserBlock(StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
         page = value.get('page')
+        if page is not None:
+            page = TranslatablePageMixin.get_translated_page(page.specific)
         link = value.get('link')
         image = value.get('image')
-        link_text = value.get('link_text') or _('link')
+        link_text = value.get('link_text') or _('Link')
         top = value.get('top_box')
         context.update({
             'title': value.get('title'),
@@ -283,23 +277,31 @@ class OverlayTeaserBlock(StructBlock):
 
     class Meta:
         icon = 'link'
-        label = _('Large Image Teaser')
+        label = 'Large Image Teaser'
         template = 'widgets/overlay-teaser-widgetchooser.html'
-        help_text = _('Choose either a page or an external link')
+        help_text = 'Choose either a page or an external link'
 
 
 class OverlayTeaserMapBlock(StructBlock):
     title = blocks.CharBlock()
     content = RichTextBlock(required=False)
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}") will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     link = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(required=False)
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
         page = value.get('page')
+        if page is not None:
+            page = TranslatablePageMixin.get_translated_page(page.specific)
         link = value.get('link')
-        link_text = value.get('link_text') or _('link')
+        link_text = value.get('link_text') or _('Link')
         from wocat.cms.models import CountryPage
         country_pages = CountryPage.objects.live().in_menu()
         countries = [{'iso_3166_1_alpha_3': country_page.country.code} for country_page in country_pages]
@@ -322,26 +324,22 @@ class OverlayTeaserMapBlock(StructBlock):
 
     class Meta:
         icon = 'link'
-        label = _('Map Teaser')
+        label = 'Map Teaser'
         template = 'widgets/overlay-teaser-widgetchooser.html'
-        help_text = _('Choose either a page or an external link')
+        help_text = 'Choose either a page or an external link'
 
 
 class TocBlock(StructBlock):
     title = blocks.CharBlock(
-        default=_('Table of contents'), required=False,
-        help_text=_('A label is required'))
+        default=_('Table of contents'), required=False)
+    horizontal = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = 'fa fa-list'
         label = _('Table of contents')
         template = 'cms/toc.html'
-        help_text = _('All "Heading" elements (of all columns) will be used '
-                      'to generate the Table of contents.')
-
-    #def render_form(self, value, prefix='', errors=None):
-    #    form = super().render_form(value, prefix, errors)
-    #    return format_html('<strong>{title}</b> {form}', title=_('Table of contents'), form=form)
+        help_text = 'All "Heading" elements (of all columns) will be used to ' \
+                    'generate the Table of contents.'
 
     def get_content(self, context):
         page = context.get('page')
@@ -371,6 +369,7 @@ class TocBlock(StructBlock):
             if stream_content:
                 context['headings'] = self.get_headings(stream_content)
                 context['title'] = value.get('title')
+                context['horizontal'] = value.get('horizontal')
         return super().render(value, context)
 
 
@@ -387,7 +386,13 @@ class DsfTocBlock(TocBlock):
 
 
 class DSFTeaserBlock(StructBlock):
-    page = PageChooserBlock(required=False)
+    page = PageChooserBlock(
+        required=False,
+        help_text='Links to the original page (in "{}") will automatically '
+                  'point to translated pages (if they exist) in other '
+                  'languages. Links to a translation will always point to that '
+                  'translated page, in all languages.'.format(
+            TranslatablePageMixin.original_lang_code))
     module_1 = blocks.BooleanBlock(required=False, default=True)
     module_2 = blocks.BooleanBlock(required=False, default=True)
     module_3 = blocks.BooleanBlock(required=False, default=True)
@@ -401,6 +406,8 @@ class DSFTeaserBlock(StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
         page = value.get('page')
+        if page is not None:
+            page = TranslatablePageMixin.get_translated_page(page.specific)
         url = page.url if page else ''
 
         module_1 = value.get('module_1')
@@ -424,7 +431,7 @@ class DSFTeaserBlock(StructBlock):
 
     class Meta:
         icon = 'link'
-        label = _('DSF Teaser')
+        label = 'DSF Teaser'
         template = 'widgets/dsf-teaser.html'
 
 
@@ -460,7 +467,7 @@ class UploadBlock(StructBlock):
 
     class Meta:
         icon = 'fa fa-upload'
-        label = _('Upload')
+        label = 'Upload'
         template = 'widgets/upload.html'
 
 
@@ -501,7 +508,8 @@ class DSFModulesBlock(StructBlock):
         for i in range(1, 8):
             module = modules.get(i)
             content = module.get('content')
-            if not content: continue  # Do not add this section if there is no content.
+            if not content:
+                continue  # Do not add this section if there is no content.
             sections.append({
                 'content': module.get('content'),
                 'id': 'module-{0}'.format(i),
@@ -524,7 +532,7 @@ class DSFModulesBlock(StructBlock):
 
     class Meta:
         icon = 'fa fa-th-list'
-        label = _('DSF Modules')
+        label = 'DSF Modules'
         template = 'widgets/tab-infobox.html'
 
 
@@ -539,6 +547,7 @@ TEASER_BLOCKS = [
 ]
 
 BASE_BLOCKS += TEASER_BLOCKS
+
 
 class MapBlock(StructBlock):
     class Meta:
@@ -561,9 +570,9 @@ class ImageGalleryElementBlock(StructBlock):
     description = blocks.CharBlock(required=False)
     shrink = ChoiceBlock(
         choices=[
-            (1, _('S')),
-            (2, _('XS')),
-            (3, _('XXS')),
+            (1, 'S'),
+            (2, 'XS'),
+            (3, 'XXS'),
         ],
         required=False,
     )
@@ -590,6 +599,8 @@ class ImageGalleryBlock(StructBlock):
             description = element.get('description')
             link = element.get('link')
             page = element.get('page')
+            if page is not None:
+                page = TranslatablePageMixin.get_translated_page(page.specific)
             url = page.url if page else link
             image = element.get('image')
             image_url = image.get_rendition('max-1200x1200').url if image else ''
@@ -611,7 +622,7 @@ class ImageGalleryBlock(StructBlock):
 
     class Meta:
         icon = 'image'
-        label = _('Image Gallery')
+        label = 'Image Gallery'
         template = 'widgets/image-gallery.html'
 
 
@@ -631,13 +642,13 @@ class SubpagesBlock(StructBlock):
 
     def render_form(self, value, prefix='', errors=None):
         form = super().render_form(value, prefix, errors)
-        return format_html('<strong>{title}</b> {form}', title=_('Subpages'), form=form)
+        return format_html('<strong>{title}</b> {form}', title='Subpages', form=form)
 
     def render(self, value, context=None):
         if context:
             page = context['page']
             context['pages'] = page.get_children().live().in_menu()
-            context['title'] = _('Subpages')
+            context['title'] = 'Subpages'
         return super().render(value, context)
 
 

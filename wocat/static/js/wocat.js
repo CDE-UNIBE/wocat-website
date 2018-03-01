@@ -4,6 +4,20 @@ $(function() {
 });
 
 $(function() {
+	$('.js-language-switcher-link').on('click', function(e) {
+		e.preventDefault();
+		var lang = $(this).data('language');
+		var form = $(this).closest('.js-language-switcher-container').find('form');
+		var href = $(this).attr('href');
+		if (href !== '' && href !== '#') {
+			form.find('input[name="next"]').val(href);
+		}
+		form.find('input[name="language"]').val(lang);
+		form.submit();
+	});
+});
+
+$(function() {
 	// Members Table
 	$('.widget-members-table').each(function() {
 		var membersTable = $(this);

@@ -79,32 +79,30 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
-        verbose_name=_('email address'),
+        verbose_name=_('Email address'),
         max_length=255,
         unique=True,
     )
     first_name = models.CharField(
-        verbose_name=_('first name'),
+        verbose_name=_('First name'),
         max_length=50, blank=True,
     )
     last_name = models.CharField(
-        verbose_name=_('last name'),
+        verbose_name=_('Last name'),
         max_length=50, blank=True,
     )
     is_staff = models.BooleanField(
-        _('staff status'),
+        'staff status',
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text='Designates whether the user can log into this admin site.',
     )
     is_active = models.BooleanField(
-        _('active'),
+        'active',
         default=True,
-        help_text=_(
-            'Designates whether this user should be treated as active. '
-            'Unselect this instead of deleting accounts.'
-        ),
+        help_text='Designates whether this user should be treated as active. '
+                  'Unselect this instead of deleting accounts.',
     )
-    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    date_joined = models.DateTimeField('date joined', default=timezone.now)
 
     objects = UserManager()
 
@@ -245,26 +243,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('Second email'),
         blank=True,
     )
-    ENGLISH = 'en'
-    FRENCH = 'fr'
-    SPANISH = 'es'
-    LANGUAGE_CHOICES = (
-        (ENGLISH, _('English')),
-        (FRENCH, _('French')),
-        (SPANISH, _('Spanish')),
-    )
     language = models.CharField(
         verbose_name=_('Language'),
         max_length=2,
-        choices=LANGUAGE_CHOICES,
-        default=ENGLISH,
+        choices=settings.LANGUAGES,
+        default=settings.LANGUAGES[0][0],
     )
     comments = models.TextField(
         verbose_name=_('Comments'),
         blank=True,
     )
     avatar = ThumbnailerImageField(
-        verbose_name=_('avatar'),
+        verbose_name='avatar',
         upload_to='users/avatars',
         # resize_source=dict(size=(1200, 1200)),
         blank=True,
@@ -284,7 +274,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=False,
     )
     deprecated = models.TextField(
-        verbose_name=_('Deprecated data'),
+        verbose_name='Deprecated data',
         blank=True,
     )
 
@@ -323,8 +313,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta(AbstractBaseUser.Meta):
         ordering = ('first_name', 'last_name')
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
 
 
 # Step 1: Signed up

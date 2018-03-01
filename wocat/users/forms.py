@@ -84,7 +84,7 @@ class UserForm(forms.ModelForm):
                 ),
             ),
             Fieldset(
-                _('Address information'),
+                _('Address Information'),
                 Row(
                     Field('address', wrapper_class="col-sm-6"),
                     Field('address_2', wrapper_class="col-sm-6"),

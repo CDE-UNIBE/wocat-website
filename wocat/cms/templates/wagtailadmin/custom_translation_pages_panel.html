@@ -1,0 +1,22 @@
+{% comment %}
+  Basically the original wagtailadmin/edit_handlers/multi_field_panel.html
+  template, just with a notice about translations at the top.
+{% endcomment %}
+
+<fieldset>
+  <legend>{{ self.heading }}</legend>
+
+  <p class="help">
+    You can link the translation pages below. To create a new translation page,
+    <a href="{% url 'wagtailadmin_pages:copy' self.instance.id %}?next={% url 'wagtailadmin_pages:edit' self.instance.id %}">
+      make a copy
+    </a>
+    of the current page (set the correct parent page in the tree of the translation language). You will be redirected back to this page where you can link the new translation page below.
+  </p>
+
+  <ul class="fields">
+    {% for child in self.children %}
+      <li class="{{ child.classes|join:" " }}">{{ child.render_as_field }}</li>
+    {% endfor %}
+  </ul>
+</fieldset>

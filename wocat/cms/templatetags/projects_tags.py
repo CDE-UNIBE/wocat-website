@@ -25,7 +25,7 @@ class Project(InclusionTag):
                 'description': '',
                 'href': project.url,
                 'map': {'countries': map_countries},
-                'readmorelink': {'text': _('to the project')},
+                'readmorelink': {'text': _('To the project')},
                 'title': project,
             }
         else:

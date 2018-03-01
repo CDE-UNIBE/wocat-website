@@ -8,6 +8,7 @@
     <div class="container">
         <br>
         {% block content %}
+            {% content-language-switcher %}
             {% include_block page.content %}
         {% endblock content %}
     </div>

@@ -3,19 +3,20 @@ from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.templatetags.static import static
 from django.utils.translation import ugettext_lazy as _
+from django_countries import countries
 from wagtail.wagtailsnippets.models import register_snippet
 
 
 # @register_snippet
 class Country(models.Model):
     code = models.CharField(
-        verbose_name=_('code (alpha3)'),
+        verbose_name='code (alpha3)',
         max_length=3,
         primary_key=True,
     )
 
     name = models.CharField(
-        verbose_name=_('name'),
+        verbose_name='name',
         max_length=255,
         unique=True,
     )
@@ -29,7 +30,9 @@ class Country(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.name
+        # Use translations of django-countries
+        country_alpha2 = countries.alpha2(self.code)
+        return dict(countries).get(country_alpha2, self.name)
 
     def get_absolute_url(self):
         return reverse('countries:detail', args=[self.slug])
@@ -52,7 +55,7 @@ class Country(models.Model):
 @register_snippet
 class Continent(models.Model):
     name = models.CharField(
-        verbose_name=_('name'),
+        verbose_name='name',
         max_length=255,
         unique=True,
     )

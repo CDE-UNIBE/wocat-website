@@ -19,7 +19,7 @@
                 {% endif %}
                 <div class="col-sm-7 col-md-offset-1">
                     {% if user == request.user %}
-                        {% trans 'edit profile' as edit_text %}
+                        {% trans 'Edit profile' as edit_text %}
                         {% include 'widgets/read-more-link.html' with fontawesome='pencil' text=edit_text href=object.update_url %}
                     {% endif %}
                     <p>
@@ -38,7 +38,7 @@
                         {% endif %}
                         {% if object.country %}
                             <img src="{{ object.country.flag }}" class="inlineflag"
-                                 alt="{{ object.country.name }}"> {{ object.country.name }}
+                                 alt="{{ object.country }}"> {{ object.country }}
                         {% endif %}
 
                     </p>
@@ -54,7 +54,7 @@
             </div><!-- row -->
             {% if object.key_work_topics.exists %}
                 <br>
-                <h3>{% blocktrans %}Key Work Topics{% endblocktrans %}</h3>
+                <h3>{% blocktrans %}Key work topics{% endblocktrans %}</h3>
                 <p>
                     {% for topic in object.key_work_topics.all %}
                         <span class="badge">{{ topic }}</span>

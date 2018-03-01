@@ -1688,6 +1688,21 @@ select.form-control::-ms-expand {
 	}
 }
 
+.widget-content-language-switcher {
+	margin-bottom: 15px;
+	background-color: transparent;
+	color: @color-neutral-dark;
+	font-size: 13px;
+
+	a {
+		color: @color-neutral-dark;
+
+		&:hover, &:focus {
+			color: @color-primary;
+		}
+	}
+}
+
 
 .widget-button {
 	margin-bottom: 30px;
@@ -1849,6 +1864,17 @@ image using the content attribute.
 
 	ul {
 		margin-bottom: 0;
+	}
+}
+.widget-toc.horizontal {
+	padding: 1.5rem 0;
+
+	ul {
+		padding-left: 0;
+	}
+	li {
+		list-style-type: none;
+		display: inline;
 	}
 }
 

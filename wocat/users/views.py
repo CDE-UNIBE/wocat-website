@@ -39,7 +39,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
             'external': False,
             'title': _('WOCAT members from your country'),
             'description': _('Find other WOCAT members from your country or search for WOCAT members worldwide.'),
-            'readmorelink': {'text': _(' Discover members of the WOCAT Network')},
+            'readmorelink': {'text': _('Discover members of the WOCAT Network')},
             'imgsrc': '',
             'imgpos': '',
             'largeimg': '',

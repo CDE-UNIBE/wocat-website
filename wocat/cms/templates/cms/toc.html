@@ -1,5 +1,5 @@
-{% if title and headings %}
-  <div class="widget-toc">
+{% if headings %}
+  <div class="widget-toc{% if horizontal %} horizontal{% endif %}">
     {% if title %}
       <h4>{{ title }}</h4>
     {% endif %}
