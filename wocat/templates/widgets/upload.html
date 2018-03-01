@@ -1,11 +1,9 @@
 {% load i18n wagtailcore_tags %}
 <div class="widget-upload">
-    {% for document in documents %}
-        {% include_block document %}
-    {% endfor %}
+  {% include_block documents %}
 
-    {% if user.is_authenticated %}
-        {% trans 'File upload' %}:
-        {% include 'widgets/dropzone.html' with apiurl=apiurl %}
-    {% endif %}
+  {% if can_upload_documents and upload_url %}
+    {% trans 'File upload' %}:
+    {% include 'widgets/dropzone.html' with upload_url=upload_url %}
+  {% endif %}
 </div>

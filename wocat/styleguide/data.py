@@ -1156,7 +1156,7 @@ data = {
         'name': 'Dropzone',
         'template': 'widgets/dropzone.html',
         'context': {
-            'apiurl': '/static/styleguide/js/dropzone-endpoint.html',
+            'upload_url': '/static/styleguide/js/dropzone-endpoint.html',
         },
     },
 

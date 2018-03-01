@@ -6,8 +6,9 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.blocks import RawHTMLBlock, PageChooserBlock, BooleanBlock, ChoiceBlock, \
-    StreamBlock, ListBlock, StructBlock, CharBlock
+from wagtail.wagtailcore.blocks import RawHTMLBlock, PageChooserBlock, \
+    BooleanBlock, ChoiceBlock, StreamBlock, ListBlock, StructBlock, CharBlock, \
+    StructValue
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock as WagtailEmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
@@ -435,34 +436,44 @@ class DSFTeaserBlock(StructBlock):
 
 
 class UploadBlock(StructBlock):
-    upload_slug = CharBlock(required=True)
     documents = ListBlock(DocumentBlock(required=False))
 
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context)
-        documents = value.get('documents')
-        if documents:
-            context.update({
-                'context': '/static/styleguide/js/dropzone-endpoint.html',
-            })
-        return context
-
     def render(self, value, context=None):
-        # Add the apiurl using the page id of the current page.
+        # Add the upload_url using the page id of the current page.
         if context:
+            can_upload_documents = context.get('can_upload_documents', False)
             page = context.get('page')
-            if page:
-                section = context['section']
-                if section:
-                    module_id = section.get('module_id')
-                    upload_slug = slugify(value.get('upload_slug'))
-                    if module_id:
-                        apiurl = reverse('cms:upload',
-                                         kwargs={'page_pk': page.id, 'module_id': module_id,
-                                                 'upload_slug': upload_slug})
-                        context['apiurl'] = apiurl
-            context['documents'] = self.child_blocks['documents'].render(value.get('documents'), context),
+            module_id = context.get('section', {}).get('module_id')
+            if can_upload_documents and page and module_id:
+                context['upload_url'] = reverse(
+                    'cms:upload', kwargs={
+                        'page_pk': page.id,
+                        'module_id': module_id,
+                    })
+
+            # Do not display empty documents (no document selected).
+            context['documents'] = self.child_blocks['documents'].render(
+                self.remove_empty_documents(value), context)
+
         return super().render(value, context)
+
+    def clean(self, value):
+        # Before saving, remove empty documents (no document selected).
+        cleaned_value = super().clean(value)
+        return StructValue(
+            self, {'documents': self.remove_empty_documents(cleaned_value)})
+
+    @staticmethod
+    def remove_empty_documents(value: StructValue) -> list:
+        """
+        Remove empty documents from a StructValue object. Empty documents
+        (actually empty DocumentBlocks) can be created in the CMS by adding new
+        document blocks without selecting a document. They can also appear
+        because an authorized user deleted a document on the website, which just
+        deletes the document object but leaves an empty DocumentBlock in the
+        CMS.
+        """
+        return [doc for doc in value.get('documents', []) if doc is not None]
 
     class Meta:
         icon = 'fa fa-upload'
@@ -522,10 +533,18 @@ class DSFModulesBlock(StructBlock):
                 'kicker': 'Module {0}'.format(i),
                 'text': module.get('text'),
             })
+
+        can_upload_documents = False
+        page = context.get('page')
+        if page:
+            can_upload_documents = page.permissions_for_user(
+                context['request'].user).can_edit()
+
         context.update({
             'sections': sections,
             'sidebar_links': sidebar_links,
             'context': context,
+            'can_upload_documents': can_upload_documents,
         })
         return context
 
