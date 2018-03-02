@@ -13,7 +13,9 @@
 				</ul>
 			</li>
     {% elif link.languageswitcher %}
-      {% include "widgets/language_chooser.html" with onlyxs=link.onlyxs csrf_token=csrf_token %}
+      {% if FEATURE_SHOW_TRANSLATIONS %}
+        {% include "widgets/language_chooser.html" with onlyxs=link.onlyxs csrf_token=csrf_token %}
+      {% endif %}
 		{% else %}
 			<li class="{% if link.active %}active{% endif %}{% if link.onlyxs %} hidden-md hidden-lg{% endif %}">
 				<a href="{{ link.href }}">{{ link.text|safe }}</a>
