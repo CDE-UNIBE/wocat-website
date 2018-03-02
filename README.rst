@@ -240,6 +240,11 @@ CMS translation - Copy page tree:
 
 * To copy the entire page tree into a new language, use the following management command:
 
+  .. note::
+
+    On WOCAT Live, translation pages are currently deactivated. Once page tree
+    is copied, remove feature toggle ``FEATURE_SHOW_TRANSLATIONS``.
+
   .. code-block:: bash
 
     python manage.py create_translation_tree
