@@ -9,6 +9,7 @@ from wagtail.wagtailcore.templatetags.wagtailcore_tags import richtext
 from wocat.cms.models import ProjectPage, TopNavigationSettings, \
     FooterSettings
 from wocat.cms.translation import TranslatablePageMixin
+from wocat.core.context_processors import template_settings
 
 register = template.Library()
 
@@ -163,6 +164,8 @@ class Header(InclusionTag):
                 'links2': nodes,
             },
             'csrf_token': get_token(context.get('request')),
+            # Add template settings to be accessible in header
+            **template_settings(context.get('request')),
         }
 
 
