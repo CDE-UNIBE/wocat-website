@@ -18,10 +18,23 @@ def get_media_years_choices():
         yield (y, y)
 
 
+def get_media_type_choices():
+    """
+    Filter the list of choices, return only the ones used.
+    """
+    used_media_types = Media.objects.values_list(
+        'media_type', flat=True).distinct()
+    return [
+        choice for choice in Media.MEDIA_TYPES if choice[0] in used_media_types]
+
+
 class MediaLibraryFilter(django_filters.FilterSet):
     # Store years to query DB only once
-    media_year_choices = list(get_media_years_choices())
+    media_year_choices = list(reversed(list(get_media_years_choices())))
 
+    media_type = django_filters.ChoiceFilter(
+        name='media_type', choices=get_media_type_choices(),
+        empty_label=_('All types'), label='')
     search = django_filters.CharFilter(
         method='media_search',
         widget=TextInput(attrs={'placeholder': _('Search')}), label='')
@@ -42,12 +55,10 @@ class MediaLibraryFilter(django_filters.FilterSet):
 
     class Meta:
         model = Media
-        fields = ['media_type', 'continent']
+        fields = ['continent']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.filters['media_type'].extra['empty_label'] = _('All types')
-        self.filters['media_type'].label = ''
         self.filters['continent'].extra['empty_label'] = _('All continents')
         self.filters['continent'].label = ''
 
