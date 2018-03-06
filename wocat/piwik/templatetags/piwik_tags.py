@@ -1,5 +1,6 @@
 from classytags.helpers import InclusionTag
 from django import template
+from django.conf import settings
 
 register = template.Library()
 
@@ -12,7 +13,7 @@ class Piwik(InclusionTag):
     def get_context(self, context, **kwargs):
         return {
             'domain': 'wocat.net',
-            'site_id': 7,
+            'site_id': settings.PIWIK_SITE_ID,
             'user_id': self.get_user_id(context)
         }
 

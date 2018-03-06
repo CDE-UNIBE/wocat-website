@@ -372,6 +372,7 @@ MAINTENANCE_MODE = False
 
 # Google webmaster tools
 GOOGLE_WEBMASTER_TOOLS_KEY = env('GOOGLE_WEBMASTER_TOOLS_KEY', default='')
+PIWIK_SITE_ID = env('PIWIK_SITE_ID', default=None)
 
 # Filename of js-file with geojson for all countries; used for the map. Relative
 # to wocat/static/js
