@@ -94,11 +94,12 @@ class DocumentBlock(DocumentChooserBlock):
         # Add the file_delete_url if the current user is owner.
         if value and context:
             user = context.get('user')
-            # check permission: "user is owner and document is not older than a day"
-            if user and user == value.uploaded_by_user and \
-                        value.created_at + timezone.timedelta(days=1) > timezone.now():
-                delete_url = reverse('cms:upload-delete', kwargs={'document_id': value.id})
-                context['file_delete_url'] = delete_url
+            # Decision taken by Nicole on March 21, 2018: No time limit to
+            # delete uploaded file (before documents could only be deleted
+            # within 24 hours after upload)
+            if user and user == value.uploaded_by_user:
+                context['file_delete_url'] = reverse(
+                    'cms:upload-delete', kwargs={'document_id': value.id})
         return super().render(value, context)
 
     class Meta:
