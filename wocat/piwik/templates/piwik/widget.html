@@ -1,3 +1,4 @@
+{% if site_id %}
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
@@ -15,3 +16,4 @@
 </script>
 <noscript><p><img src="//piwik.{{ domain }}/piwik.php?idsite={{ site_id }}" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
+{% endif %}

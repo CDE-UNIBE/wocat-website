@@ -112,7 +112,7 @@ class InstitutionViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter, )
     filter_fields = ('memorandum', 'country', )
     search_fields = (
-        'country__name', 'name', 'abbreviation',
+        'name', 'abbreviation',
     )
     ordering_fields = '__all__'
 

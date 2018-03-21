@@ -53,6 +53,7 @@
                           field: "country_name",
                           title: "{% trans "Country" %}",
                           width: "30%",
+                          sortable: true,
                           filter: {
                               type: "select",
                               data: [
@@ -68,7 +69,7 @@
                       {
                           field: 'memorandum',
                           sortable: true,
-                          title: "{% trans "Memorandum" %}",
+                          title: "{% trans "Memorandum signed" %}",
                           width: "10%",
                           formatter: "boolFormatter",
                           align: "center",
@@ -77,11 +78,11 @@
                               data: [
                                   {
                                       id: true,
-                                      text: '{% trans "Signed" %}'
+                                      text: '{% trans "Yes" %}'
                                   },
                                   {
                                       id: false,
-                                      text: '{% trans "Not signed" %}'
+                                      text: '{% trans "No" %}'
                                   }
                               ]
                           }
@@ -89,6 +90,11 @@
                   ],
                   filter: true
               });
+              //{% comment %}I'm sorry... This seemed to be the most direct/pragmatic approach to move the search field.{% endcomment %}
+              var searchField = $('.search > input');
+              searchField.addClass('institution-search');
+              $('th[data-field="name"]').append(searchField);
+              $('.fixed-table-toolbar').remove();
           });
       </script>
   {% endcompress %}

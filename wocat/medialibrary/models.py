@@ -4,13 +4,14 @@ from django.urls import reverse
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.db.models import QuerySet
+from django.utils.translation import ugettext_lazy as _
+from model_utils import Choices
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
-from wagtail.wagtailsnippets.models import register_snippet
 
 from wocat.cms.models import UniquePageMixin, HeaderPageMixin, \
     get_default_year_now
@@ -97,48 +98,20 @@ class MediaLibraryPage(
         return context
 
 
-@register_snippet
-class MediaType(models.Model):
-    name = models.CharField(
-        'Name',
-        max_length=255,
-        unique=True,
-    )
-    icon = models.CharField(
-        'Icon name',
-        max_length=255,
-        help_text='Fontawesome icon name.',
-        blank=True,
-    )
-    default_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name='Default image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    order = models.PositiveIntegerField(default=None, null=True)
-
-    class Meta:
-        ordering = ['order', 'name']
-
-    @property
-    def image(self):
-        return self.default_image
-
-    def __str__(self):
-        return self.name
-
-    panels = [
-        FieldPanel('name'),
-        FieldPanel('icon'),
-        ImageChooserPanel('default_image'),
-        FieldPanel('order'),
-    ]
-
-
 class Media(models.Model):
+
+    MEDIA_TYPES = Choices(
+        (3, _('Books')),
+        (4, _('Maps')),
+        (8, _('Other documents')),
+        (6, _('Photos')),
+        (10, _('PR materials')),
+        (9, _('Presentations')),
+        (1, _('SLM questionnaires')),
+        (2, _('Training materials')),
+        (5, _('Videos')),
+    )
+
     title = models.CharField(
         'Title',
         max_length=255,
@@ -159,7 +132,7 @@ class Media(models.Model):
 
     @property
     def image(self):
-        return self.teaser_image or self.media_type.image
+        return self.teaser_image or None
 
     video = models.URLField(
         verbose_name='Video',
@@ -204,11 +177,8 @@ class Media(models.Model):
         to=Continent,
         blank=True, null=True,
     )
-    media_type = models.ForeignKey(
-        'MediaType',
-        verbose_name='Type',
-        on_delete=models.PROTECT,
-    )
+    media_type = models.IntegerField(
+        choices=MEDIA_TYPES, db_column='media_type_id')
 
     class Meta:
         verbose_name = 'Media'

@@ -1,10 +1,12 @@
 from django.conf import settings
 
 
-def webmaster_tools_key(request):
+def template_settings(request):
     """
-    Returns a lazy 'messages' context variable.
+    Put selected setting variables to the template
     """
-    return {
-        'GOOGLE_WEBMASTER_TOOLS_KEY': settings.GOOGLE_WEBMASTER_TOOLS_KEY
-    }
+    setting_values = [
+        'GOOGLE_WEBMASTER_TOOLS_KEY',
+        'FEATURE_SHOW_TRANSLATIONS',
+    ]
+    return {value: getattr(settings, value) for value in setting_values}

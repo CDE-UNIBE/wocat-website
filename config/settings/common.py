@@ -225,7 +225,7 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'sekizai.context_processors.sekizai',
-                'wocat.core.context_processors.webmaster_tools_key',
+                'wocat.core.context_processors.template_settings',
             ],
         },
     },
@@ -372,6 +372,7 @@ MAINTENANCE_MODE = False
 
 # Google webmaster tools
 GOOGLE_WEBMASTER_TOOLS_KEY = env('GOOGLE_WEBMASTER_TOOLS_KEY', default='')
+PIWIK_SITE_ID = env('PIWIK_SITE_ID', default=None)
 
 # Filename of js-file with geojson for all countries; used for the map. Relative
 # to wocat/static/js
@@ -412,3 +413,6 @@ LOGGING = {
         }
     },
 }
+
+# Feature toggles
+FEATURE_SHOW_TRANSLATIONS = env.bool('FEATURE_SHOW_TRANSLATIONS', default=True)
