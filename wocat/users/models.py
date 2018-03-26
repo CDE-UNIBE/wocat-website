@@ -267,7 +267,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     newsletter = models.BooleanField(
         _('Newsletter subscription'),
-        default=True,
+        default=False,
     )
     terms_and_conditions = models.BooleanField(
         _('Accepted terms and conditions'),
