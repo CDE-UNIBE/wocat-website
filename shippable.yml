@@ -15,7 +15,6 @@ services:
 
 build:
   ci:
-    - psql -c 'create role shippable with superuser;' -U postgres
     - psql -c 'create database wocat;' -U postgres
     - cp env.example .env
     - pip install --upgrade pip
