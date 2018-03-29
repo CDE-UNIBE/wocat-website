@@ -130,12 +130,12 @@ class MapSearchView(TemplateView):
         return self.request.GET.get('q')
 
     def prepare_data(self, model_class):
-        qs = model_class.objects.live()
+        qs = model_class.objects.live().order_by('title')
         qs = TranslatablePageMixin.apply_translation_filter(qs, self.request)
         if self.query_string:
             # cast to list, as a searchqueryset (or something...) is returned
             return list(qs.search(self.query_string))
-        return qs.order_by('title')
+        return qs
 
     def prepare_country_data(self):
         # Get all countries with projects; alias the 'name' as 'title' to match
