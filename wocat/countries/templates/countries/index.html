@@ -11,15 +11,6 @@
         {% content-language-switcher %}
         <br>
         {% block content %}
-            <div class="row cols-sm-3">
-                {% for country in page.countries %}
-                    <div class="col">
-                        {% country %}
-                    </div>
-                {% endfor %}
-
-            </div>
-            <br>
             {% include_block page.content %}
         {% endblock content %}
     </div>
