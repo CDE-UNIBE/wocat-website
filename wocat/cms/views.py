@@ -1,3 +1,4 @@
+import itertools
 import json
 
 from django.conf import settings
@@ -7,6 +8,8 @@ from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import View, RedirectView
 from wagtail.wagtailcore.models import Page, Collection
 from wagtail.wagtaildocs.models import get_document_model
+
+from wocat.cms.blocks import COLUMNS_BLOCKS
 
 
 class AddLanguagePrefixRedirectView(RedirectView):
@@ -26,6 +29,7 @@ class DocumentUploadView(View):
     Handle uploaded documents of DSF.
     """
     dsf_collection_name = 'DS-SLM Upload'
+    column_blocks = [block[0] for block in COLUMNS_BLOCKS]
 
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
@@ -53,40 +57,62 @@ class DocumentUploadView(View):
 
         # Add the document to the upload block. As there are multiple upload
         # blocks on the same page, the correct one needs to be found.
+        # The stream_data may be nested in multiple layouts.
         data = page.content.stream_data
-        document_location_found = False
-        for item in data:
-            if item.get('type') != 'dsf_modules':
-                continue
+        page_element = self.iterate_block(*data)
 
-            modules = item.get('value', {})
-            module_key = 'module_{}'.format(module_id)
-            for block in modules.get(module_key, []):
-                if block.get('type') != 'upload':
-                    continue
-
-                module_name = modules.get('{}_title'.format(module_key))
-                title = ' - '.join([page.title, module_name, str(file)])
-
-                # Create document and add it to the list
-                document_cls = get_document_model()
-                document = document_cls.objects.create(
-                    title=title, file=file, collection=collection,
-                    uploaded_by_user=request.user)
-
-                documents = block.get('value', {}).get('documents', [])
-                documents.append(document.pk)
-                document_location_found = True
-
-        if not document_location_found:
+        if not page_element:
             return HttpResponse(status=404)
 
+        self.append_document_to_module(
+            item=page_element, module_id=module_id, page=page, file=file,
+            collection=collection, user=request.user
+        )
         # Save the new data
         data_json = json.dumps(data)
         page.content = data_json
         page.save()
 
         return HttpResponse('file uploaded')
+
+    def iterate_block(self, *data):
+        """
+        Loop over structure created by wagtail CMS blocks, and find the 'dsf_modules' element.
+        """
+
+        for item in data:
+            item_type = item.get('type')
+            if item_type == 'dsf_modules':
+                return item
+            elif item_type in self.column_blocks:
+                # Extract the 'columns' and iterate over its values.
+                return self.iterate_block(*itertools.chain(*item['value'].values()))
+            else:
+                continue
+
+        return None
+
+    def append_document_to_module(self, item, module_id, page, file, collection, user):
+        modules = item.get('value', {})
+        module_key = 'module_{}'.format(module_id)
+        for block in modules.get(module_key, []):
+            if block.get('type') != 'upload':
+                continue
+
+            module_name = modules.get('{}_title'.format(module_key))
+            title = ' - '.join([page.title, module_name, str(file)])
+
+            # Create document and add it to the list
+            document_cls = get_document_model()
+            document = document_cls.objects.create(
+                title=title, file=file, collection=collection,
+                uploaded_by_user=user)
+
+            documents = block.get('value', {}).get('documents', [])
+            documents.append(document.pk)
+            return True
+
+        return False
 
 
 class DocumentUploadDeleteView(View):
