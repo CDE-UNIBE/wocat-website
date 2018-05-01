@@ -62,3 +62,6 @@ mailchimp3==2.0.18
 
 # Maintenance mode
 django-maintenancemode==0.11.2
+
+# Cookie law
+django-cookie-law==2.0.1

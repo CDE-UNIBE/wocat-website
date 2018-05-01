@@ -1,0 +1,19 @@
+{% load i18n %}
+
+
+<div class="modal" id="CookielawBanner" data-reveal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3>{% trans "COOKIE_INFO_HEADER" %}</h3>
+        <p>
+          {% trans "COOKIE_INFO_PARA" %}
+          <br>
+        </p>
+        <div class="text-right">
+          <a class="btn btn-primary" href="javascript:Cookielaw.createCookielawCookie();$('#CookielawBanner').modal('hide');">{% trans "COOKIE_INFO_OK" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,14 @@
-{% load staticfiles i18n core_tags cms_tags wagtailuserbar piwik_tags compress sekizai_tags %}<!DOCTYPE html>
+{% load cms_tags %}
+{% load cms_tags %}
+{% load compress %}
+{% load cookielaw_tags %}
+{% load core_tags %}
+{% load i18n %}
+{% load piwik_tags %}
+{% load sekizai_tags %}
+{% load staticfiles %}
+{% load wagtailuserbar %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -101,10 +111,17 @@
     <script src="{% static 'js/dropzone.min.js' %}"></script>
     <script src="{% static 'js/interact.min.js' %}"></script>
     <script src="{% static 'js/wocat.js' %}"></script>
+    <script>
+      $(document).ready(function() {
+        $('#CookielawBanner').modal();
+      })
+    </script>
+    <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
     {% piwik %}
   {% endblock javascript %}
 {% endcompress %}
 {% render_block "js" %}
+{% cookielaw_banner %}
 <div class="widget-cms-userbar">
 	{% wagtailuserbar %}
 </div>
