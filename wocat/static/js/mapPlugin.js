@@ -124,8 +124,7 @@ jQuery.fn.setMap = function( options ) {
     // Item detail
     // -----------
     detailContainer.on('click', '.js-search-detail', function() {
-        getMapFeatureDetail($(this).attr('href'));
-        return false;
+        getMapFeatureDetail($(this).data('href'));
     });
     detailOverlay.on('click', '.js-overlay-close', function() {
         if (overlayUrlHistory.length > 1) {
@@ -140,7 +139,6 @@ jQuery.fn.setMap = function( options ) {
     });
     detailOverlay.on('click', '.show-descendant', function() {
         getMapFeatureDetail($(this).data('descendant-url'));
-        return false;
     });
 
     // ----------------
