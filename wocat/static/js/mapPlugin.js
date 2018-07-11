@@ -23,6 +23,7 @@ jQuery.fn.setMap = function( options ) {
     var searchForm = $('.js-search');
     var detailContainer = $('#js-map-detail');
     var detailOverlay = $('#js-map-detail-overlay');
+    var detailPanel = $('#map-panel');
 
     // store references to active geojson-layers.
     var layers = [];
@@ -62,6 +63,7 @@ jQuery.fn.setMap = function( options ) {
     // call api for selected filter and querystring from form.
     function displaySearchResults() {
         detailOverlay.hide();
+        detailPanel.addClass('is-expanded');
         detailContainer.show();
 
         // purge layers on map and in the overlay-history.
@@ -157,6 +159,7 @@ jQuery.fn.setMap = function( options ) {
 
     // Load and show single element in detail overlay
     function getMapFeatureDetail(url) {
+        detailPanel.addClass('is-expanded');
         settings.showPanelFn();
         _purgeLayers();
         _getDataFromAPI(url).done(function(data) {
