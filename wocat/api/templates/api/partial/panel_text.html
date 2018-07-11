@@ -40,9 +40,9 @@
               <ul>
                 {% for descendant in descendants|dictsort:"name" %}
                   <li>
-                    <a class="show-descendant" data-descendant-url="{{ descendant.url }}" href="">
+                    <span class="show-descendant is-link" data-descendant-url="{{ descendant.url }}">
                       {{ descendant.name }}
-                    </a>
+                    </span>
                     {% if descendant.countrypage_url %}
                       <p>
                         <a class="widget-teaser-readmoretext widget-teaser-readmoretext-lines" href="{{ descendant.countrypage_url }}">

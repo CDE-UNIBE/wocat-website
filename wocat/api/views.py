@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 from django.contrib.auth.forms import AuthenticationForm
 from django.db.models import Q, F
 from django.utils.decorators import method_decorator
@@ -151,8 +153,9 @@ class MapSearchView(TemplateView):
         ).distinct()
         if self.query_string:
             qs = qs.filter(name__icontains=self.query_string)
-        # Return translated country names
-        return [str(c) for c in qs]
+        # Return translated country names, along with the api detail url
+        StubPage = namedtuple('StubPage', 'title, get_api_detail_url')
+        return [StubPage(str(c), c.get_api_detail_url()) for c in qs]
 
     def get_countries(self):
         return {
