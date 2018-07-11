@@ -64,6 +64,7 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'cookielaw',
     'django_countries',
     'django_languages',
     'easy_thumbnails',
