@@ -46,6 +46,9 @@ class UserForm(forms.ModelForm):
         self.fields['unccd_country'].choices = ((country.code, country) for country in Country.objects.all())
         self.fields['unccd_country'].widget.choices = self.fields['unccd_country'].choices
 
+        # Update label of avatar field
+        self.fields['avatar'].label = _('Your profile picture')
+
         # Update the required fields.
         fields_required = getattr(self.Meta, 'fields_required', None)
         if fields_required:
