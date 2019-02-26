@@ -175,8 +175,8 @@ LANGUAGE_CODE = 'en'
 # page in "Home" with the slug of the new language.
 LANGUAGES = [
     ('en', _('English')),
-    ('fr', _('French')),
-    ('es', _('Spanish')),
+#    ('fr', _('French')),
+#    ('es', _('Spanish')),
     # See comment above when adding new languages ...
 ]
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
