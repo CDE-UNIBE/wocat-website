@@ -159,4 +159,8 @@ RAVEN_CONFIG = {
 # Custom Admin URL, use {% url 'admin:index' %}
 ADMIN_URL = env('DJANGO_ADMIN_URL')
 
+# Upload max configurations
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int('DATA_UPLOAD_MAX_NUMBER_FIELDS',default = 1000)
+
 # Your production stuff: Below this line define 3rd party library settings
