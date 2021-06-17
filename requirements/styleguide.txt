@@ -1,4 +1,4 @@
 # Styleguide dependencies go here
 django==1.9.6
-wagtail==1.7
+wagtail==2.11.8
 
