@@ -43,7 +43,7 @@ django-sekizai==0.10.0
 
 # Your custom requirements go here
 # CMS
-wagtail==1.13
+wagtail==2.11.8
 elasticsearch==2.4.1
 django-modelcluster>=3.1,<4.0
 
