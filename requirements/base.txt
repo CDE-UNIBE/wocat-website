@@ -27,6 +27,9 @@ easy-thumbnails==2.4.2
 # Well-built with regular release cycles!
 django-allauth==0.33.0
 
+# For turing test on registration page
+django-recaptcha==2.0.6
+
 # Python-PostgreSQL Database Adapter
 psycopg2==2.7.3.1
 

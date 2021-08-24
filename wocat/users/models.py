@@ -331,11 +331,13 @@ def deactivate_user_on_email_confirmation(email_address, **kwargs):
     user.save()
     notify_moderators(user)
 
-# Reactivate users after resetting password.
-@receiver(signal=password_reset)
-def reactivate_account(user, **kwargs):
-    user.is_active = True
-    user.save()
+# Commented out 2021 August
+#  - this allowed circumvention of approval from admins for a new account
+# # Reactivate users after resetting password.
+# @receiver(signal=password_reset)
+# def reactivate_account(user, **kwargs):
+#     user.is_active = True
+#     user.save()
 
 
 def notify_moderators(user):

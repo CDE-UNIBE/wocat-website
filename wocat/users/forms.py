@@ -4,6 +4,9 @@ from django.contrib.auth import get_user_model
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from captcha.fields import ReCaptchaField
+# from captcha.widgets import ReCaptchaV3
+
 from wocat.cms.models import TermsSettings
 from wocat.countries.models import Country
 
@@ -15,6 +18,12 @@ class FullUserForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
+
+    # Adding a recaptcha for signup
+    captcha = ReCaptchaField()
+    # Use this for V3, must replace keys appropriately and adjust score in .env
+    # captcha = ReCaptchaField(widget=ReCaptchaV3)
+
     unccd = forms.BooleanField(
         label=_('I’m responsible for the reporting of UNCCD Best Practices in SLM'),
         required=False,
@@ -39,7 +48,7 @@ class UserForm(forms.ModelForm):
                   'experiences', 'key_work_topics', 'address', 'address_2', 'postal_code', 'city', 'country', 'phone',
                   'phone_2', 'fax', 'fax_2', 'second_email', 'comments', 'avatar', 'institution',
                   'newsletter', 'terms_and_conditions']
-        fields_required = ['first_name', 'last_name', 'gender']
+        fields_required = ['first_name', 'last_name', 'gender', 'captcha']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -125,6 +134,7 @@ class UserForm(forms.ModelForm):
             ),
             'newsletter',
             'terms_and_conditions',
+            'captcha',
         )
         self.helper.add_input(Submit('submit', _('Send')))
 
